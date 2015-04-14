@@ -10,7 +10,7 @@ Render::Render()
 }
 Render::Render(int GASIZE)
 {
-	viewMatrix = glm::lookAt(glm::vec3(GASIZE / 2, 200.0f, 30), glm::vec3(GASIZE / 2, 0, GASIZE / 2), glm::vec3(0, 1, 0)); //Test
+	viewMatrix = glm::lookAt( glm::vec3( -50, 200.0f, -50 ), glm::vec3( GASIZE / 2, 0, GASIZE / 2 ), glm::vec3( 0, 1, 0 ) ); //Test
 	//viewMatrix = glm::lookAt(glm::vec3(GASIZE / 2, 200.0f, 30), glm::vec3(GASIZE / 2, 0, GASIZE / 2), glm::vec3(0, 1, 0));
 	//viewMatrix = glm::lookAt(glm::vec3(0, 0, -2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));  //Original
 	projMatrix = glm::perspective(70.0f, 640.f / 480.0f, 0.5f, 2000.0f);
