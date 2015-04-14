@@ -12,6 +12,7 @@ GAShader::GAShader(GLuint* gShaderP)
 }
 GAShader::~GAShader()
 {
+	delete gShaderProgram;
 }
 
 

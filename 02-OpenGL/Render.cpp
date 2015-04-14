@@ -17,7 +17,9 @@ Render::Render(int GASIZE)
 	gShaderGA = 0;
 }
 Render::~Render()
-{}
+{
+	delete ga;
+}
 
 void Render::init(int GASIZE)
 {

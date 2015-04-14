@@ -8,7 +8,7 @@ GameArea::GameArea()
 }
 GameArea::~GameArea()
 {
-	//delete[] GAMap;
+	delete[] GAMap;
 }
 
 //GA
