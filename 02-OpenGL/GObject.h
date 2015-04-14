@@ -47,7 +47,7 @@ class GObject
 		void loadObjectFile(std::string fileName);
 		void bindBuffers();
 
-		void render(); //Draw
+		void render(GLint uniLocation, GLuint shaderProgram); //Draw
 
 		void init();
 

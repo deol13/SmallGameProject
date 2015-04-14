@@ -139,10 +139,12 @@ void GObject::bindBuffers()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(sizeof(float)* 3));
 }
 
-void GObject::render()
+
+void GObject::render(GLint uniLocation, GLuint shaderProgram)
 {
 	glm::mat4 worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
-	glUniformMatrix4fv(0, 1, false, &worldMatrix[0][0]);
+	glUniformMatrix4fv(shaderProgram, uniLocation, false, &worldMatrix[0][0]);
+
 	glBindVertexArray(gAttribute);
 	glDrawArrays(drawMode, 0, nrOfVertices);
 }

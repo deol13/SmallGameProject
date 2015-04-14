@@ -9,6 +9,8 @@ GAShader::GAShader(GLuint* gShaderP)
 	compile();
 	ViewMatrix = glGetUniformLocation(*gShaderProgram, "ViewMatrix");
 	ProjectionMatrix = glGetUniformLocation(*gShaderProgram, "ProjectionMatrix");
+	worldMatrix = glGetUniformLocation(*gShaderProgram, "WorldMatrix");
+
 }
 GAShader::~GAShader()
 {
