@@ -61,16 +61,46 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 		while (WM_QUIT != msg.message)
 		{
-			if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
-			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-			else
-			{
-				render->render();
+			if ( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) {
 
-				SwapBuffers(hDC); //10. Växla front- och back-buffer
+				switch ( msg.message ) {
+				case WM_MOUSEMOVE:
+				{
+					break;
+				}
+				case WM_KEYDOWN:
+				{
+					WPARAM param = msg.wParam;
+					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
+					KeyDown( c );
+					break;
+				}
+
+				case WM_KEYUP:
+				{
+					WPARAM param = msg.wParam;
+					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
+					KeyUp( c );
+					break;
+				}
+				}
+
+				TranslateMessage( &msg );
+				DispatchMessage( &msg );
+			} else {
+				render->render();
+				SwapBuffers( hDC ); //10. Växla front- och back-buffer
+
+				FPScount++;
+
+				if ( ( std::clock() - start ) / ( double )CLOCKS_PER_SEC > 1 ) {
+					start = std::clock();
+					std::string s = std::to_string( FPScount );
+					FPScount = 0;
+					std::wstring stemp = std::wstring( s.begin(), s.end() );
+					LPCWSTR sw = stemp.c_str();
+					SetWindowText( wndHandle, sw );
+				}
 			}
 		}
 
