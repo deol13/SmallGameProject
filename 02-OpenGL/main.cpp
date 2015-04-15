@@ -11,6 +11,11 @@
 #include "Render.h"
 #include "lua.hpp"
 
+#include <ctime>
+#include <cstdio>
+#include <sstream>
+
+
 #define GLM_FORCE_RADIANS
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
@@ -30,7 +35,11 @@ GLuint bth_tex = 0;
 
 Render* render;
 
+
 int GASIZE = 256;
+int FPScount = 0;
+clock_t start = clock();
+
 
 void SetViewport()
 {
@@ -69,9 +78,9 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		while (WM_QUIT != msg.message)
 		{
 			if ( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) {
-
+				
 				switch ( msg.message ) {
-				case WM_MOUSEMOVE:
+				case MK_LBUTTON:
 				{
 					break;
 				}
