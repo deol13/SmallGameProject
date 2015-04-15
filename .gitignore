@@ -62,3 +62,9 @@ Temporary Items
 *.sdf
 *.vcxproj
 >>>>>>> origin/master
+*.tlog
+*.pdb
+*.filters
+02-OpenGL/GObject (Konfliktkopia för laptop 2015-04-15).h
+*.pdb
+*.idb

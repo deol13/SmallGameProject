@@ -4,9 +4,12 @@
 #include <windows.h>
 #include <vector>
 #include <fstream>
+#include <string>
+#include <ctime>
 #include <gl/glew.h>
 #include <gl/GL.h>
 #include "Render.h"
+#include "lua.hpp"
 
 #define GLM_FORCE_RADIANS
 #include <glm\glm.hpp>
@@ -39,6 +42,8 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 {	
 	MSG msg = { 0 };
 	HWND wndHandle = InitWindow(hInstance); //1. Skapa fönster
+	clock_t start = clock();
+	int FPScount = 0;
 	
 	if (wndHandle)
 	{
@@ -59,6 +64,8 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 		ShowWindow(wndHandle, nCmdShow);
 
+		start = std::clock();
+
 		while (WM_QUIT != msg.message)
 		{
 			if ( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) {
@@ -72,7 +79,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				{
 					WPARAM param = msg.wParam;
 					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-					KeyDown( c );
+					//KeyDown( c );
 					break;
 				}
 
@@ -80,7 +87,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				{
 					WPARAM param = msg.wParam;
 					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-					KeyUp( c );
+					//KeyUp( c );
 					break;
 				}
 				}
