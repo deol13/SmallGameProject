@@ -38,6 +38,7 @@ class GObject
 	public:
 		GObject();
 		GObject(std::vector<Vertex> vertices, int drawMode, GLuint gTexture);
+		GObject::GObject(std::string fileName, int drawMode, GLuint texture);
 		~GObject();
 
 		void scale(float x, float y, float z); //set scale matrix

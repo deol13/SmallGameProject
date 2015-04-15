@@ -11,6 +11,6 @@ public:
 	Player();
 	attack();
 	move( Direction dir);
-	takeDamage
+	takeDamage( int dmg);
 };
 #endif

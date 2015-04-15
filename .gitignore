@@ -68,3 +68,8 @@ Temporary Items
 02-OpenGL/GObject (Konfliktkopia för laptop 2015-04-15).h
 *.pdb
 *.idb
+*.exe
+*.log
+*.tlog
+*.ilk
+*.sdf
