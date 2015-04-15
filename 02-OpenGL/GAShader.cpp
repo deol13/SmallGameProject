@@ -46,6 +46,7 @@ bool GAShader::compile()
 		in vec2 texCoords[];
 
 		uniform mat4 ProjectionMatrix;
+		uniform mat4 WorldMatrix;
 		
 		out vec2 texCoordsGeo;
 

@@ -59,7 +59,7 @@ void Render::createTexture( std::string fileName )
 	stbi_image_free( textureData );
 }
 
-void Render::render()
+void Render::render(GuiManager* gui)
 {
 	glClearColor( 0.1, 0.1, 0.1, 1.0 );
 
@@ -80,6 +80,7 @@ void Render::render()
 	
 	//glDrawElements(GL_TRIANGLE_STRIP, ga->getIBOCount(), GL_UNSIGNED_INT, 0);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	gui->render();
 
 	glBindTexture( GL_TEXTURE_2D, testObj.getTexture() );
 	testObj.render( gaShader->worldMatrix, *gaShader->gShaderProgram );

@@ -12,6 +12,8 @@
 #include "stb_image.h"
 #include "GObject.h"
 
+#include "GuiManager.h"
+
 class Render
 {
 	public:
@@ -19,7 +21,7 @@ class Render
 		Render(int GASIZE);
 		~Render();
 
-		void render();
+		void render(GuiManager* gui);
 		void init(int GASIZE);
 
 		GLuint gGABuffer = 0;
