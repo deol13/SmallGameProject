@@ -10,6 +10,7 @@
 #include <gl/GL.h>
 #include "Render.h"
 #include "lua.hpp"
+#include "GuiManager.h"
 
 #include <ctime>
 #include <cstdio>
@@ -34,6 +35,7 @@ GLuint gShaderProgram = 0;
 GLuint bth_tex = 0;
 
 Render* render;
+GuiManager* mGUI;
 
 int GASIZE = 256;
 int FPScount = 0;
@@ -67,6 +69,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 		render = new Render(GASIZE);
 		render->init(GASIZE);
+		mGUI = new GuiManager();
 
 		ShowWindow(wndHandle, nCmdShow);
 
@@ -79,13 +82,16 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				switch ( msg.message ) {
 				case MK_LBUTTON:
 				{
+					POINT newMpos;
+					GetCursorPos(&newMpos);
+					mGUI->mouseClick(newMpos.x, newMpos.y);
 					break;
 				}
 				case WM_KEYDOWN:
 				{
 					WPARAM param = msg.wParam;
 					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-					KeyDown( c );
+					//KeyDown( c );
 					break;
 				}
 
@@ -93,7 +99,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				{
 					WPARAM param = msg.wParam;
 					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-					KeyUp( c );
+					//KeyUp( c );
 					break;
 				}
 				}
@@ -101,7 +107,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				TranslateMessage( &msg );
 				DispatchMessage( &msg );
 			} else {
-				render->render();
+				render->render(mGUI);
 				SwapBuffers( hDC ); //10. Växla front- och back-buffer
 
 				FPScount++;

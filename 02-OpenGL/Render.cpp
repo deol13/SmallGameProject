@@ -32,7 +32,7 @@ void Render::init(int GASIZE)
 	//ga->createIBO();
 }
 
-void Render::render()
+void Render::render(GuiManager* gui)
 {
 	glUseProgram(gShaderGA);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ViewMatrix, 1, false, &viewMatrix[0][0]);
@@ -47,6 +47,7 @@ void Render::render()
 	
 	//glDrawElements(GL_TRIANGLE_STRIP, ga->getIBOCount(), GL_UNSIGNED_INT, 0);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	gui->render();
 
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR)

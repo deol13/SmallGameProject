@@ -10,6 +10,8 @@
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 
+#include "GuiManager.h"
+
 class Render
 {
 	public:
@@ -17,7 +19,7 @@ class Render
 		Render(int GASIZE);
 		~Render();
 
-		void render();
+		void render(GuiManager* gui);
 		void init(int GASIZE);
 
 		GLuint gGABuffer = 0;
@@ -33,6 +35,7 @@ class Render
 
 		glm::mat4 viewMatrix;// = glm::lookAt(glm::vec3(256 / 2, 200.0f, 0), glm::vec3(256 / 2, 0, 256 / 2), glm::vec3(0, 1, 0));
 		glm::mat4 projMatrix;// = glm::perspective(70.0f, 640.f / 480.0f, 0.5f, 2000.0f);
+
 
 };
 
