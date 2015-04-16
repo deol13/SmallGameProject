@@ -1,16 +1,24 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-enum Direction {UP, DOWN, LEFT, RIGHT};
+#include "GObject.h"
 
 class Player 
 {
 private:
-	int x, y;
+	int health;
+	int gold;
+	int x, z;
+	int moveSpeed;
+	GObject* loadObj;
 public:
+	enum Direction { UP, DOWN, LEFT, RIGHT };
 	Player();
-	attack();
-	move( Direction dir);
-	takeDamage( int dmg);
+	Player(GLuint texture, int x, int y);
+	void attack();
+	void move( Direction dir);
+	void takeDamage( int dmg);
+	GObject* getGObject() const;
+	//void update();
 };
 #endif

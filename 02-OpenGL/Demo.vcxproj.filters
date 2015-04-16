@@ -36,6 +36,12 @@
     <ClCompile Include="GuiManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+>>>>>>> origin/master
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameArea.h">
@@ -77,5 +83,13 @@
     <ClInclude Include="GuiManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LuaButton.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+>>>>>>> origin/master
   </ItemGroup>
 </Project>

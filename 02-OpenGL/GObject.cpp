@@ -10,6 +10,22 @@ GObject::GObject()
 	gAttribute = 0;
 	nrOfVertices = 0;
 	drawMode = 0;
+
+	scaleMatrix = glm::mat4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	translationMatrix = glm::mat4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	rotationMatrix = glm::mat4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
 }
 GObject::GObject(std::vector<Vertex> vertices, int drawMode, GLuint gTexture)
 {
@@ -18,11 +34,43 @@ GObject::GObject(std::vector<Vertex> vertices, int drawMode, GLuint gTexture)
 	this->gTexture = gTexture;
 	nrOfVertices = 0;
 	gBuffer = 0;
+
+	scaleMatrix = glm::mat4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	translationMatrix = glm::mat4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	rotationMatrix = glm::mat4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
 }
 GObject::GObject(std::string fileName, int drawMode, GLuint gTexture) {
 	this->drawMode = drawMode;
 	this->gTexture = gTexture;
 	loadObjectFile(fileName);
+
+	scaleMatrix = glm::mat4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	translationMatrix = glm::mat4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	rotationMatrix = glm::mat4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
 }
 GObject::~GObject()
 {
@@ -148,7 +196,7 @@ void GObject::bindBuffers()
 void GObject::render(GLint uniLocation, GLuint shaderProgram)
 {
 	glm::mat4 worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
-	glUniformMatrix4fv(shaderProgram, uniLocation, false, &worldMatrix[0][0]);
+	glProgramUniformMatrix4fv(shaderProgram, uniLocation, 1, false, &worldMatrix[0][0]);
 
 	glBindVertexArray(gAttribute);
 	glDrawArrays(drawMode, 0, nrOfVertices);
@@ -175,3 +223,4 @@ std::vector<Vertex> GObject::getVertices()
 {
 	return vertices;
 }
+

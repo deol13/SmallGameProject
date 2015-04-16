@@ -68,13 +68,6 @@ Temporary Items
 02-OpenGL/GObject (Konfliktkopia för laptop 2015-04-15).h
 *.pdb
 *.idb
-<<<<<<< HEAD
-*.exe
-*.log
-*.tlog
-*.ilk
-*.sdf
-=======
 02-OpenGL/Debug/Demo.exe
 02-OpenGL/Debug/Demo.exe
 02-OpenGL/Debug/Demo.exe
@@ -99,30 +92,3 @@ Temporary Items
 02-OpenGL/Demo.vcxproj.filters
 02-OpenGL/OpenGLDemo.sdf
 02-OpenGL/OpenGLDemo.v12.suo
->>>>>>> origin/master
-02-OpenGL/OpenGLDemo.v12.suo
-*.sdf
-02-OpenGL/OpenGLDemo.sdf
-*.filters
-02-OpenGL/Debug/vc120.pdb
-*.idb
-02-OpenGL/Debug/Demo.tlog/link.read.1.tlog
-*.tlog
-02-OpenGL/Debug/Demo.tlog/link.write.1.tlog
-*.tlog
-02-OpenGL/Debug/Demo.tlog/link.command.1.tlog
-*.tlog
-02-OpenGL/Debug/Demo.tlog/CL.read.1.tlog
-02-OpenGL/Debug/Demo.tlog/cl.command.1.tlog
-*.tlog
-02-OpenGL/Debug/Demo.pdb
-*.pdb
-02-OpenGL/Debug/Demo.log
-*.log
-02-OpenGL/Debug/Demo.tlog/cl.command.1.tlog
-*.tlog
-02-OpenGL/Debug/Demo.tlog/Demo.lastbuildstate
-*.lastbuildstate
-02-OpenGL/Debug/GameArea.obj
-02-OpenGL/Debug/stb_image.obj
-*.ilk
