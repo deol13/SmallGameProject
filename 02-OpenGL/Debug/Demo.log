@@ -1,48 +1,53 @@
-﻿Build started 2015-04-15 15:02:53.
-     1>Project "J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO LuaLib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\GameArea.obj
-         Debug\GAShader.obj
-         Debug\GObject.obj
-         Debug\GuiManager.obj
-         Debug\main.obj
-         Debug\Render.obj
-         Debug\stb_image.obj
-     1>LuaLib.lib(lapi.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lauxlib.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lbaselib.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lbitlib.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lcode.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lcorolib.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lctype.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldblib.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldebug.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldo.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldump.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lfunc.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lgc.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(linit.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(liolib.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(llex.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lmathlib.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lmem.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(loadlib.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lobject.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lopcodes.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(loslib.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lparser.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lstate.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lstring.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lstrlib.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ltable.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ltablib.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ltm.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lundump.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lvm.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lzio.obj) : warning LNK4204: 'J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-         Demo.vcxproj -> J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.exe
-     1>Done Building Project "J:\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)).
+﻿Build started 2015-04-15 15:58:21.
+     1>Project "C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Render.cpp main.cpp
+         Render.cpp
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(62): error C2039: 'render' : is not a member of 'Render'
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\render.h(18) : see declaration of 'Render'
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(64): warning C4305: 'argument' : truncation from 'double' to 'GLclampf'
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(66): error C2065: 'gShaderGA' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(67): error C2065: 'gShaderGA' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(67): error C2065: 'gaShader' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(67): error C2227: left of '->ViewMatrix' must point to class/struct/union/generic type
+                 type is 'unknown-type'
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(67): error C2065: 'viewMatrix' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(68): error C2065: 'gShaderGA' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(68): error C2065: 'gaShader' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(68): error C2227: left of '->ProjectionMatrix' must point to class/struct/union/generic type
+                 type is 'unknown-type'
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(68): error C2065: 'projMatrix' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(70): error C2065: 'ga' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(70): error C2227: left of '->gGAAttribute' must point to class/struct/union/generic type
+                 type is 'unknown-type'
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(71): error C2065: 'ga' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(71): error C2227: left of '->gGABuffer' must point to class/struct/union/generic type
+                 type is 'unknown-type'
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(71): error C2198: 'PFNGLBINDBUFFERPROC' : too few arguments for call
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(79): error C2065: 'ga' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(79): error C2227: left of '->imageTex' must point to class/struct/union/generic type
+                 type is 'unknown-type'
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(79): error C2660: 'glBindTexture' : function does not take 1 arguments
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(85): error C2065: 'testObj' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(85): error C2228: left of '.getTexture' must have class/struct/union
+                 type is 'unknown-type'
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(85): error C2660: 'glBindTexture' : function does not take 1 arguments
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(86): error C2065: 'testObj' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(86): error C2228: left of '.render' must have class/struct/union
+                 type is 'unknown-type'
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(86): error C2065: 'gaShader' : undeclared identifier
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(86): error C2227: left of '->worldMatrix' must point to class/struct/union/generic type
+                 type is 'unknown-type'
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\render.cpp(86): error C2227: left of '->gShaderProgram' must point to class/struct/union/generic type
+                 type is 'unknown-type'
+         Generating Code...
+         Compiling...
+         main.cpp
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\main.cpp(110): error C2039: 'render' : is not a member of 'Render'
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\render.h(18) : see declaration of 'Render'
+         Generating Code...
+     1>Done Building Project "C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:03.17
+Time Elapsed 00:00:01.64

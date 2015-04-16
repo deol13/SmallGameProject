@@ -69,42 +69,14 @@ Temporary Items
 *.pdb
 *.idb
 <<<<<<< HEAD
-02-OpenGL/Debug/Demo.exe
-02-OpenGL/Debug/Demo.exe
-02-OpenGL/Debug/Demo.exe
-02-OpenGL/Debug/Demo.ilk
-02-OpenGL/Debug/Demo.log
-02-OpenGL/Debug/Demo.pdb
-02-OpenGL/Debug/Demo.tlog/cl.command.1.tlog
-02-OpenGL/Debug/Demo.tlog/CL.read.1.tlog
-02-OpenGL/Debug/Demo.tlog/CL.write.1.tlog
-02-OpenGL/Debug/Demo.tlog/Demo.lastbuildstate
-02-OpenGL/Debug/Demo.tlog/link.command.1.tlog
-02-OpenGL/Debug/Demo.tlog/link.read.1.tlog
-02-OpenGL/Debug/Demo.tlog/link.write.1.tlog
-02-OpenGL/Debug/GameArea.obj
-02-OpenGL/Debug/GAShader.obj
-02-OpenGL/Debug/main.obj
-02-OpenGL/Debug/Render.obj
-02-OpenGL/Debug/stb_image.obj
-02-OpenGL/Debug/vc120.idb
-02-OpenGL/Debug/vc120.pdb
-02-OpenGL/Demo.vcxproj
-02-OpenGL/Demo.vcxproj.filters
-02-OpenGL/OpenGLDemo.sdf
-02-OpenGL/OpenGLDemo.v12.suo
-=======
 *.exe
 *.log
 *.tlog
 *.ilk
 *.sdf
->>>>>>> b4b17db188192dbe77dae9c2bdafd27c50333e64
-02-OpenGL/Debug/Demo.tlog/cl.command.1.tlog
-.gitignore.BACKUP.344.gitignore
-.gitignore.BASE.344.gitignore
-.gitignore.LOCAL.344.gitignore
-.gitignore.REMOTE.344.gitignore
+=======
+02-OpenGL/Debug/Demo.exe
+02-OpenGL/Debug/Demo.exe
 02-OpenGL/Debug/Demo.exe
 02-OpenGL/Debug/Demo.ilk
 02-OpenGL/Debug/Demo.log
@@ -127,3 +99,4 @@ Temporary Items
 02-OpenGL/Demo.vcxproj.filters
 02-OpenGL/OpenGLDemo.sdf
 02-OpenGL/OpenGLDemo.v12.suo
+>>>>>>> origin/master
