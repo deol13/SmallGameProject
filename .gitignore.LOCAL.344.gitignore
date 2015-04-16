@@ -1,0 +1,94 @@
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# =========================
+# Operating System Files
+# =========================
+
+# OSX
+# =========================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+<<<<<<< HEAD
+*.exe
+02-OpenGL/Debug/Demo.exe
+*.pdb
+*.pdb
+*.exe
+*.pdb
+*.idb
+=======
+*.tlog
+*.pdb
+*.lastbuildstate
+*.exe
+*.ilk
+*.tlog
+*.lastbuildstate
+*.obj
+*.opensdf
+*.sdf
+*.vcxproj
+>>>>>>> origin/master
+*.tlog
+*.pdb
+*.filters
+02-OpenGL/GObject (Konfliktkopia för laptop 2015-04-15).h
+*.pdb
+*.idb
+02-OpenGL/Debug/Demo.exe
+02-OpenGL/Debug/Demo.exe
+02-OpenGL/Debug/Demo.exe
+02-OpenGL/Debug/Demo.ilk
+02-OpenGL/Debug/Demo.log
+02-OpenGL/Debug/Demo.pdb
+02-OpenGL/Debug/Demo.tlog/cl.command.1.tlog
+02-OpenGL/Debug/Demo.tlog/CL.read.1.tlog
+02-OpenGL/Debug/Demo.tlog/CL.write.1.tlog
+02-OpenGL/Debug/Demo.tlog/Demo.lastbuildstate
+02-OpenGL/Debug/Demo.tlog/link.command.1.tlog
+02-OpenGL/Debug/Demo.tlog/link.read.1.tlog
+02-OpenGL/Debug/Demo.tlog/link.write.1.tlog
+02-OpenGL/Debug/GameArea.obj
+02-OpenGL/Debug/GAShader.obj
+02-OpenGL/Debug/main.obj
+02-OpenGL/Debug/Render.obj
+02-OpenGL/Debug/stb_image.obj
+02-OpenGL/Debug/vc120.idb
+02-OpenGL/Debug/vc120.pdb
+02-OpenGL/Demo.vcxproj
+02-OpenGL/Demo.vcxproj.filters
+02-OpenGL/OpenGLDemo.sdf
+02-OpenGL/OpenGLDemo.v12.suo
