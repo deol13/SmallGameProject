@@ -88,6 +88,7 @@
     <ClCompile Include="GameArea.cpp" />
     <ClCompile Include="GAShader.cpp" />
     <ClCompile Include="GObject.cpp" />
+    <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="stb_image.c" />
@@ -96,6 +97,7 @@
     <ClInclude Include="GameArea.h" />
     <ClInclude Include="GAShader.h" />
     <ClInclude Include="GObject.h" />
+    <ClInclude Include="GuiManager.h" />
     <ClInclude Include="lauxlib.h" />
     <ClInclude Include="lua.h" />
     <ClInclude Include="lua.hpp" />
@@ -105,6 +107,9 @@
     <ClInclude Include="Render.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Vertex.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LuaButton.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
