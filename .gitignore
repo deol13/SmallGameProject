@@ -100,3 +100,22 @@ Temporary Items
 02-OpenGL/OpenGLDemo.sdf
 02-OpenGL/OpenGLDemo.v12.suo
 >>>>>>> origin/master
+02-OpenGL/OpenGLDemo.v12.suo
+*.sdf
+02-OpenGL/OpenGLDemo.sdf
+*.filters
+02-OpenGL/Debug/vc120.pdb
+*.idb
+02-OpenGL/Debug/Demo.tlog/link.read.1.tlog
+*.tlog
+02-OpenGL/Debug/Demo.tlog/link.write.1.tlog
+*.tlog
+02-OpenGL/Debug/Demo.tlog/link.command.1.tlog
+*.tlog
+02-OpenGL/Debug/Demo.tlog/CL.read.1.tlog
+02-OpenGL/Debug/Demo.tlog/cl.command.1.tlog
+*.tlog
+02-OpenGL/Debug/Demo.pdb
+*.pdb
+02-OpenGL/Debug/Demo.log
+*.log

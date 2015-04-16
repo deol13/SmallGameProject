@@ -33,7 +33,7 @@ void Render::init(int GASIZE)
 	loadTextures();
 
 	//hard coded test object
-	testObj = GObject( "victest.obj", GL_QUAD_STRIP, textures[ 0 ] );
+	testObj = GObject( "victest.obj", GL_QUADS, textures[ 0 ] );
 }
 
 void Render::loadTextures() 
