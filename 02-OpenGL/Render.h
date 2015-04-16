@@ -21,7 +21,7 @@ class Render
 		Render(int GASIZE);
 		~Render();
 
-		void render(GuiManager* gui);
+		void render(GuiManager* gui, std::vector<GObject*> renderObjects);
 		void init(int GASIZE);
 
 		GLuint gGABuffer = 0;
@@ -30,6 +30,8 @@ class Render
 		//Textures
 		void loadTextures();
 		void createTexture( std::string fileName );
+
+		GLuint getTexture(int index) const;
 
 	private:
 		GAShader* gaShader;

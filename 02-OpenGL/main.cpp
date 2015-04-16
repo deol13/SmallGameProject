@@ -15,6 +15,7 @@
 #include <ctime>
 #include <cstdio>
 #include <sstream>
+#include "Player.h"
 
 
 #define GLM_FORCE_RADIANS
@@ -36,11 +37,11 @@ GLuint bth_tex = 0;
 
 Render* render;
 GuiManager* mGUI;
+Player* player;
 
 int GASIZE = 256;
 int FPScount = 0;
 clock_t start = clock();
-
 
 void SetViewport()
 {
@@ -70,6 +71,10 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		render = new Render(GASIZE);
 		render->init(GASIZE);
 		mGUI = new GuiManager();
+		player = new Player(render->getTexture(0), 0, 0);
+
+		std::vector<GObject*> renderObjects;
+		renderObjects.push_back(player->getGObject());
 
 		ShowWindow(wndHandle, nCmdShow);
 
@@ -91,7 +96,23 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				{
 					WPARAM param = msg.wParam;
 					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-					//KeyDown( c );
+					if (c == 'w' || c == 'W')
+					{
+						player->move(Player::UP);
+					}
+					else if (c == 's' || c == 'S')
+					{
+						player->move(Player::DOWN);
+					}
+					else if (c == 'a' || c == 'A')
+					{
+						player->move(Player::LEFT);
+					}
+					else if (c == 'd' || c == 'D')
+					{
+						player->move(Player::RIGHT);
+					}
+					else{}
 					break;
 				}
 
@@ -107,7 +128,9 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				TranslateMessage( &msg );
 				DispatchMessage( &msg );
 			} else {
-				render->render(mGUI);
+
+				render->render(mGUI, renderObjects);
+
 				SwapBuffers( hDC ); //10. Växla front- och back-buffer
 
 				FPScount++;

@@ -26,12 +26,13 @@ bool GAShader::compile()
 		layout(location = 1) in vec2 GATex;
 
 		uniform mat4 ViewMatrix;
+		uniform mat4 WorldMatrix;
 
 		out vec2 texCoords;
 
 		void main () 
 		{
-			gl_Position = ViewMatrix * vec4(GAPosition, 1.0f);
+			gl_Position = ViewMatrix * WorldMatrix * vec4(GAPosition, 1.0f);
 			texCoords = GATex;
 		}
 
@@ -46,7 +47,6 @@ bool GAShader::compile()
 		in vec2 texCoords[];
 
 		uniform mat4 ProjectionMatrix;
-		uniform mat4 WorldMatrix;
 		
 		out vec2 texCoordsGeo;
 

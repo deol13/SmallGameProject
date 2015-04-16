@@ -33,7 +33,7 @@ void Render::init(int GASIZE)
 	loadTextures();
 
 	//hard coded test object
-	testObj = GObject( "victest.obj", GL_QUADS, textures[ 0 ] );
+	//testObj = GObject( "victest.obj", GL_QUADS, textures[ 0 ] );
 }
 
 void Render::loadTextures() 
@@ -59,33 +59,49 @@ void Render::createTexture( std::string fileName )
 	stbi_image_free( textureData );
 }
 
-void Render::render(GuiManager* gui)
+void Render::render(GuiManager* gui, std::vector<GObject*> renderObjects)
 {
-	glClearColor( 0.1, 0.1, 0.1, 1.0 );
+	glClearColor(0.1, 0.1, 0.1, 1.0);
+
+glm::mat4 worldMatrix = glm::mat4(
+	1.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 1.0f, 0.0f,
+	0.0f, 0.0f, 0.0f, 1.0f);
 
 	glUseProgram(gShaderGA);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ViewMatrix, 1, false, &viewMatrix[0][0]);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ProjectionMatrix, 1, false, &projMatrix[0][0]);
+	glProgramUniformMatrix4fv(gShaderGA, gaShader->worldMatrix, 1, false, &worldMatrix[0][0]);
 
 	glBindVertexArray(ga->gGAAttribute);
 	glBindBuffer(GL_ARRAY_BUFFER, ga->gGABuffer);
-	glEnable( GL_DEPTH_TEST );
-	glDepthFunc( GL_LEQUAL );
-	glDepthMask( GL_TRUE );
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glDepthMask(GL_TRUE);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ga->gIndexBuffer);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, ga->imageTex);
-	
+
+
+
 	//glDrawElements(GL_TRIANGLE_STRIP, ga->getIBOCount(), GL_UNSIGNED_INT, 0);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	gui->render();
 
-	glBindTexture( GL_TEXTURE_2D, testObj.getTexture() );
-	testObj.render( gaShader->worldMatrix, *gaShader->gShaderProgram );
+
+	glBindTexture(GL_TEXTURE_2D, renderObjects[0]->getTexture());
+	renderObjects[0]->render(gaShader->worldMatrix, *gaShader->gShaderProgram);
 
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR)
 		printf("Error");
+}
+
+
+GLuint Render::getTexture(int index) const
+{
+	return textures[index];
 }

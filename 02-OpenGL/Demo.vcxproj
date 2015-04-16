@@ -90,6 +90,7 @@
     <ClCompile Include="GObject.cpp" />
     <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="stb_image.c" />
   </ItemGroup>
