@@ -3,7 +3,10 @@
 
 Player::Player()
 {
-	//loadObj = new GObject("Victest.obj", GL_QUADS, );
+	loadObj = new GObject();
+	x = 0;
+	z = 0;
+	moveSpeed = 1;
 }
 Player::Player(GLuint texture, int x, int z)
 {
@@ -12,7 +15,8 @@ Player::Player(GLuint texture, int x, int z)
 	this->z = z;
 	moveSpeed = 1;
 }
-void Player::attack(){}
+void Player::attack()
+{}
 
 void Player::move(Direction dir)
 {
@@ -44,6 +48,7 @@ void Player::takeDamage(int dmg)
 	health -= dmg;
 	if (health <= 0)
 	{
+
 	}
 }
 

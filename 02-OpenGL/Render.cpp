@@ -4,6 +4,12 @@
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
+glm::mat4 worldMatrixMap = glm::mat4(
+	1.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 1.0f, 0.0f,
+	0.0f, 0.0f, 0.0f, 1.0f);
+
 Render::Render()
 {
 	gShaderGA = 0;
@@ -29,7 +35,6 @@ void Render::init(int GASIZE)
 	ga->loadImage();
 	ga->createGA(GASIZE);
 	ga->GABuffers();
-	//ga->createIBO();
 	loadTextures();
 
 	//hard coded test object
@@ -63,35 +68,25 @@ void Render::render(GuiManager* gui, std::vector<GObject*> renderObjects)
 {
 	glClearColor(0.1, 0.1, 0.1, 1.0);
 
-glm::mat4 worldMatrix = glm::mat4(
-	1.0f, 0.0f, 0.0f, 0.0f,
-	0.0f, 1.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 1.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 1.0f);
-
 	glUseProgram(gShaderGA);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ViewMatrix, 1, false, &viewMatrix[0][0]);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ProjectionMatrix, 1, false, &projMatrix[0][0]);
-	glProgramUniformMatrix4fv(gShaderGA, gaShader->worldMatrix, 1, false, &worldMatrix[0][0]);
+	glProgramUniformMatrix4fv(gShaderGA, gaShader->worldMatrix, 1, false, &worldMatrixMap[0][0]);
 
 	glBindVertexArray(ga->gGAAttribute);
 	glBindBuffer(GL_ARRAY_BUFFER, ga->gGABuffer);
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
-	glDepthMask(GL_TRUE);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ga->gIndexBuffer);
 
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	//Draw Map
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, ga->imageTex);
-
-
-
-	//glDrawElements(GL_TRIANGLE_STRIP, ga->getIBOCount(), GL_UNSIGNED_INT, 0);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	//Draw GUI
 	gui->render();
 
-
+	//Draw Player
 	glBindTexture(GL_TEXTURE_2D, renderObjects[0]->getTexture());
 	renderObjects[0]->render(gaShader->worldMatrix, *gaShader->gShaderProgram);
 
@@ -100,6 +95,9 @@ glm::mat4 worldMatrix = glm::mat4(
 		printf("Error");
 }
 
+//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ga->gIndexBuffer);
+//glDrawElements(GL_TRIANGLE_STRIP, ga->getIBOCount(), GL_UNSIGNED_INT, 0);
+//ga->createIBO();
 
 GLuint Render::getTexture(int index) const
 {

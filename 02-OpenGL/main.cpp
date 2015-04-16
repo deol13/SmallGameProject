@@ -43,6 +43,8 @@ int GASIZE = 256;
 int FPScount = 0;
 clock_t start = clock();
 
+void keySwitchFunc(const char c);
+
 void SetViewport()
 {
 	glViewport(0, 0, 640, 480);
@@ -61,13 +63,14 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 		glewInit(); //3. Initiera The OpenGL Extension Wrangler Library (GLEW)
 
-		/*glEnable(GL_CULL_FACE);
+		//glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glDepthMask(GL_TRUE);
-		glDepthFunc(GL_LEQUAL);*/
+		glDepthFunc(GL_LEQUAL);
 
 		SetViewport(); //4. Sätt viewport
 
+		//Init main's objects
 		render = new Render(GASIZE);
 		render->init(GASIZE);
 		mGUI = new GuiManager();
@@ -96,23 +99,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				{
 					WPARAM param = msg.wParam;
 					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-					if (c == 'w' || c == 'W')
-					{
-						player->move(Player::UP);
-					}
-					else if (c == 's' || c == 'S')
-					{
-						player->move(Player::DOWN);
-					}
-					else if (c == 'a' || c == 'A')
-					{
-						player->move(Player::LEFT);
-					}
-					else if (c == 'd' || c == 'D')
-					{
-						player->move(Player::RIGHT);
-					}
-					else{}
+					keySwitchFunc(c);
 					break;
 				}
 
@@ -246,4 +233,48 @@ HGLRC CreateOpenGLContext(HWND wndHandle)
 	wglMakeCurrent(hDC, hRC);
 
 	return hRC;
+}
+
+
+void keySwitchFunc(const char c)
+{
+	switch (c)
+	{
+	case 'w':
+	case 'W':
+		player->move(Player::UP);
+		break;
+	case 's':
+	case 'S':
+		player->move(Player::DOWN);
+		break;
+	case 'a':
+	case 'A':
+		player->move(Player::LEFT);
+		break;
+	case 'd':
+	case 'D':
+		player->move(Player::RIGHT);
+		break;
+	default:
+		break;
+	}
+
+	/*if (c == 'w' || c == 'W')
+	{
+		player->move(Player::UP);
+	}
+	else if (c == 's' || c == 'S')
+	{
+		player->move(Player::DOWN);
+	}
+	else if (c == 'a' || c == 'A')
+	{
+		player->move(Player::LEFT);
+	}
+	else if (c == 'd' || c == 'D')
+	{
+		player->move(Player::RIGHT);
+	}
+	else{}*/
 }

@@ -3,9 +3,6 @@
 
 #include "GObject.h"
 
-//enum Direction {UP, DOWN, LEFT, RIGHT};
-
-
 class Player 
 {
 private:
