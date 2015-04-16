@@ -119,3 +119,10 @@ Temporary Items
 *.pdb
 02-OpenGL/Debug/Demo.log
 *.log
+02-OpenGL/Debug/Demo.tlog/cl.command.1.tlog
+*.tlog
+02-OpenGL/Debug/Demo.tlog/Demo.lastbuildstate
+*.lastbuildstate
+02-OpenGL/Debug/GameArea.obj
+02-OpenGL/Debug/stb_image.obj
+*.ilk
