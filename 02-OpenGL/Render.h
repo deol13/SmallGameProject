@@ -9,6 +9,8 @@
 #include <gl/GL.h>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
+#include "stb_image.h"
+#include "GObject.h"
 
 #include "GuiManager.h"
 
@@ -25,6 +27,10 @@ class Render
 		GLuint gGABuffer = 0;
 		GLuint gGAAttribute = 0;
 
+		//Textures
+		void loadTextures();
+		void createTexture( std::string fileName );
+
 	private:
 		GAShader* gaShader;
 		GLuint gShaderGA = 0;
@@ -36,7 +42,12 @@ class Render
 		glm::mat4 viewMatrix;// = glm::lookAt(glm::vec3(256 / 2, 200.0f, 0), glm::vec3(256 / 2, 0, 256 / 2), glm::vec3(0, 1, 0));
 		glm::mat4 projMatrix;// = glm::perspective(70.0f, 640.f / 480.0f, 0.5f, 2000.0f);
 
+<<<<<<< HEAD
 
+=======
+		GObject testObj;
+		std::vector<GLuint> textures;
+>>>>>>> b4b17db188192dbe77dae9c2bdafd27c50333e64
 };
 
 #endif

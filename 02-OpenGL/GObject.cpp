@@ -19,6 +19,11 @@ GObject::GObject(std::vector<Vertex> vertices, int drawMode, GLuint gTexture)
 	nrOfVertices = 0;
 	gBuffer = 0;
 }
+GObject::GObject(std::string fileName, int drawMode, GLuint gTexture) {
+	this->drawMode = drawMode;
+	this->gTexture = gTexture;
+	loadObjectFile(fileName);
+}
 GObject::~GObject()
 {
 }
@@ -57,9 +62,9 @@ void GObject::translate(float x, float y, float z) //set translation matrix
 
 void GObject::loadObjectFile(std::string fileName)
 {
-	std::ifstream inStream( "Resources/" + fileName, std::ios::binary | std::ios::ate );
+	std::ifstream inStream( "Resource/" + fileName, std::ios::binary | std::ios::ate );
 	int vectorReserveSize = inStream.tellg() * 0.05f;
-	inStream = std::ifstream( "Resources/" + fileName );
+	inStream = std::ifstream( "Resource/" + fileName );
 
 	if ( !inStream.is_open() ) {
 		std::cout << fileName + " not found\n";
@@ -74,7 +79,7 @@ void GObject::loadObjectFile(std::string fileName)
 	glm::vec3 pos = glm::vec3();
 	glm::vec2 coord = glm::vec2();
 	//glm::vec3 normal = glm::vec3();
-	std::string indices[ 2 ] = {};
+	std::string indices[ 3 ] = {};
 	int i = 0, j = 0;
 	Vertex vert = Vertex();
 
