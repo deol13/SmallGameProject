@@ -85,6 +85,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="enemyHandler.cpp" />
     <ClCompile Include="GameArea.cpp" />
     <ClCompile Include="GAShader.cpp" />
     <ClCompile Include="GObject.cpp" />
@@ -95,6 +97,8 @@
     <ClCompile Include="stb_image.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="enemy.h" />
+    <ClInclude Include="enemyHandler.h" />
     <ClInclude Include="GameArea.h" />
     <ClInclude Include="GAShader.h" />
     <ClInclude Include="GObject.h" />

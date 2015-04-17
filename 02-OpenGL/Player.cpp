@@ -3,16 +3,20 @@
 
 Player::Player()
 {
-	//loadObj = new GObject("Victest.obj", GL_QUADS, );
+	loadObj = new GObject();
+	x = 0.0f;
+	z = 0.0f;
+	moveSpeed = 1;
 }
-Player::Player(GLuint texture, int x, int z)
+Player::Player(GLuint texture, float x, float z)
 {
 	loadObj = new GObject("Victest.obj", GL_QUADS, texture);
 	this->x = x;
 	this->z = z;
 	moveSpeed = 1;
 }
-void Player::attack(){}
+void Player::attack()
+{}
 
 void Player::move(Direction dir)
 {
@@ -44,6 +48,7 @@ void Player::takeDamage(int dmg)
 	health -= dmg;
 	if (health <= 0)
 	{
+
 	}
 }
 
@@ -56,3 +61,13 @@ GObject* Player::getGObject() const
 //{
 //	loadObj->render();
 //}
+
+
+float Player::getX()
+{
+	return x;
+}
+float Player::getZ()
+{
+	return z;
+}

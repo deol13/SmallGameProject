@@ -16,6 +16,7 @@
 #include <cstdio>
 #include <sstream>
 #include "Player.h"
+#include "enemyHandler.h"
 
 
 #define GLM_FORCE_RADIANS
@@ -38,10 +39,13 @@ GLuint bth_tex = 0;
 Render* render;
 GuiManager* mGUI;
 Player* player;
+enemyHandler* eHandler;
 
 int GASIZE = 256;
 int FPScount = 0;
 clock_t start = clock();
+
+void keySwitchFunc(const char c);
 
 void SetViewport()
 {
@@ -61,17 +65,27 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 		glewInit(); //3. Initiera The OpenGL Extension Wrangler Library (GLEW)
 
-		/*glEnable(GL_CULL_FACE);
+		//glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 		glDepthMask(GL_TRUE);
-		glDepthFunc(GL_LEQUAL);*/
+		glDepthFunc(GL_LEQUAL);
 
 		SetViewport(); //4. Sätt viewport
 
+		//Init main's objects
 		render = new Render(GASIZE);
 		render->init(GASIZE);
 		mGUI = new GuiManager();
 		player = new Player(render->getTexture(0), 0, 0);
+		
+
+
+		//----------------------------------------------------------- TMP
+		GObject* meleeE = new GObject("Victest.obj", GL_QUADS, render->getTexture(0));
+		eHandler = new enemyHandler(player, render->getGAShader());
+		eHandler->setUniLoc(render->getWorldMatixLoc());
+		eHandler->createWave(1, meleeE, 0, meleeE, 0, meleeE);
+		//-----------------------------------------------------------
 
 		std::vector<GObject*> renderObjects;
 		renderObjects.push_back(player->getGObject());
@@ -96,23 +110,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				{
 					WPARAM param = msg.wParam;
 					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-					if (c == 'w' || c == 'W')
-					{
-						player->move(Player::UP);
-					}
-					else if (c == 's' || c == 'S')
-					{
-						player->move(Player::DOWN);
-					}
-					else if (c == 'a' || c == 'A')
-					{
-						player->move(Player::LEFT);
-					}
-					else if (c == 'd' || c == 'D')
-					{
-						player->move(Player::RIGHT);
-					}
-					else{}
+					keySwitchFunc(c);
 					break;
 				}
 
@@ -130,6 +128,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			} else {
 
 				render->render(mGUI, renderObjects);
+				eHandler->makeMove();
 
 				SwapBuffers( hDC ); //10. Växla front- och back-buffer
 
@@ -246,4 +245,48 @@ HGLRC CreateOpenGLContext(HWND wndHandle)
 	wglMakeCurrent(hDC, hRC);
 
 	return hRC;
+}
+
+
+void keySwitchFunc(const char c)
+{
+	switch (c)
+	{
+	case 'w':
+	case 'W':
+		player->move(Player::UP);
+		break;
+	case 's':
+	case 'S':
+		player->move(Player::DOWN);
+		break;
+	case 'a':
+	case 'A':
+		player->move(Player::LEFT);
+		break;
+	case 'd':
+	case 'D':
+		player->move(Player::RIGHT);
+		break;
+	default:
+		break;
+	}
+
+	/*if (c == 'w' || c == 'W')
+	{
+		player->move(Player::UP);
+	}
+	else if (c == 's' || c == 'S')
+	{
+		player->move(Player::DOWN);
+	}
+	else if (c == 'a' || c == 'A')
+	{
+		player->move(Player::LEFT);
+	}
+	else if (c == 'd' || c == 'D')
+	{
+		player->move(Player::RIGHT);
+	}
+	else{}*/
 }
