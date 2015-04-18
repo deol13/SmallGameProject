@@ -72,6 +72,7 @@ void Render::render(GuiManager* gui, std::vector<GObject*> renderObjects)
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ViewMatrix, 1, false, &viewMatrix[0][0]);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ProjectionMatrix, 1, false, &projMatrix[0][0]);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->worldMatrix, 1, false, &worldMatrixMap[0][0]);
+	
 
 	glBindVertexArray(ga->gGAAttribute);
 	glBindBuffer(GL_ARRAY_BUFFER, ga->gGABuffer);

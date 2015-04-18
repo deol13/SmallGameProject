@@ -41,7 +41,7 @@ void enemyHandler::createWave(int melee, GObject* meleeObj, int ranged, GObject*
 		this->wave[i].loadObj = meleeObj;
 		meleeObj->translate(0, 0, 100.0f);
 		meleeObj->translate(100.0f, 0, 0);
-		meleeObj->translate(0,1.0f,0);
+		meleeObj->translate(0,12.0f,0);
 	}
 
 	nrOfEnemies += melee;

@@ -19,6 +19,7 @@ class GAShader
 		GLint ViewMatrix;
 		GLint ProjectionMatrix;
 		GLint worldMatrix;
+		GLint attackColor;
 
 	private:
 		void CompileErrorPrint(GLuint* shader);

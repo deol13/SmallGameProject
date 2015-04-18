@@ -47,6 +47,10 @@ void enemy::act(float playerX, float playerZ) //spelarens objekt eller plats
 			loadObj->translate(moveSpeed* moveX / abs(moveX + moveZ), 0, moveSpeed* moveZ / abs(moveX + moveZ));
 
 		}
+		else
+		{
+
+		}
 	}
 	else if (type == RANGED)
 	{

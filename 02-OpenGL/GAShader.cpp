@@ -10,7 +10,7 @@ GAShader::GAShader(GLuint* gShaderP)
 	ViewMatrix = glGetUniformLocation(*gShaderProgram, "ViewMatrix");
 	ProjectionMatrix = glGetUniformLocation(*gShaderProgram, "ProjectionMatrix");
 	worldMatrix = glGetUniformLocation(*gShaderProgram, "WorldMatrix");
-
+	attackColor = glGetUniformLocation(*gShaderProgram, "attackColor");
 }
 GAShader::~GAShader()
 {
@@ -67,6 +67,7 @@ bool GAShader::compile()
 		in vec2 texCoordsGeo;
 
 		uniform sampler2D heightMapSampler;
+		uniform int attackColor;
 
 		out vec4 fragColor;
 

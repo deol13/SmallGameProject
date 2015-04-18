@@ -82,7 +82,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 
 		//----------------------------------------------------------- TMP
-		GObject* meleeE = new GObject("Victest.obj", GL_QUADS, render->getTexture(0));
+		GObject* meleeE = new GObject("enamie.obj", GL_QUADS, render->getTexture(0));
 		eHandler = new enemyHandler(render->getGAShader());
 		eHandler->setUniLoc(render->getWorldMatixLoc());
 		eHandler->createWave(1, meleeE, 0, meleeE, 0, meleeE);
@@ -132,6 +132,8 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				player->update();
 				render->render(mGUI, renderObjects);
 				eHandler->makeMove( player->getX(), player->getZ());
+				
+			
 
 				SwapBuffers( hDC ); //10. Växla front- och back-buffer
 

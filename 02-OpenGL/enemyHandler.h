@@ -9,6 +9,7 @@ class enemyHandler
 		enemy* wave;
 		int wavesize;
 
+
 		GLuint shaderProgram;
 		GLint uniLocation;
 
