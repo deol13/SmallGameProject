@@ -7,9 +7,8 @@ enemyHandler::enemyHandler()
 
 }
 
-enemyHandler::enemyHandler(Player* player, GLuint shaderProgram)
+enemyHandler::enemyHandler(GLuint shaderProgram)
 {
-	this->player = player;
 	this->shaderProgram = shaderProgram;
 	this->wave = nullptr;
 }
@@ -67,11 +66,11 @@ void enemyHandler::clearWave()
 	delete wave;
 }
 
-void enemyHandler::makeMove()	//spelarens objekt eller plats
+void enemyHandler::makeMove( float playerX, float playerZ)	//spelarens objekt eller plats
 {
 	for (int i = 0; i < wavesize; i++)
 	{
-		wave[i].act(player->getX(), player->getZ());
+		wave[i].act(playerX, playerZ);
 		wave[i].loadObj->render(uniLocation, shaderProgram);
 	}
 }

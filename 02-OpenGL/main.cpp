@@ -46,6 +46,7 @@ int FPScount = 0;
 clock_t start = clock();
 
 void keySwitchFunc(const char c);
+void keySwitchFuncFalse(const char c);
 
 void SetViewport()
 {
@@ -82,7 +83,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 		//----------------------------------------------------------- TMP
 		GObject* meleeE = new GObject("Victest.obj", GL_QUADS, render->getTexture(0));
-		eHandler = new enemyHandler(player, render->getGAShader());
+		eHandler = new enemyHandler(render->getGAShader());
 		eHandler->setUniLoc(render->getWorldMatixLoc());
 		eHandler->createWave(1, meleeE, 0, meleeE, 0, meleeE);
 		//-----------------------------------------------------------
@@ -110,6 +111,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				{
 					WPARAM param = msg.wParam;
 					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
+
 					keySwitchFunc(c);
 					break;
 				}
@@ -118,7 +120,8 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				{
 					WPARAM param = msg.wParam;
 					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-					//KeyUp( c );
+
+					keySwitchFuncFalse(c);
 					break;
 				}
 				}
@@ -126,9 +129,9 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				TranslateMessage( &msg );
 				DispatchMessage( &msg );
 			} else {
-
+				player->update();
 				render->render(mGUI, renderObjects);
-				eHandler->makeMove();
+				eHandler->makeMove( player->getX(), player->getZ());
 
 				SwapBuffers( hDC ); //10. Växla front- och back-buffer
 
@@ -250,43 +253,40 @@ HGLRC CreateOpenGLContext(HWND wndHandle)
 
 void keySwitchFunc(const char c)
 {
-	switch (c)
+	if ( c == 'w' || c == 'W' )
 	{
-	case 'w':
-	case 'W':
-		player->move(Player::UP);
-		break;
-	case 's':
-	case 'S':
-		player->move(Player::DOWN);
-		break;
-	case 'a':
-	case 'A':
-		player->move(Player::LEFT);
-		break;
-	case 'd':
-	case 'D':
-		player->move(Player::RIGHT);
-		break;
-	default:
-		break;
+		player->setMovement(player->UP, true);
 	}
+	if ( c == 's' || c == 'S' )
+	{
+		player->setMovement(player->DOWN, true);
+	}
+	if ( c == 'a' || c == 'A' )
+	{
+		player->setMovement(player->LEFT, true);
+	}
+	if ( c == 'd' || c == 'D' )
+	{
+		player->setMovement(player->RIGHT, true);
+	}
+}
 
-	/*if (c == 'w' || c == 'W')
+void keySwitchFuncFalse(const char c)
+{
+	if (c == 'w' || c == 'W')
 	{
-		player->move(Player::UP);
+		player->setMovement(player->UP, false);
 	}
-	else if (c == 's' || c == 'S')
+	if (c == 's' || c == 'S')
 	{
-		player->move(Player::DOWN);
+		player->setMovement(player->DOWN, false);
 	}
-	else if (c == 'a' || c == 'A')
+	if (c == 'a' || c == 'A')
 	{
-		player->move(Player::LEFT);
+		player->setMovement(player->LEFT, false);
 	}
-	else if (c == 'd' || c == 'D')
+	if (c == 'd' || c == 'D')
 	{
-		player->move(Player::RIGHT);
+		player->setMovement(player->RIGHT, false);
 	}
-	else{}*/
 }

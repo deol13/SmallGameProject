@@ -36,11 +36,17 @@ void enemy::act(float playerX, float playerZ) //spelarens objekt eller plats
 {
 	if (type == MELEE)
 	{
-		posX -= moveSpeed;
-		loadObj->translate(moveSpeed, 0, 0);
+		
+		float moveX = playerX - posX;
+		float moveZ = playerZ - posZ;
 
-		posZ += moveSpeed;
-		loadObj->translate(0, 0, moveSpeed);
+		if (abs(moveX) + abs(moveZ) > 0.0000001f)
+		{
+			posX += moveSpeed* moveX / abs(moveX + moveZ);
+			posZ += moveSpeed* moveZ / abs(moveX + moveZ);
+			loadObj->translate(moveSpeed* moveX / abs(moveX + moveZ), 0, moveSpeed* moveZ / abs(moveX + moveZ));
+
+		}
 	}
 	else if (type == RANGED)
 	{

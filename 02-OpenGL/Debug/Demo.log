@@ -1,8 +1,9 @@
-﻿Build started 2015-04-17 16:55:39.
+﻿Build started 2015-04-18 14:54:59.
      1>Project "C:\temp\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\temp\SmallGameProject\02-OpenGL\\glm" /I"C:\temp\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt enemyHandler.cpp
-         enemyHandler.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\temp\SmallGameProject\02-OpenGL\\glm" /I"C:\temp\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt enemy.cpp
+         enemy.cpp
+     1>cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\temp\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO LuaLib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\temp\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\temp\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\enemy.obj
          Debug\enemyHandler.obj
@@ -19,4 +20,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.00
+Time Elapsed 00:00:11.13

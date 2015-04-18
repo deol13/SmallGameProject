@@ -1,21 +1,20 @@
 #ifndef ENEMYHANDLER_H
 #define ENEMYHANDLER_H
 #include "enemy.h"
-#include "GObject.h"
+
 
 class enemyHandler
 {
 	private:
 		enemy* wave;
 		int wavesize;
-		Player* player;
 
 		GLuint shaderProgram;
 		GLint uniLocation;
 
 	public:	
 		enemyHandler();
-		enemyHandler(Player* player, GLuint shaderProgram);
+		enemyHandler(GLuint shaderProgram);
 		~enemyHandler();
 
 		int getWaveSize();
@@ -24,7 +23,7 @@ class enemyHandler
 		
 		void clearWave();
 
-		void makeMove();	//update
+		void makeMove(float playerX, float playerZ);	//update
 
 		void setUniLoc(GLint uniLocation);
 		void setShaderPro(GLuint ShaderProgram);

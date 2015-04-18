@@ -1,7 +1,6 @@
 #ifndef ENEMY_H
 #define ENEMY_H
-
-#include "Player.h"
+#include "GObject.h"
 
 const int MELEE = 1;
 const int RANGED = 2;
