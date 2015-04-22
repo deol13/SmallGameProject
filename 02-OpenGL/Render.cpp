@@ -4,11 +4,11 @@
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
-glm::mat4 worldMatrixMap = glm::mat4(
-	1.0f, 0.0f, 0.0f, 0.0f,
-	0.0f, 1.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 1.0f, 0.0f,
-	0.0f, 0.0f, 0.0f, 1.0f);
+//glm::mat4 worldMatrixMap = glm::mat4(
+//	1.0f, 0.0f, 0.0f, 0.0f,
+//	0.0f, 1.0f, 0.0f, 0.0f,
+//	0.0f, 0.0f, 1.0f, 0.0f,
+//	0.0f, 0.0f, 0.0f, 1.0f);
 
 Render::Render()
 {
@@ -16,25 +16,20 @@ Render::Render()
 }
 Render::Render(int GASIZE)
 {
-	viewMatrix = glm::lookAt( glm::vec3( -20, 20.0f, -20 ), glm::vec3( 0, 0, 0 ), glm::vec3( 0, 1, 0 ) ); //Test
-	//viewMatrix = glm::lookAt(glm::vec3(GASIZE / 2, 200.0f, 30), glm::vec3(GASIZE / 2, 0, GASIZE / 2), glm::vec3(0, 1, 0));
+	//viewMatrix = glm::lookAt( glm::vec3( -20, 20.0f, -20 ), glm::vec3( 0, 0, 0 ), glm::vec3( 0, 1, 0 ) ); //Test
+	viewMatrix = glm::lookAt(glm::vec3(GASIZE / 2, 200.0f, 30), glm::vec3(GASIZE / 2, 0, GASIZE / 2), glm::vec3(0, 1, 0));
 	//viewMatrix = glm::lookAt(glm::vec3(0, 0, -2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));  //Original
 	projMatrix = glm::perspective(70.0f, 640.f / 480.0f, 0.5f, 2000.0f);
 	gShaderGA = 0;
 }
 Render::~Render()
 {
-	delete ga;
+	delete gaShader;
 }
 
 void Render::init(int GASIZE)
 {
 	gaShader = new GAShader(&gShaderGA);
-	ga = new GameArea();
-
-	ga->loadImage();
-	ga->createGA(GASIZE);
-	ga->GABuffers();
 	loadTextures();
 
 	//hard coded test object
@@ -43,7 +38,8 @@ void Render::init(int GASIZE)
 
 void Render::loadTextures() 
 {
-	createTexture( "testvic.png" );
+	createTexture("GridImage.png");
+	createTexture("testvic.png");
 }
 
 void Render::createTexture( std::string fileName ) 
@@ -71,35 +67,35 @@ void Render::render(GuiManager* gui, std::vector<GObject*> renderObjects)
 	glUseProgram(gShaderGA);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ViewMatrix, 1, false, &viewMatrix[0][0]);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ProjectionMatrix, 1, false, &projMatrix[0][0]);
-	glProgramUniformMatrix4fv(gShaderGA, gaShader->worldMatrix, 1, false, &worldMatrixMap[0][0]);
+	//glProgramUniformMatrix4fv(gShaderGA, gaShader->worldMatrix, 1, false, &worldMatrixMap[0][0]);
 	
 
-	glBindVertexArray(ga->gGAAttribute);
-	glBindBuffer(GL_ARRAY_BUFFER, ga->gGABuffer);
+	/*glBindVertexArray(ga->gGAAttribute);
+	glBindBuffer(GL_ARRAY_BUFFER, ga->gGABuffer);*/
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	//Draw Map
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, ga->imageTex);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
 	//Draw GUI
 	gui->render();
 
 	//Draw Player
+	GLuint currentTexture = renderObjects[0]->getTexture();
 	glBindTexture(GL_TEXTURE_2D, renderObjects[0]->getTexture());
-	renderObjects[0]->render(gaShader->worldMatrix, *gaShader->gShaderProgram);
+
+	for( int i = 0; i < (int)renderObjects.size(); i++ ) {
+		if( currentTexture != renderObjects[i]->getTexture() ) {
+			glBindTexture(GL_TEXTURE_2D, renderObjects[i]->getTexture());
+			 currentTexture = renderObjects[i]->getTexture();
+		}
+		renderObjects[i]->render(gaShader->worldMatrix, *gaShader->gShaderProgram);
+	}
 
 
 	GLenum error = glGetError();
 	if (error != GL_NO_ERROR)
 		printf("Error");
 }
-
-//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ga->gIndexBuffer);
-//glDrawElements(GL_TRIANGLE_STRIP, ga->getIBOCount(), GL_UNSIGNED_INT, 0);
-//ga->createIBO();
 
 GLuint Render::getTexture(int index) const
 {

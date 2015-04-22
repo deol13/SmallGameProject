@@ -1,12 +1,12 @@
-#ifndef ENEMYHANDLER_H
-#define ENEMYHANDLER_H
-#include "enemy.h"
+#ifndef EnemyHANDLER_H
+#define EnemyHANDLER_H
+#include "Enemy.h"
 
 
-class enemyHandler
+class EnemyHandler
 {
 	private:
-		enemy* wave;
+		Enemy* wave;
 		int wavesize;
 
 
@@ -14,9 +14,9 @@ class enemyHandler
 		GLint uniLocation;
 
 	public:	
-		enemyHandler();
-		enemyHandler(GLuint shaderProgram);
-		~enemyHandler();
+		EnemyHandler();
+		EnemyHandler(GLuint shaderProgram);
+		~EnemyHandler();
 
 		int getWaveSize();
 

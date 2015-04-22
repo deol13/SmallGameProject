@@ -1,29 +1,29 @@
-#include "enemyHandler.h"
+#include "EnemyHandler.h"
 
-enemyHandler::enemyHandler()
+EnemyHandler::EnemyHandler()
 {
 	this->wavesize = 0;
-	this->wave = new enemy[10];
+	this->wave = new Enemy[10];
 
 }
 
-enemyHandler::enemyHandler(GLuint shaderProgram)
+EnemyHandler::EnemyHandler(GLuint shaderProgram)
 {
 	this->shaderProgram = shaderProgram;
 	this->wave = nullptr;
 }
 
-enemyHandler::~enemyHandler()
+EnemyHandler::~EnemyHandler()
 {
 	delete wave;
 }
 
-int enemyHandler::getWaveSize()
+int EnemyHandler::getWaveSize()
 {
 	return wavesize;
 }
 
-void enemyHandler::createWave(int melee, GObject* meleeObj, int ranged, GObject* rangedObj, int tank, GObject* tankObj)
+void EnemyHandler::createWave(int melee, GObject* meleeObj, int ranged, GObject* rangedObj, int tank, GObject* tankObj)
 {
 	if (wave != nullptr)
 	{
@@ -31,7 +31,7 @@ void enemyHandler::createWave(int melee, GObject* meleeObj, int ranged, GObject*
 	}
 
 	wavesize = melee + ranged + tank;
-	wave = new enemy[wavesize];
+	wave = new Enemy[wavesize];
 
 	int nrOfEnemies = 0;
 
@@ -61,12 +61,12 @@ void enemyHandler::createWave(int melee, GObject* meleeObj, int ranged, GObject*
 	}
 }
 
-void enemyHandler::clearWave()
+void EnemyHandler::clearWave()
 {
 	delete wave;
 }
 
-void enemyHandler::makeMove( float playerX, float playerZ)	//spelarens objekt eller plats
+void EnemyHandler::makeMove( float playerX, float playerZ)	//spelarens objekt eller plats
 {
 	for (int i = 0; i < wavesize; i++)
 	{
@@ -77,12 +77,12 @@ void enemyHandler::makeMove( float playerX, float playerZ)	//spelarens objekt el
 
 
 //TMP
-void enemyHandler::setUniLoc(GLint uniLocation)
+void EnemyHandler::setUniLoc(GLint uniLocation)
 {
 	this->uniLocation = uniLocation;
 }
 
-void enemyHandler::setShaderPro(GLuint ShaderProgram)
+void EnemyHandler::setShaderPro(GLuint ShaderProgram)
 {
 	this->shaderProgram = shaderProgram;
 }

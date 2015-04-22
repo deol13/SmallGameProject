@@ -42,7 +42,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>\\storage10.student.bth.se\students\20132\deol13\Visual Studio 2013\Projects\Exempelkoder\02-OpenGL\glm;glew-1.11.0/Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>glm;glew-1.11.0/Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>glew-1.11.0/lib/Release/win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -85,21 +85,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="enemy.cpp" />
-    <ClCompile Include="enemyHandler.cpp" />
-    <ClCompile Include="GameArea.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GAShader.cpp" />
     <ClCompile Include="GObject.cpp" />
     <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="stb_image.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="enemy.h" />
-    <ClInclude Include="enemyHandler.h" />
-    <ClInclude Include="GameArea.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="GAShader.h" />
     <ClInclude Include="GObject.h" />
     <ClInclude Include="GuiManager.h" />
@@ -108,6 +107,8 @@
     <ClInclude Include="lua.hpp" />
     <ClInclude Include="luaconf.h" />
     <ClInclude Include="lualib.h" />
+    <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="MenuState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="stb_image.h" />

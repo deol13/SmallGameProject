@@ -2,21 +2,18 @@
 // BTH - Stefan Petersson 2014.
 //--------------------------------------------------------------------------------------
 #include <windows.h>
-#include <vector>
 #include <fstream>
-#include <string>
 #include <ctime>
 #include <gl/glew.h>
 #include <gl/GL.h>
 #include "Render.h"
 #include "lua.hpp"
 #include "GuiManager.h"
-
-#include <ctime>
 #include <cstdio>
 #include <sstream>
-#include "Player.h"
-#include "enemyHandler.h"
+//#include "Player.h"
+//#include "EnemyHandler.h"
+#include "GameState.h"
 
 
 #define GLM_FORCE_RADIANS
@@ -27,9 +24,9 @@
 #pragma comment(lib, "glew32.lib")
 
 
-HWND InitWindow(HINSTANCE hInstance);
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-HGLRC CreateOpenGLContext(HWND wndHandle);
+HWND InitWindow( HINSTANCE hInstance );
+LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
+HGLRC CreateOpenGLContext( HWND wndHandle );
 
 GLuint gVertexBuffer = 0;
 GLuint gVertexAttribute = 0;
@@ -39,140 +36,152 @@ GLuint bth_tex = 0;
 Render* render;
 GuiManager* mGUI;
 Player* player;
-enemyHandler* eHandler;
+EnemyHandler* eHandler;
 
-int GASIZE = 256;
+const int GASIZE = 256;
+
+const double FPSLOCK = 60.0;
 int FPScount = 0;
 clock_t start = clock();
+clock_t currentFrame;
 
-void keySwitchFunc(const char c);
-void keySwitchFuncFalse(const char c);
+void keySwitchFunc( const char c );
+void keySwitchFuncFalse( const char c );
 
-void SetViewport()
-{
-	glViewport(0, 0, 640, 480);
-	
+enum State { GAMESTATE, MENUSTATE, SHOPSTATE };
+
+void SetViewport() {
+	glViewport( 0, 0, 640, 480 );
+
 }
 
-int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
-{	
+int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow ) {
 	MSG msg = { 0 };
-	HWND wndHandle = InitWindow(hInstance); //1. Skapa fönster
-	
-	if (wndHandle)
-	{
-		HDC hDC = GetDC(wndHandle);
-		HGLRC hRC = CreateOpenGLContext(wndHandle); //2. Skapa och koppla OpenGL context
+	HWND wndHandle = InitWindow( hInstance ); //1. Skapa fönster
+	if( wndHandle ) {
+		HDC hDC = GetDC( wndHandle );
+		HGLRC hRC = CreateOpenGLContext( wndHandle ); //2. Skapa och koppla OpenGL context
 
 		glewInit(); //3. Initiera The OpenGL Extension Wrangler Library (GLEW)
 
 		//glEnable(GL_CULL_FACE);
-		glEnable(GL_DEPTH_TEST);
-		glDepthMask(GL_TRUE);
-		glDepthFunc(GL_LEQUAL);
+		glEnable( GL_DEPTH_TEST );
+		glDepthMask( GL_TRUE );
+		glDepthFunc( GL_LEQUAL );
 
 		SetViewport(); //4. Sätt viewport
 
-		//Init main's objects
-		render = new Render(GASIZE);
-		render->init(GASIZE);
-		mGUI = new GuiManager();
-		player = new Player(render->getTexture(0), 0, 0);
-		
+		State playState = GAMESTATE;
+		GameState* gameState = new GameState();
+
+		////Init main's objects
+		//render = new Render(GASIZE);
+		//render->init(GASIZE);
+		//mGUI = new GuiManager();
+		//player = new Player(render->getTexture(0), 0, 0);
+		//
 
 
-		//----------------------------------------------------------- TMP
-		GObject* meleeE = new GObject("enamie.obj", GL_QUADS, render->getTexture(0));
-		eHandler = new enemyHandler(render->getGAShader());
-		eHandler->setUniLoc(render->getWorldMatixLoc());
-		eHandler->createWave(1, meleeE, 0, meleeE, 0, meleeE);
-		//-----------------------------------------------------------
+		////----------------------------------------------------------- TMP
+		//GObject* meleeE = new GObject("enamie.obj", GL_QUADS, render->getTexture(0));
+		//eHandler = new EnemyHandler(render->getGAShader());
+		//eHandler->setUniLoc(render->getWorldMatixLoc());
+		//eHandler->createWave(1, meleeE, 0, meleeE, 0, meleeE);
+		////-----------------------------------------------------------
 
-		std::vector<GObject*> renderObjects;
-		renderObjects.push_back(player->getGObject());
+		//std::vector<GObject*> renderObjects;
+		//renderObjects.push_back(player->getGObject());
 
-		ShowWindow(wndHandle, nCmdShow);
+		ShowWindow( wndHandle, nCmdShow );
 
 		start = std::clock();
 
-		while (WM_QUIT != msg.message)
-		{
-			if ( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) {
-				
-				switch ( msg.message ) {
-				case MK_LBUTTON:
+		while( WM_QUIT != msg.message ) {
+			currentFrame = std::clock();
+			switch( playState ) {
+			case MENUSTATE:
+				if (msg.message == MK_LBUTTON)
 				{
 					POINT newMpos;
 					GetCursorPos(&newMpos);
 					mGUI->mouseClick(newMpos.x, newMpos.y);
-					break;
 				}
-				case WM_KEYDOWN:
-				{
-					WPARAM param = msg.wParam;
-					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
+				break;
+			case GAMESTATE:
+				if( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) {
 
-					keySwitchFunc(c);
-					break;
+					switch( msg.message ) {
+					case MK_LBUTTON:
+					{
+						POINT newMpos;
+						GetCursorPos( &newMpos );
+						break;
+					}
+					case WM_KEYDOWN:
+					{
+						WPARAM param = msg.wParam;
+						char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
+						gameState->keyDown( c );
+						break;
+					}
+
+					case WM_KEYUP:
+					{
+						WPARAM param = msg.wParam;
+						char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
+						gameState->keyUp( c );
+						break;
+					}
+					}
+					TranslateMessage( &msg );
+					DispatchMessage( &msg );
 				}
+				gameState->update();
+				break;
+			default:
 
-				case WM_KEYUP:
-				{
-					WPARAM param = msg.wParam;
-					char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-
-					keySwitchFuncFalse(c);
-					break;
-				}
-				}
-
-				TranslateMessage( &msg );
-				DispatchMessage( &msg );
-			} else {
-				player->update();
-				render->render(mGUI, renderObjects);
-				eHandler->makeMove( player->getX(), player->getZ());
-				
-			
-
-				SwapBuffers( hDC ); //10. Växla front- och back-buffer
-
-				FPScount++;
-
-				if ( ( std::clock() - start ) / ( double )CLOCKS_PER_SEC > 1 ) {
-					start = std::clock();
-					std::string s = std::to_string( FPScount );
-					FPScount = 0;
-					std::wstring stemp = std::wstring( s.begin(), s.end() );
-					LPCWSTR sw = stemp.c_str();
-					SetWindowText( wndHandle, sw );
-				}
+				break;
 			}
+
+			//player->update();
+			//render->render(mGUI, renderObjects);
+			//eHandler->makeMove( player->getX(), player->getZ());
+
+			SwapBuffers( hDC ); //10. Växla front- och back-buffer
+			FPScount++;
+
+			if( ( std::clock() - start ) / ( double )CLOCKS_PER_SEC > 1 ) {
+				start = std::clock();
+				std::string s = std::to_string( FPScount );
+				FPScount = 0;
+				std::wstring stemp = std::wstring( s.begin(), s.end() );
+				LPCWSTR sw = stemp.c_str();
+				SetWindowText( wndHandle, sw );
+			}
+			while( std::clock() - currentFrame < CLOCKS_PER_SEC / FPSLOCK ) {}			//comment out for unlimited frames
 		}
 
-		wglMakeCurrent(NULL, NULL);
-		ReleaseDC(wndHandle, hDC);
-		wglDeleteContext(hRC);
-		DestroyWindow(wndHandle);
+		wglMakeCurrent( NULL, NULL );
+		ReleaseDC( wndHandle, hDC );
+		wglDeleteContext( hRC );
+		DestroyWindow( wndHandle );
 	}
-
-	return (int) msg.wParam;
+	return ( int )msg.wParam;
 }
 
-HWND InitWindow(HINSTANCE hInstance)
-{
+HWND InitWindow( HINSTANCE hInstance ) {
 	WNDCLASSEX wcex = { 0 };
-	wcex.cbSize = sizeof(WNDCLASSEX); 
-	wcex.style          = CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc    = WndProc;
-	wcex.hInstance      = hInstance;
+	wcex.cbSize = sizeof( WNDCLASSEX );
+	wcex.style = CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc = WndProc;
+	wcex.hInstance = hInstance;
 	wcex.lpszClassName = L"BTH_GL_DEMO";
-	if( !RegisterClassEx(&wcex) )
+	if( !RegisterClassEx( &wcex ) )
 		return false;
 
 	RECT rc = { 0, 0, 640, 480 };
 	AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE );
-	
+
 	HWND handle = CreateWindow(
 		L"BTH_GL_DEMO",
 		L"BTH OpenGL Demo",
@@ -184,33 +193,30 @@ HWND InitWindow(HINSTANCE hInstance)
 		nullptr,
 		nullptr,
 		hInstance,
-		nullptr);
+		nullptr );
 
 	return handle;
 }
 
-LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
-{
-	switch (message) 
-	{
+LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam ) {
+	switch( message ) {
 	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;		
+		PostQuitMessage( 0 );
+		break;
 	}
 
-	return DefWindowProc(hWnd, message, wParam, lParam);
+	return DefWindowProc( hWnd, message, wParam, lParam );
 }
 
-HGLRC CreateOpenGLContext(HWND wndHandle)
-{
+HGLRC CreateOpenGLContext( HWND wndHandle ) {
 	//get handle to a device context (DC) for the client area
 	//of a specified window or for the entire screen
-	HDC hDC = GetDC(wndHandle);
+	HDC hDC = GetDC( wndHandle );
 
 	//details: http://msdn.microsoft.com/en-us/library/windows/desktop/dd318286(v=vs.85).aspx
 	static  PIXELFORMATDESCRIPTOR pixelFormatDesc =
 	{
-		sizeof(PIXELFORMATDESCRIPTOR),    // size of this pfd  
+		sizeof( PIXELFORMATDESCRIPTOR ),    // size of this pfd  
 		1,                                // version number  
 		PFD_DRAW_TO_WINDOW |              // support window  
 		PFD_SUPPORT_OPENGL |              // support OpenGL  
@@ -233,62 +239,52 @@ HGLRC CreateOpenGLContext(HWND wndHandle)
 
 	//attempt to match an appropriate pixel format supported by a
 	//device context to a given pixel format specification.
-	int pixelFormat = ChoosePixelFormat(hDC, &pixelFormatDesc);
+	int pixelFormat = ChoosePixelFormat( hDC, &pixelFormatDesc );
 
 	//set the pixel format of the specified device context
 	//to the format specified by the iPixelFormat index.
-	SetPixelFormat(hDC, pixelFormat, &pixelFormatDesc);
+	SetPixelFormat( hDC, pixelFormat, &pixelFormatDesc );
 
 	//create a new OpenGL rendering context, which is suitable for drawing
 	//on the device referenced by hdc. The rendering context has the same
 	//pixel format as the device context.
-	HGLRC hRC = wglCreateContext(hDC);
-	
+	HGLRC hRC = wglCreateContext( hDC );
+
 	//makes a specified OpenGL rendering context the calling thread's current
 	//rendering context. All subsequent OpenGL calls made by the thread are
 	//drawn on the device identified by hdc. 
-	wglMakeCurrent(hDC, hRC);
+	wglMakeCurrent( hDC, hRC );
 
 	return hRC;
 }
 
 
-void keySwitchFunc(const char c)
-{
-	if ( c == 'w' || c == 'W' )
-	{
-		player->setMovement(player->UP, true);
+void keySwitchFunc( const char c ) {
+	if( c == 'w' || c == 'W' ) {
+		player->setMovement( player->UP, true );
 	}
-	if ( c == 's' || c == 'S' )
-	{
-		player->setMovement(player->DOWN, true);
+	if( c == 's' || c == 'S' ) {
+		player->setMovement( player->DOWN, true );
 	}
-	if ( c == 'a' || c == 'A' )
-	{
-		player->setMovement(player->LEFT, true);
+	if( c == 'a' || c == 'A' ) {
+		player->setMovement( player->LEFT, true );
 	}
-	if ( c == 'd' || c == 'D' )
-	{
-		player->setMovement(player->RIGHT, true);
+	if( c == 'd' || c == 'D' ) {
+		player->setMovement( player->RIGHT, true );
 	}
 }
 
-void keySwitchFuncFalse(const char c)
-{
-	if (c == 'w' || c == 'W')
-	{
-		player->setMovement(player->UP, false);
+void keySwitchFuncFalse( const char c ) {
+	if( c == 'w' || c == 'W' ) {
+		player->setMovement( player->UP, false );
 	}
-	if (c == 's' || c == 'S')
-	{
-		player->setMovement(player->DOWN, false);
+	if( c == 's' || c == 'S' ) {
+		player->setMovement( player->DOWN, false );
 	}
-	if (c == 'a' || c == 'A')
-	{
-		player->setMovement(player->LEFT, false);
+	if( c == 'a' || c == 'A' ) {
+		player->setMovement( player->LEFT, false );
 	}
-	if (c == 'd' || c == 'D')
-	{
-		player->setMovement(player->RIGHT, false);
+	if( c == 'd' || c == 'D' ) {
+		player->setMovement( player->RIGHT, false );
 	}
 }

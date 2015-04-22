@@ -57,7 +57,6 @@ Temporary Items
 *.ilk
 *.tlog
 *.lastbuildstate
-*.obj
 *.opensdf
 *.sdf
 *.vcxproj

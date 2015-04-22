@@ -1,6 +1,5 @@
 #include "Player.h"
 
-
 Player::Player()
 {
 	loadObj = new GObject();
@@ -14,7 +13,7 @@ Player::Player()
 }
 Player::Player(GLuint texture, float x, float z)
 {
-	loadObj = new GObject("Victest.obj", GL_QUADS, texture);
+	loadObj = new GObject("victest.obj", GL_QUADS, texture);
 	this->x = x;
 	this->z = z;
 	moveSpeed = 0.9;
@@ -24,6 +23,12 @@ Player::Player(GLuint texture, float x, float z)
 		movement[i] = false;
 	}
 }
+
+Player::~Player()
+{
+	delete loadObj;
+}
+
 void Player::attack()
 {}
 
@@ -36,9 +41,7 @@ void Player::takeDamage(int dmg)
 {
 	health -= dmg;
 	if (health <= 0)
-	{
-
-	}
+	{}
 }
 
 GObject* Player::getGObject() const
@@ -70,11 +73,11 @@ void Player::update()
 	}
 }
 
-
 float Player::getX()
 {
 	return x;
 }
+
 float Player::getZ()
 {
 	return z;

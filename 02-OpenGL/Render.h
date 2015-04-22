@@ -3,7 +3,7 @@
 
 #include "Vertex.h"
 #include <vector>
-#include "GameArea.h"
+//#include "GameArea.h"
 #include "GAShader.h"
 #include <gl/glew.h>
 #include <gl/GL.h>
@@ -13,7 +13,7 @@
 #include "GObject.h"
 
 #include "GuiManager.h"
-#include "enemyHandler.h"
+#include "EnemyHandler.h"
 
 class Render
 {
@@ -39,7 +39,7 @@ class Render
 	private:
 		GAShader* gaShader;
 		GLuint gShaderGA = 0;
-		GameArea* ga;
+		//GameArea* ga;
 
 		GLint ViewMatrix;
 		GLint ProjectionMatrix;
@@ -50,7 +50,7 @@ class Render
 		GObject testObj;
 		std::vector<GLuint> textures;
 
-		enemyHandler* eHandler;
+		EnemyHandler* eHandler;
 
 };
 

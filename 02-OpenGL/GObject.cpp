@@ -8,7 +8,7 @@ GObject::GObject()
 	gTexture = 0;
 	gBuffer = 0;
 	gAttribute = 0;
-	nrOfVertices = 0;
+//	nrOfVertices = 0;
 	drawMode = 0;
 
 	scaleMatrix = glm::mat4(
@@ -32,7 +32,7 @@ GObject::GObject(std::vector<Vertex> vertices, int drawMode, GLuint gTexture)
 	this->vertices = vertices;
 	this->drawMode = drawMode;
 	this->gTexture = gTexture;
-	nrOfVertices = 0;
+//	nrOfVertices = vertices.size();
 	gBuffer = 0;
 
 	scaleMatrix = glm::mat4(
@@ -50,6 +50,8 @@ GObject::GObject(std::vector<Vertex> vertices, int drawMode, GLuint gTexture)
 		0.0f, 1.0f, 0.0f, 0.0f,
 		0.0f, 0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f);
+
+	init();
 }
 GObject::GObject(std::string fileName, int drawMode, GLuint gTexture) {
 	this->drawMode = drawMode;
@@ -120,7 +122,7 @@ void GObject::loadObjectFile(std::string fileName)
 		return;
 	}
 
-	nrOfVertices = 0;
+	//nrOfVertices = 0;
 	std::vector<glm::vec3> positions;
 	std::vector<glm::vec2> texCoords;
 	//std::vector<glm::vec3> normals;
@@ -167,7 +169,7 @@ void GObject::loadObjectFile(std::string fileName)
 				//normal = normals[ std::stoi( indices[ 2 ] ) - 1 ];
 				//indices[ 2 ].clear();
 				vertices.push_back( { pos.x, pos.y, pos.z, coord.s, coord.t } );
-				nrOfVertices++;
+			//	nrOfVertices++;
 				j++;
 			}
 		}
@@ -181,7 +183,7 @@ void GObject::bindBuffers()
 {
 	glGenBuffers(1, &gBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, gBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*(nrOfVertices), &vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*(vertices.size()), &vertices[0], GL_STATIC_DRAW);
 
 	glGenVertexArrays(1, &gAttribute);
 	glBindVertexArray(gAttribute);
@@ -199,7 +201,7 @@ void GObject::render(GLint uniLocation, GLuint shaderProgram)
 	glProgramUniformMatrix4fv(shaderProgram, uniLocation, 1, false, &worldMatrix[0][0]);
 
 	glBindVertexArray(gAttribute);
-	glDrawArrays(drawMode, 0, nrOfVertices);
+	glDrawArrays(drawMode, 0, vertices.size());
 }
 
 void GObject::init()

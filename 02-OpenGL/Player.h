@@ -17,6 +17,7 @@ public:
 	enum Direction { UP, DOWN, LEFT, RIGHT };
 	Player();
 	Player(GLuint texture, float x, float y);
+	~Player();
 	void attack();
 	void setMovement(int dir, bool isMoving);
 	void takeDamage(int dmg);

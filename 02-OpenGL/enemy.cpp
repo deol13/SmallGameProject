@@ -1,18 +1,31 @@
-#include "enemy.h"
+#include "Enemy.h"
 
-enemy::enemy()
+Enemy::Enemy()
 {
+	loadObj = new GObject();
 	health = 20;
 	type = MELEE;
 	moveSpeed = 0.8f;
-	posX = 100.0f;
-	posZ = 100.0f;
+	this->x = 100.0f;
+	this->z = 100.0f;
 }
 
-enemy::~enemy()
-{}
+Enemy::Enemy(int type, float x, float z)
+{
+	loadObj = new GObject();
+	health = 20;
+	this->type = MELEE;
+	moveSpeed = 0.8f;
+	this->x = 100.0f;
+	this->z = 100.0f;
+}
 
-void enemy::setEnemy(int type)
+Enemy::~Enemy()
+{
+	delete loadObj;
+}
+
+void Enemy::setEnemy(int type)
 {
 	if (type == MELEE)
 	{
@@ -32,18 +45,18 @@ void enemy::setEnemy(int type)
 
 }
 
-void enemy::act(float playerX, float playerZ) //spelarens objekt eller plats
+void Enemy::act(float playerX, float playerZ) //spelarens objekt eller plats
 {
 	if (type == MELEE)
 	{
 		
-		float moveX = playerX - posX;
-		float moveZ = playerZ - posZ;
+		float moveX = playerX - x;
+		float moveZ = playerZ - z;
 
 		if (abs(moveX) + abs(moveZ) > 0.0000001f)
 		{
-			posX += moveSpeed* moveX / abs(moveX + moveZ);
-			posZ += moveSpeed* moveZ / abs(moveX + moveZ);
+			x += moveSpeed* moveX / abs(moveX + moveZ);
+			z += moveSpeed* moveZ / abs(moveX + moveZ);
 			loadObj->translate(moveSpeed* moveX / abs(moveX + moveZ), 0, moveSpeed* moveZ / abs(moveX + moveZ));
 
 		}
