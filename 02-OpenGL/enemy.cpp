@@ -10,14 +10,24 @@ Enemy::Enemy()
 	this->z = 100.0f;
 }
 
-Enemy::Enemy(int type, float x, float z)
+Enemy::Enemy(int type, float x, float z, GLuint texture)
 {
-	loadObj = new GObject();
-	health = 20;
-	this->type = MELEE;
-	moveSpeed = 0.8f;
-	this->x = 100.0f;
-	this->z = 100.0f;
+	this->x = x;
+	this->z = z;
+	loadObj = nullptr;
+
+	switch ( type )
+	{
+	case MELEE:
+		loadObj = new GObject( "enamie.obj", GL_TRIANGLES, texture );
+		health = 20;
+		this->type = MELEE;
+		moveSpeed = 0.8f;	
+		break;
+	default:
+		break;
+	}
+	loadObj->translate(x, 17, z);
 }
 
 Enemy::~Enemy()
@@ -73,4 +83,14 @@ void Enemy::act(float playerX, float playerZ) //spelarens objekt eller plats
 	{
 
 	}
+}
+
+GObject* Enemy::getGObject() const 
+{
+	return loadObj;
+}
+
+BoundingRect Enemy::getBounds() const 
+{
+	return collisionRect;
 }

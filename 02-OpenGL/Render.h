@@ -15,6 +15,10 @@
 #include "GuiManager.h"
 #include "EnemyHandler.h"
 
+#include "LightShader.h"
+#include "gbuffer.h"
+#include "BlitQuad.h"
+
 class Render
 {
 	public:
@@ -22,8 +26,10 @@ class Render
 		Render(int GASIZE);
 		~Render();
 
+		void GeometryPassInit();
 		void render(GuiManager* gui, std::vector<GObject*> renderObjects);
-		void init(int GASIZE);
+		void lightPass();
+		void init(int GASIZE, unsigned int width, unsigned int height);
 
 		GLuint gGABuffer = 0;
 		GLuint gGAAttribute = 0;
@@ -39,7 +45,19 @@ class Render
 	private:
 		GAShader* gaShader;
 		GLuint gShaderGA = 0;
+
+		//Light Pass
+		LightShader* lShaderObj;
+		GLuint lShader = 0;
+
 		//GameArea* ga;
+
+		int nrSpotLights = 1;
+		SpotLight* spotLights;
+
+		//Deferred
+		GBuffer* gBuffer;
+		BlitQuad* blitQuads;
 
 		GLint ViewMatrix;
 		GLint ProjectionMatrix;

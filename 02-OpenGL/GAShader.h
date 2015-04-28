@@ -20,6 +20,7 @@ class GAShader
 		GLint ProjectionMatrix;
 		GLint worldMatrix;
 		GLint attackColor;
+		GLint mapSampler;
 
 	private:
 		void CompileErrorPrint(GLuint* shader);

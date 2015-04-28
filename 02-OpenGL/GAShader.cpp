@@ -11,10 +11,10 @@ GAShader::GAShader(GLuint* gShaderP)
 	ProjectionMatrix = glGetUniformLocation(*gShaderProgram, "ProjectionMatrix");
 	worldMatrix = glGetUniformLocation(*gShaderProgram, "WorldMatrix");
 	attackColor = glGetUniformLocation(*gShaderProgram, "attackColor");
+	//mapSampler = glGetUniformLocation(*gShaderProgram, "heightMapSampler");
 }
 GAShader::~GAShader()
 {
-	delete gShaderProgram;
 }
 
 
@@ -25,14 +25,13 @@ bool GAShader::compile()
 		layout(location = 0) in vec3 GAPosition;
 		layout(location = 1) in vec2 GATex;
 
-		uniform mat4 ViewMatrix;
 		uniform mat4 WorldMatrix;
 
 		out vec2 texCoords;
 
 		void main () 
 		{
-			gl_Position = ViewMatrix * WorldMatrix * vec4(GAPosition, 1.0f);
+			gl_Position = WorldMatrix * vec4(GAPosition, 1.0f);
 			texCoords = GATex;
 		}
 
@@ -47,15 +46,23 @@ bool GAShader::compile()
 		in vec2 texCoords[];
 
 		uniform mat4 ProjectionMatrix;
+		uniform mat4 ViewMatrix;
 		
 		out vec2 texCoordsGeo;
+		out vec3 modelViewPos;
+		out vec3 normalWorld;
 
 		void main ()
 		{
+			vec3 v1 = gl_in[1].gl_Position.xyz - gl_in[0].gl_Position.xyz;
+			vec3 v2 = gl_in[2].gl_Position.xyz - gl_in[0].gl_Position.xyz;
+
 			for ( int i = 0; i < gl_in.length(); i++ )
 			{
-				gl_Position = ProjectionMatrix * gl_in[i].gl_Position;
+				modelViewPos = gl_in[i].gl_Position.xyz;
+				gl_Position = ProjectionMatrix * ViewMatrix * gl_in[i].gl_Position;
 				texCoordsGeo = texCoords[i];
+				normalWorld = normalize(cross(v1, v2));
 				EmitVertex();
 			}
 			EndPrimitive();
@@ -65,15 +72,23 @@ bool GAShader::compile()
 	const char* fragment_shader = R"(
 		#version 430
 		in vec2 texCoordsGeo;
+		in vec3 modelViewPos;
+		in vec3 normalWorld;
 
 		uniform sampler2D heightMapSampler;
 		uniform int attackColor;
 
-		out vec4 fragColor;
+		layout (location = 0) out vec3 WorldPosOut;   
+		layout (location = 1) out vec3 DiffuseOut;     
+		layout (location = 2) out vec3 NormalOut;     
+		layout (location = 3) out vec3 TexCoordOut;
 
 		void main () 
 		{
-			fragColor = texture(heightMapSampler, vec2(texCoordsGeo));
+			WorldPosOut = modelViewPos;
+			DiffuseOut = texture(heightMapSampler, texCoordsGeo).xyz;
+			NormalOut = normalWorld;
+			TexCoordOut = vec3(mod(texCoordsGeo.x, 1.0f), mod(texCoordsGeo.y, 1.0f), 0.0f);	
 		}
 	)";
 
@@ -103,11 +118,10 @@ bool GAShader::compile()
 	LinkErrorPrint(gShaderProgram);
 
 	GLenum error = glGetError();
-	if (error != GL_NO_ERROR)
+	if(error != GL_NO_ERROR)
 		printf("Error");
 	return true;
 }
-
 
 void GAShader::LinkErrorPrint(GLuint* gShaderProgram)
 {

@@ -21,6 +21,8 @@ struct Vertex
 		v = tv;
 	}
 
+	~Vertex(){}
+
 	glm::vec3 getXYZ()
 	{
 		return glm::vec3(x, y, z);

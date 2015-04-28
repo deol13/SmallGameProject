@@ -19,15 +19,18 @@
     <Filter Include="Header Files\stb_image">
       <UniqueIdentifier>{4105f8ac-f3e4-482e-9cd8-ae002da5e96d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\structs">
+      <UniqueIdentifier>{2ca9b144-fdb6-4e7e-997e-85ac866215e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{472b441b-05d3-42f4-aae8-0ad2b302e467}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Render.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GAShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GObject.cpp">
@@ -51,15 +54,21 @@
     <ClCompile Include="MenuState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GAShader.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="BlitQuad.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="gbuffer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="LightShader.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GAShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -99,11 +108,47 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MenuButton.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header Files\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingRect.h">
+      <Filter>Header Files\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="BlitQuad.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GAShader.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="gbuffer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="LightShader.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
+      <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="LuaButton.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="EnemyReader.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="EnemyWaves.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="AltWave.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ArenaReader.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Arena.dat">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -24,16 +24,54 @@ Render::Render(int GASIZE)
 }
 Render::~Render()
 {
+	delete[] blitQuads;
+
+	delete[] spotLights;
+	delete gBuffer;
+
 	delete gaShader;
+	delete lShaderObj;
+
+	glDeleteShader(gShaderGA);
+	glDeleteShader(lShader);
 }
 
-void Render::init(int GASIZE)
+void Render::init(int GASIZE, unsigned int width, unsigned int height)
 {
 	gaShader = new GAShader(&gShaderGA);
 	loadTextures();
 
-	//hard coded test object
-	//testObj = GObject( "victest.obj", GL_QUADS, textures[ 0 ] );
+	nrSpotLights = 2;
+	lShaderObj = new LightShader(&lShader);
+	spotLights = new SpotLight[nrSpotLights];
+
+	//GBuffer
+	gBuffer = new GBuffer();
+	gBuffer->Init(width, height);
+
+	//Screen Quads
+	blitQuads = new BlitQuad[6];
+	blitQuads[0].Init(&lShader, vec2(-1, -1), vec2(-0.6, -0.6));
+	blitQuads[1].Init(&lShader, vec2(-0.6, -1), vec2(-0.2, -0.6));
+	blitQuads[2].Init(&lShader, vec2(-0.2, -1), vec2(0.2, -0.6));
+	blitQuads[3].Init(&lShader, vec2(0.2, -1), vec2(0.6, -0.6));
+	blitQuads[4].Init(&lShader, vec2(0.6, -1), vec2(1, -0.6));
+	blitQuads[5].Init(&lShader, vec2(-1, -1), vec2(1, 1));
+
+	//Light
+	spotLights[0].Color = vec3(1.0f, 1.0f, 1.0f);
+	spotLights[0].Position = vec3(-50, 300.0f, -50);
+	spotLights[0].Direction = normalize(vec3(128.0f, -80.0f, 128.0f) - vec3(-50, 300.0f, -50));
+	spotLights[0].DiffuseIntensity = 1.0f;
+	spotLights[0].AmbientIntensity = 0.0f;
+	spotLights[0].Cutoff = 0.40f;
+
+	spotLights[1].Color = vec3(1.0f, 1.0f, 1.0f);
+	spotLights[1].Position = vec3(-50, 300.0f, -50);
+	spotLights[1].Direction = normalize(vec3(128.0f, -80.0f, 128.0f) - vec3(-50, 300.0f, -50));
+	spotLights[1].DiffuseIntensity = 0.40f;
+	spotLights[1].AmbientIntensity = 0.10f;
+	spotLights[1].Cutoff = 0.01f;
 }
 
 void Render::loadTextures() 
@@ -60,19 +98,22 @@ void Render::createTexture( std::string fileName )
 	stbi_image_free( textureData );
 }
 
+void Render::GeometryPassInit() //Bind gBuffer for object and ground shader.
+{
+	glUseProgram(gShaderGA);
+	gBuffer->BindForWriting();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 void Render::render(GuiManager* gui, std::vector<GObject*> renderObjects)
 {
-	glClearColor(0.1, 0.1, 0.1, 1.0);
+	glClearColor(1.0, 1.0, 1.0, 1.0);
 
 	glUseProgram(gShaderGA);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ViewMatrix, 1, false, &viewMatrix[0][0]);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ProjectionMatrix, 1, false, &projMatrix[0][0]);
 	//glProgramUniformMatrix4fv(gShaderGA, gaShader->worldMatrix, 1, false, &worldMatrixMap[0][0]);
 	
-
-	/*glBindVertexArray(ga->gGAAttribute);
-	glBindBuffer(GL_ARRAY_BUFFER, ga->gGABuffer);*/
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	glActiveTexture(GL_TEXTURE0);
 
@@ -82,6 +123,7 @@ void Render::render(GuiManager* gui, std::vector<GObject*> renderObjects)
 	//Draw Player
 	GLuint currentTexture = renderObjects[0]->getTexture();
 	glBindTexture(GL_TEXTURE_2D, renderObjects[0]->getTexture());
+	glProgramUniform1i(gShaderGA, gaShader->mapSampler, currentTexture);
 
 	for( int i = 0; i < (int)renderObjects.size(); i++ ) {
 		if( currentTexture != renderObjects[i]->getTexture() ) {
@@ -93,7 +135,55 @@ void Render::render(GuiManager* gui, std::vector<GObject*> renderObjects)
 
 
 	GLenum error = glGetError();
-	if (error != GL_NO_ERROR)
+	if(error != GL_NO_ERROR)
+	{
+		printf("Error");
+	}
+}
+
+void Render::lightPass()
+{
+	glUseProgram(lShader);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	gBuffer->BindForReading();
+
+	glProgramUniform1i(lShader, lShaderObj->Position, 0);
+	glProgramUniform1i(lShader, lShaderObj->Diffuse, 1);
+	glProgramUniform1i(lShader, lShaderObj->Normal, 2);
+	glProgramUniform1i(lShader, lShaderObj->UVcord, 3);
+	glProgramUniform1i(lShader, lShaderObj->Depth, 4);
+
+	//Camera position.
+	glProgramUniform3fv(lShader, lShaderObj->eyepos, 1, &(glm::vec3(256 / 2, 200.0f, 30))[0]);
+	glProgramUniform1i(lShader, lShaderObj->NumSpotLights, nrSpotLights);
+
+	//Create and send in shadow maps view and project matrix 
+	mat4 cameraview = glm::lookAt(spotLights[0].Position, spotLights[0].Position + spotLights[0].Direction, vec3(0, 1, 0));
+	glProgramUniformMatrix4fv(lShader, lShaderObj->ProjectionMatrixSM, 1, false, &cameraview[0][0]); //
+	glProgramUniformMatrix4fv(lShader, lShaderObj->ViewMatrixSM, 1, false, &projMatrix[0][0]);
+
+	//Bind lights uniform buffer.
+	glBindBuffer(GL_UNIFORM_BUFFER, lShaderObj->lightBuffer);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(SpotLight) * nrSpotLights, spotLights, GL_DYNAMIC_DRAW);
+	glBindBufferBase(GL_UNIFORM_BUFFER, lShaderObj->bindingPoint, lShaderObj->lightBuffer);
+	//------
+
+	blitQuads[5].BindVertData();
+	glProgramUniform1i(lShader, lShaderObj->Use, 5);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	for(int n = 0; n < 5; n++)
+	{
+		blitQuads[n].BindVertData();
+		glProgramUniform1i(lShader, lShaderObj->Use, n);
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	}
+
+	GLenum error = glGetError();
+	if(error != GL_NO_ERROR)
 		printf("Error");
 }
 

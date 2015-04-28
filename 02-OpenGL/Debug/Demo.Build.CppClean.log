@@ -1,33 +1,23 @@
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\vc120.pdb
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\vc120.idb
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\gamearea.obj
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\gashader.obj
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\gobject.obj
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\guimanager.obj
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\main.obj
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\player.obj
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\render.obj
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\stb_image.obj
-c:\temp\smallgameproject\02-opengl\debug\vc120.pdb
-c:\temp\smallgameproject\02-opengl\debug\vc120.idb
-c:\temp\smallgameproject\02-opengl\debug\enemyhandler.obj
-c:\temp\smallgameproject\02-opengl\debug\gamearea.obj
-c:\temp\smallgameproject\02-opengl\debug\gashader.obj
-c:\temp\smallgameproject\02-opengl\debug\gobject.obj
-c:\temp\smallgameproject\02-opengl\debug\guimanager.obj
-c:\temp\smallgameproject\02-opengl\debug\main.obj
-c:\temp\smallgameproject\02-opengl\debug\player.obj
-c:\temp\smallgameproject\02-opengl\debug\render.obj
-c:\temp\smallgameproject\02-opengl\debug\enemy.obj
-c:\temp\smallgameproject\02-opengl\debug\stb_image.obj
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\demo.ilk
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\demo.exe
-j:\visual studio 2013\projects\smallgameproject\02-opengl\debug\demo.pdb
-c:\temp\smallgameproject\02-opengl\debug\demo.ilk
-c:\temp\smallgameproject\02-opengl\debug\demo.pdb
-c:\temp\smallgameproject\02-opengl\debug\demo.tlog\cl.command.1.tlog
-c:\temp\smallgameproject\02-opengl\debug\demo.tlog\cl.read.1.tlog
-c:\temp\smallgameproject\02-opengl\debug\demo.tlog\cl.write.1.tlog
-c:\temp\smallgameproject\02-opengl\debug\demo.tlog\link.command.1.tlog
-c:\temp\smallgameproject\02-opengl\debug\demo.tlog\link.read.1.tlog
-c:\temp\smallgameproject\02-opengl\debug\demo.tlog\link.write.1.tlog
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\vc120.pdb
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\vc120.idb
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\enemy.obj
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\gamestate.obj
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\gashader.obj
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\gobject.obj
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\guimanager.obj
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\main.obj
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\menustate.obj
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\player.obj
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\render.obj
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\stb_image.obj
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\demo.pdb
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\demo.tlog\cl.command.1.tlog
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\demo.tlog\cl.read.1.tlog
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\demo.tlog\cl.write.1.tlog
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\demo.tlog\link-cvtres.read.1.tlog
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\demo.tlog\link-cvtres.write.1.tlog
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\demo.tlog\link-rc.read.1.tlog
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\demo.tlog\link-rc.write.1.tlog
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\demo.tlog\link.command.1.tlog
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\demo.tlog\link.read.1.tlog
+c:\users\victor\dropbox\smallgameproject\02-opengl\debug\demo.tlog\link.write.1.tlog

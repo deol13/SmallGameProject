@@ -13,7 +13,7 @@ Player::Player()
 }
 Player::Player(GLuint texture, float x, float z)
 {
-	loadObj = new GObject("victest.obj", GL_QUADS, texture);
+	loadObj = new GObject("mainchar.obj", GL_TRIANGLES, texture);
 	this->x = x;
 	this->z = z;
 	moveSpeed = 0.9;
@@ -55,30 +55,49 @@ void Player::update()
 	{
 		z += moveSpeed;
 		loadObj->translate(0,0,moveSpeed);
+		collisionRect.move( 0, moveSpeed );
 	}
 	if (movement[1]) //DOWN
 	{
 		z -= moveSpeed;
 		loadObj->translate(0, 0, -moveSpeed);
+		collisionRect.move( 0, -moveSpeed );
 	}
 	if (movement[2]) //LEFT
 	{
 		x += moveSpeed;
 		loadObj->translate(moveSpeed, 0, 0);
+		collisionRect.move( moveSpeed, 0 );
 	}
 	if (movement[3]) //RIGHT
 	{
 		x -= moveSpeed;
 		loadObj->translate(-moveSpeed, 0, 0);
+		collisionRect.move( -moveSpeed, 0 );
 	}
 }
 
-float Player::getX()
+float Player::getX() const
 {
 	return x;
 }
 
-float Player::getZ()
+float Player::getZ() const
 {
 	return z;
+}
+
+float Player::getAngle() const 
+{
+	return angle;
+}
+
+BoundingRect Player::getBounds() const 
+{
+	return collisionRect;
+}
+
+float Player::getMoveSpeed() const
+{
+	return moveSpeed;
 }

@@ -43,6 +43,16 @@ void GuiManager::init(std::string filename)
 	}
 }
 
+void GuiManager::render()
+{
+	for ( int i = 0; i < nrOfbuttons; i++ )
+	{
+		glBindTexture( GL_TEXTURE_2D, guiButtons[ 0 ].texture );
+		glBindVertexArray( guiAttribute[ i ] );
+		glDrawArrays( GL_QUADS, 0, 4 );
+	}
+}
+
 void GuiManager::mouseClick(int x, int y)
 {
 	lua_getglobal(L, "luafunktion");

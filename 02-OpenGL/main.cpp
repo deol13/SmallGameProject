@@ -38,7 +38,7 @@ GuiManager* mGUI;
 Player* player;
 EnemyHandler* eHandler;
 
-const int GASIZE = 256;
+//const int GASIZE = 256;
 
 const double FPSLOCK = 60.0;
 int FPScount = 0;

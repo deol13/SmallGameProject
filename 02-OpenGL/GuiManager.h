@@ -21,12 +21,9 @@ class GuiManager
 		GuiManager();
 		~GuiManager();
 		void mouseClick(int x, int y);
-		
 		void render();
-
 		void clean();
 		void init(std::string filename);	
-
 		void createVertexBuffer();
 
 		GLuint getTexture(int index);

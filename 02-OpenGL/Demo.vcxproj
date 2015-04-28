@@ -85,11 +85,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BlitQuad.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GAShader.cpp" />
+    <ClCompile Include="gbuffer.cpp" />
     <ClCompile Include="GObject.cpp" />
     <ClCompile Include="GuiManager.cpp" />
+    <ClCompile Include="LightShader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -97,12 +100,15 @@
     <ClCompile Include="stb_image.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BlitQuad.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GAShader.h" />
+    <ClInclude Include="gbuffer.h" />
     <ClInclude Include="GObject.h" />
     <ClInclude Include="GuiManager.h" />
     <ClInclude Include="lauxlib.h" />
+    <ClInclude Include="LightShader.h" />
     <ClInclude Include="lua.h" />
     <ClInclude Include="lua.hpp" />
     <ClInclude Include="luaconf.h" />
@@ -110,11 +116,18 @@
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="BoundingRect.h" />
     <ClInclude Include="Render.h" />
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AltWave.dat" />
+    <None Include="Arena.dat" />
+    <None Include="ArenaReader.lua" />
+    <None Include="EnemyReader.lua" />
+    <None Include="EnemyWaves.dat" />
     <None Include="LuaButton.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

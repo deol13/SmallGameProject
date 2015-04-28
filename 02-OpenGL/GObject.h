@@ -8,6 +8,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <vector>
 
 class GObject
@@ -19,10 +20,13 @@ class GObject
 		//Buffers
 		GLuint gBuffer;
 		GLuint gAttribute;
+		GLuint IndexBufferId;
 
 		//Vertex
-		std::vector<Vertex> vertices;
+		std::vector<Vertex> vert;
 		int nrOfVertices;
+
+		std::vector<GLushort> indices;
 
 		//Matrix
 		glm::mat4 scaleMatrix = glm::mat4(
