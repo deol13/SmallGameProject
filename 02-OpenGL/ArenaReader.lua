@@ -26,11 +26,24 @@ function readFile()
 		for i = 1, c , 1
 		do
 			arenaArr[i] = io.read("*l")	
-			
+			if i % 5 == 2
+			then
+				arenaArr[i] = findTexture(arenaArr[i])
+			end
 		end
 	end		
 	
 	io.close(file)							-- closes the open file
 
 	return arenaArr, nrOfObjects
+end
+
+function findTexture(name)			-- Matches the texture names to their GLuint
+	if name == wall1.tex
+	then
+		return 1
+	end
+	else
+		return 1
+	end
 end

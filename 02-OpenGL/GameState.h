@@ -16,6 +16,8 @@ private:
 	//std::vector<Enemy> enemyWave;
 	Enemy** enemyWave;
 	int waveSize;
+	int nrOfArenaObjects;
+	int firstEnemyIndex;		//Start of enemies in renderObjects. Useful for enemy deaths etc.
 
 	
 	void loadArena(std::string fileName);

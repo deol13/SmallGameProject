@@ -16,6 +16,7 @@ Player::Player(GLuint texture, float x, float z)
 	loadObj = new GObject("mainchar.obj", GL_TRIANGLES, texture);
 	this->x = x;
 	this->z = z;
+	collisionRect = {x - 1, x + 1, z - 1, z + 1};			//Note: I've no idea if these are accurate.
 	moveSpeed = 0.9;
 	loadObj->translate(0,17,0);
 	for (int i = 0; i < 4; i++)
