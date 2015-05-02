@@ -38,11 +38,10 @@ void Player::setMovement(int dir, bool isMoving)
 	movement[dir] = isMoving;
 }
 
-void Player::takeDamage(int dmg)
+bool Player::takeDamage(const int dmg)
 {
 	health -= dmg;
-	if (health <= 0)
-	{}
+	return (health > 0);
 }
 
 GObject* Player::getGObject() const

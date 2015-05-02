@@ -79,6 +79,7 @@ GObject::GObject(std::string fileName, int drawMode, GLuint gTexture) {
 }
 GObject::~GObject()
 {
+	//delete[] vert;
 }
 
 void GObject::scale(float x, float y, float z) //set scale matrix
@@ -115,6 +116,8 @@ void GObject::translate(float x, float y, float z) //set translation matrix
 
 void GObject::loadObjectFile(std::string fileName)
 {
+	//vert = new std::vector<Vertex>[2];
+
 	std::string line;
 	std::ifstream myfile("Resource/" + fileName);
 	if(myfile.is_open())
@@ -214,7 +217,7 @@ void GObject::bindBuffers()
 {
 	glGenBuffers(1, &gBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, gBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vert[0])* indices.size(), &vert[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(currentVert[0]) * indices.size(), &currentVert[0], GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(IndexBufferId);
 
@@ -229,6 +232,8 @@ void GObject::bindBuffers()
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(0));
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), BUFFER_OFFSET(sizeof(float)* 3));
+
+
 }
 
 
@@ -241,11 +246,35 @@ void GObject::render(GLint uniLocation, GLuint shaderProgram)
 	glBindBuffer(GL_ARRAY_BUFFER, gBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferId);
 
+	//reset animation frame
+	if(animationState > 1.0f)
+	{
+		animationState = 0.0f;
+	}
+	//Change vertices. Needs optimization
+	for(int i = 0; i < currentVert.size(); i++)
+	{
+		currentVert[i].x = vert[i].x * (1 - animationState) + vert2[i].x * animationState;
+		currentVert[i].y = vert[i].y * (1 - animationState) + vert2[i].y * animationState;
+		currentVert[i].z = vert[i].z * (1 - animationState) + vert2[i].z * animationState;
+	}
+	animationState += 0.01;
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(currentVert[0])* indices.size(), &currentVert[0], GL_STATIC_DRAW);
+
 	glDrawElements(drawMode, nrOfVertices * 3, GL_UNSIGNED_SHORT, 0);
 }
 
 void GObject::init()
 {
+	animationState = 0.0f;
+	for(int i = 0; i < vert.size(); i++)
+	{
+		currentVert.push_back(vert[i]);
+		vert2.push_back(vert[i]);
+		vert2[i].x += 200;
+		vert2[i].z += 200;
+	}
 	bindBuffers();
 }
 
@@ -259,10 +288,10 @@ GLuint GObject::getTexture()
 }
 void GObject::setVertices(std::vector<Vertex> vertices)
 {
-	this->vert = vertices;
+	currentVert = vertices;
 }
 std::vector<Vertex> GObject::getVertices()
 {
-	return vert;
+	return currentVert;
 }
 

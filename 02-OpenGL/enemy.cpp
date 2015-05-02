@@ -94,3 +94,9 @@ BoundingRect Enemy::getBounds() const
 {
 	return collisionRect;
 }
+
+bool Enemy::takeDamage(const int dmg)
+{
+	health -= dmg;
+	return (health > 0);
+}

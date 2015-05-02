@@ -24,7 +24,11 @@ class GObject
 
 		//Vertex
 		std::vector<Vertex> vert;
+		std::vector<Vertex> vert2;
+		std::vector<Vertex> currentVert;
 		int nrOfVertices;
+
+		float animationState;
 
 		std::vector<GLushort> indices;
 

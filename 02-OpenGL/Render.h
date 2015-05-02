@@ -42,6 +42,9 @@ class Render
 		GLuint getGAShader();
 		GLint Render::getWorldMatixLoc();
 
+		glm::mat4 getViewMatrix() const;
+		glm::mat4 getProjectionMatrix() const;
+
 	private:
 		GAShader* gaShader;
 		GLuint gShaderGA = 0;

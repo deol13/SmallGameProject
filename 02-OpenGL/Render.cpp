@@ -201,3 +201,12 @@ GLint Render::getWorldMatixLoc()
 {
 	return gaShader->worldMatrix;
 }
+
+glm::mat4 Render::getViewMatrix() const 
+{
+	return viewMatrix;
+}
+glm::mat4 Render::getProjectionMatrix() const
+{
+	return projMatrix;
+}

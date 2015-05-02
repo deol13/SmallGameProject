@@ -72,6 +72,9 @@ void GameState::keyDown(char c)
 	if ( playerCanMove(dir) )
 	{
 		player->setMovement( dir, true );
+	} else 
+	{
+		player->setMovement( dir, false );
 	}
 }
 void GameState::keyUp(char c)
@@ -90,14 +93,45 @@ void GameState::keyUp(char c)
 	}
 }
 
+void GameState::leftMouseClick(long x, long y)
+{
+	//glm::vec2 vecFromPlayer = glm::vec2(x - player->getX(), y - player->getZ());
+	//float angle = atan(vecFromPlayer.y / vecFromPlayer.x);
+	//glm::vec2 dirVec =  glm::normalize(glm::vec2(x - player->getX(), y - player->getZ()));
+	
+	GLdouble* worldX;
+	GLdouble* worldY;
+	GLdouble* worldZ;
+	float winDepth;
+	glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winDepth);
+	GLdouble projMat[16];
+	GLdouble viewMat[16];
+	GLint viewPort[4]= {0, 0, 640, 480};
+
+	for(int i = 0; i < 16; i++)
+	{
+		projMat[i] = render->getProjectionMatrix()[i/4][i%4];
+		viewMat[i] = render->getViewMatrix()[i / 4][i % 4];
+	}
+	gluUnProject((double)x, (double)y, winDepth, viewMat, projMat, viewPort, worldX, worldY, worldZ);
+	glm::vec2 dirVec = glm::normalize(glm::vec2(*worldX - player->getX(), *worldY - player->getZ()));	//multiply this with weapon size
+	for(int i = 0; i < waveSize; i++)
+	{
+		if(enemyWave[i]->getBounds().collides({player->getX(), player->getZ(), player->getX() + dirVec.x, player->getZ() + dirVec.x}))
+		{
+			//Enemy is hit
+		}
+	}
+}
+
 void GameState::loadArena(std::string fileName)
 {
 	//Temporary solution for the ground quad
 	std::vector<Vertex> groundVertices = {
-		Vertex(256.0f, 1.0f, 256.0f, 0.0f, 1.0f),
-		Vertex(256.0f, 1.0f, 0.0f, 0.0f, 0.0f),
-		Vertex(0.0f, 1.0f, 256.0f, 1.0f, 1.0f),
-		Vertex(0.0f, 1.0f, 0.0f, 1.0f, 0.0f)
+		{256.0f, 1.0f, 256.0f, 0.0f, 1.0f},
+		{256.0f, 1.0f, 0.0f, 0.0f, 0.0f},
+		{0.0f, 1.0f, 256.0f, 1.0f, 1.0f},
+		{0.0f, 1.0f, 0.0f, 1.0f, 0.0f}
 	};
 	renderObjects.push_back(new GObject(groundVertices, GL_TRIANGLES, render->getTexture(0)));
 
@@ -235,9 +269,9 @@ void GameState::spawnPlayer()
 bool GameState::playerCanMove(Player::Direction dir)
 {
 	BoundingRect playerBounds = player->getBounds();
-	switch(dir)
+
+	if(dir == Player::UP)
 	{
-	case Player::UP:
 		if(playerBounds.maxZ >= GASIZE)
 		{
 			return false;
@@ -245,8 +279,9 @@ bool GameState::playerCanMove(Player::Direction dir)
 		{
 			playerBounds.move(0.0f, player->getMoveSpeed());
 		}
-		break;
-	case Player::DOWN:
+	}
+	if(dir == Player::DOWN)
+	{
 		if(playerBounds.minZ <= 0)
 		{
 			return false;
@@ -254,8 +289,9 @@ bool GameState::playerCanMove(Player::Direction dir)
 		{
 			playerBounds.move(0.0f, -player->getMoveSpeed());
 		}
-		break;
-	case Player::LEFT:
+	}
+	if(dir == Player::LEFT)
+	{
 		if(playerBounds.maxX >= GASIZE)
 		{
 			return false;
@@ -263,19 +299,18 @@ bool GameState::playerCanMove(Player::Direction dir)
 		{
 			playerBounds.move(player->getMoveSpeed(), 0.0f);
 		}
-		break;
-	case Player::RIGHT:
+	}
+	if(dir == Player::RIGHT)
+	{
 		if(playerBounds.minX <= 0)
 		{
 			return false;
 		} else
 		{
-			playerBounds.move(player->getMoveSpeed(), 0.0f);
+			playerBounds.move(-player->getMoveSpeed(), 0.0f);
 		}
-		break;
-	default:
-		return false;
 	}
+
 	for(int i = 0; i < waveSize; i++)		//only checks with enemies right now. Need to add environment check
 	{
 		if(playerBounds.collides(enemyWave[i]->getBounds()))

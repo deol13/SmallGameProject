@@ -32,5 +32,6 @@ public:
 	void update();
 	void keyDown(char c);
 	void keyUp(char c);
+	void leftMouseClick(long x, long y);
 };
 #endif

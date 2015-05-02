@@ -23,7 +23,7 @@ public:
 	~Player();
 	void attack();
 	void setMovement(int dir, bool isMoving);
-	void takeDamage(int dmg);
+	bool takeDamage(const int dmg);
 	GObject* getGObject() const;
 	void update();
 

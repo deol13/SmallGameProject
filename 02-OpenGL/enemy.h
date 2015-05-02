@@ -25,9 +25,10 @@ class Enemy
 		~Enemy();
 
 		void setEnemy(int type);
-		void act(float playerX, float playerZ); //spelarens objekt eller plats
+		void act(float playerX, float playerZ);
 		GObject* getGObject() const;
 		BoundingRect getBounds() const;
+		bool takeDamage(const int dmg);					//returns true if still alive
 
 };
 #endif
