@@ -77,6 +77,7 @@ void Render::init(int GASIZE, unsigned int width, unsigned int height)
 void Render::loadTextures() 
 {
 	createTexture("GridImage.png");
+	createTexture("TestAnimation/testtexture.png");
 	createTexture("testvic.png");
 }
 

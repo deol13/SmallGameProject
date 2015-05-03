@@ -261,7 +261,7 @@ void GameState::spawnEnemies(std::string fileName)
 void GameState::spawnPlayer()
 {
 	//Hardcoded for now. Might be worth using lua later
-	player = new Player(render->getTexture(1), 0, 0);
+	player = new Player(render->getTexture(1), 100, 100);
 	renderObjects.push_back(player->getGObject());
 
 }

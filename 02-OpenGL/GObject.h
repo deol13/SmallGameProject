@@ -23,8 +23,8 @@ class GObject
 		GLuint IndexBufferId;
 
 		//Vertex
-		std::vector<Vertex> vert;
-		std::vector<Vertex> vert2;
+		std::vector<std::vector<Vertex>> vert;
+	//	std::vector<Vertex> vert2;
 		std::vector<Vertex> currentVert;
 		int nrOfVertices;
 
@@ -43,17 +43,20 @@ class GObject
 		//
 		int drawMode;
 
+		void animate();
+
 	public:
 		GObject();
 		GObject(std::vector<Vertex> vertices, int drawMode, GLuint gTexture);
-		GObject::GObject(std::string fileName, int drawMode, GLuint texture);
+		GObject(std::string fileName, int drawMode, GLuint texture);					
+		GObject(std::string* fileNames, int nrOfKeyFrames, GLuint texture);					//Loads multiple keyframes for animated objects
 		~GObject();
 
 		void scale(float x, float y, float z); //set scale matrix
 		void rotate(float x, float y, float z); //set rotation matrix
 		void translate(float x, float y, float z); //set translation matrix
 
-		void loadObjectFile(std::string fileName);
+		void loadObjectFile(std::string fileName, int keyFrame = 0);
 		void bindBuffers();
 
 		void render(GLint uniLocation, GLuint shaderProgram); //Draw

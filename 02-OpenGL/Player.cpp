@@ -13,12 +13,13 @@ Player::Player()
 }
 Player::Player(GLuint texture, float x, float z)
 {
-	loadObj = new GObject("mainchar.obj", GL_TRIANGLES, texture);
+	std::string files[] = {"TestAnimation/StartFrame.obj", "TestAnimation/Frame10.obj", "TestAnimation/Frame20.obj"};
+	loadObj = new GObject(files, 3, texture);
 	this->x = x;
 	this->z = z;
 	collisionRect = {x - 1, x + 1, z - 1, z + 1};			//Note: I've no idea if these are accurate.
 	moveSpeed = 0.9;
-	loadObj->translate(0,17,0);
+	loadObj->translate(x,17,z);
 	for (int i = 0; i < 4; i++)
 	{
 		movement[i] = false;
