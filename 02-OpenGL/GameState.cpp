@@ -10,15 +10,15 @@ void GameState::init(int w, int h)
 	state = 0;
 	//initialize the board the AI uses
 	this->board = new int*[GASIZE];
-	for (int x = GASIZE - 1; x >= 0; x--)
+	for (int x = GASIZE - 1; x >= 0; x -- )
 	{
 		this->board[x] = new int[GASIZE];
 
-		for (int z = GASIZE - 1; z >= 0; z--)
+		for (int z = GASIZE - 1; z >= 0; z --)
 		{
 			if (x == GASIZE - 1 || z == GASIZE - 1 || x == 0 || z == 0)
 			{
-				this->board[x][z] = -4;		//if an edge of the board
+				this->board[x][z] = -10;		//if an edge of the board
 			}
 			else
 			{

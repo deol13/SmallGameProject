@@ -7,6 +7,12 @@ const int MELEE = 1;
 const int RANGED = 2;
 const int TANK = 3;
 
+const int MELEERANGE = 8;
+const int RANGEDRANGE = 16;
+const int TANKRANGE = 12;
+
+const int potentialRange = 4;
+
 class Enemy
 {
 	private:
@@ -36,8 +42,8 @@ class Enemy
 		void attack();
 		void act(float playerX, float playerZ, int** board);
 		
-		void createNegativePotential(int** board, int posX, int posZ, int size);
-		void createPositivePotential(int** board, int posX, int posZ, int size);
+		void createNegativePotential(int** board, int posX, int posZ);
+		void createPositivePotential(int** board, int posX, int posZ);
 
 };
 #endif
