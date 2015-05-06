@@ -7,7 +7,7 @@
 struct MenuButton
 {
 public:
-	GLuint texture;
+	int textureIndex;
 	Vertex vertexArr[4];
 };
 

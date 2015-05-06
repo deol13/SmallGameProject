@@ -13,6 +13,7 @@ Player::Player()
 }
 Player::Player(GLuint texture, float x, float z)
 {
+	//std::string files[] = {"WalkingAnimation/StandStill.obj", "WalkingAnimation/10frames.obj", "WalkingAnimation/10framesleft.obj"};
 	std::string files[] = {"TestAnimation/StartFrame.obj", "TestAnimation/Frame10.obj", "TestAnimation/Frame20.obj"};
 	loadObj = new GObject(files, 3, texture);
 	this->x = x;

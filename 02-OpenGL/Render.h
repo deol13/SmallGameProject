@@ -23,11 +23,11 @@ class Render
 {
 	public:
 		Render();
-		Render(int GASIZE);
+		Render(int GASIZE, float aspectRatio);
 		~Render();
 
 		void GeometryPassInit();
-		void render(GuiManager* gui, std::vector<GObject*> renderObjects);
+		void render(std::vector<GObject*> renderObjects);
 		void lightPass();
 		void init(int GASIZE, unsigned int width, unsigned int height);
 
@@ -40,7 +40,7 @@ class Render
 
 		GLuint getTexture(int index) const;
 		GLuint getGAShader();
-		GLint Render::getWorldMatixLoc();
+		GLint getWorldMatixLoc();
 
 		glm::mat4 getViewMatrix() const;
 		glm::mat4 getProjectionMatrix() const;

@@ -6,26 +6,45 @@
 #include <iostream>
 #include <glm\glm.hpp>
 
+#include "GuiShader.h"
 #include "MenuButton.h"
+#include <vector>
+#include "stb_image.h"
 
 class GuiManager
 {
 	private:
+		int windowWidth;
+		int windowHeight;
 		int state;
+		int noAction;
 		int error;
 		lua_State* L;
-		MenuButton* guiButtons;
 		int nrOfbuttons;
+		std::vector<MenuButton> guiButtons;
+		std::vector<GLuint> textures;
+
+		GuiShader* gShader;
+		GLuint gGuiShader;
+
+		Vertex tmp[4];
 
 	public:
-		GuiManager();
+		GuiManager(int w, int h);
 		~GuiManager();
-		void mouseClick(int x, int y);
-		void render();
+		void startMenuR(); //Render start menu
+		void init();
+		int mouseClick(float mx, float my);
+		void update();
+		void getLuaTable(int nrOfParameters);
 		void clean();
-		void init(std::string filename);	
 		void createVertexBuffer();
+		void createTexture(std::string fileName);
 
+		static int stateChange(lua_State *L);
+		static int nonTableAction;
+
+		void loadTextures();
 		GLuint getTexture(int index);
 		
 		GLuint* guiAttribute;

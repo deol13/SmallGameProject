@@ -14,12 +14,12 @@ Render::Render()
 {
 	gShaderGA = 0;
 }
-Render::Render(int GASIZE)
+Render::Render(int GASIZE, float aspectRatio)
 {
 	//viewMatrix = glm::lookAt( glm::vec3( -20, 20.0f, -20 ), glm::vec3( 0, 0, 0 ), glm::vec3( 0, 1, 0 ) ); //Test
-	viewMatrix = glm::lookAt(glm::vec3(GASIZE / 2, 200.0f, 30), glm::vec3(GASIZE / 2, 0, GASIZE / 2), glm::vec3(0, 1, 0));
+	viewMatrix = glm::lookAt(glm::vec3(GASIZE / 2, 200.0f, GASIZE / 2), glm::vec3(GASIZE / 2, 0, GASIZE / 2), glm::vec3(0, 0, 1));
 	//viewMatrix = glm::lookAt(glm::vec3(0, 0, -2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));  //Original
-	projMatrix = glm::perspective(70.0f, 640.f / 480.0f, 0.5f, 2000.0f);
+	projMatrix = glm::perspective(70.0f, aspectRatio, 0.5f, 2000.0f);
 	gShaderGA = 0;
 }
 Render::~Render()
@@ -78,7 +78,9 @@ void Render::loadTextures()
 {
 	createTexture("GridImage.png");
 	createTexture("TestAnimation/testtexture.png");
+	createTexture("blacktest.png");
 	createTexture("testvic.png");
+	createTexture("floor.png");
 }
 
 void Render::createTexture( std::string fileName ) 
@@ -106,7 +108,7 @@ void Render::GeometryPassInit() //Bind gBuffer for object and ground shader.
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Render::render(GuiManager* gui, std::vector<GObject*> renderObjects)
+void Render::render(std::vector<GObject*> renderObjects)
 {
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 
@@ -117,9 +119,6 @@ void Render::render(GuiManager* gui, std::vector<GObject*> renderObjects)
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 	glActiveTexture(GL_TEXTURE0);
-
-	//Draw GUI
-	gui->render();
 
 	//Draw Player
 	GLuint currentTexture = renderObjects[0]->getTexture();

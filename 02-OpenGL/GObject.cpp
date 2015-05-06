@@ -107,7 +107,9 @@ void GObject::loadObjectFile(std::string fileName, int keyFrame)
 		std::vector<Vertex> uv;
 
 		std::string sub;
-		int count = 0;
+		int vertCount = 0;
+		int texCount = 0;
+		int faceCount = 0;
  		int state = 0;
 		while(true) {
 			if(!(getline(myfile, line))) break;
@@ -121,42 +123,46 @@ void GObject::loadObjectFile(std::string fileName, int keyFrame)
 				std::string sub;
 				iss >> sub; // discard 'v'
 				iss >> sub;
-				vert[keyFrame][count].x = std::stof(sub);
+				vert[keyFrame][vertCount].x = std::stof(sub);
 				iss >> sub;
-				vert[keyFrame][count].y = std::stof(sub);
+				vert[keyFrame][vertCount].y = std::stof(sub);
 				iss >> sub;
-				vert[keyFrame][count].z = std::stof(sub);
-				vert[keyFrame][count].u = -1.0f;
-				vert[keyFrame][count].v = -1.0f;
-				count++;
+				vert[keyFrame][vertCount].z = std::stof(sub);
+				vert[keyFrame][vertCount].u = -1.0f;
+				vert[keyFrame][vertCount].v = -1.0f;
+				vertCount++;
 			} else if(line[0] == 'v' && line[1] == 't') //UV cord
 			{
 				if(state != 1)
 				{
 					state = 1;
-					count = 0;
+					//count = 0;
 				}
 				uv.push_back(Vertex());
 				std::istringstream iss(line);
 				std::string sub;
 				iss >> sub; // discard 'vt'
 				iss >> sub;
-				uv[count].u = std::stof(sub);
+				uv[texCount].u = std::stof(sub);
 				iss >> sub;
-				uv[count].v = std::stof(sub);
-				count++;
+				uv[texCount].v = std::stof(sub);
+				texCount++;
 			} else if(line[0] == 'f') // face
 			{
 				if(state != 2)
 				{
 					state = 2;
-					count = 0;
+					//count = 0;
 				}
 				std::istringstream iss(line);
 				std::string sub;
-				indices.push_back(0);
-				indices.push_back(0);
-				indices.push_back(0);
+				if(keyFrame == 0)
+				{
+					indices.push_back(0);
+					indices.push_back(0);
+					indices.push_back(0);
+				}
+
 				//vert
 				iss >> sub; // discard 'f'
 
@@ -169,12 +175,12 @@ void GObject::loadObjectFile(std::string fileName, int keyFrame)
 					int indexUV = std::stoi(sub) - 1;
 					if(vert[keyFrame][indexVERT].u < 0)
 					{
-						indices[count * 3 + n] = indexVERT; // set vertex index
+						indices[faceCount * 3 + n] = indexVERT; // set vertex index
 						vert[keyFrame][indexVERT].u = uv[indexUV].u;
 						vert[keyFrame][indexVERT].v = uv[indexUV].v;
-					} else if(vert[keyFrame][indexVERT].u == uv[indexUV].u && vert[keyFrame][indexVERT].v == uv[indexUV].v)			//Roughly doubles framerate currently. May need som debugging to avoid holes
+					} else if(vert[keyFrame][indexVERT].u == uv[indexUV].u && vert[keyFrame][indexVERT].v == uv[indexUV].v)			//Avoid duplicate vertices
 					{
-						indices[count * 3 + n] = indexVERT;
+						indices[faceCount * 3 + n] = indexVERT;
 					}else
 					{
 						int temp = indexVERT;
@@ -183,15 +189,16 @@ void GObject::loadObjectFile(std::string fileName, int keyFrame)
 						vert[keyFrame][indexVERT] = vert[keyFrame][temp];
 						vert[keyFrame][indexVERT].u = uv[indexUV].u;
 						vert[keyFrame][indexVERT].v = uv[indexUV].v;
-						indices[count * 3 + n] = indexVERT;
+						indices[faceCount * 3 + n] = indexVERT;
 					}
 					iss >> sub; // normal index
 					sub = "";
 				}
-				count++;
+				faceCount++;
 			}
 		}
-		nrOfVertices = count;
+		GLushort indexTest = indices[indices.size()-1];
+		nrOfVertices = faceCount;
 	}
 }
 
@@ -231,8 +238,9 @@ void GObject::render(GLint uniLocation, GLuint shaderProgram)
 	//reset animation frame
 	if( vert.size() > 1) {
 		animate();
+		glBufferData(GL_ARRAY_BUFFER, sizeof(currentVert[0])* currentVert.size(), &currentVert[0], GL_STATIC_DRAW);
 	}
-	glBufferData(GL_ARRAY_BUFFER, sizeof(currentVert[0])* currentVert.size(), &currentVert[0], GL_STATIC_DRAW);
+	
 
 	glDrawElements(drawMode, nrOfVertices * 3, GL_UNSIGNED_SHORT, 0);
 }

@@ -39,11 +39,10 @@ function readFile()
 end
 
 function findTexture(name)			-- Matches the texture names to their GLuint
-	if name == wall1.tex
+	if name == "floor.png"
 	then
-		return 1
-	end
+		return 4
 	else
-		return 1
+		return 2
 	end
 end

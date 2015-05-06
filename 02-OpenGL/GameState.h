@@ -7,7 +7,8 @@
 class GameState {
 	const int GASIZE = 256;				//Game Area max size
 private:
-	
+	int state;
+	int** board;
 	Render* render;
 	GuiManager* gameUI;
 	std::vector<GObject*> renderObjects;
@@ -16,6 +17,7 @@ private:
 	//std::vector<Enemy> enemyWave;
 	Enemy** enemyWave;
 	int waveSize;
+	int enemiesRemaining;
 	int nrOfArenaObjects;
 	int firstEnemyIndex;		//Start of enemies in renderObjects. Useful for enemy deaths etc.
 
@@ -24,14 +26,16 @@ private:
 	void spawnEnemies(std::string fileName);
 	void spawnPlayer();
 	bool playerCanMove( Player::Direction dir );
+	void createNegativePotential(int posX, int posZ, int size);
 
 public:
-	GameState();
-	void init();
+	GameState(int w, int h);
+	void init(int w, int h);
 	void clean();
 	void update();
 	void keyDown(char c);
 	void keyUp(char c);
 	void leftMouseClick(long x, long y);
+	int getState() const;
 };
 #endif

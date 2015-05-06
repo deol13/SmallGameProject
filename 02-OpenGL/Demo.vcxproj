@@ -92,9 +92,9 @@
     <ClCompile Include="gbuffer.cpp" />
     <ClCompile Include="GObject.cpp" />
     <ClCompile Include="GuiManager.cpp" />
+    <ClCompile Include="GuiShader.cpp" />
     <ClCompile Include="LightShader.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="stb_image.c" />
@@ -107,6 +107,7 @@
     <ClInclude Include="gbuffer.h" />
     <ClInclude Include="GObject.h" />
     <ClInclude Include="GuiManager.h" />
+    <ClInclude Include="GuiShader.h" />
     <ClInclude Include="lauxlib.h" />
     <ClInclude Include="LightShader.h" />
     <ClInclude Include="lua.h" />
@@ -114,7 +115,6 @@
     <ClInclude Include="luaconf.h" />
     <ClInclude Include="lualib.h" />
     <ClInclude Include="MenuButton.h" />
-    <ClInclude Include="MenuState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="BoundingRect.h" />
     <ClInclude Include="Render.h" />
@@ -128,6 +128,7 @@
     <None Include="ArenaReader.lua" />
     <None Include="EnemyReader.lua" />
     <None Include="EnemyWaves.dat" />
+    <None Include="gui.lua" />
     <None Include="LuaButton.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

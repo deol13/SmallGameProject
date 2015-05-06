@@ -14,8 +14,7 @@
 //#include "Player.h"
 //#include "EnemyHandler.h"
 #include "GameState.h"
-
-
+//#include <vld.h> 
 #define GLM_FORCE_RADIANS
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
@@ -23,6 +22,8 @@
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glew32.lib")
 
+const int WINDOW_WIDTH = 1280;
+const int WINDOW_HEIGHT = 720;
 
 HWND InitWindow( HINSTANCE hInstance );
 LRESULT CALLBACK WndProc( HWND, UINT, WPARAM, LPARAM );
@@ -33,12 +34,11 @@ GLuint gVertexAttribute = 0;
 GLuint gShaderProgram = 0;
 GLuint bth_tex = 0;
 
-Render* render;
-GuiManager* mGUI;
 Player* player;
-EnemyHandler* eHandler;
 
 //const int GASIZE = 256;
+
+bool isQuitting = false;
 
 const double FPSLOCK = 60.0;
 int FPScount = 0;
@@ -51,11 +51,13 @@ void keySwitchFuncFalse( const char c );
 enum State { GAMESTATE, MENUSTATE, SHOPSTATE };
 
 void SetViewport() {
-	glViewport( 0, 0, 640, 480 );
+	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 }
 
 int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow ) {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	MSG msg = { 0 };
 	HWND wndHandle = InitWindow( hInstance ); //1. Skapa fönster
 	if( wndHandle ) {
@@ -65,56 +67,74 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		glewInit(); //3. Initiera The OpenGL Extension Wrangler Library (GLEW)
 
 		//glEnable(GL_CULL_FACE);
-		glEnable( GL_DEPTH_TEST );
 		glDepthMask( GL_TRUE );
 		glDepthFunc( GL_LEQUAL );
 
 		SetViewport(); //4. Sätt viewport
 
-		State playState = GAMESTATE;
-		GameState* gameState = new GameState();
+		State playState = MENUSTATE;
+		bool initState = false;
 
-		////Init main's objects
-		//render = new Render(GASIZE);
-		//render->init(GASIZE);
-		//mGUI = new GuiManager();
-		//player = new Player(render->getTexture(0), 0, 0);
-		//
-
-
-		////----------------------------------------------------------- TMP
-		//GObject* meleeE = new GObject("enamie.obj", GL_QUADS, render->getTexture(0));
-		//eHandler = new EnemyHandler(render->getGAShader());
-		//eHandler->setUniLoc(render->getWorldMatixLoc());
-		//eHandler->createWave(1, meleeE, 0, meleeE, 0, meleeE);
-		////-----------------------------------------------------------
-
-		//std::vector<GObject*> renderObjects;
-		//renderObjects.push_back(player->getGObject());
+		GameState* gameState = new GameState(WINDOW_WIDTH, WINDOW_HEIGHT);
+		
+		GuiManager* mGUI = new GuiManager(WINDOW_WIDTH, WINDOW_HEIGHT);
+		mGUI->startMenuR();
 
 		ShowWindow( wndHandle, nCmdShow );
 
 		start = std::clock();
 
-		while( WM_QUIT != msg.message ) {
+		while (WM_QUIT != msg.message && !isQuitting) {
 			currentFrame = std::clock();
 			switch( playState ) {
 			case MENUSTATE:
-				if (msg.message == MK_LBUTTON)
+				glDisable(GL_DEPTH_TEST);
+				if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 				{
-					POINT newMpos;
-					GetCursorPos(&newMpos);
-					mGUI->mouseClick(newMpos.x, newMpos.y);
+					if (msg.message == WM_LBUTTONDOWN)
+					{
+						POINT newMpos;
+						GetCursorPos(&newMpos);
+						ScreenToClient(wndHandle, &newMpos);
+						float screenX = (newMpos.x * 2.0f / WINDOW_WIDTH) - 1.0f;
+						float screenY = (newMpos.y * 2.0f / WINDOW_HEIGHT) - 1.0f;
+						int tmp = mGUI->mouseClick(screenX, screenY);
+
+						if (tmp != -1)
+						{
+							if (tmp == 1)
+							{
+								playState = GAMESTATE;
+								initState = true;
+							}
+							else if (tmp == 2)
+							{
+								isQuitting = true;
+							}
+						}
+					}
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
 				}
+				mGUI->update();
 				break;
 			case GAMESTATE:
-				if( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) {
-
+				if(initState)
+				{
+					gameState->init(WINDOW_WIDTH, WINDOW_HEIGHT);
+					initState = false;
+				}
+				glEnable(GL_DEPTH_TEST);
+				if( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) 
+				{
+			
 					switch( msg.message ) {
-					case MK_LBUTTON:
+					case  WM_LBUTTONDOWN:
 					{
 						POINT newMpos;
 						GetCursorPos( &newMpos );
+						ScreenToClient(wndHandle, &newMpos);
+						gameState->leftMouseClick(newMpos.x, newMpos.y);
 						break;
 					}
 					case WM_KEYDOWN:
@@ -137,6 +157,13 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 					DispatchMessage( &msg );
 				}
 				gameState->update();
+				//Should switch back to main menu
+				/*if(gameState->getState() == 1)
+				{
+					gameState->clean();
+					initState = true;
+					playState = MENUSTATE;
+				}*/
 				break;
 			default:
 
@@ -144,12 +171,10 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			}
 
 			//player->update();
-			//render->render(mGUI, renderObjects);
-			//eHandler->makeMove( player->getX(), player->getZ());
-
+			
 			SwapBuffers( hDC ); //10. Växla front- och back-buffer
 			FPScount++;
-
+			
 			if( ( std::clock() - start ) / ( double )CLOCKS_PER_SEC > 1 ) {
 				start = std::clock();
 				std::string s = std::to_string( FPScount );
@@ -161,6 +186,9 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			while( std::clock() - currentFrame < CLOCKS_PER_SEC / FPSLOCK ) {}			//comment out for unlimited frames
 		}
 
+		delete mGUI;
+		delete gameState;
+		delete player;
 		wglMakeCurrent( NULL, NULL );
 		ReleaseDC( wndHandle, hDC );
 		wglDeleteContext( hRC );
@@ -179,7 +207,7 @@ HWND InitWindow( HINSTANCE hInstance ) {
 	if( !RegisterClassEx( &wcex ) )
 		return false;
 
-	RECT rc = { 0, 0, 640, 480 };
+	RECT rc = {0, 0, WINDOW_WIDTH, WINDOW_HEIGHT};
 	AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE );
 
 	HWND handle = CreateWindow(

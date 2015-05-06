@@ -1,0 +1,96 @@
+newmtl head:Group33555SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd testtexture.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl head:Group33555SG1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd testtexture.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl head:Group33555SG2
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd testtexture.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl head:Group33555SG3
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd testtexture.png
+Ni 1.00
+newmtl head:Group33555SG4
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd testtexture.png
+Ni 1.00
+newmtl head:Group33555SG5
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd testtexture.png
+Ni 1.00
+newmtl head:Group33555SG6
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd testtexture.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl head:Group33555SG7
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd testtexture.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl head:Group33555SG8
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd testtexture.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 18.00
+newmtl head:Group33555SG9
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd testtexture.png
+Ni 1.00
+newmtl head:Group33555SG10
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd testtexture.png
+Ni 1.00
+newmtl head:Group33555SG11
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd testtexture.png
+Ni 1.00

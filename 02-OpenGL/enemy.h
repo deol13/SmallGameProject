@@ -25,10 +25,19 @@ class Enemy
 		~Enemy();
 
 		void setEnemy(int type);
-		void act(float playerX, float playerZ);
+		
 		GObject* getGObject() const;
+		float getX()const;
+		float getZ()const;
+		int getHealth()const;
 		BoundingRect getBounds() const;
 		bool takeDamage(const int dmg);					//returns true if still alive
+
+		void attack();
+		void act(float playerX, float playerZ, int** board);
+		
+		void createNegativePotential(int** board, int posX, int posZ, int size);
+		void createPositivePotential(int** board, int posX, int posZ, int size);
 
 };
 #endif
