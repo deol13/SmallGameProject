@@ -1,14 +1,30 @@
-﻿Build started 5/6/2015 3:49:39 PM.
+﻿Build started 5/7/2015 10:39:13 AM.
      1>Project "C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameState.cpp
-         GameState.cpp
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(32): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(223): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(225): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(275): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(285): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(365): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Enemy.cpp
+         Enemy.cpp
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(193): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(194): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(229): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(230): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(267): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(268): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(304): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(305): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(342): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(343): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(378): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(379): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(416): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(417): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(453): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(454): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(470): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(472): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(478): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(480): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(502): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(521): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO LuaLib.lib GLU32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\BlitQuad.obj
          Debug\Enemy.obj
@@ -28,4 +44,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.87
+Time Elapsed 00:00:00.80

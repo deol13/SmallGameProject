@@ -186,8 +186,7 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 					}
 					else if (testerX == -1 && testerZ == 0)
 					{
-						testerX += 2;
-						testerZ--;		// (1, -1) up right
+						testerZ++;		// (-1, 1) up right
 					}
 					else
 					{
@@ -219,7 +218,7 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 					}
 					else if (testerX == -1 && testerZ == -1)
 					{
-						testerX++;		//(0,1) down
+						testerX++;		//(0,-1) down
 					}
 					else if (testerX == 0 && testerZ == -1)
 					{
@@ -473,7 +472,6 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			createNegativePotential(board, x, z);	//tell the board where we are standing
 			loadObj->translate(moveX, 0, 0);
 
-			//board[(int)tempX][(int)tempZ] = 0;		//Set our last pos as 0 in the board
 		}
 		if (moveZ != 0)
 		{
@@ -484,12 +482,17 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			loadObj->translate(0, 0, moveZ);
 
 		}
+
+		if (attacking == false)
+		{
+			board[(int)tempX][(int)tempZ] += 8;		//Set our last pos to be standard
+		}
 	}
 }
 
 void Enemy::createNegativePotential(int** board, int posX, int posZ)
 {
-	board[posZ][posX] -= 4;
+	board[posZ][posX] -= 8;
 
 	int length = 0;
 	for (int i = posZ - potentialRange; i <= posZ + potentialRange; i++)
@@ -500,7 +503,7 @@ void Enemy::createNegativePotential(int** board, int posX, int posZ)
 			if (length < potentialRange)
 			{
 				if (length > 0)
-					board[i][j] -= 4;
+					board[i][j] -= potentialRange - length;
 			}
 		}
 	}
@@ -508,7 +511,7 @@ void Enemy::createNegativePotential(int** board, int posX, int posZ)
 
 void Enemy::createPositivePotential(int** board, int posX, int posZ)
 {
-	board[posZ][posX] += 4;
+	board[posZ][posX] += 8;
 
 	int length = 0;
 	for (int i = posZ - potentialRange; i <= posZ + potentialRange; i++)
@@ -519,7 +522,7 @@ void Enemy::createPositivePotential(int** board, int posX, int posZ)
 			if (length < potentialRange)
 			{
 				if (length > 0)
-					board[i][j] += 4;
+					board[i][j] += potentialRange - length;
 			}
 		}
 	}
