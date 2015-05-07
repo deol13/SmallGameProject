@@ -3,6 +3,16 @@
 GameState::GameState( int w, int h)
 {
 	//init(w, h);
+	//Set render
+	render = new Render(GASIZE, w / h);
+	render->init(GASIZE, w, h);
+}
+
+GameState::~GameState()
+{
+	delete render;
+	render = nullptr;
+	clean();
 }
 
 void GameState::init(int w, int h) 
@@ -28,24 +38,22 @@ void GameState::init(int w, int h)
 	}
 
 	enemyWave = nullptr;
-	//Set render
-	render = new Render(256, w/h);
-	render->init(256, w, h);
+	
 	//Load UI
 	//gameUI = new GuiManager();
 	//Set player
 	spawnPlayer();
 	//Load arena
-	//loadArena("temp");
+	loadArena("temp");
 	//Spawn first enemy wave
-	spawnEnemies("placeholder");
+	//spawnEnemies("placeholder");
 	enemiesRemaining = waveSize;
 }
 
 void GameState::clean()
 {
-	delete render;
-	render = nullptr;
+//	delete render;
+//	render = nullptr;
 	gameUI = nullptr;
 	for(int i = 0; i < waveSize; i++)
 	{
@@ -71,18 +79,6 @@ void GameState::update()
 	render->GeometryPassInit();
 	render->render(renderObjects);
 	render->lightPass();
-
-	//Debug function that drains health of enemy. Currently bugged
-	//if(!enemyWave[0]->takeDamage(1))	
-	//{
-	//	renderObjects.erase(renderObjects.begin() + firstEnemyIndex);
-	//	delete enemyWave[0];
-	//	enemyWave[0] = enemyWave[--waveSize];
-	//}
-	//if(waveSize < 1)		//wave has been defeated
-	//{
-	////	spawnEnemies("altwave.dat");
-	//}
 }
 
 void GameState::keyDown(char c)
@@ -165,15 +161,6 @@ int GameState::getState()const
 
 void GameState::loadArena(std::string fileName)
 {
-	//Temporary solution for the ground quad
-	//std::vector<Vertex> groundVertices = {
-	//	{256.0f, 1.0f, 256.0f, 0.0f, 1.0f},
-	//	{256.0f, 1.0f, 0.0f, 0.0f, 0.0f},
-	//	{0.0f, 1.0f, 256.0f, 1.0f, 1.0f},
-	//	{0.0f, 1.0f, 0.0f, 1.0f, 0.0f}
-	//};
-	//renderObjects.push_back(new GObject(groundVertices, GL_TRIANGLES, render->getTexture(0)));
-
 	//Grab from lua
 	int error = 0;
 	int waveNr = 1;
@@ -223,8 +210,8 @@ void GameState::loadArena(std::string fileName)
 			float x = atoi(arenaArr[5*i+2].c_str());
 			GObject* temp = new GObject(arenaArr[5 * i], GL_TRIANGLES, render->getTexture(atoi(arenaArr[5*i+1].c_str())));
 			temp->translate(atoi(arenaArr[5*i+2].c_str()), atoi(arenaArr[5*i+3].c_str()), atoi(arenaArr[5*i+4].c_str()));
-			temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
-			temp->scale(1.5f, 1.5f, 1.5f);
+			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
+			//temp->scale(0.05f, 0.05f, 0.05f);
 			renderObjects.push_back(temp);
 
 		}

@@ -38,8 +38,8 @@ function readFile()
 	return arenaArr, nrOfObjects
 end
 
-function findTexture(name)			-- Matches the texture names to their GLuint
-	if name == "floor.png"
+function findTexture(name)			-- Matches the texture names to their GLuint. 
+	if name == "blocks.png"
 	then
 		return 4
 	else

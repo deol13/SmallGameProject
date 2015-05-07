@@ -30,6 +30,7 @@ private:
 
 public:
 	GameState(int w, int h);
+	~GameState();
 	void init(int w, int h);
 	void clean();
 	void update();

@@ -233,15 +233,8 @@ void GObject::render(GLint uniLocation, GLuint shaderProgram)
 
 	glBindVertexArray(gAttribute);
 	glBindBuffer(GL_ARRAY_BUFFER, gBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferId);
-
-	//reset animation frame
-	if( vert.size() > 1) {
-		animate();
-		glBufferData(GL_ARRAY_BUFFER, sizeof(currentVert[0])* currentVert.size(), &currentVert[0], GL_STATIC_DRAW);
-	}
-	
-
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferId);	
+	glBufferData(GL_ARRAY_BUFFER, sizeof(currentVert[0])* currentVert.size(), &currentVert[0], GL_STATIC_DRAW);
 	glDrawElements(drawMode, nrOfVertices * 3, GL_UNSIGNED_SHORT, 0);
 }
 
@@ -285,6 +278,11 @@ void GObject::setVertices(std::vector<Vertex> vertices)
 std::vector<Vertex> GObject::getVertices()
 {
 	return currentVert;
+}
+
+void GObject::setAnimationState(float state)
+{
+	animationState = state;
 }
 
 void GObject::animate()

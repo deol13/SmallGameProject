@@ -17,9 +17,9 @@ Render::Render()
 Render::Render(int GASIZE, float aspectRatio)
 {
 	//viewMatrix = glm::lookAt( glm::vec3( -20, 20.0f, -20 ), glm::vec3( 0, 0, 0 ), glm::vec3( 0, 1, 0 ) ); //Test
-	viewMatrix = glm::lookAt(glm::vec3(GASIZE / 2, 200.0f, GASIZE / 2), glm::vec3(GASIZE / 2, 0, GASIZE / 2), glm::vec3(0, 0, 1));
+	viewMatrix = glm::lookAt(glm::vec3(GASIZE / 2, GASIZE / 2, GASIZE / 2), glm::vec3(GASIZE / 2, 0, GASIZE / 2), glm::vec3(0, 0, 1));
 	//viewMatrix = glm::lookAt(glm::vec3(0, 0, -2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));  //Original
-	projMatrix = glm::perspective(70.0f, aspectRatio, 0.5f, 2000.0f);
+	projMatrix = glm::perspective(90.0f, aspectRatio, 0.5f, 1000.0f);
 	gShaderGA = 0;
 }
 Render::~Render()
@@ -80,7 +80,7 @@ void Render::loadTextures()
 	createTexture("TestAnimation/testtexture.png");
 	createTexture("blacktest.png");
 	createTexture("testvic.png");
-	createTexture("floor.png");
+	createTexture("blocks.png");
 }
 
 void Render::createTexture( std::string fileName ) 
