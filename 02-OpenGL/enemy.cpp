@@ -5,7 +5,7 @@ Enemy::Enemy()
 	loadObj = new GObject();
 	health = 20;
 	type = MELEE;
-	moveSpeed = 1.0f;
+	moveSpeed = 2.0f;
 	this->x = 100.0f;
 	this->z = 100.0f;
 }
@@ -22,7 +22,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture)
 		loadObj = new GObject( "enamie.obj", GL_TRIANGLES, texture );
 		health = 20;
 		this->type = MELEE;
-		moveSpeed = 1.0f;	
+		moveSpeed = 2.0f;	
 		break;
 	default:
 		break;
@@ -104,12 +104,12 @@ void Enemy::attack()
 void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt eller plats
 {
 	bool attacking = false;
+
 	if (type == MELEE && board[(int)x][(int)z] >= 0)		//atack if in range
 	{
 		if (abs(x - playerX) <= MELEERANGE && abs(z - playerZ) <= MELEERANGE)
 		{
 			attacking = true;
-
 			attack();
 		}
 	}
@@ -129,6 +129,7 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			attack();
 		}
 	}
+
 	if (attacking == false)	//If not attacking then move
 	{
 		float moveX = 0.0f;
@@ -154,6 +155,8 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 		{
 			moveZ--;
 		}
+
+		createPositivePotential(board, x, z);	//take away the enemies own negative field
 
 		if (board[(int)(x + moveX)][(int)(z + moveZ)] < 0 || board[(int)x][(int)z] < 0)
 		{
@@ -467,25 +470,20 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 
 		if (moveX != 0)
 		{
-			createPositivePotential(board, x, z);
 			x = x + moveX;
-			createNegativePotential(board, x, z);	//tell the board where we are standing
 			loadObj->translate(moveX, 0, 0);
 
 		}
 		if (moveZ != 0)
 		{
-			createPositivePotential(board, x, z);
 			z = z + moveZ;
-			createNegativePotential(board, x, z);
-
 			loadObj->translate(0, 0, moveZ);
 
 		}
 
 		if (attacking == false)
 		{
-			board[(int)tempX][(int)tempZ] += 8;		//Set our last pos to be standard
+			createNegativePotential(board, x, z);	//tell the board where we are standing
 		}
 	}
 }
