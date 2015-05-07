@@ -25,6 +25,21 @@
     <Filter Include="Graphics">
       <UniqueIdentifier>{472b441b-05d3-42f4-aae8-0ad2b302e467}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Headers">
+      <UniqueIdentifier>{3d1fa2e8-ca98-4e21-987b-ff4f2149db36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Sources">
+      <UniqueIdentifier>{9b52fc3b-7ece-49a1-964b-f53c7ab19cb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{0526ebbc-c9ef-4f7d-8da3-6adf6aaf6cf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Sources">
+      <UniqueIdentifier>{98e50e2c-1913-4f50-9dea-a9b6172780f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Headers">
+      <UniqueIdentifier>{3ba43baa-4b65-4c9a-826d-3a13513cca4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -34,9 +49,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GuiManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
@@ -51,20 +63,23 @@
     <ClCompile Include="GameState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GAShader.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="BlitQuad.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GAShader.cpp">
+      <Filter>Graphics\Sources</Filter>
     </ClCompile>
     <ClCompile Include="gbuffer.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="LightShader.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Sources</Filter>
     </ClCompile>
     <ClCompile Include="GuiShader.cpp">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="LightShader.cpp">
+      <Filter>Graphics\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiManager.cpp">
+      <Filter>GUI\Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,9 +90,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GuiManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameState.h">
@@ -104,9 +116,6 @@
     <ClInclude Include="stb_image.h">
       <Filter>Header Files\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="MenuButton.h">
-      <Filter>Header Files\structs</Filter>
-    </ClInclude>
     <ClInclude Include="Vertex.h">
       <Filter>Header Files\structs</Filter>
     </ClInclude>
@@ -114,22 +123,28 @@
       <Filter>Header Files\structs</Filter>
     </ClInclude>
     <ClInclude Include="BlitQuad.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Headers</Filter>
     </ClInclude>
     <ClInclude Include="GAShader.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Headers</Filter>
     </ClInclude>
     <ClInclude Include="gbuffer.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="LightShader.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="SpotLight.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Headers</Filter>
     </ClInclude>
     <ClInclude Include="GuiShader.h">
-      <Filter>Graphics</Filter>
+      <Filter>Graphics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LightShader.h">
+      <Filter>Graphics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
+      <Filter>Graphics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiManager.h">
+      <Filter>GUI\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuButton.h">
+      <Filter>GUI\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

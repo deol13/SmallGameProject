@@ -15,19 +15,19 @@ end
 
 function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a menu state ]]
 	if state == 1 then  --[[ Start menu ]]
-		if xPos < 0.25 and xPos > -0.25  and yPos < -0.5 and yPos > -1.0 then
+		if xPos < 0.25 and xPos > -0.25  and yPos < 1.0 and yPos > 0.5 then
 			stateChange(1) --[[ New game ]]
-		--[[ elseif xPos < 0.25 and xPos > -0.25  and yPos < 0.0 and yPos > -0.5 then
+		--[[ elseif xPos < 0.25 and xPos > -0.25  and yPos < 0.5and yPos > 0.0 then
 			stateChange(1) ]] --[[ Continue game ]]
-		elseif xPos < 0.25 and xPos > -0.25  and yPos < 0.5 and yPos > 0.0 then
+		elseif xPos < 0.25 and xPos > -0.25  and yPos < 0.0 and yPos > -0.5 then
 			return howToPlayMenu, 2
-		elseif xPos < 0.25 and xPos > -0.25 and yPos < 1.0 and yPos > 0.5 then
+		elseif xPos < 0.25 and xPos > -0.25 and yPos < -0.5 and yPos > -1.0 then
 			stateChange(2) --[[ Exit game ]]
 		else
 			return -1 --[[ Empty space clicked on ]]
 		end
 	elseif state == 2 then --[[ Getting back to the startMenu from "howToPlayMenu" ]]
-		if xPos < 260 and xPos > 170 and yPos < 300 and yPos > 260 then
+		if xPos < -0.10 and xPos > -0.5 and yPos < 0.0 and yPos > -0.40 then
 			return startMenu, 1
 		end
 	else

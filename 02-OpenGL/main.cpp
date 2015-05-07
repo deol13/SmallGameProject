@@ -96,8 +96,8 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 						POINT newMpos;
 						GetCursorPos(&newMpos);
 						ScreenToClient(wndHandle, &newMpos);
-						float screenX = (newMpos.x * 2.0f / WINDOW_WIDTH) - 1.0f;
-						float screenY = (newMpos.y * 2.0f / WINDOW_HEIGHT) - 1.0f;
+						float screenX = (newMpos.x * 2.0f / WINDOW_WIDTH) -1.0f;
+						float screenY = -(newMpos.y * 2.0f / WINDOW_HEIGHT) +1.0f;
 						int tmp = mGUI->mouseClick(screenX, screenY);
 
 						if (tmp != -1)
