@@ -11,7 +11,7 @@ const int MELEERANGE = 8;
 const int RANGEDRANGE = 16;
 const int TANKRANGE = 12;
 
-const int potentialRange = 4;
+const int potentialRange = 8;
 
 class Enemy
 {
