@@ -16,7 +16,6 @@ class GuiManager
 	private:
 		int windowWidth;
 		int windowHeight;
-		int state;
 		int noAction;
 		int error;
 		lua_State* L;
@@ -41,6 +40,8 @@ class GuiManager
 		void createVertexBuffer();
 		void createTexture(std::string fileName);
 
+		void pauseGame();
+
 		static int stateChange(lua_State *L);
 		static int nonTableAction;
 
@@ -50,6 +51,7 @@ class GuiManager
 		GLuint* guiAttribute;
 		GLuint* guiBuffer;
 
+		int state;
 };
 
 #endif

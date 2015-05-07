@@ -7,6 +7,8 @@ startMenu = { -0.25, 1.0, 0.25, 0.5, 0, 0, 1, 1, 0,
 howToPlayMenu = { -0.5, 1.0, 0.5, 0, 0, 0, 1, 1, 4,
 				  -0.5, 0, -0.10, -0.40, 0, 0, 1, 1, 5 }
 
+pauseMenu =		{ -0.312, 0.25, 0.312,  0.0 , 0, 0, 1, 1, 6, 
+				  -0.312, 0.0 , 0.312, -0.25, 0, 0, 1, 1, 7 }
 
 function init() --[[ When the game starts, lua returns how the start menu should look like ]]
 	return startMenu, 1
@@ -30,6 +32,12 @@ function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a
 		if xPos < -0.10 and xPos > -0.5 and yPos < 0.0 and yPos > -0.40 then
 			return startMenu, 1
 		end
+	elseif state == 3 then 
+		if xPos < 0.312 and xPos > -0.312  and yPos < 0.25 and yPos > 0.0 then          --[[Resume]]
+			stateChange(0)
+		elseif xPos < 0.312 and xPos > -0.312  and yPos < 0.0 and yPos > -0.25 then     --[[Exit to start menu]]
+			stateChange(2)
+		end
 	else
 		return -1
 	end
@@ -37,6 +45,9 @@ function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a
 	return -1
 end
 
+function pauseGame()
+	return pauseMenu, 3
+end
 
 function healthLoss( health )
 	health = health - 1

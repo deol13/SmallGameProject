@@ -30,6 +30,7 @@ private:
 
 public:
 	GameState(int w, int h);
+	~GameState();
 	void init(int w, int h);
 	void clean();
 	void update();
@@ -37,5 +38,7 @@ public:
 	void keyUp(char c);
 	void leftMouseClick(long x, long y);
 	int getState() const;
+	int guiState();
+	int screenClickesOn(float mx, float my);
 };
 #endif

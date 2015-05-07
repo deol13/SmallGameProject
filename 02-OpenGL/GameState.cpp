@@ -5,6 +5,11 @@ GameState::GameState( int w, int h)
 	//init(w, h);
 }
 
+GameState::~GameState()
+{
+	clean();
+}
+
 void GameState::init(int w, int h) 
 {
 	state = 0;
@@ -32,7 +37,7 @@ void GameState::init(int w, int h)
 	render = new Render(256, w/h);
 	render->init(256, w, h);
 	//Load UI
-	//gameUI = new GuiManager();
+	gameUI = new GuiManager(w, h);
 	//Set player
 	spawnPlayer();
 	//Load arena
@@ -46,6 +51,7 @@ void GameState::clean()
 {
 	delete render;
 	render = nullptr;
+	delete gameUI;
 	gameUI = nullptr;
 	for(int i = 0; i < waveSize; i++)
 	{
@@ -53,18 +59,31 @@ void GameState::clean()
 	}
 	delete[] enemyWave;
 	enemyWave = nullptr;
+
+	delete player;
+
+	for (int i = 0; i < GASIZE; i++)
+	{
+		delete board[i];
+	}
+	delete[] board;
+
+	renderObjects.clear();
 }
 
 void GameState::update()
 {
 
-	player->update();
+ 	player->update();
 	
-	for (int i = 0; i < waveSize; i++)
+	if (gameUI->state != 3)
 	{
-		if(enemyWave[i]->getHealth() > 0)
+		for (int i = 0; i < waveSize; i++)
 		{
-			enemyWave[i]->act(player->getX(), player->getZ(), board);
+			if (enemyWave[i]->getHealth() > 0)
+			{
+				enemyWave[i]->act(player->getX(), player->getZ(), board);
+			}
 		}
 	}
 
@@ -72,6 +91,10 @@ void GameState::update()
 	render->render(renderObjects);
 	render->lightPass();
 
+	if (gameUI->state == 3)
+	{
+		gameUI->update();
+	}
 	//Debug function that drains health of enemy. Currently bugged
 	//if(!enemyWave[0]->takeDamage(1))	
 	//{
@@ -88,6 +111,8 @@ void GameState::update()
 void GameState::keyDown(char c)
 {
 	Player::Direction dir;
+	bool dontUseDir = false;
+
 	switch (c)
 	{
 	case 'w':
@@ -106,16 +131,22 @@ void GameState::keyDown(char c)
 	case 'D':
 		dir = Player::RIGHT;
 		break;
+	case 'p':
+	case 'P':
+		dir = Player::STILL;
+		gameUI->pauseGame();
+		break;
 	default:
 		dir = Player::STILL;
 		break;
 	}
-	if ( playerCanMove(dir) )
+	if (playerCanMove(dir))
 	{
-		player->setMovement( dir, true );
-	} else 
+		player->setMovement(dir, true);
+	}
+	else
 	{
-		player->setMovement( dir, false );
+		player->setMovement(dir, false);
 	}
 }
 void GameState::keyUp(char c)
@@ -370,4 +401,14 @@ void GameState::createNegativePotential(int posX, int posZ, int size)
 			}
 		}
 	}
+}
+
+int GameState::guiState()
+{
+	return gameUI->state;
+}
+
+int GameState::screenClickesOn(float mx, float my)
+{
+	return gameUI->mouseClick(mx, my);
 }

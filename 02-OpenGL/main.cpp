@@ -39,6 +39,7 @@ Player* player;
 //const int GASIZE = 256;
 
 bool isQuitting = false;
+bool mDepthTest = false;
 
 const double FPSLOCK = 60.0;
 int FPScount = 0;
@@ -88,7 +89,9 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			currentFrame = std::clock();
 			switch( playState ) {
 			case MENUSTATE:
-				glDisable(GL_DEPTH_TEST);
+				if (mDepthTest)
+					glDisable(GL_DEPTH_TEST);
+
 				if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 				{
 					if (msg.message == WM_LBUTTONDOWN)
@@ -106,11 +109,18 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							{
 								playState = GAMESTATE;
 								initState = true;
+								mGUI->state = 1;
 							}
 							else if (tmp == 2)
 							{
 								isQuitting = true;
 							}
+							/*else if (tmp == 3)
+							{
+								playState = GAMESTATE;
+								initState = false;
+								mGUI->state = 1;
+							}*/
 						}
 					}
 					TranslateMessage(&msg);
@@ -124,39 +134,75 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 					gameState->init(WINDOW_WIDTH, WINDOW_HEIGHT);
 					initState = false;
 				}
-				glEnable(GL_DEPTH_TEST);
 				if( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) 
 				{
-			
-					switch( msg.message ) {
-					case  WM_LBUTTONDOWN:
+					if (gameState->guiState() != 3)
 					{
-						POINT newMpos;
-						GetCursorPos( &newMpos );
-						ScreenToClient(wndHandle, &newMpos);
-						gameState->leftMouseClick(newMpos.x, newMpos.y);
-						break;
-					}
-					case WM_KEYDOWN:
-					{
-						WPARAM param = msg.wParam;
-						char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-						gameState->keyDown( c );
-						break;
-					}
+						glEnable(GL_DEPTH_TEST);
+						if (!mDepthTest)
+							glEnable(GL_DEPTH_TEST);
 
-					case WM_KEYUP:
-					{
-						WPARAM param = msg.wParam;
-						char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-						gameState->keyUp( c );
-						break;
+						switch (msg.message) {
+						case  WM_LBUTTONDOWN:
+						{
+							POINT newMpos;
+							GetCursorPos(&newMpos);
+							ScreenToClient(wndHandle, &newMpos);
+							gameState->leftMouseClick(newMpos.x, newMpos.y);
+							break;
+						}
+						case WM_KEYDOWN:
+						{
+							WPARAM param = msg.wParam;
+							char c = MapVirtualKey(param, MAPVK_VK_TO_CHAR);
+							gameState->keyDown(c);
+							break;
+						}
+
+						case WM_KEYUP:
+						{
+							WPARAM param = msg.wParam;
+							char c = MapVirtualKey(param, MAPVK_VK_TO_CHAR);
+							gameState->keyUp(c);
+							break;
+						}
+						}
+						gameState->update();
 					}
+					else
+					{
+						//if (mDepthTest)
+						//	glDisable(GL_DEPTH_TEST);
+					
+						switch (msg.message) {
+						case WM_LBUTTONDOWN:
+						{
+							POINT newMpos;
+							GetCursorPos(&newMpos);
+							ScreenToClient(wndHandle, &newMpos);
+							float screenX = (newMpos.x * 2.0f / WINDOW_WIDTH) - 1.0f;
+							float screenY = -(newMpos.y * 2.0f / WINDOW_HEIGHT) + 1.0f;
+							int tmp = gameState->screenClickesOn(screenX, screenY);
+							if (tmp != -1)
+							{
+								if (tmp == 2)
+								{
+									playState = MENUSTATE;
+									gameState->clean();
+								}
+							}
+					
+							break;
+						}
+						}
+						glDisable(GL_DEPTH_TEST);
 					}
 					TranslateMessage( &msg );
 					DispatchMessage( &msg );
 				}
-				gameState->update();
+				else
+					gameState->update();
+				
 				//Should switch back to main menu
 				/*if(gameState->getState() == 1)
 				{

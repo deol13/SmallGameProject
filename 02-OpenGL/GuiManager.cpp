@@ -28,16 +28,18 @@ void GuiManager::clean()
 	nrOfbuttons = 0;
 	guiButtons.clear();
 
-	if (guiAttribute != nullptr)
-	{
-		delete[] guiAttribute;
-		guiAttribute = nullptr;
-	}
 	if (guiBuffer != nullptr)
 	{
+		glDeleteBuffers(nrOfbuttons, guiBuffer);
 		delete[] guiBuffer;
 		guiBuffer = nullptr;
 	}
+	if (guiAttribute != nullptr)
+	{
+		glDeleteVertexArrays(nrOfbuttons, guiAttribute);
+		delete[] guiAttribute;
+		guiAttribute = nullptr;
+	}	
 }
 
 void GuiManager::init()
@@ -77,8 +79,11 @@ void GuiManager::update()
 {
 	glUseProgram(gGuiShader);
 
-	glClearColor(0,0,0,1);
-	glClear(GL_COLOR_BUFFER_BIT);
+	if (state != 3)
+	{
+		glClearColor(0, 0, 0, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
 
 	glActiveTexture(GL_TEXTURE0);
 
@@ -100,7 +105,7 @@ void GuiManager::update()
 int GuiManager::mouseClick(float mx, float my)
 {
 	noAction = -1;
-	nonTableAction = 0;
+	nonTableAction = -1;
 
 	lua_getglobal(L, "clicked");
 	lua_pushnumber(L, mx);
@@ -109,12 +114,28 @@ int GuiManager::mouseClick(float mx, float my)
 
 	getLuaTable(3);
 
-	if (nonTableAction != 0)
+	if (nonTableAction != -1)
+	{
+		state = 0;
 		return nonTableAction;
+	}
 	else
 		createVertexBuffer();
 
 	return -1;
+}
+
+void GuiManager::pauseGame()
+{
+	lua_getglobal(L, "pauseGame");
+
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
+
+	getLuaTable(0);
+
+	createVertexBuffer();
 }
 
 void GuiManager::getLuaTable(int nrOfParameters)
@@ -133,7 +154,7 @@ void GuiManager::getLuaTable(int nrOfParameters)
 	{
 		noAction = lua_tonumber(L, -1);
 		lua_pop(L, 1);
-		if (noAction != -1)
+		if (noAction > 0)
 		{
 			clean();
 
@@ -192,6 +213,11 @@ void GuiManager::getLuaTable(int nrOfParameters)
 
 				lua_pop(L, 1);
 			}
+		}
+		else if (noAction == 0)
+		{
+			clean();
+			state = 0;
 		}
 
 	}
@@ -270,4 +296,7 @@ void GuiManager::loadTextures()
 
 	createTexture("HowToPlayText.png");
 	createTexture("Back.png");
+
+	createTexture("Resume.png");
+	createTexture("Quit.png");
 }
