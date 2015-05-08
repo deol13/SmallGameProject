@@ -40,6 +40,12 @@
     <Filter Include="GUI\Headers">
       <UniqueIdentifier>{3ba43baa-4b65-4c9a-826d-3a13513cca4a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\SFX">
+      <UniqueIdentifier>{d63e502e-ac2d-4f66-afe4-862094acbff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SFX">
+      <UniqueIdentifier>{86a6ad56-7e19-47b3-9394-be3c9926aef2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="GuiManager.cpp">
       <Filter>GUI\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Source Files\SFX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="MenuButton.h">
       <Filter>GUI\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Header Files\SFX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

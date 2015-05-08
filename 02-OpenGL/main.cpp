@@ -18,6 +18,7 @@
 #define GLM_FORCE_RADIANS
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
+//#include "Audio.h"
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glew32.lib")
@@ -89,6 +90,11 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			currentFrame = std::clock();
 			switch( playState ) {
 			case MENUSTATE:
+				
+
+				//Audio::getAudio().init(1.0f, 1.0f, 1.0f, true, true, true);
+				//Audio::getAudio().playMusic(0);
+
 				if (mDepthTest)
 				{
 					glDisable(GL_DEPTH_TEST);
