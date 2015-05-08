@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "iostream"
 
 Enemy::Enemy()
 {
@@ -8,6 +9,8 @@ Enemy::Enemy()
 	moveSpeed = 2.0f;
 	this->x = 100.0f;
 	this->z = 100.0f;
+
+	initPhero();
 }
 
 Enemy::Enemy(int type, float x, float z, GLuint texture)
@@ -22,12 +25,14 @@ Enemy::Enemy(int type, float x, float z, GLuint texture)
 		loadObj = new GObject( "enamie.obj", GL_TRIANGLES, texture );
 		health = 20;
 		this->type = MELEE;
-		moveSpeed = 2.0f;	
+		moveSpeed = 10.0f;	
 		break;
 	default:
 		break;
 	}
 	loadObj->translate(x, 17, z);
+
+	initPhero();
 }
 
 Enemy::~Enemy()
@@ -104,8 +109,11 @@ void Enemy::attack()
 void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt eller plats
 {
 	bool attacking = false;
+	int biggest = -100;
+	float bestMoveX = 0.0f;
+	float bestMoveZ = 0.0f;
 
-	if (type == MELEE && board[(int)x][(int)z] >= 0)		//atack if in range
+	if (type == MELEE)		//atack if in range
 	{
 		if (abs(x - playerX) <= MELEERANGE && abs(z - playerZ) <= MELEERANGE)
 		{
@@ -113,7 +121,7 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			attack();
 		}
 	}
-	else if (type == RANGED && board[(int)x][(int)z] >= 0)
+	else if (type == RANGED)
 	{
 		if (abs(x - playerX) <= RANGEDRANGE && abs(z - playerZ) <= RANGEDRANGE)
 		{
@@ -121,7 +129,7 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			attack();
 		}
 	}
-	else if (type == TANK && board[(int)x][(int)z] >= 0)
+	else if (type == TANK)
 	{
 		if (abs(x - playerX) <= TANKRANGE && abs(z - playerZ) <= TANKRANGE)
 		{
@@ -130,14 +138,10 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 		}
 	}
 
-	if (attacking == false)	//If not attacking then move
+	if (attacking == false || board[(int)x][(int)z] >= 0)
 	{
 		float moveX = 0.0f;
 		float moveZ = 0.0f;
-
-		int lowest = -100;
-		float biggestX = -100.0;
-		float biggestZ = -100.0;
 
 		if (x < playerX)		//suggested movement
 		{
@@ -156,8 +160,6 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			moveZ--;
 		}
 
-		createPositivePotential(board, x, z);	//take away the enemies own negative field
-
 		if (board[(int)(x + moveX)][(int)(z + moveZ)] < 0 || board[(int)x][(int)z] < 0)
 		{
 			int testerX = (int)moveX;
@@ -167,11 +169,12 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			{
 				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
 				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
-					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
+					if (board[(int)(x + testerX)][(int)(z + testerZ)] > biggest)
+					{	//Tar ut platsen med högst värde och sparar undan den
+						biggest = board[(int)(x + testerX)][(int)(z + testerZ)];
+
+						bestMoveX = testerX;
+						bestMoveZ = testerZ;
 					}
 
 					if (testerX == -1 && testerZ == -1)
@@ -193,8 +196,8 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 					}
 					else
 					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
+						testerX = 0;	//chosing path of least resistence
+						testerZ = 0;
 						break;
 					}
 				}
@@ -203,11 +206,12 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			{
 				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
 				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
+					if (board[(int)(x + testerX)][(int)(z + testerZ)] > biggest)
 					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
+						biggest = board[(int)(x + testerX)][(int)(z + testerZ)];
+
+						bestMoveX = testerX;
+						bestMoveZ = testerZ;
 					}
 
 					if (testerX == -1 && testerZ == 0)
@@ -229,8 +233,8 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 					}
 					else
 					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
+						testerX = 0;
+						testerZ = 0;
 						break;
 					}
 				}
@@ -239,11 +243,12 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			{
 				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
 				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
+					if (board[(int)(x + testerX)][(int)(z + testerZ)] > biggest)
 					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
+						biggest = board[(int)(x + testerX)][(int)(z + testerZ)];
+
+						bestMoveX = testerX;
+						bestMoveZ = testerZ;
 					}
 
 					if (testerX == 1 && testerZ == -1)
@@ -267,9 +272,8 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 					}
 					else
 					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
-
+						testerX = 0;
+						testerZ = 0;
 						break;
 					}
 				}
@@ -279,11 +283,12 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			{
 				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
 				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
+					if (board[(int)(x + testerX)][(int)(z + testerZ)] > biggest)
 					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
+						biggest = board[(int)(x + testerX)][(int)(z + testerZ)];
+
+						bestMoveX = testerX;
+						bestMoveZ = testerZ;
 					}
 
 					if (testerX == 0 && testerZ == 1)
@@ -304,8 +309,8 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 					}
 					else
 					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
+						testerX = 0;
+						testerZ = 0;
 						break;
 					}
 				}
@@ -314,11 +319,12 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			{
 				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
 				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
+					if (board[(int)(x + testerX)][(int)(z + testerZ)] > biggest)
 					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
+						biggest = board[(int)(x + testerX)][(int)(z + testerZ)];
+
+						bestMoveX = testerX;
+						bestMoveZ = testerZ;
 					}
 
 					if (testerX == 1 && testerZ == 1)
@@ -342,8 +348,8 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 					}
 					else
 					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
+						testerX = 0;
+						testerZ = 0;
 						break;
 					}
 				}
@@ -353,11 +359,12 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			{
 				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
 				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
+					if (board[(int)(x + testerX)][(int)(z + testerZ)] > biggest)
 					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
+						biggest = board[(int)(x + testerX)][(int)(z + testerZ)];
+
+						bestMoveX = testerX;
+						bestMoveZ = testerZ;
 					}
 
 					if (testerX == 1 && testerZ == 0)
@@ -378,8 +385,8 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 					}
 					else
 					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
+						testerX = 0;
+						testerZ = 0;
 						break;
 					}
 				}
@@ -388,11 +395,12 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			{
 				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
 				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
+					if (board[(int)(x + testerX)][(int)(z + testerZ)] > biggest)
 					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
+						biggest = board[(int)(x + testerX)][(int)(z + testerZ)];
+
+						bestMoveX = testerX;
+						bestMoveZ = testerZ;
 					}
 
 					if (testerX == 1 && testerZ == -1)
@@ -416,8 +424,8 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 					}
 					else
 					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
+						testerX = 0;
+						testerZ = 0;
 						break;
 					}
 				}
@@ -427,11 +435,12 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 			{
 				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
 				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
+					if (board[(int)(x + testerX)][(int)(z + testerZ)] > biggest)
 					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
+						biggest = board[(int)(x + testerX)][(int)(z + testerZ)];
+
+						bestMoveX = testerX;
+						bestMoveZ = testerZ;
 					}
 
 					if (testerX == 0 && testerZ == -1)
@@ -453,20 +462,18 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 					}
 					else
 					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
+						testerX = 0;
+						testerZ = 0;
 						break;
 					}
 				}
 
 			}
-
-			moveX = testerX * moveSpeed;	//Got where we are moving 
-			moveZ = testerZ * moveSpeed;
+			
+			moveX = bestMoveX * moveSpeed;	//Got where we are moving 
+			moveZ = bestMoveZ * moveSpeed;
+			setPheromone(x, z, board);
 		}
-
-		float tempX = x;
-		float tempZ = z;
 
 		if (moveX != 0)
 		{
@@ -478,50 +485,37 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 		{
 			z = z + moveZ;
 			loadObj->translate(0, 0, moveZ);
-
-		}
-
-		if (attacking == false)
-		{
-			createNegativePotential(board, x, z);	//tell the board where we are standing
 		}
 	}
 }
 
-void Enemy::createNegativePotential(int** board, int posX, int posZ)
+void Enemy::setPheromone(int x, int z, int** board)
 {
-	board[posZ][posX] -= 8;
-
-	int length = 0;
-	for (int i = posZ - potentialRange; i <= posZ + potentialRange; i++)
+	if (thirdLastX != 0 && thirdLastZ != 0)
 	{
-		for (int j = posX - potentialRange; j <= posX + potentialRange; j++)
-		{
-			length = sqrt(((j - posX)*(j - posX)) + ((i - posZ)*(i - posZ)));
-			if (length < potentialRange)
-			{
-				if (length > 0)
-					board[i][j] -= potentialRange - length;
-			}
-		}
+		board[thirdLastX][thirdLastZ] += 5000;
 	}
+
+	thirdLastX = secondLastX;
+	thirdLastZ = secondLastZ;
+
+	secondLastX = firstLastX;
+	secondLastZ = firstLastZ;
+
+	firstLastX = x;
+	firstLastZ = z;
+
+	board[firstLastX][firstLastZ] += -5000;
+	board[secondLastX][secondLastZ] += -5000;
+	board[thirdLastX][thirdLastZ] += -5000;
 }
 
-void Enemy::createPositivePotential(int** board, int posX, int posZ)
+void Enemy::initPhero()
 {
-	board[posZ][posX] += 8;
-
-	int length = 0;
-	for (int i = posZ - potentialRange; i <= posZ + potentialRange; i++)
-	{
-		for (int j = posX - potentialRange; j <= posX + potentialRange; j++)
-		{
-			length = sqrt(((j - posX)*(j - posX)) + ((i - posZ)*(i - posZ)));
-			if (length < potentialRange)
-			{
-				if (length > 0)
-					board[i][j] += potentialRange - length;
-			}
-		}
-	}
+	firstLastX = 0;
+	firstLastZ = 0;
+	secondLastX = 0;
+	secondLastZ = 0;
+	thirdLastX = 0;
+	thirdLastZ = 0;
 }

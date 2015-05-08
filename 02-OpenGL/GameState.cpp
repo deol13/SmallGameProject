@@ -10,11 +10,11 @@ void GameState::init(int w, int h)
 	state = 0;
 	//initialize the board the AI uses
 	this->board = new int*[GASIZE];
-	for (int x = GASIZE - 1; x >= 0; x -- )
+	for (int x = GASIZE - 1; x >= 0; x--)
 	{
 		this->board[x] = new int[GASIZE];
 
-		for (int z = GASIZE - 1; z >= 0; z --)
+		for (int z = GASIZE - 1; z >= 0; z--)
 		{
 			if (x == GASIZE - 1 || z == GASIZE - 1 || x == 0 || z == 0)
 			{
@@ -64,6 +64,7 @@ void GameState::update()
 	{
 		if(enemyWave[i]->getHealth() > 0)
 		{
+			createEnemyPotential(enemyWave[i]->getX(), enemyWave[i]->getZ());
 			enemyWave[i]->act(player->getX(), player->getZ(), board);
 		}
 	}
@@ -369,5 +370,60 @@ void GameState::createNegativePotential(int posX, int posZ, int size)
 					board[i][j] -= size - length;
 			}
 		}
+	}
+}
+
+void GameState::createEnemyPotential(int posX, int posZ)		//Sets options for the bots to chose from
+{
+	int x = 0;
+	int z = 0;
+
+	int negativeValue = -500;
+	int potentialFieldSize = 4;
+
+	for (int i = 0; i < waveSize; i++)	//creates negative fields around all the enemies but one
+	{
+		x = enemyWave[i]->getX();
+		z = enemyWave[i]->getZ();
+
+		if (x != posX && z != posZ)		//puts a negative field around all the enemies
+		{
+			for (int i = 1; i < potentialFieldSize; i++)
+			{
+
+				board[x][z] = negativeValue / i;
+
+				board[x + i][z] = negativeValue / i;
+				board[x][z + i] = negativeValue / i;
+				board[x + i][z + i] = negativeValue / i;
+
+				board[x - i][z] = negativeValue / i;
+				board[x][z - i] = negativeValue / i;
+				board[x - i][z - i] = negativeValue / i;
+
+				board[x + i][z - i] = negativeValue / i;
+				board[x - i][z + i] = negativeValue / i;
+			}
+		}
+		else							//Calculates the best option for targeted enemy
+		{
+			for (int i = 1; i < potentialFieldSize; i++)
+			{
+				board[x][z] += ((player->getX() + player->getZ()) * (x + z)) / i * 10;
+
+				board[x + 1][z] += ((player->getX() + player->getZ()) * (x + 1 + z)) / i * 10;
+				board[x][z + 1] += ((player->getX() + player->getZ()) * (x + z + 1)) / i * 10;
+				board[x + 1][z + 1] += ((player->getX() + player->getZ()) * ((x + 1) + (z + 1))) / i * 10;
+
+				board[x - 1][z] += ((player->getX() + player->getZ()) * ((x - 1) + z)) / i * 10;
+				board[x][z - 1] += ((player->getX() + player->getZ()) * (x + (z - 1))) / i * 10;
+				board[x - 1][z - 1] += ((player->getX() + player->getZ()) * ((x - 1) + (z - 1))) / i * 10;
+
+				board[x + 1][z - 1] += ((player->getX() + player->getZ()) * ((x + 1) + (z - 1))) / i * 10;
+				board[x - 1][z + 1] += ((player->getX() + player->getZ()) * ((x - 1) + (z + 1))) / i * 10;
+
+			}
+		}
+
 	}
 }

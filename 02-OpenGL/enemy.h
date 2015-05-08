@@ -11,7 +11,9 @@ const int MELEERANGE = 8;
 const int RANGEDRANGE = 16;
 const int TANKRANGE = 12;
 
-const int potentialRange = 8;
+const int POTENTIALRANGE = 4;
+
+using namespace std;
 
 class Enemy
 {
@@ -25,6 +27,10 @@ class Enemy
 		GObject* loadObj;
 		BoundingRect collisionRect;
 
+		int firstLastX, firstLastZ, secondLastX, secondLastZ, thirdLastX, thirdLastZ;
+		void setPheromone(int x, int z, int** board);
+		void initPhero();
+
 	public:
 		Enemy();
 		Enemy(int type, float x, float z, GLuint texture);
@@ -33,17 +39,14 @@ class Enemy
 		void setEnemy(int type);
 		
 		GObject* getGObject() const;
-		float getX()const;
-		float getZ()const;
+		float getX() const;
+		float getZ() const;
 		int getHealth()const;
 		BoundingRect getBounds() const;
 		bool takeDamage(const int dmg);					//returns true if still alive
 
 		void attack();
 		void act(float playerX, float playerZ, int** board);
-		
-		void createNegativePotential(int** board, int posX, int posZ);
-		void createPositivePotential(int** board, int posX, int posZ);
 
 };
 #endif

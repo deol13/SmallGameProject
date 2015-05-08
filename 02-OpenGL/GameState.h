@@ -9,24 +9,28 @@ class GameState {
 private:
 	int state;
 	int** board;
+	
 	Render* render;
 	GuiManager* gameUI;
 	std::vector<GObject*> renderObjects;
 	std::vector<BoundingRect> collisionVec;
+	
 	Player* player;
 	//std::vector<Enemy> enemyWave;
 	Enemy** enemyWave;
+	
 	int waveSize;
 	int enemiesRemaining;
 	int nrOfArenaObjects;
 	int firstEnemyIndex;		//Start of enemies in renderObjects. Useful for enemy deaths etc.
 
-	
 	void loadArena(std::string fileName);
 	void spawnEnemies(std::string fileName);
 	void spawnPlayer();
 	bool playerCanMove( Player::Direction dir );
+	
 	void createNegativePotential(int posX, int posZ, int size);
+	void createEnemyPotential(int posX, int posZ);
 
 public:
 	GameState(int w, int h);
