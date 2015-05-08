@@ -1,14 +1,8 @@
-﻿Build started 5/7/2015 4:18:14 PM.
+﻿Build started 5/8/2015 10:52:09 AM.
      1>Project "C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glew-1.11.0" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameState.cpp
-         GameState.cpp
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(37): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(254): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(256): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(306): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(316): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(396): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glew-1.11.0" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" LuaLib.lib GLU32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\BlitQuad.obj
          Debug\Enemy.obj
@@ -28,4 +22,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.03
+Time Elapsed 00:00:01.68

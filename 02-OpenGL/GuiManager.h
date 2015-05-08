@@ -14,6 +14,7 @@
 class GuiManager
 {
 	private:
+		int texCounter;
 		int windowWidth;
 		int windowHeight;
 		int noAction;

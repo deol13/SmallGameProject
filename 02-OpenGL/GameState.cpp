@@ -2,11 +2,13 @@
 
 GameState::GameState( int w, int h)
 {
+	onExitCleanUp = false;
 	//init(w, h);
 }
 
 GameState::~GameState()
 {
+
 	clean();
 }
 
@@ -45,30 +47,37 @@ void GameState::init(int w, int h)
 	//Spawn first enemy wave
 	spawnEnemies("placeholder");
 	enemiesRemaining = waveSize;
+
+	onExitCleanUp = true;
 }
 
 void GameState::clean()
 {
-	delete render;
-	render = nullptr;
-	delete gameUI;
-	gameUI = nullptr;
-	for(int i = 0; i < waveSize; i++)
+	if (onExitCleanUp)
 	{
-		delete enemyWave[i];
+		delete render;
+		render = nullptr;
+		delete gameUI;
+		gameUI = nullptr;
+		for (int i = 0; i < waveSize; i++)
+		{
+			delete enemyWave[i];
+		}
+		delete[] enemyWave;
+		enemyWave = nullptr;
+
+		delete player;
+
+		for (int i = 0; i < GASIZE; i++)
+		{
+			delete board[i];
+		}
+		delete[] board;
+
+		renderObjects.clear();
+
+		onExitCleanUp = false;
 	}
-	delete[] enemyWave;
-	enemyWave = nullptr;
-
-	delete player;
-
-	for (int i = 0; i < GASIZE; i++)
-	{
-		delete board[i];
-	}
-	delete[] board;
-
-	renderObjects.clear();
 }
 
 void GameState::update()

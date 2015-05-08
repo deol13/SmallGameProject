@@ -90,7 +90,10 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			switch( playState ) {
 			case MENUSTATE:
 				if (mDepthTest)
+				{
 					glDisable(GL_DEPTH_TEST);
+					mDepthTest = false;
+				}
 
 				if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 				{
@@ -103,24 +106,21 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 						float screenY = -(newMpos.y * 2.0f / WINDOW_HEIGHT) +1.0f;
 						int tmp = mGUI->mouseClick(screenX, screenY);
 
-						if (tmp != -1)
+						if (tmp == 1)
 						{
-							if (tmp == 1)
-							{
-								playState = GAMESTATE;
-								initState = true;
-								mGUI->state = 1;
-							}
-							else if (tmp == 2)
-							{
-								isQuitting = true;
-							}
-							/*else if (tmp == 3)
-							{
-								playState = GAMESTATE;
-								initState = false;
-								mGUI->state = 1;
-							}*/
+							playState = GAMESTATE;
+							initState = true;
+							mGUI->state = 1;
+						}
+						else if (tmp == 2) //Map creation
+						{
+							playState = GAMESTATE;
+							initState = false;
+							mGUI->state = 1;
+						}
+						else if (tmp == 3)
+						{
+							isQuitting = true;
 						}
 					}
 					TranslateMessage(&msg);
@@ -138,9 +138,11 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				{
 					if (gameState->guiState() != 3)
 					{
-						glEnable(GL_DEPTH_TEST);
 						if (!mDepthTest)
+						{
 							glEnable(GL_DEPTH_TEST);
+							mDepthTest = true;
+						}
 
 						switch (msg.message) {
 						case  WM_LBUTTONDOWN:
@@ -171,8 +173,11 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 					}
 					else
 					{
-						//if (mDepthTest)
-						//	glDisable(GL_DEPTH_TEST);
+						if (mDepthTest)
+						{
+							glDisable(GL_DEPTH_TEST);
+							mDepthTest = false;
+						}
 					
 						switch (msg.message) {
 						case WM_LBUTTONDOWN:
@@ -183,15 +188,12 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							float screenX = (newMpos.x * 2.0f / WINDOW_WIDTH) - 1.0f;
 							float screenY = -(newMpos.y * 2.0f / WINDOW_HEIGHT) + 1.0f;
 							int tmp = gameState->screenClickesOn(screenX, screenY);
-							if (tmp != -1)
+
+							if (tmp == 2)
 							{
-								if (tmp == 2)
-								{
-									playState = MENUSTATE;
-									gameState->clean();
-								}
+								playState = MENUSTATE;
+								gameState->clean();
 							}
-					
 							break;
 						}
 						}
@@ -216,8 +218,6 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				break;
 			}
 
-			//player->update();
-			
 			SwapBuffers( hDC ); //10. Växla front- och back-buffer
 			FPScount++;
 			

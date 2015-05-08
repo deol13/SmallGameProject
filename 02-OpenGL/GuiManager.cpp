@@ -13,6 +13,7 @@ GuiManager::GuiManager(int w, int h)
 	guiBuffer = nullptr;
 	noAction = -1;
 	gGuiShader = 0;
+	texCounter = 0;
 
 	init();
 }
@@ -267,9 +268,12 @@ int GuiManager::stateChange(lua_State *L)
 
 void GuiManager::createTexture(std::string fileName)
 {
+	std::string filePath;
 	GLuint texture;
 	int x, y, n;
-	std::string filePath = "Resource/" + fileName;
+
+	filePath = "Resource/" + fileName; //filePath = "Resource/InGameGui/" + fileName;
+
 	unsigned char* textureData = stbi_load(filePath.c_str(), &x, &y, &n, 4);
 	glGenTextures(1, &texture);
 	glActiveTexture(GL_TEXTURE0);
@@ -282,6 +286,8 @@ void GuiManager::createTexture(std::string fileName)
 	textures.push_back(texture);
 	stbi_image_free(textureData);
 
+	texCounter++;
+
 	GLenum error1 = glGetError();
 	if (error1 != GL_NO_ERROR)
 		printf("Error");
@@ -289,13 +295,15 @@ void GuiManager::createTexture(std::string fileName)
 
 void GuiManager::loadTextures()
 {
-	createTexture("NewGame.png");
-	createTexture("Continue.png");
-	createTexture("HowToPlay.png");
-	createTexture("Exit.png");
+	createTexture("NewMenuTextures/backGround.png");
+	createTexture("NewMenuTextures/newgame.png");
+	createTexture("NewMenuTextures/conti.png");
+	createTexture("NewMenuTextures/howto.png");
+	createTexture("NewMenuTextures/mapedit.png");
+	createTexture("NewMenuTextures/exit.png");
 
-	createTexture("HowToPlayText.png");
-	createTexture("Back.png");
+	createTexture("NewMenuTextures/howtoplaybk.png");
+	createTexture("NewMenuTextures/back.png");
 
 	createTexture("Resume.png");
 	createTexture("Quit.png");
