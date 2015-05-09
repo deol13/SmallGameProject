@@ -42,8 +42,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>glm;glew-1.11.0/Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>glew-1.11.0/lib/Release/win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+    <IncludePath>glm;glew-1.11.0/Include;..\OpenAL\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <LibraryPath>glew-1.11.0/lib/Release/win32;..\OpenAL\lib\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -62,7 +62,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>LuaLib.lib;GLU32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>LuaLib.lib;GLU32.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -85,6 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BlitQuad.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -101,6 +102,7 @@
     <ClCompile Include="stb_image.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="BlitQuad.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameState.h" />
