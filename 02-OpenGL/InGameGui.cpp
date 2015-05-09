@@ -95,7 +95,7 @@ void InGameGui::addHealth()
 	getLuaTable();
 	
 	if (maxHealth < 6)
-	{
+	{ //Increase 4 in [] with 1 for every object before the first heart
 		maxHealth++;
 		currentHealth = maxHealth;
 
@@ -107,10 +107,9 @@ void InGameGui::addHealth()
 
 void InGameGui::DmgTaken()
 { //4,5,6,7,8,9
-	
 	if (currentHealth > 0) //Temporary
-	{
-		guiObjects[currentHealth + 3].textureIndex = 3;
+	{ //Increase 3 in [] with 1 for every object before the first heart
+		guiObjects[currentHealth + 3].textureIndex = 3; 
 		currentHealth--;
 	}
 
@@ -128,7 +127,7 @@ void InGameGui::DmgTaken()
 void InGameGui::heal()
 {
 	if (currentHealth < maxHealth) //Temporary
-	{
+	{ //Increase 4 in [] with 1 for every object before the first heart
 		guiObjects[currentHealth + 4].textureIndex = 1;
 		currentHealth++;
 	}

@@ -140,6 +140,32 @@ void GuiManager::pauseGame()
 	createVertexBuffer();
 }
 
+void GuiManager::won()
+{
+	lua_getglobal(L, "onVictory");
+
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
+
+	getLuaTable(0);
+
+	createVertexBuffer();
+}
+
+void GuiManager::defeat()
+{
+	lua_getglobal(L, "onDeath");
+
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
+
+	getLuaTable(0);
+
+	createVertexBuffer();
+}
+
 void GuiManager::getLuaTable(int nrOfParameters)
 {
 	int counter = 0;
@@ -303,4 +329,9 @@ void GuiManager::loadTextures()
 
 	createTexture("Resume.png");
 	createTexture("Quit.png");
+
+	createTexture("Victory.png");
+	createTexture("Defeat.png");
+	createTexture("Restart.png");
+	createTexture("LoadSave.png");
 }

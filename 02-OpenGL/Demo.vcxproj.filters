@@ -1,74 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Header Files\lua">
-      <UniqueIdentifier>{608aea55-e5c8-444a-886f-0eb40e26612f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\stb_image">
-      <UniqueIdentifier>{4105f8ac-f3e4-482e-9cd8-ae002da5e96d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\structs">
-      <UniqueIdentifier>{2ca9b144-fdb6-4e7e-997e-85ac866215e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics">
-      <UniqueIdentifier>{472b441b-05d3-42f4-aae8-0ad2b302e467}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Headers">
-      <UniqueIdentifier>{3d1fa2e8-ca98-4e21-987b-ff4f2149db36}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Sources">
-      <UniqueIdentifier>{9b52fc3b-7ece-49a1-964b-f53c7ab19cb7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GUI">
-      <UniqueIdentifier>{0526ebbc-c9ef-4f7d-8da3-6adf6aaf6cf6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GUI\Sources">
-      <UniqueIdentifier>{98e50e2c-1913-4f50-9dea-a9b6172780f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GUI\Headers">
-      <UniqueIdentifier>{3ba43baa-4b65-4c9a-826d-3a13513cca4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\SFX">
-      <UniqueIdentifier>{d63e502e-ac2d-4f66-afe4-862094acbff9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\SFX">
-      <UniqueIdentifier>{86a6ad56-7e19-47b3-9394-be3c9926aef2}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="stb_image.c">
-      <Filter>Header Files\stb_image</Filter>
-    </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BlitQuad.cpp">
       <Filter>Graphics\Sources</Filter>
     </ClCompile>
@@ -78,64 +10,44 @@
     <ClCompile Include="gbuffer.cpp">
       <Filter>Graphics\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="LightShader.cpp">
+      <Filter>Graphics\Sources</Filter>
+    </ClCompile>
     <ClCompile Include="GuiShader.cpp">
       <Filter>Graphics\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="LightShader.cpp">
-      <Filter>Graphics\Sources</Filter>
+    <ClCompile Include="InGameGui.cpp">
+      <Filter>GUI\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.c">
+      <Filter>Header Files\Stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GuiManager.cpp">
       <Filter>GUI\Sources</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="InGameGui.cpp">
-      <Filter>GUI\Sources</Filter>
-=======
-    <ClCompile Include="Audio.cpp">
-      <Filter>Source Files\SFX</Filter>
->>>>>>> origin/master
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Render.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lua.h">
-      <Filter>Header Files\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="lua.hpp">
-      <Filter>Header Files\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="lauxlib.h">
-      <Filter>Header Files\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="luaconf.h">
-      <Filter>Header Files\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="lualib.h">
-      <Filter>Header Files\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="stb_image.h">
-      <Filter>Header Files\stb_image</Filter>
-    </ClInclude>
-    <ClInclude Include="Vertex.h">
-      <Filter>Header Files\structs</Filter>
-    </ClInclude>
-    <ClInclude Include="BoundingRect.h">
-      <Filter>Header Files\structs</Filter>
-    </ClInclude>
     <ClInclude Include="BlitQuad.h">
       <Filter>Graphics\Headers</Filter>
     </ClInclude>
@@ -145,11 +57,59 @@
     <ClInclude Include="gbuffer.h">
       <Filter>Graphics\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="LightShader.h">
+      <Filter>Graphics\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="GuiShader.h">
       <Filter>Graphics\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="LightShader.h">
-      <Filter>Graphics\Headers</Filter>
+    <ClInclude Include="MenuButton.h">
+      <Filter>GUI\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameGui.h">
+      <Filter>GUI\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header Files\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingRect.h">
+      <Filter>Header Files\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files\Stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="lua.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="lauxlib.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="lua.hpp">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="luaconf.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="lualib.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SpotLight.h">
       <Filter>Graphics\Headers</Filter>
@@ -157,20 +117,15 @@
     <ClInclude Include="GuiManager.h">
       <Filter>GUI\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="MenuButton.h">
-      <Filter>GUI\Headers</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="InGameGui.h">
-      <Filter>GUI\Headers</Filter>
-=======
-    <ClInclude Include="Audio.h">
-      <Filter>Header Files\SFX</Filter>
->>>>>>> origin/master
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="LuaButton.lua">
+    <None Include="AltWave.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Arena.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ArenaReader.lua">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="EnemyReader.lua">
@@ -179,17 +134,49 @@
     <None Include="EnemyWaves.dat">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="AltWave.dat">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="ArenaReader.lua">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Arena.dat">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="gui.lua">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="LuaButton.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{d5de1873-660c-47f0-aa74-e88b1e1c8544}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{bca76cfc-d617-4865-8d89-e48fdc1c2228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{cf43db43-da5f-49d5-b84b-0da2c28b67de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Sources">
+      <UniqueIdentifier>{6663f6a3-2833-484d-9a19-5e67929ec0c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Headers">
+      <UniqueIdentifier>{1e4e83f5-7cd2-4a7c-af5c-4b63b3374bbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Sources">
+      <UniqueIdentifier>{252571b7-64b6-4591-af76-ce746833af6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Headers">
+      <UniqueIdentifier>{03cb4399-f89d-4341-baec-c120c56b435b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{5c309f12-1323-4d21-9c24-fb75fc72540e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{585abb53-5485-4e0d-8496-ffef8e7bc66c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structs">
+      <UniqueIdentifier>{0b6e693d-7aa7-4a5b-8e62-645ef3d68612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Stb_image">
+      <UniqueIdentifier>{f31f3846-4389-4583-a28b-e5a4c50681ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lua">
+      <UniqueIdentifier>{3d3cfca8-7704-46e4-8ca0-dccfab2977e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

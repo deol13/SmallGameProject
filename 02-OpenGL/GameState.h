@@ -38,6 +38,7 @@ public:
 	void init(int w, int h);
 	void clean();
 	void update();
+	void uiUpdate();
 	void keyDown(char c);
 	void keyUp(char c);
 	void leftMouseClick(long x, long y);

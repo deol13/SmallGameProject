@@ -86,16 +86,9 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			currentFrame = std::clock();
 			switch( playState ) {
 			case MENUSTATE:
-				
-
 				//Audio::getAudio().init(1.0f, 1.0f, 1.0f, true, true, true);
 				//Audio::getAudio().playMusic(0);
-
-				if (mDepthTest)
-				{
-					glDisable(GL_DEPTH_TEST);
-					mDepthTest = false;
-				}
+				glDisable(GL_DEPTH_TEST);
 
 				if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 				{
@@ -138,14 +131,8 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				}
 				if( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) 
 				{
-					if (gameState->guiState() != 3)
+					if (gameState->guiState() < 3)
 					{
-						//if (!mDepthTest)
-						//{
-						//	glEnable(GL_DEPTH_TEST);
-						//	mDepthTest = true;
-						//}
-
 						switch (msg.message) {
 						case  WM_LBUTTONDOWN:
 						{
@@ -171,16 +158,14 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							break;
 						}
 						}
+						//glEnable(GL_DEPTH_TEST);
 						gameState->update();
+						glDisable(GL_DEPTH_TEST);
+						gameState->uiUpdate();
+						glEnable(GL_DEPTH_TEST);
 					}
 					else
 					{
-						if (mDepthTest)
-						{
-							glDisable(GL_DEPTH_TEST);
-							mDepthTest = false;
-						}
-					
 						switch (msg.message) {
 						case WM_LBUTTONDOWN:
 						{
@@ -200,12 +185,19 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 						}
 						}
 						glDisable(GL_DEPTH_TEST);
+						gameState->uiUpdate();
 					}
 					TranslateMessage( &msg );
 					DispatchMessage( &msg );
 				}
 				else
+				{
+					//glEnable(GL_DEPTH_TEST);
 					gameState->update();
+					glDisable(GL_DEPTH_TEST);
+					gameState->uiUpdate();
+					glEnable(GL_DEPTH_TEST);
+				}
 				
 				//Should switch back to main menu
 				/*if(gameState->getState() == 1)

@@ -13,6 +13,14 @@ howToPlayMenu = { -1.0, 1.0, 1.0, -1.0, 0, 0, 1, 1, 6,      --How to play text
 pauseMenu =		{ -0.312, 0.25, 0.312,  0.0 , 0, 0, 1, 1, 8,  --Resume
 				  -0.312, 0.0 , 0.312, -0.25, 0, 0, 1, 1, 9 } --Quit
 
+won = { -0.312, 0.400, 0.312, 0.150, 0, 0, 1, 1, 10, -- Win 
+	    -0.312, 0.125, 0.312, -0.125, 0, 0, 1, 1, 9 }  --Quit
+
+defeat = { -0.312, 0.675, 0.312, 0.425, 0, 0, 1, 1, 11,  -- Defeat
+		   -0.312, 0.400, 0.312, 0.150, 0, 0, 1, 1, 12,  -- Restart
+		   -0.312, 0.125, 0.312, -0.125, 0, 0, 1, 1, 13,  -- Load last save
+		   -0.312, -0.150, 0.312, -0.400, 0, 0, 1, 1, 9 } --Quit
+
 stadardInGameGui = { -1.0, 1.0, 1.0, 0.848, 0, 0, 1, 1, 0,          --Background
 
 					 -0.313, 0.987, 0.0  , 0.861, 0, 0, 1, 1, 5,
@@ -44,9 +52,20 @@ empty = {}
 maxHearts = 6
 currentHearts = 3
 
+
+
+
 function init() --[[ When the game starts, lua returns how the start menu should look like ]]
 	return startMenu, 1
 end
+
+--won = { -0.312, 0.450, 0.312, 0.150, 0, 0, 1, 1, 10, -- Win 
+--	    -0.312, 0.125, 0.312, -0.125, 0, 0, 1, 1, 9 }  --Quit
+--
+--defeat = { -0.312, 0.725, 0.312, 0.475, 0, 0, 1, 1, 11,  -- Defeat
+--		   -0.312, 0.450, 0.312, 0.150, 0, 0, 1, 1, 12,  -- Restart
+--		   -0.312, 0.125, 0.312, -0.125, 0, 0, 1, 1, 13,  -- Load last save
+--		   -0.312, -0.150, 0.312, -0.400, 0, 0, 1, 1, 9 } --Quit
 
 
 function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a menu state ]]
@@ -74,6 +93,18 @@ function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a
 		elseif xPos < 0.312 and xPos > -0.312  and yPos < 0.0 and yPos > -0.25 then     --[[Exit to start menu]]
 			stateChange(2)
 		end
+	elseif state == 4 then  --Win
+		if xPos < 0.312 and xPos > -0.312  and yPos < 0.125 and yPos > -0.125 then --[[Exit to start menu]]
+			stateChange(2)
+		elseif xPos < 0.312 and xPos > -0.312  and yPos < 0.450 and yPos > 0.150 then --[[Resume / Hidden Button]]
+			stateChange(0)
+		end
+	elseif state == 5 then  --Defeat
+		if xPos < 0.312 and xPos > -0.312  and yPos < -0.15 and yPos > -0.40 then --[[Exit to start menu]]
+			stateChange(2)
+		elseif xPos < 0.312 and xPos > -0.312  and yPos < 0.725 and yPos > 0.475 then --[[Resume / Hidden Button]]
+			stateChange(0)
+		end
 	else
 		return -1
 	end
@@ -88,6 +119,14 @@ end
 
 function inGameGUI()
 	return stadardInGameGui
+end
+
+function onVictory()
+	return won, 4
+end
+
+function onDeath()
+	return defeat, 5
 end
 
 function addHeart()

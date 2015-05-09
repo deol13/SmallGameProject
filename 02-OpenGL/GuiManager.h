@@ -42,6 +42,8 @@ class GuiManager
 		void createTexture(std::string fileName);
 
 		void pauseGame();
+		void won();
+		void defeat();
 
 		static int stateChange(lua_State *L);
 		static int nonTableAction;

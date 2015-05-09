@@ -101,11 +101,7 @@ void GameState::update()
 	render->render(renderObjects);
 	render->lightPass();
 
-	gameUI->update();
-	if (menuUI->state == 3)
-	{
-		menuUI->update();
-	}
+	
 	//Debug function that drains health of enemy. Currently bugged
 	//if(!enemyWave[0]->takeDamage(1))	
 	//{
@@ -117,6 +113,19 @@ void GameState::update()
 	//{
 	////	spawnEnemies("altwave.dat");
 	//}
+}
+
+void GameState::uiUpdate()
+{
+	if (menuUI->state == 3)
+	{
+		gameUI->update();
+		menuUI->update();
+	}
+	else if (menuUI->state == 4 || menuUI->state == 5)
+		menuUI->update();
+	else
+		gameUI->update();
 }
 
 void GameState::keyDown(char c)
@@ -176,6 +185,16 @@ void GameState::keyDown(char c)
 	case 'X': //Temporary
 		skipSetDir = true; //Temporary
 		gameUI->comboLost(); //Temporary
+		break; //Temporary
+	case 'c': //Temporary
+	case 'C': //Temporary
+		skipSetDir = true; //Temporary
+		menuUI->defeat(); //Temporary
+		break; //Temporary
+	case 'v': //Temporary
+	case 'V': //Temporary
+		skipSetDir = true; //Temporary
+		menuUI->won(); //Temporary
 		break; //Temporary
 	default: 
 		dir = Player::STILL;
