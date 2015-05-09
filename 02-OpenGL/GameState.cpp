@@ -167,6 +167,16 @@ void GameState::keyDown(char c)
 		skipSetDir = true; //Temporary
 		gameUI->heal(); //Temporary
 		break; //Temporary
+	case 'z': //Temporary
+	case 'Z': //Temporary
+		skipSetDir = true; //Temporary
+		gameUI->increaseCombo(); //Temporary
+		break; //Temporary
+	case 'x': //Temporary
+	case 'X': //Temporary
+		skipSetDir = true; //Temporary
+		gameUI->comboLost(); //Temporary
+		break; //Temporary
 	default: 
 		dir = Player::STILL;
 		break;

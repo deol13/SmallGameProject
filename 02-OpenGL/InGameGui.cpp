@@ -78,10 +78,16 @@ void InGameGui::update()
 	}
 }
 
-void InGameGui::changeCombo() 
+void InGameGui::increaseCombo() 
 {
-
+	if (guiObjects[3].textureIndex < 18)
+		guiObjects[3].textureIndex += 1;
 }
+void InGameGui::comboLost()
+{
+	guiObjects[3].textureIndex = 8;
+}
+
 
 void InGameGui::addHealth() 
 {
@@ -95,16 +101,16 @@ void InGameGui::addHealth()
 
 		createExtraBuffer();
 		for (int i = 0; i < maxHealth; i++) //Heal the player to max health
-			guiObjects[i + 3].textureIndex = 1;
+			guiObjects[i + 4].textureIndex = 1;
 	}
 }
 
 void InGameGui::DmgTaken()
-{ //3,4,5,6,7,8
+{ //4,5,6,7,8,9
 	
 	if (currentHealth > 0) //Temporary
 	{
-		guiObjects[currentHealth + 2].textureIndex = 3;
+		guiObjects[currentHealth + 3].textureIndex = 3;
 		currentHealth--;
 	}
 
@@ -123,7 +129,7 @@ void InGameGui::heal()
 {
 	if (currentHealth < maxHealth) //Temporary
 	{
-		guiObjects[currentHealth + 3].textureIndex = 1;
+		guiObjects[currentHealth + 4].textureIndex = 1;
 		currentHealth++;
 	}
 }
@@ -293,6 +299,19 @@ void InGameGui::loadTextures()
 	createTexture("glowSword.png"); //5
 	createTexture("spear.png"); //6
 	createTexture("glowSpear.png"); //7
+
+	createTexture("tmp/Combo0.png"); //8
+	createTexture("tmp/Combo1.png"); //9
+	createTexture("tmp/Combo2.png"); //10
+	createTexture("tmp/Combo3.png"); //11
+	createTexture("tmp/Combo4.png"); //12
+	createTexture("tmp/Combo5.png"); //13
+	createTexture("tmp/Combo6.png"); //14
+	createTexture("tmp/Combo7.png"); //15
+	createTexture("tmp/Combo8.png"); //16
+	createTexture("tmp/Combo9.png"); //17
+	createTexture("tmp/Combo10.png"); //18
+
 }
 
 

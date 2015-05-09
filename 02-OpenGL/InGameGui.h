@@ -37,7 +37,8 @@ class InGameGui
 
 		void init();
 		void update();
-		void changeCombo();
+		void increaseCombo();
+		void comboLost();
 		void addHealth();
 		void DmgTaken();
 		void heal();

@@ -11,8 +11,6 @@
 #include "GuiManager.h"
 #include <cstdio>
 #include <sstream>
-//#include "Player.h"
-//#include "EnemyHandler.h"
 #include "GameState.h"
 //#include <vld.h> 
 #define GLM_FORCE_RADIANS
@@ -36,8 +34,6 @@ GLuint gShaderProgram = 0;
 GLuint bth_tex = 0;
 
 Player* player;
-
-//const int GASIZE = 256;
 
 bool isQuitting = false;
 bool mDepthTest = false;

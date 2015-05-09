@@ -1,20 +1,20 @@
-<<<<<<< HEAD
-﻿Build started 5/9/2015 11:53:40 AM.
+﻿Build started 5/9/2015 1:26:35 PM.
      1>Project "C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" LuaLib.lib GLU32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\BlitQuad.obj
-=======
-﻿Build started 5/8/2015 3:56:25 PM.
-     1>Project "C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
-         main.cpp
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze- /errorReport:prompt stb_image.c
-         stb_image.c
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glew-1.11.0" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt InGameGui.cpp
+         InGameGui.cpp
+     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(169): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(173): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(177): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(181): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(185): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(189): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(193): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(197): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(201): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
          Debug\BlitQuad.obj
->>>>>>> origin/master
          Debug\Enemy.obj
          Debug\GameState.obj
          Debug\GAShader.obj
@@ -28,82 +28,9 @@
          Debug\Player.obj
          Debug\Render.obj
          Debug\stb_image.obj
-<<<<<<< HEAD
-     1>LuaLib.lib(lapi.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lauxlib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lbaselib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lbitlib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lcode.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lcorolib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lctype.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldblib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldebug.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldo.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldump.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lfunc.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lgc.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(linit.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(liolib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(llex.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lmathlib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lmem.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(loadlib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lobject.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lopcodes.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(loslib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lparser.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lstate.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lstring.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lstrlib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ltable.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ltablib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ltm.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lundump.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lvm.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lzio.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
          Demo.vcxproj -> C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.exe
      1>Done Building Project "C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:11.11
-=======
-     1>LuaLib.lib(lapi.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lauxlib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lbaselib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lbitlib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lcode.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lcorolib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lctype.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldblib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldebug.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldo.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldump.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lfunc.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lgc.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(linit.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(liolib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(llex.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lmathlib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lmem.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(loadlib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lobject.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lopcodes.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(loslib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lparser.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lstate.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lstring.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lstrlib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ltable.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ltablib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ltm.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lundump.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lvm.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lzio.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-         Demo.vcxproj -> C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.exe
-     1>Done Building Project "C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:11.91
->>>>>>> origin/master
+Time Elapsed 00:00:01.32
