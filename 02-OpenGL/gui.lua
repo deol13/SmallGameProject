@@ -1,19 +1,45 @@
-startMenu = { -1.0, 1.0, 1.0, -1.0, 0, 0, 1, 1, 0,
-			  -0.95, -0.497, -0.61, -0.924, 0, 0, 1, 1, 1,
-			  -0.56, -0.497, -0.22, -0.924, 0, 0, 1, 1, 2,
-			  -0.17, -0.497,  0.17, -0.924, 0, 0, 1, 1, 3,
-			   0.22, -0.497,  0.56, -0.924, 0, 0, 1, 1, 4,
-			   0.61, -0.497,  0.95, -0.924, 0, 0, 1, 1, 5
-			   }
+startMenu =     { -1.0, 1.0, 1.0, -1.0, 0, 0, 1, 1, 0,         --Background
+			      -0.95, -0.497, -0.61, -0.924, 0, 0, 1, 1, 1, --New Game
+			      -0.56, -0.497, -0.22, -0.924, 0, 0, 1, 1, 2, --Continue
+			      -0.17, -0.497,  0.17, -0.924, 0, 0, 1, 1, 3, --How to play
+			       0.22, -0.497,  0.56, -0.924, 0, 0, 1, 1, 4, --Map creation
+			       0.61, -0.497,  0.95, -0.924, 0, 0, 1, 1, 5 } -- Exit
 
 
-howToPlayMenu = { -1.0, 1.0, 1.0, -1.0, 0, 0, 1, 1, 6,
-				  -0.9, -0.46, -0.5, -0.87, 0, 0, 1, 1, 7 }
-				  ---0.5, 0, -0.10, -0.40, 0, 0, 1, 1, 7
+howToPlayMenu = { -1.0, 1.0, 1.0, -1.0, 0, 0, 1, 1, 6,      --How to play text
+				  -0.841, -0.475, -0.441, -0.875, 0, 0, 1, 1, 7 } --Back
+
 				  
-pauseMenu =		{ -0.312, 0.25, 0.312,  0.0 , 0, 0, 1, 1, 8, 
-				  -0.312, 0.0 , 0.312, -0.25, 0, 0, 1, 1, 9 }
+pauseMenu =		{ -0.312, 0.25, 0.312,  0.0 , 0, 0, 1, 1, 8,  --Resume
+				  -0.312, 0.0 , 0.312, -0.25, 0, 0, 1, 1, 9 } --Quit
 
+stadardInGameGui = { -1.0, 1.0, 1.0, 0.848, 0, 0, 1, 1, 0,          --Background
+
+					 -0.313, 0.987, 0.0  , 0.861, 0, 0, 1, 1, 5,
+					 -0.0  , 0.987, 0.313, 0.861, 0, 0, 1, 1, 6, --Sword and spear 
+
+				     -0.950, 0.979, -0.8875, 0.869, 0, 0, 1, 1, 1, --Heart
+				     -0.8795, 0.979, -0.817, 0.869, 0, 0, 1, 1, 1, --Heart
+				     -0.809, 0.979, -0.7465, 0.869, 0, 0, 1, 1, 1 } --Heart 
+					 
+					 -- -0.7382, 0.979, -0.6757, 0.869, 0, 0, 1, 1, 1,
+					 -- -0.6674, 0.979, -0.6049, 0.869, 0, 0, 1, 1, 1,
+					 -- -0.5966, 0.979, -0.5341, 0.869, 0, 0, 1, 1, 1 }
+
+					 -- 0.021= 15p  0.014 = 10p   0.11 = 80p  0.0625   0.008
+
+					 -- -0.5258, 0.972, -0.2128 , 0.750, 0, 0, 1, 1, 4,
+					 -- -0.2045, 0.972, 0.1085 , 0.750, 0, 0, 1, 1, 5 } --Sword and spear
+
+
+heartOne = { -0.7382, 0.979, -0.6757, 0.869, 0, 0, 1, 1, 1 }    --Heart
+heartTwo = { -0.6674, 0.979, -0.6049, 0.869, 0, 0, 1, 1, 1 }    --Heart
+heartThree = { -0.5966, 0.979, -0.5341, 0.869, 0, 0, 1, 1, 1 }  --Heart
+
+empty = {}
+
+maxHearts = 6
+currentHearts = 3
 
 function init() --[[ When the game starts, lua returns how the start menu should look like ]]
 	return startMenu, 1
@@ -36,7 +62,7 @@ function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a
 			return -1 --[[ Empty space clicked on ]]
 		end
 	elseif state == 2 then --[[ Getting back to the startMenu from "howToPlayMenu" ]]
-		if xPos < -0.5 and xPos > -0.9 and yPos < -0.46 and yPos > -0.87 then
+		if xPos < -0.441 and xPos > -0.841 and yPos < -0.475 and yPos > -0.875 then
 			return startMenu, 1
 		end
 	elseif state == 3 then 
@@ -52,16 +78,26 @@ function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a
 	return -1
 end
 
+
 function pauseGame()
 	return pauseMenu, 3
 end
 
-function healthLoss( health )
-	health = health - 1
-	return health
+function inGameGUI()
+	return stadardInGameGui
 end
 
-function goldChanged( gold, value )
-	gold = gold + value
-	return gold
+function addHeart()
+	if currentHearts == 3 then
+		currentHearts = currentHearts + 1
+		return heartOne
+	elseif currentHearts == 4 then
+		currentHearts = currentHearts + 1
+		return heartTwo
+	elseif currentHearts == 5 then
+		currentHearts = currentHearts + 1
+		return heartThree
+	else
+		return empty
+	end
 end

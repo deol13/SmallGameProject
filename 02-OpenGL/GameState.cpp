@@ -8,7 +8,6 @@ GameState::GameState( int w, int h)
 
 GameState::~GameState()
 {
-
 	clean();
 }
 
@@ -38,8 +37,10 @@ void GameState::init(int w, int h)
 	//Set render
 	render = new Render(256, w/h);
 	render->init(256, w, h);
-	//Load UI
-	gameUI = new GuiManager(w, h);
+	//Load Menu UI
+	menuUI = new GuiManager(w, h);
+	//Load GUI
+	gameUI = new InGameGui();
 	//Set player
 	spawnPlayer();
 	//Load arena
@@ -85,7 +86,7 @@ void GameState::update()
 
  	player->update();
 	
-	if (gameUI->state != 3)
+	if (menuUI->state != 3)
 	{
 		for (int i = 0; i < waveSize; i++)
 		{
@@ -100,9 +101,10 @@ void GameState::update()
 	render->render(renderObjects);
 	render->lightPass();
 
-	if (gameUI->state == 3)
+	gameUI->update();
+	if (menuUI->state == 3)
 	{
-		gameUI->update();
+		menuUI->update();
 	}
 	//Debug function that drains health of enemy. Currently bugged
 	//if(!enemyWave[0]->takeDamage(1))	
@@ -120,7 +122,7 @@ void GameState::update()
 void GameState::keyDown(char c)
 {
 	Player::Direction dir;
-	bool dontUseDir = false;
+	bool skipSetDir = false;
 
 	switch (c)
 	{
@@ -143,19 +145,42 @@ void GameState::keyDown(char c)
 	case 'p':
 	case 'P':
 		dir = Player::STILL;
-		gameUI->pauseGame();
+		menuUI->pauseGame();
 		break;
-	default:
+	case 'q':
+	case 'Q':
+		skipSetDir = true;
+		gameUI->changeWeapon();
+		break;
+	case 'e': //Temporary
+	case 'E': //Temporary
+		skipSetDir = true; //Temporary
+		gameUI->addHealth(); //Temporary
+		break; //Temporary
+	case 'r': //Temporary
+	case 'R': //Temporary
+		skipSetDir = true; //Temporary
+		gameUI->DmgTaken(); //Temporary
+		break; //Temporary
+	case 'f': //Temporary
+	case 'F': //Temporary
+		skipSetDir = true; //Temporary
+		gameUI->heal(); //Temporary
+		break; //Temporary
+	default: 
 		dir = Player::STILL;
 		break;
 	}
-	if (playerCanMove(dir))
+	if (!skipSetDir)
 	{
-		player->setMovement(dir, true);
-	}
-	else
-	{
-		player->setMovement(dir, false);
+		if (playerCanMove(dir))
+		{
+			player->setMovement(dir, true);
+		}
+		else
+		{
+			player->setMovement(dir, false);
+		}
 	}
 }
 void GameState::keyUp(char c)
@@ -414,10 +439,10 @@ void GameState::createNegativePotential(int posX, int posZ, int size)
 
 int GameState::guiState()
 {
-	return gameUI->state;
+	return menuUI->state;
 }
 
 int GameState::screenClickesOn(float mx, float my)
 {
-	return gameUI->mouseClick(mx, my);
+	return menuUI->mouseClick(mx, my);
 }

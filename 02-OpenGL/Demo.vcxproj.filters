@@ -81,6 +81,9 @@
     <ClCompile Include="GuiManager.cpp">
       <Filter>GUI\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="InGameGui.cpp">
+      <Filter>GUI\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render.h">
@@ -144,6 +147,9 @@
       <Filter>GUI\Headers</Filter>
     </ClInclude>
     <ClInclude Include="MenuButton.h">
+      <Filter>GUI\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameGui.h">
       <Filter>GUI\Headers</Filter>
     </ClInclude>
   </ItemGroup>

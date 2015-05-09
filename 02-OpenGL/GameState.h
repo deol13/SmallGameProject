@@ -3,6 +3,7 @@
 #include "Render.h"
 #include <string>
 #include "Player.h"
+#include "InGameGui.h"
 
 class GameState {
 	const int GASIZE = 256;				//Game Area max size
@@ -10,7 +11,8 @@ private:
 	int state;
 	int** board;
 	Render* render;
-	GuiManager* gameUI;
+	GuiManager* menuUI;
+	InGameGui* gameUI;
 	std::vector<GObject*> renderObjects;
 	std::vector<BoundingRect> collisionVec;
 	Player* player;

@@ -138,11 +138,11 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				{
 					if (gameState->guiState() != 3)
 					{
-						if (!mDepthTest)
-						{
-							glEnable(GL_DEPTH_TEST);
-							mDepthTest = true;
-						}
+						//if (!mDepthTest)
+						//{
+						//	glEnable(GL_DEPTH_TEST);
+						//	mDepthTest = true;
+						//}
 
 						switch (msg.message) {
 						case  WM_LBUTTONDOWN:

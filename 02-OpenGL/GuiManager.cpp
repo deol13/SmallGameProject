@@ -26,7 +26,6 @@ GuiManager::~GuiManager()
 
 void GuiManager::clean()
 {
-	nrOfbuttons = 0;
 	guiButtons.clear();
 
 	if (guiBuffer != nullptr)
@@ -40,7 +39,9 @@ void GuiManager::clean()
 		glDeleteVertexArrays(nrOfbuttons, guiAttribute);
 		delete[] guiAttribute;
 		guiAttribute = nullptr;
-	}	
+	}
+
+	nrOfbuttons = 0;
 }
 
 void GuiManager::init()
@@ -167,22 +168,18 @@ void GuiManager::getLuaTable(int nrOfParameters)
 				if(counter == 0)
 				{
 					x = lua_tonumber(L, -1);
-					//x = (x + 1.0f) * (windowWidth) / 2.0f;
 				}
 				else if(counter == 1)
 				{
 					y = lua_tonumber(L, -1);
-				//	y = (y + 1.0f) * (windowHeight) / 2.0f;
 				}
 				else if(counter == 2)
 				{
 					x2 = lua_tonumber(L, -1);
-				//	x2 = (x2 + 1.0f) * (windowWidth) / 2.0f;
 				}
 				else if(counter == 3)
 				{
 					y2 = lua_tonumber(L, -1);
-				//	y2 = (y2 + 1.0f) * (windowHeight) / 2.0f;
 				}
 				else if(counter == 4)
 				{
@@ -268,11 +265,10 @@ int GuiManager::stateChange(lua_State *L)
 
 void GuiManager::createTexture(std::string fileName)
 {
-	std::string filePath;
 	GLuint texture;
 	int x, y, n;
 
-	filePath = "Resource/" + fileName; //filePath = "Resource/InGameGui/" + fileName;
+	std::string filePath = "Resource/" + fileName;
 
 	unsigned char* textureData = stbi_load(filePath.c_str(), &x, &y, &n, 4);
 	glGenTextures(1, &texture);
@@ -303,7 +299,7 @@ void GuiManager::loadTextures()
 	createTexture("NewMenuTextures/exit.png");
 
 	createTexture("NewMenuTextures/howtoplaybk.png");
-	createTexture("NewMenuTextures/back.png");
+	createTexture("NewMenuTextures/newback.png");
 
 	createTexture("Resume.png");
 	createTexture("Quit.png");
