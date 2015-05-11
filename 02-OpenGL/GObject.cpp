@@ -100,7 +100,15 @@ void GObject::loadObjectFile(std::string fileName, int keyFrame)
 	vert.push_back(std::vector<Vertex>());
 
 	std::string line;
+
 	std::ifstream myfile("Resource/" + fileName);
+	//long size = myfile.tellg();
+	//myfile.seekg(0, std::ios::beg);
+	//char* fileBuffer = new char[size];
+	//myfile.read(fileBuffer, size);
+	//vert[keyFrame].reserve(myfile.tellg() * 0.05f);
+	//indices.reserve(myfile.tellg() * 0.05f);
+	//myfile = std::ifstream("Resource/" + fileName);
 	if(myfile.is_open())
 	{
 		//std::vector<Vertex> vert;
@@ -111,6 +119,18 @@ void GObject::loadObjectFile(std::string fileName, int keyFrame)
 		int texCount = 0;
 		int faceCount = 0;
  		int state = 0;
+
+		//long charCount = 0;
+		//while(charCount < size)
+		//{
+		//	if(fileBuffer[charCount] == 'v')
+		//	{
+
+		//	}
+
+		//	charCount++;
+		//}
+
 		while(true) {
 			if(!(getline(myfile, line))) break;
 			if(line.size() < 5)

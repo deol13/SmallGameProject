@@ -1,7 +1,12 @@
 x1
-1
+2
 plane.obj
-blocks.png
 128.0
 0.0
 128.0
+blocks.png
+hus/hus.obj
+128.0
+0.0
+128.0
+hus/husimittenlowres.png

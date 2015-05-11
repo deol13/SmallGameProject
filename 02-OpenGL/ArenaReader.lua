@@ -4,6 +4,8 @@ end
 	
 function readFile()
 	arenaArr = {}
+	texArr = {}
+	texCount = 0;
 	file = io.open("Arena.dat", "r")	-- Opens a file in read
 	io.input(file)							-- sets the default input file as test.lua
 
@@ -21,15 +23,17 @@ function readFile()
 	nrOfObjects = tonumber(nrOfObjects)
 	if nrOfObjects ~= nil or nrOfObjects ~= 0 --Is there any meaning to doing the rest?
 	then
-		c = nrOfObjects * 5	
-		
-		for i = 1, c , 1
+		c = nrOfObjects * 6	
+		i = 1
+		while i < c
 		do
 			arenaArr[i] = io.read("*l")	
-			if i % 5 == 2
+			if i % 6 == 5
 			then
-				arenaArr[i] = findTexture(arenaArr[i])
+				arenaArr[i + 1] = findTexture(arenaArr[i])
+				i = i + 1
 			end
+			i = i + 1
 		end
 	end		
 	
@@ -39,10 +43,10 @@ function readFile()
 end
 
 function findTexture(name)			-- Matches the texture names to their GLuint. 
-	if name == "blocks.png"
-	then
-		return 4
-	else
-		return 2
+	--check for new textures
+	if texArr[name] == nil then
+		texCount = texCount + 1
+		texArr[name] = texCount
 	end
+	return texArr[name]							--return the texture matching the file name
 end

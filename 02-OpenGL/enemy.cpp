@@ -19,7 +19,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture)
 	switch ( type )
 	{
 	case MELEE:
-		loadObj = new GObject( "enamie.obj", GL_TRIANGLES, texture );
+		loadObj = new GObject( "enemyobj/wolflowpoly.obj", GL_TRIANGLES, texture );
 		health = 20;
 		this->type = MELEE;
 		moveSpeed = 1.0f;	

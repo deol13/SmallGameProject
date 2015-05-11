@@ -21,7 +21,6 @@ private:
 	int nrOfArenaObjects;
 	int firstEnemyIndex;		//Start of enemies in renderObjects. Useful for enemy deaths etc.
 
-	
 	void loadArena(std::string fileName);
 	void spawnEnemies(std::string fileName);
 	void spawnPlayer();

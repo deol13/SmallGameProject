@@ -36,9 +36,10 @@ class Render
 
 		//Textures
 		void loadTextures();
-		void createTexture( std::string fileName );
+		int createTexture( std::string fileName );
 
 		GLuint getTexture(int index) const;
+		GLuint getTextureSize() const;
 		GLuint getGAShader();
 		GLint getWorldMatixLoc();
 
