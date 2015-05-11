@@ -121,6 +121,7 @@ void GameState::uiUpdate()
 void GameState::keyDown(char c)
 {
 	Player::Direction dir;
+	int tmp = 0;
 	bool skipSetDir = false;
 
 	switch (c)
@@ -159,12 +160,14 @@ void GameState::keyDown(char c)
 	case 'r': //Temporary
 	case 'R': //Temporary
 		skipSetDir = true; //Temporary
-		gameUI->DmgTaken(); //Temporary
+		tmp = gameUI->dmgTaken(3); //Temporary
+		if (tmp == 1)
+			menuUI->defeat();
 		break; //Temporary
 	case 'f': //Temporary
 	case 'F': //Temporary
 		skipSetDir = true; //Temporary
-		gameUI->heal(); //Temporary
+		gameUI->heal(false); //Temporary
 		break; //Temporary
 	case 'z': //Temporary
 	case 'Z': //Temporary
