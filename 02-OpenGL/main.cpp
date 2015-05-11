@@ -52,7 +52,6 @@ void SetViewport() {
 	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 }
-
 int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow ) {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 

@@ -39,11 +39,7 @@ class GObject
 			);
 		glm::mat4 translationMatrix = glm::mat4(
 			);
-
-		//
 		int drawMode;
-
-		void animate();
 
 	public:
 		GObject();
@@ -63,6 +59,9 @@ class GObject
 
 		void init();
 
+		void animate();
+
+		void setAnimationState(float state);
 		void setTexture(GLuint gTexture);
 		GLuint getTexture();
 		void setVertices(std::vector<Vertex> vertices);

@@ -53,30 +53,40 @@ GObject* Player::getGObject() const
 
 void Player::update()
 {
+	int moving = 0;
 	if (movement[0]) //UP
 	{
 		z += moveSpeed;
 		loadObj->translate(0,0,moveSpeed);
 		collisionRect.move( 0, moveSpeed );
+		moving++;
 	}
 	if (movement[1]) //DOWN
 	{
 		z -= moveSpeed;
 		loadObj->translate(0, 0, -moveSpeed);
 		collisionRect.move( 0, -moveSpeed );
+		moving++;
 	}
 	if (movement[2]) //LEFT
 	{
 		x += moveSpeed;
 		loadObj->translate(moveSpeed, 0, 0);
 		collisionRect.move( moveSpeed, 0 );
+		moving++;
 	}
 	if (movement[3]) //RIGHT
 	{
 		x -= moveSpeed;
 		loadObj->translate(-moveSpeed, 0, 0);
 		collisionRect.move( -moveSpeed, 0 );
+		moving++;
 	}
+	if(moving == 0)
+	{	
+		loadObj->setAnimationState(0.0);
+	}
+	loadObj->animate();
 }
 
 float Player::getX() const

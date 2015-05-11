@@ -18,9 +18,9 @@ Render::Render()
 Render::Render(int GASIZE, float aspectRatio)
 {
 	//viewMatrix = glm::lookAt( glm::vec3( -20, 20.0f, -20 ), glm::vec3( 0, 0, 0 ), glm::vec3( 0, 1, 0 ) ); //Test
-	viewMatrix = glm::lookAt(glm::vec3(GASIZE / 2, 200.0f, GASIZE / 2), glm::vec3(GASIZE / 2, 0, GASIZE / 2), glm::vec3(0, 0, 1));
+	viewMatrix = glm::lookAt(glm::vec3(GASIZE / 2, GASIZE / 2, GASIZE / 2), glm::vec3(GASIZE / 2, 0, GASIZE / 2), glm::vec3(0, 0, 1));
 	//viewMatrix = glm::lookAt(glm::vec3(0, 0, -2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));  //Original
-	projMatrix = glm::perspective(70.0f, aspectRatio, 0.5f, 2000.0f);
+	projMatrix = glm::perspective(90.0f, aspectRatio, 0.5f, 1000.0f);
 	gShaderGA = 0;
 	onExitCleanUp = false;
 }
@@ -46,7 +46,7 @@ Render::~Render()
 void Render::init(int GASIZE, unsigned int width, unsigned int height)
 {
 	gaShader = new GAShader(&gShaderGA);
-	loadTextures();
+	//loadTextures();
 
 	nrSpotLights = 2;
 	lShaderObj = new LightShader(&lShader);
@@ -85,14 +85,15 @@ void Render::init(int GASIZE, unsigned int width, unsigned int height)
 
 void Render::loadTextures() 
 {
-	createTexture("GridImage.png");
 	createTexture("TestAnimation/testtexture.png");
+	createTexture("blocks.png");
+	createTexture("enemyobj/wolflowpoly.png");
 	createTexture("blacktest.png");
-	createTexture("testvic.png");
-	createTexture("floor.png");
+	createTexture("hus/husimitten.png");
+	createTexture("eldpelare/eld.png");
 }
 
-void Render::createTexture( std::string fileName ) 
+int Render::createTexture( std::string fileName ) 
 {
 	GLuint texture;
 	int x, y, n;
@@ -108,6 +109,7 @@ void Render::createTexture( std::string fileName )
 	glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData );
 	textures.push_back( texture );
 	stbi_image_free( textureData );
+	return textures.size() - 1;
 }
 
 void Render::GeometryPassInit() //Bind gBuffer for object and ground shader.
@@ -199,6 +201,11 @@ void Render::lightPass()
 GLuint Render::getTexture(int index) const
 {
 	return textures[index];
+}
+
+GLuint Render::getTextureSize() const
+{
+	return textures.size();
 }
 
 GLuint Render::getGAShader()

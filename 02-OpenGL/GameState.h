@@ -25,7 +25,6 @@ private:
 
 	bool onExitCleanUp;
 
-	
 	void loadArena(std::string fileName);
 	void spawnEnemies(std::string fileName);
 	void spawnPlayer();

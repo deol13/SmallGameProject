@@ -4,10 +4,15 @@ GameState::GameState( int w, int h)
 {
 	onExitCleanUp = false;
 	//init(w, h);
+	//Set render
+	render = new Render(GASIZE, w / h);
+	render->init(GASIZE, w, h);
 }
 
 GameState::~GameState()
 {
+	delete render;
+	render = nullptr;
 	clean();
 }
 
@@ -34,9 +39,6 @@ void GameState::init(int w, int h)
 	}
 
 	enemyWave = nullptr;
-	//Set render
-	render = new Render(256, w/h);
-	render->init(256, w, h);
 	//Load Menu UI
 	menuUI = new GuiManager(w, h);
 	//Load GUI
@@ -44,7 +46,7 @@ void GameState::init(int w, int h)
 	//Set player
 	spawnPlayer();
 	//Load arena
-	//loadArena("temp");
+	loadArena("temp");
 	//Spawn first enemy wave
 	spawnEnemies("placeholder");
 	enemiesRemaining = waveSize;
@@ -100,19 +102,7 @@ void GameState::update()
 	render->GeometryPassInit();
 	render->render(renderObjects);
 	render->lightPass();
-
 	
-	//Debug function that drains health of enemy. Currently bugged
-	//if(!enemyWave[0]->takeDamage(1))	
-	//{
-	//	renderObjects.erase(renderObjects.begin() + firstEnemyIndex);
-	//	delete enemyWave[0];
-	//	enemyWave[0] = enemyWave[--waveSize];
-	//}
-	//if(waveSize < 1)		//wave has been defeated
-	//{
-	////	spawnEnemies("altwave.dat");
-	//}
 }
 
 void GameState::uiUpdate()
@@ -262,15 +252,6 @@ int GameState::getState()const
 
 void GameState::loadArena(std::string fileName)
 {
-	//Temporary solution for the ground quad
-	//std::vector<Vertex> groundVertices = {
-	//	{256.0f, 1.0f, 256.0f, 0.0f, 1.0f},
-	//	{256.0f, 1.0f, 0.0f, 0.0f, 0.0f},
-	//	{0.0f, 1.0f, 256.0f, 1.0f, 1.0f},
-	//	{0.0f, 1.0f, 0.0f, 1.0f, 0.0f}
-	//};
-	//renderObjects.push_back(new GObject(groundVertices, GL_TRIANGLES, render->getTexture(0)));
-
 	//Grab from lua
 	int error = 0;
 	int waveNr = 1;
@@ -304,24 +285,29 @@ void GameState::loadArena(std::string fileName)
 	{
 		nrOfArenaObjects = lua_tointeger(L, -1);
 		lua_pop(L, 1);
-		std::string* arenaArr = new std::string[5 *nrOfArenaObjects];
-
+		std::string* arenaArr = new std::string[6 * nrOfArenaObjects];					//0: obj, 1-3: x,y,z, 4: tex-name, 5: tex-index
+		int texOffset = render->getTextureSize()-1;
+		
 		int c = 0;
 		lua_pushnil(L);
 		while(lua_next(L, -2) != 0)
 		{
-
-			arenaArr[c] = lua_tostring(L, -1);
+			std::string debug = lua_tostring(L, -1);
+			arenaArr[c] = debug;
 			lua_pop(L, 1);
 			c++;
 		}
 		for(int i = 0; i < nrOfArenaObjects; i++)
 		{
-			float x = atoi(arenaArr[5*i+2].c_str());
-			GObject* temp = new GObject(arenaArr[5 * i], GL_TRIANGLES, render->getTexture(atoi(arenaArr[5*i+1].c_str())));
-			temp->translate(atoi(arenaArr[5*i+2].c_str()), atoi(arenaArr[5*i+3].c_str()), atoi(arenaArr[5*i+4].c_str()));
-			temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
-			temp->scale(1.5f, 1.5f, 1.5f);
+			int texIndex = atoi(arenaArr[6*i+5].c_str()) + texOffset;
+			if( texIndex >= render->getTextureSize()  ) {
+				render->createTexture(arenaArr[6*i + 4]);
+			}
+			//float x = atoi(arenaArr[6*i+2].c_str());
+			GObject* temp = new GObject(arenaArr[6 * i], GL_TRIANGLES, render->getTexture(texIndex));
+			temp->translate(atoi(arenaArr[6*i+1].c_str()), atoi(arenaArr[6*i+2].c_str()), atoi(arenaArr[6*i+3].c_str()));
+			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
+			//temp->scale(0.05f, 0.05f, 0.05f);
 			renderObjects.push_back(temp);
 
 		}
@@ -358,18 +344,20 @@ void GameState::spawnEnemies(std::string fileName)
 
 	if(error)
 	{
+		std::string luaErr = lua_tostring(L, -1);
 		std::cerr << "Unable to run 2: " << lua_tostring(L, -1) << std::endl;
 		lua_pop(L, 1);
 	} else if(!error)
 	{
 		waveSize = lua_tointeger(L, -1);
 		lua_pop(L, 1);
-		float* enemyArgs = new float[waveSize * 4];
+		std::string* enemyArgs = new std::string[waveSize * 6];
+		int texOffset = render->getTextureSize()-1;
 		int c = 0;
 		lua_pushnil(L);
 		while(lua_next(L, -2) != 0)
 		{
-			enemyArgs[c] = lua_tonumber(L, -1);
+			enemyArgs[c] = lua_tostring(L, -1);
 			lua_pop(L, 1);
 			c++;
 		}
@@ -377,7 +365,11 @@ void GameState::spawnEnemies(std::string fileName)
 		firstEnemyIndex = renderObjects.size();			//Note: There could possibly be an offset.
 		for(int i = 0; i < waveSize; i++)
 		{
-			Enemy* tempEnemy = new Enemy((int)enemyArgs[4 * i], enemyArgs[(4 * i) + 1], enemyArgs[(4 * i) + 2], render->getTexture((int)enemyArgs[(4 * i) + 3]));
+			int texIndex = atoi(enemyArgs[6*i+3].c_str()) + texOffset;
+			if( texIndex >= render->getTextureSize()  ) {
+				render->createTexture(enemyArgs[6*i + 2]);
+			}
+			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex));
 			enemyWave[i] = tempEnemy;
 			createNegativePotential(enemyWave[i]->getX(), enemyWave[i]->getZ(), 2);	//for AI sets -4 at enemies location
 			renderObjects.push_back(tempEnemy->getGObject());
@@ -390,7 +382,8 @@ void GameState::spawnEnemies(std::string fileName)
 void GameState::spawnPlayer()
 {
 	//Hardcoded for now. Might be worth using lua later
-	player = new Player(render->getTexture(1), 100, 100);
+	render->createTexture("TestAnimation/testtexture.png");
+	player = new Player(render->getTexture(0), 100, 100);
 	renderObjects.push_back(player->getGObject());
 
 }

@@ -1,7 +1,12 @@
 x1
-1
-floor.obj
-floor.png
+2
+plane.obj
+128.0
 0.0
+128.0
+blocks.png
+hus/hus.obj
+128.0
 0.0
-0.0
+128.0
+hus/husimittenlowres.png

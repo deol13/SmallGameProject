@@ -100,7 +100,15 @@ void GObject::loadObjectFile(std::string fileName, int keyFrame)
 	vert.push_back(std::vector<Vertex>());
 
 	std::string line;
+
 	std::ifstream myfile("Resource/" + fileName);
+	//long size = myfile.tellg();
+	//myfile.seekg(0, std::ios::beg);
+	//char* fileBuffer = new char[size];
+	//myfile.read(fileBuffer, size);
+	//vert[keyFrame].reserve(myfile.tellg() * 0.05f);
+	//indices.reserve(myfile.tellg() * 0.05f);
+	//myfile = std::ifstream("Resource/" + fileName);
 	if(myfile.is_open())
 	{
 		//std::vector<Vertex> vert;
@@ -111,6 +119,18 @@ void GObject::loadObjectFile(std::string fileName, int keyFrame)
 		int texCount = 0;
 		int faceCount = 0;
  		int state = 0;
+
+		//long charCount = 0;
+		//while(charCount < size)
+		//{
+		//	if(fileBuffer[charCount] == 'v')
+		//	{
+
+		//	}
+
+		//	charCount++;
+		//}
+
 		while(true) {
 			if(!(getline(myfile, line))) break;
 			if(line.size() < 5)
@@ -233,15 +253,8 @@ void GObject::render(GLint uniLocation, GLuint shaderProgram)
 
 	glBindVertexArray(gAttribute);
 	glBindBuffer(GL_ARRAY_BUFFER, gBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferId);
-
-	//reset animation frame
-	if( vert.size() > 1) {
-		animate();
-		glBufferData(GL_ARRAY_BUFFER, sizeof(currentVert[0])* currentVert.size(), &currentVert[0], GL_STATIC_DRAW);
-	}
-	
-
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferId);	
+	glBufferData(GL_ARRAY_BUFFER, sizeof(currentVert[0])* currentVert.size(), &currentVert[0], GL_STATIC_DRAW);
 	glDrawElements(drawMode, nrOfVertices * 3, GL_UNSIGNED_SHORT, 0);
 }
 
@@ -285,6 +298,11 @@ void GObject::setVertices(std::vector<Vertex> vertices)
 std::vector<Vertex> GObject::getVertices()
 {
 	return currentVert;
+}
+
+void GObject::setAnimationState(float state)
+{
+	animationState = state;
 }
 
 void GObject::animate()

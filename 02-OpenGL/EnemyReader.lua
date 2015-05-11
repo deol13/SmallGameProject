@@ -4,7 +4,9 @@ end
 	
 function readFile()
 	enemyArr = {}
-	file = io.open("AltWave.dat", "r")	-- Opens a file in read
+	texArr = {}
+	texCount = 0;
+	file = io.open("EnemyWaves.dat", "r")	-- Opens a file in read
 	io.input(file)							-- sets the default input file as test.lua
 
 	if waveNr == nil then waveNr = 1 end
@@ -21,29 +23,43 @@ function readFile()
 	nrOfEnemies = tonumber(nrOfEnemies)
 	if nrOfEnemies ~= nil or nrOfEnemies ~= 0 --Is there any meaning to doing the rest?
 	then
-		c = nrOfEnemies * 4	
-		
-		for i = 1, c , 4
+		c = nrOfEnemies * 6	+ 1
+		i = 1
+		while i < c
 		do
-			enemyType = io.read("*l")	
-			if enemyType == "melee"			-- decide type
+			if i % 6 == 1								-- decide Ai type
 			then
-				enemyArr[i] = 1
-				enemyArr[i+3] = 1
+				enemyType = io.read("*l")	
+				if enemyType == "melee"			
+				then
+					enemyArr[i] = 1
+				else
+					enemyArr[i] = 0
+				end
+				i = i + 1
+			elseif i % 6 == 3							-- decide texture index, while avoiding repeats
+			then
+				enemyArr[i] = io.read("*l")
+				enemyArr[i + 1] = findTexture(enemyArr[i])
+				i = i + 2--]]
 			else
-				enemyArr[i] = 1
-				enemyArr[i+3] = 1
-			end
-
-			enemyArr[i + 1] = io.read("*l")		--X
-			--enemyArr[i + 1] = tonumber(modelArr[i + 1])
-			enemyArr[i + 2] = io.read("*l")		--Z
-			--enemyArr[i + 2] = tonumber(modelArr[i + 2])
-			
+					enemyArr[i] = io.read("*l")
+					i = i + 1
+			end			
 		end
 	end		
 	
 	io.close(file)							-- closes the open file
 
 	return enemyArr, nrOfEnemies
+end
+
+
+function findTexture(name)			-- Matches the texture names to their GLuint. 
+	--check for new textures
+	if texArr[name] == nil then
+		texCount = texCount + 1
+		texArr[name] = texCount
+	end
+	return texArr[name]							--return the texture matching the file name
 end
