@@ -105,31 +105,53 @@ void InGameGui::addHealth()
 	}
 }
 
-void InGameGui::DmgTaken()
+int InGameGui::dmgTaken(float dmg)
 { //4,5,6,7,8,9
-	if (currentHealth > 0) //Temporary
-	{ //Increase 3 in [] with 1 for every object before the first heart
-		guiObjects[currentHealth + 3].textureIndex = 3; 
-		currentHealth--;
-	}
-
-	//if (currentHealth == 1)
-	//{
-	//	//Show defeat window.
-	//}
-	//else
-	//{
-	//	guiObjects[currentHealth].textureIndex = 3;
+	//if (currentHealth > 0) //Temporary
+	//{ //Increase 3 in [] with 1 for every object before the first heart
+	//	guiObjects[currentHealth + 3].textureIndex = 3;
 	//	currentHealth--;
 	//}
+
+	for (int i = 0; i < dmg; i++)
+	{
+		if (guiObjects[currentHealth + 3].textureIndex == 1)
+		{
+			guiObjects[currentHealth + 3].textureIndex = 2;
+		}
+		else if (guiObjects[currentHealth + 3].textureIndex == 2)
+		{
+			guiObjects[currentHealth + 3].textureIndex = 3;
+			currentHealth--;
+		}
+	}
+
+	if (currentHealth == 0)
+		return 1;
+	return 0;
 }
 
-void InGameGui::heal()
+void InGameGui::heal( bool fullHeal )
 {
-	if (currentHealth < maxHealth) //Temporary
-	{ //Increase 4 in [] with 1 for every object before the first heart
-		guiObjects[currentHealth + 4].textureIndex = 1;
-		currentHealth++;
+	if (!fullHeal)
+	{
+		if (currentHealth < maxHealth) //Temporary
+		{ //Increase 4 in [] with 1 for every object before the first heart
+			if (guiObjects[currentHealth + 3].textureIndex == 2)
+				guiObjects[currentHealth + 3].textureIndex = 1;
+			else
+			{
+				guiObjects[currentHealth + 4].textureIndex = 1;
+				currentHealth++;
+			}
+			
+		}
+	}
+	else
+	{
+		for (int i = 0; i < maxHealth; i++) //Heal the player to max health
+			guiObjects[i + 4].textureIndex = 1;
+		currentHealth = maxHealth;
 	}
 }
 
