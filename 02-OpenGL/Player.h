@@ -8,6 +8,8 @@ class Player
 {
 private:
 	int health;
+	int maxHealth;
+	int armour;
 	int gold;
 	float x, z;
 	float angle;
@@ -19,13 +21,18 @@ private:
 public:
 	enum Direction { UP, DOWN, LEFT, RIGHT, STILL };
 	Player();
-	Player(GLuint texture, float x, float y);
+	Player(GLuint texture, float x, float y, int health, int armour);
 	~Player();
 	void attack();
 	void setMovement(int dir, bool isMoving);
 	bool takeDamage(const int dmg);
 	GObject* getGObject() const;
 	void update();
+
+	void setGold(const int gold);
+	void setMaxHealth(const int health);
+	void setHealth(const int health);
+	void setArmour(const int armour);
 
 	float getX() const;
 	float getZ() const;

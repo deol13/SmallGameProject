@@ -8,12 +8,15 @@ Player::Player()
 	Point* colPoints = new Point[4]{{0.0, 0.0}, {0.0, 10.0}, {10.0, 0.0}, {10.0, 10.0}};
 	BoundingPolygon collisionRect = BoundingPolygon(colPoints, 4);
 	moveSpeed = 1;
+	health = 6;
+	armour = 0;
+	gold = 0;
 	for (int i = 0; i < 4; i++)
 	{
 		movement[i] = false;
 	}
 }
-Player::Player(GLuint texture, float x, float z)
+Player::Player(GLuint texture, float x, float z, int health, int armour)
 {
 	//std::string files[] = {"WalkingAnimation/StandStill.obj", "WalkingAnimation/10frames.obj", "WalkingAnimation/10framesleft.obj"};
 	std::string files[] = {"TestAnimation/StartFrame.obj", "TestAnimation/Frame10.obj", "TestAnimation/Frame20.obj"};
@@ -23,6 +26,10 @@ Player::Player(GLuint texture, float x, float z)
 	Point colPoints[4] ={{x - 5.0, z - 5.0}, {x - 5.0, z + 5.0}, {x + 5.0, z - 5.0}, {x + 5.0, z + 5.0}};
 	collisionRect = BoundingPolygon(colPoints, 4);
 	moveSpeed = 0.9;
+	this->health = health;
+	this->armour = armour;
+	this->gold = 0;
+
 	loadObj->translate(x,17,z);
 	for (int i = 0; i < 4; i++)
 	{
@@ -91,6 +98,23 @@ void Player::update()
 	}
 	loadObj->animate();
 }
+
+	void Player::setGold(const int gold)
+	{
+		this->gold = gold;
+	}
+	void Player::setMaxHealth(const int health)
+	{
+		this->maxHealth = health;
+	}
+	void Player::setHealth(const int health)
+	{
+		this->health = health;
+	}
+	void Player::setArmour(const int armour)
+	{
+		this->armour = armour;
+	}
 
 float Player::getX() const
 {
