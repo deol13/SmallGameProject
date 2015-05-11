@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "BoundingRect.h"
+#include "BoundingPolygon.h"
 #include "GObject.h"
 
 class Player 
@@ -14,7 +14,7 @@ private:
 	float moveSpeed;
 	GObject* loadObj;
 	bool movement[4];
-	BoundingRect collisionRect;
+	BoundingPolygon collisionRect;
 
 public:
 	enum Direction { UP, DOWN, LEFT, RIGHT, STILL };
@@ -30,7 +30,7 @@ public:
 	float getX() const;
 	float getZ() const;
 	float getAngle() const;
-	BoundingRect getBounds() const;
+	BoundingPolygon getBounds() const;
 	float getMoveSpeed() const;
 };
 #endif

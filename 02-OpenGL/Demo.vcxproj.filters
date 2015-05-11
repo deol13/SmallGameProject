@@ -46,6 +46,9 @@
     <ClCompile Include="GuiManager.cpp">
       <Filter>GUI\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="BoundingPolygon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlitQuad.h">
@@ -84,9 +87,6 @@
     <ClInclude Include="Vertex.h">
       <Filter>Header Files\Structs</Filter>
     </ClInclude>
-    <ClInclude Include="BoundingRect.h">
-      <Filter>Header Files\Structs</Filter>
-    </ClInclude>
     <ClInclude Include="stb_image.h">
       <Filter>Header Files\Stb_image</Filter>
     </ClInclude>
@@ -116,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="GuiManager.h">
       <Filter>GUI\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingPolygon.h">
+      <Filter>Header Files\Structs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

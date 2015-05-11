@@ -226,8 +226,13 @@ void GameState::leftMouseClick(long x, long y)
 	
 
 	//
-	glm::vec2 dirVec = glm::normalize(glm::vec2(x - player->getX(), y - player->getZ()));	//multiply this with weapon size
-	BoundingRect hitbox = {player->getX(), player->getZ(), player->getX() + 20 * dirVec.x, player->getZ() + 20 * dirVec.y};
+	float weaponSize = 5.0f;	//multiplier for the direction vector
+	glm::vec2 dirVec = glm::normalize(glm::vec2(weaponSize*(x - player->getX()), weaponSize*(y - player->getZ())));
+	Point points[3];
+	points[0] = {player->getX(), player->getZ()};
+	points[1] = {player->getX() + dirVec.x - dirVec.y, player->getZ() + dirVec.y + dirVec.x};		
+	points[1] = {player->getX() + dirVec.x + dirVec.y, player->getZ() + dirVec.y - dirVec.x};
+	BoundingPolygon hitbox = BoundingPolygon(points, 3);
 	for(int i = 0; i < waveSize; i++)
 	{
 		if(enemyWave[i]->getBounds().collides(hitbox))
@@ -387,11 +392,11 @@ void GameState::spawnPlayer()
 
 bool GameState::playerCanMove(Player::Direction dir)
 {
-	BoundingRect playerBounds = player->getBounds();
+	BoundingPolygon playerBounds = player->getBounds();
 
 	if(dir == Player::UP)
 	{
-		if(playerBounds.maxZ >= GASIZE)
+		if(playerBounds.findMax({0.0f, 1.0f}) >= GASIZE)
 		{
 			return false;
 		} else
@@ -401,7 +406,7 @@ bool GameState::playerCanMove(Player::Direction dir)
 	}
 	if(dir == Player::DOWN)
 	{
-		if(playerBounds.minZ <= 0)
+		if(playerBounds.findMin({0.0f, 1.0f}) <= 0)
 		{
 			return false;
 		} else
@@ -411,7 +416,7 @@ bool GameState::playerCanMove(Player::Direction dir)
 	}
 	if(dir == Player::LEFT)
 	{
-		if(playerBounds.maxX >= GASIZE)
+		if(playerBounds.findMax({0.0f, 1.0f}) >= GASIZE)
 		{
 			return false;
 		} else
@@ -421,7 +426,7 @@ bool GameState::playerCanMove(Player::Direction dir)
 	}
 	if(dir == Player::RIGHT)
 	{
-		if(playerBounds.minX <= 0)
+		if(playerBounds.findMin({0.0f, 1.0f}) <= 0)
 		{
 			return false;
 		} else

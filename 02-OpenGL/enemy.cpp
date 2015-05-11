@@ -8,6 +8,8 @@ Enemy::Enemy()
 	moveSpeed = 2.0f;
 	this->x = 100.0f;
 	this->z = 100.0f;
+	Point colPoints [4] = {{x - 5.0, z - 5.0}, {x - 5.0, z + 5.0}, {x + 5.0, z - 5.0}, {x + 5.0, z + 5.0}};
+	collisionRect = BoundingPolygon(colPoints, 4);
 }
 
 Enemy::Enemy(int type, float x, float z, GLuint texture)
@@ -15,7 +17,8 @@ Enemy::Enemy(int type, float x, float z, GLuint texture)
 	this->x = x;
 	this->z = z;
 	loadObj = nullptr;
-	collisionRect = {x - 1, x + 1, z - 1, z + 1};
+	Point* colPoints = new Point[4]{{x - 5.0, z - 5.0}, {x - 5.0, z + 5.0}, {x + 5.0, z - 5.0}, {x + 5.0, z + 5.0}};
+	collisionRect = BoundingPolygon(colPoints, 4);
 	switch ( type )
 	{
 	case MELEE:
@@ -74,9 +77,9 @@ int Enemy::getHealth() const
 	return this->health;
 }
 
-BoundingRect Enemy::getBounds() const
+BoundingPolygon Enemy::getBounds() const
 {
-	return{x - 5, z - 5, x + 5, z + 5};
+	return collisionRect;
 }
 
 bool Enemy::takeDamage(const int dmg)

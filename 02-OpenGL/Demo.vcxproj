@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BlitQuad.cpp" />
+    <ClCompile Include="BoundingPolygon.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GAShader.cpp" />
@@ -120,7 +121,7 @@
     <ClInclude Include="lualib.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="BoundingRect.h" />
+    <ClInclude Include="BoundingPolygon.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="stb_image.h" />

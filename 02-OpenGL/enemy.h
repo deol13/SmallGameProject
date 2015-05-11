@@ -1,7 +1,7 @@
 #ifndef Enemy_H
 #define Enemy_H
 #include "GObject.h"
-#include "BoundingRect.h"
+#include "BoundingPolygon.h"
 
 const int MELEE = 1;
 const int RANGED = 2;
@@ -23,7 +23,7 @@ class Enemy
 		int health;
 		int type;
 		GObject* loadObj;
-		BoundingRect collisionRect;
+		BoundingPolygon collisionRect;
 
 	public:
 		Enemy();
@@ -36,7 +36,7 @@ class Enemy
 		float getX()const;
 		float getZ()const;
 		int getHealth()const;
-		BoundingRect getBounds() const;
+		BoundingPolygon getBounds() const;
 		bool takeDamage(const int dmg);					//returns true if still alive
 
 		void attack();
