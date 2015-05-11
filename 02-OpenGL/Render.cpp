@@ -13,6 +13,7 @@
 Render::Render()
 {
 	gShaderGA = 0;
+	onExitCleanUp = false;
 }
 Render::Render(int GASIZE, float aspectRatio)
 {
@@ -21,19 +22,25 @@ Render::Render(int GASIZE, float aspectRatio)
 	//viewMatrix = glm::lookAt(glm::vec3(0, 0, -2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));  //Original
 	projMatrix = glm::perspective(90.0f, aspectRatio, 0.5f, 1000.0f);
 	gShaderGA = 0;
+	onExitCleanUp = false;
 }
 Render::~Render()
 {
-	delete[] blitQuads;
+	if (onExitCleanUp)
+	{
+		delete[] blitQuads;
 
-	delete[] spotLights;
-	delete gBuffer;
+		delete[] spotLights;
+		delete gBuffer;
 
-	delete gaShader;
-	delete lShaderObj;
+		delete gaShader;
+		delete lShaderObj;
 
-	glDeleteShader(gShaderGA);
-	glDeleteShader(lShader);
+		glDeleteShader(gShaderGA);
+		glDeleteShader(lShader);
+
+		onExitCleanUp = false;
+	}
 }
 
 void Render::init(int GASIZE, unsigned int width, unsigned int height)
@@ -72,6 +79,8 @@ void Render::init(int GASIZE, unsigned int width, unsigned int height)
 	spotLights[1].DiffuseIntensity = 0.40f;
 	spotLights[1].AmbientIntensity = 0.10f;
 	spotLights[1].Cutoff = 0.01f;
+
+	onExitCleanUp = true;
 }
 
 void Render::loadTextures() 

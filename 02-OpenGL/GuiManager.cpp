@@ -13,6 +13,7 @@ GuiManager::GuiManager(int w, int h)
 	guiBuffer = nullptr;
 	noAction = -1;
 	gGuiShader = 0;
+	texCounter = 0;
 
 	init();
 }
@@ -25,19 +26,22 @@ GuiManager::~GuiManager()
 
 void GuiManager::clean()
 {
-	nrOfbuttons = 0;
 	guiButtons.clear();
 
-	if (guiAttribute != nullptr)
-	{
-		delete[] guiAttribute;
-		guiAttribute = nullptr;
-	}
 	if (guiBuffer != nullptr)
 	{
+		glDeleteBuffers(nrOfbuttons, guiBuffer);
 		delete[] guiBuffer;
 		guiBuffer = nullptr;
 	}
+	if (guiAttribute != nullptr)
+	{
+		glDeleteVertexArrays(nrOfbuttons, guiAttribute);
+		delete[] guiAttribute;
+		guiAttribute = nullptr;
+	}
+
+	nrOfbuttons = 0;
 }
 
 void GuiManager::init()
@@ -77,8 +81,11 @@ void GuiManager::update()
 {
 	glUseProgram(gGuiShader);
 
-	glClearColor(0,0,0,1);
-	glClear(GL_COLOR_BUFFER_BIT);
+	if (state != 3)
+	{
+		glClearColor(0, 0, 0, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
 
 	glActiveTexture(GL_TEXTURE0);
 
@@ -100,7 +107,7 @@ void GuiManager::update()
 int GuiManager::mouseClick(float mx, float my)
 {
 	noAction = -1;
-	nonTableAction = 0;
+	nonTableAction = -1;
 
 	lua_getglobal(L, "clicked");
 	lua_pushnumber(L, mx);
@@ -109,12 +116,54 @@ int GuiManager::mouseClick(float mx, float my)
 
 	getLuaTable(3);
 
-	if (nonTableAction != 0)
+	if (nonTableAction != -1)
+	{
+		state = 0;
 		return nonTableAction;
+	}
 	else
 		createVertexBuffer();
 
 	return -1;
+}
+
+void GuiManager::pauseGame()
+{
+	lua_getglobal(L, "pauseGame");
+
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
+
+	getLuaTable(0);
+
+	createVertexBuffer();
+}
+
+void GuiManager::won()
+{
+	lua_getglobal(L, "onVictory");
+
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
+
+	getLuaTable(0);
+
+	createVertexBuffer();
+}
+
+void GuiManager::defeat()
+{
+	lua_getglobal(L, "onDeath");
+
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
+
+	getLuaTable(0);
+
+	createVertexBuffer();
 }
 
 void GuiManager::getLuaTable(int nrOfParameters)
@@ -133,7 +182,7 @@ void GuiManager::getLuaTable(int nrOfParameters)
 	{
 		noAction = lua_tonumber(L, -1);
 		lua_pop(L, 1);
-		if (noAction != -1)
+		if (noAction > 0)
 		{
 			clean();
 
@@ -145,22 +194,18 @@ void GuiManager::getLuaTable(int nrOfParameters)
 				if(counter == 0)
 				{
 					x = lua_tonumber(L, -1);
-					//x = (x + 1.0f) * (windowWidth) / 2.0f;
 				}
 				else if(counter == 1)
 				{
 					y = lua_tonumber(L, -1);
-				//	y = (y + 1.0f) * (windowHeight) / 2.0f;
 				}
 				else if(counter == 2)
 				{
 					x2 = lua_tonumber(L, -1);
-				//	x2 = (x2 + 1.0f) * (windowWidth) / 2.0f;
 				}
 				else if(counter == 3)
 				{
 					y2 = lua_tonumber(L, -1);
-				//	y2 = (y2 + 1.0f) * (windowHeight) / 2.0f;
 				}
 				else if(counter == 4)
 				{
@@ -192,6 +237,11 @@ void GuiManager::getLuaTable(int nrOfParameters)
 
 				lua_pop(L, 1);
 			}
+		}
+		else if (noAction == 0)
+		{
+			clean();
+			state = 0;
 		}
 
 	}
@@ -243,7 +293,9 @@ void GuiManager::createTexture(std::string fileName)
 {
 	GLuint texture;
 	int x, y, n;
+
 	std::string filePath = "Resource/" + fileName;
+
 	unsigned char* textureData = stbi_load(filePath.c_str(), &x, &y, &n, 4);
 	glGenTextures(1, &texture);
 	glActiveTexture(GL_TEXTURE0);
@@ -256,6 +308,8 @@ void GuiManager::createTexture(std::string fileName)
 	textures.push_back(texture);
 	stbi_image_free(textureData);
 
+	texCounter++;
+
 	GLenum error1 = glGetError();
 	if (error1 != GL_NO_ERROR)
 		printf("Error");
@@ -263,11 +317,21 @@ void GuiManager::createTexture(std::string fileName)
 
 void GuiManager::loadTextures()
 {
-	createTexture("NewGame.png");
-	createTexture("Continue.png");
-	createTexture("HowToPlay.png");
-	createTexture("Exit.png");
+	createTexture("NewMenuTextures/backGround.png");
+	createTexture("NewMenuTextures/newgame.png");
+	createTexture("NewMenuTextures/conti.png");
+	createTexture("NewMenuTextures/howto.png");
+	createTexture("NewMenuTextures/mapedit.png");
+	createTexture("NewMenuTextures/exit.png");
 
-	createTexture("HowToPlayText.png");
-	createTexture("Back.png");
+	createTexture("NewMenuTextures/howtoplaybk.png");
+	createTexture("NewMenuTextures/newback.png");
+
+	createTexture("Resume.png");
+	createTexture("Quit.png");
+
+	createTexture("Victory.png");
+	createTexture("Defeat.png");
+	createTexture("Restart.png");
+	createTexture("LoadSave.png");
 }

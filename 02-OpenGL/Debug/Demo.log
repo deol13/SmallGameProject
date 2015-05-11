@@ -1,32 +1,9 @@
-﻿Build started 2015-05-10 23:20:13.
-     1>Project "E:\Dropbox\Dropbox\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         E:\Program\VisualStudio\VC\bin\CL.exe /c /I"E:\Dropbox\Dropbox\SmallGameProject\02-OpenGL\\glm" /I"E:\Dropbox\Dropbox\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameState.cpp
-         GameState.cpp
-     1>e:\dropbox\dropbox\smallgameproject\02-opengl\gamestate.cpp(7): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>e:\dropbox\dropbox\smallgameproject\02-opengl\gamestate.cpp(211): warning C4018: '>=' : signed/unsigned mismatch
-     1>e:\dropbox\dropbox\smallgameproject\02-opengl\gamestate.cpp(216): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>e:\dropbox\dropbox\smallgameproject\02-opengl\gamestate.cpp(277): warning C4018: '>=' : signed/unsigned mismatch
-     1>e:\dropbox\dropbox\smallgameproject\02-opengl\gamestate.cpp(280): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>e:\dropbox\dropbox\smallgameproject\02-opengl\gamestate.cpp(282): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>e:\dropbox\dropbox\smallgameproject\02-opengl\gamestate.cpp(363): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-       Link:
-         E:\Program\VisualStudio\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\Dropbox\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO LuaLib.lib GLU32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\Dropbox\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\Dropbox\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\BlitQuad.obj
-         Debug\Enemy.obj
-         Debug\GameState.obj
-         Debug\GAShader.obj
-         Debug\gbuffer.obj
-         Debug\GObject.obj
-         Debug\GuiManager.obj
-         Debug\GuiShader.obj
-         Debug\LightShader.obj
-         Debug\main.obj
-         Debug\Player.obj
-         Debug\Render.obj
-         Debug\stb_image.obj
-         Demo.vcxproj -> E:\Dropbox\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.exe
-     1>Done Building Project "E:\Dropbox\Dropbox\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)).
+﻿Build started 5/11/2015 10:55:08 AM.
+     1>Project "C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         Demo.vcxproj -> C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.exe
+     1>Done Building Project "C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.15
+Time Elapsed 00:00:00.06

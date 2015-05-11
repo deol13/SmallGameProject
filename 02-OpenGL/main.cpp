@@ -11,13 +11,12 @@
 #include "GuiManager.h"
 #include <cstdio>
 #include <sstream>
-//#include "Player.h"
-//#include "EnemyHandler.h"
 #include "GameState.h"
 //#include <vld.h> 
 #define GLM_FORCE_RADIANS
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
+//#include "Audio.h"
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glew32.lib")
@@ -36,9 +35,8 @@ GLuint bth_tex = 0;
 
 Player* player;
 
-//const int GASIZE = 256;
-
 bool isQuitting = false;
+bool mDepthTest = false;
 
 const double FPSLOCK = 60.0;
 int FPScount = 0;
@@ -87,7 +85,10 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			currentFrame = std::clock();
 			switch( playState ) {
 			case MENUSTATE:
+				//Audio::getAudio().init(1.0f, 1.0f, 1.0f, true, true, true);
+				//Audio::getAudio().playMusic(0);
 				glDisable(GL_DEPTH_TEST);
+
 				if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 				{
 					if (msg.message == WM_LBUTTONDOWN)
@@ -95,21 +96,25 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 						POINT newMpos;
 						GetCursorPos(&newMpos);
 						ScreenToClient(wndHandle, &newMpos);
-						float screenX = (newMpos.x * 2.0f / WINDOW_WIDTH) - 1.0f;
-						float screenY = (newMpos.y * 2.0f / WINDOW_HEIGHT) - 1.0f;
+						float screenX = (newMpos.x * 2.0f / WINDOW_WIDTH) -1.0f;
+						float screenY = -(newMpos.y * 2.0f / WINDOW_HEIGHT) +1.0f;
 						int tmp = mGUI->mouseClick(screenX, screenY);
 
-						if (tmp != -1)
+						if (tmp == 1)
 						{
-							if (tmp == 1)
-							{
-								playState = GAMESTATE;
-								initState = true;
-							}
-							else if (tmp == 2)
-							{
-								isQuitting = true;
-							}
+							playState = GAMESTATE;
+							initState = true;
+							mGUI->state = 1;
+						}
+						else if (tmp == 2) //Map creation
+						{
+							playState = GAMESTATE;
+							initState = false;
+							mGUI->state = 1;
+						}
+						else if (tmp == 3)
+						{
+							isQuitting = true;
 						}
 					}
 					TranslateMessage(&msg);
@@ -123,39 +128,76 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 					gameState->init(WINDOW_WIDTH, WINDOW_HEIGHT);
 					initState = false;
 				}
-				glEnable(GL_DEPTH_TEST);
 				if( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) 
 				{
-			
-					switch( msg.message ) {
-					case  WM_LBUTTONDOWN:
+					if (gameState->guiState() < 3)
 					{
-						POINT newMpos;
-						GetCursorPos( &newMpos );
-						ScreenToClient(wndHandle, &newMpos);
-						gameState->leftMouseClick(newMpos.x, newMpos.y);
-						break;
-					}
-					case WM_KEYDOWN:
-					{
-						WPARAM param = msg.wParam;
-						char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-						gameState->keyDown( c );
-						break;
-					}
+						switch (msg.message) {
+						case  WM_LBUTTONDOWN:
+						{
+							POINT newMpos;
+							GetCursorPos(&newMpos);
+							ScreenToClient(wndHandle, &newMpos);
+							gameState->leftMouseClick(newMpos.x, newMpos.y);
+							break;
+						}
+						case WM_KEYDOWN:
+						{
+							WPARAM param = msg.wParam;
+							char c = MapVirtualKey(param, MAPVK_VK_TO_CHAR);
+							gameState->keyDown(c);
+							break;
+						}
 
-					case WM_KEYUP:
-					{
-						WPARAM param = msg.wParam;
-						char c = MapVirtualKey( param, MAPVK_VK_TO_CHAR );
-						gameState->keyUp( c );
-						break;
+						case WM_KEYUP:
+						{
+							WPARAM param = msg.wParam;
+							char c = MapVirtualKey(param, MAPVK_VK_TO_CHAR);
+							gameState->keyUp(c);
+							break;
+						}
+						}
+						//glEnable(GL_DEPTH_TEST);
+						gameState->update();
+						glDisable(GL_DEPTH_TEST);
+						gameState->uiUpdate();
+						glEnable(GL_DEPTH_TEST);
 					}
+					else
+					{
+						switch (msg.message) {
+						case WM_LBUTTONDOWN:
+						{
+							POINT newMpos;
+							GetCursorPos(&newMpos);
+							ScreenToClient(wndHandle, &newMpos);
+							float screenX = (newMpos.x * 2.0f / WINDOW_WIDTH) - 1.0f;
+							float screenY = -(newMpos.y * 2.0f / WINDOW_HEIGHT) + 1.0f;
+							int tmp = gameState->screenClickesOn(screenX, screenY);
+
+							if (tmp == 2)
+							{
+								playState = MENUSTATE;
+								gameState->clean();
+							}
+							break;
+						}
+						}
+						glDisable(GL_DEPTH_TEST);
+						gameState->uiUpdate();
 					}
 					TranslateMessage( &msg );
 					DispatchMessage( &msg );
 				}
-				gameState->update();
+				else
+				{
+					//glEnable(GL_DEPTH_TEST);
+					gameState->update();
+					glDisable(GL_DEPTH_TEST);
+					gameState->uiUpdate();
+					glEnable(GL_DEPTH_TEST);
+				}
+				
 				//Should switch back to main menu
 				/*if(gameState->getState() == 1)
 				{
@@ -169,8 +211,6 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				break;
 			}
 
-			//player->update();
-			
 			SwapBuffers( hDC ); //10. Växla front- och back-buffer
 			FPScount++;
 			

@@ -46,6 +46,8 @@ class Render
 		glm::mat4 getViewMatrix() const;
 		glm::mat4 getProjectionMatrix() const;
 
+		bool onExitCleanUp;
+
 	private:
 		GAShader* gaShader;
 		GLuint gShaderGA = 0;

@@ -2,6 +2,7 @@
 
 GameState::GameState( int w, int h)
 {
+	onExitCleanUp = false;
 	//init(w, h);
 	//Set render
 	render = new Render(GASIZE, w / h);
@@ -20,15 +21,15 @@ void GameState::init(int w, int h)
 	state = 0;
 	//initialize the board the AI uses
 	this->board = new int*[GASIZE];
-	for (int x = GASIZE - 1; x >= 0; x--)
+	for (int x = GASIZE - 1; x >= 0; x -- )
 	{
 		this->board[x] = new int[GASIZE];
 
-		for (int z = GASIZE - 1; z >= 0; z--)
+		for (int z = GASIZE - 1; z >= 0; z --)
 		{
 			if (x == GASIZE - 1 || z == GASIZE - 1 || x == 0 || z == 0)
 			{
-				this->board[x][z] = -4;		//if an edge of the board
+				this->board[x][z] = -10;		//if an edge of the board
 			}
 			else
 			{
@@ -38,8 +39,10 @@ void GameState::init(int w, int h)
 	}
 
 	enemyWave = nullptr;
-	//Load UI
-	//gameUI = new GuiManager();
+	//Load Menu UI
+	menuUI = new GuiManager(w, h);
+	//Load GUI
+	gameUI = new InGameGui();
 	//Set player
 	spawnPlayer();
 	//Load arena
@@ -47,42 +50,79 @@ void GameState::init(int w, int h)
 	//Spawn first enemy wave
 	spawnEnemies("placeholder");
 	enemiesRemaining = waveSize;
+
+	onExitCleanUp = true;
 }
 
 void GameState::clean()
 {
-//	delete render;
-//	render = nullptr;
-	gameUI = nullptr;
-	for(int i = 0; i < waveSize; i++)
+	if (onExitCleanUp)
 	{
-		delete enemyWave[i];
+		delete render;
+		render = nullptr;
+		delete gameUI;
+		gameUI = nullptr;
+		for (int i = 0; i < waveSize; i++)
+		{
+			delete enemyWave[i];
+		}
+		delete[] enemyWave;
+		enemyWave = nullptr;
+
+		delete player;
+
+		for (int i = 0; i < GASIZE; i++)
+		{
+			delete board[i];
+		}
+		delete[] board;
+
+		renderObjects.clear();
+
+		onExitCleanUp = false;
 	}
-	delete[] enemyWave;
-	enemyWave = nullptr;
 }
 
 void GameState::update()
 {
 
-	player->update();
+ 	player->update();
 	
-	for (int i = 0; i < waveSize; i++)
+	if (menuUI->state != 3)
 	{
-		if(enemyWave[i]->getHealth() > 0)
+		for (int i = 0; i < waveSize; i++)
 		{
-			enemyWave[i]->act(player->getX(), player->getZ(), board);
+			if (enemyWave[i]->getHealth() > 0)
+			{
+				enemyWave[i]->act(player->getX(), player->getZ(), board);
+			}
 		}
 	}
 
 	render->GeometryPassInit();
 	render->render(renderObjects);
 	render->lightPass();
+	
+}
+
+void GameState::uiUpdate()
+{
+	if (menuUI->state == 3)
+	{
+		gameUI->update();
+		menuUI->update();
+	}
+	else if (menuUI->state == 4 || menuUI->state == 5)
+		menuUI->update();
+	else
+		gameUI->update();
 }
 
 void GameState::keyDown(char c)
 {
 	Player::Direction dir;
+	bool skipSetDir = false;
+
 	switch (c)
 	{
 	case 'w':
@@ -101,16 +141,65 @@ void GameState::keyDown(char c)
 	case 'D':
 		dir = Player::RIGHT;
 		break;
-	default:
+	case 'p':
+	case 'P':
+		dir = Player::STILL;
+		menuUI->pauseGame();
+		break;
+	case 'q':
+	case 'Q':
+		skipSetDir = true;
+		gameUI->changeWeapon();
+		break;
+	case 'e': //Temporary
+	case 'E': //Temporary
+		skipSetDir = true; //Temporary
+		gameUI->addHealth(); //Temporary
+		break; //Temporary
+	case 'r': //Temporary
+	case 'R': //Temporary
+		skipSetDir = true; //Temporary
+		gameUI->DmgTaken(); //Temporary
+		break; //Temporary
+	case 'f': //Temporary
+	case 'F': //Temporary
+		skipSetDir = true; //Temporary
+		gameUI->heal(); //Temporary
+		break; //Temporary
+	case 'z': //Temporary
+	case 'Z': //Temporary
+		skipSetDir = true; //Temporary
+		gameUI->increaseCombo(); //Temporary
+		break; //Temporary
+	case 'x': //Temporary
+	case 'X': //Temporary
+		skipSetDir = true; //Temporary
+		gameUI->comboLost(); //Temporary
+		break; //Temporary
+	case 'c': //Temporary
+	case 'C': //Temporary
+		skipSetDir = true; //Temporary
+		menuUI->defeat(); //Temporary
+		break; //Temporary
+	case 'v': //Temporary
+	case 'V': //Temporary
+		skipSetDir = true; //Temporary
+		menuUI->won(); //Temporary
+		break; //Temporary
+	default: 
 		dir = Player::STILL;
 		break;
 	}
-	if ( playerCanMove(dir) )
+	if (!skipSetDir)
 	{
-		player->setMovement( dir, true );
-	} else 
-	{
-		player->setMovement( dir, false );
+		if (playerCanMove(dir))
+		{
+			player->setMovement(dir, true);
+		}
+		else
+		{
+			player->setMovement(dir, false);
+		}
 	}
 }
 void GameState::keyUp(char c)
@@ -368,4 +457,14 @@ void GameState::createNegativePotential(int posX, int posZ, int size)
 			}
 		}
 	}
+}
+
+int GameState::guiState()
+{
+	return menuUI->state;
+}
+
+int GameState::screenClickesOn(float mx, float my)
+{
+	return menuUI->mouseClick(mx, my);
 }

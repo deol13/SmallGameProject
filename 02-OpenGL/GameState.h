@@ -3,6 +3,7 @@
 #include "Render.h"
 #include <string>
 #include "Player.h"
+#include "InGameGui.h"
 
 class GameState {
 	const int GASIZE = 256;				//Game Area max size
@@ -10,7 +11,8 @@ private:
 	int state;
 	int** board;
 	Render* render;
-	GuiManager* gameUI;
+	GuiManager* menuUI;
+	InGameGui* gameUI;
 	std::vector<GObject*> renderObjects;
 	std::vector<BoundingRect> collisionVec;
 	Player* player;
@@ -20,6 +22,8 @@ private:
 	int enemiesRemaining;
 	int nrOfArenaObjects;
 	int firstEnemyIndex;		//Start of enemies in renderObjects. Useful for enemy deaths etc.
+
+	bool onExitCleanUp;
 
 	void loadArena(std::string fileName);
 	void spawnEnemies(std::string fileName);
@@ -33,9 +37,12 @@ public:
 	void init(int w, int h);
 	void clean();
 	void update();
+	void uiUpdate();
 	void keyDown(char c);
 	void keyUp(char c);
 	void leftMouseClick(long x, long y);
 	int getState() const;
+	int guiState();
+	int screenClickesOn(float mx, float my);
 };
 #endif
