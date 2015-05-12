@@ -2,6 +2,7 @@
 
 GameState::GameState( int w, int h)
 {
+	gold = 999;
 	onExitCleanUp = false;
 	//init(w, h);
 	//Set render
@@ -33,6 +34,8 @@ void GameState::init(int w, int h)
 	menuUI = new GuiManager(w, h);
 	//Load GUI
 	gameUI = new InGameGui();
+	//Load Shop UI
+	shopUI = new ShopUI();
 	//Set player
 	spawnPlayer();
 	//Load arena
@@ -48,10 +51,12 @@ void GameState::clean()
 {
 	if (onExitCleanUp)
 	{
-		delete render;
-		render = nullptr;
 		delete gameUI;
 		gameUI = nullptr;
+		delete shopUI;
+		shopUI = nullptr;
+		delete menuUI;
+		menuUI = nullptr;
 		for (int i = 0; i < waveSize; i++)
 		{
 			delete enemyWave[i];
@@ -106,6 +111,8 @@ void GameState::uiUpdate()
 	}
 	else if (menuUI->state == 4 || menuUI->state == 5)
 		menuUI->update();
+	else if (shopUI->getState() == 1)
+		shopUI->update();
 	else
 		gameUI->update();
 }
@@ -180,6 +187,12 @@ void GameState::keyDown(char c)
 	case 'V': //Temporary
 		skipSetDir = true; //Temporary
 		menuUI->won(); //Temporary
+		break; //Temporary
+	case 'o': //Temporary
+	case 'O': //Temporary
+		skipSetDir = true; //Temporary
+		shopUI->setState(); //Temporary
+		shopUI->showGold(gold);
 		break; //Temporary
 	default: 
 		dir = Player::STILL;
@@ -444,7 +457,20 @@ int GameState::guiState()
 	return menuUI->state;
 }
 
+int GameState::getShopState()
+{
+	return shopUI->getState();
+}
+
 int GameState::screenClickesOn(float mx, float my)
 {
-	return menuUI->mouseClick(mx, my);
+	if (menuUI->state > 2)
+		return menuUI->mouseClick(mx, my);
+	else if (shopUI->getState() == 1)
+		return shopUI->mouseClick(mx, my, gold);
+}
+
+void GameState::maxHeal()
+{
+	gameUI->heal(true);
 }

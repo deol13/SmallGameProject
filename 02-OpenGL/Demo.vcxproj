@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BlitQuad.cpp" />
+    <ClCompile Include="BoundingPolygon.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GAShader.cpp" />
@@ -105,6 +106,7 @@
   <ItemGroup>
     <ClInclude Include="Audio.h" />
     <ClInclude Include="BlitQuad.h" />
+    <ClInclude Include="BoundingPolygon.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GAShader.h" />
