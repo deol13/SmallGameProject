@@ -16,7 +16,7 @@ private:
 	InGameGui* gameUI;
 	ShopUI* shopUI;
 	std::vector<GObject*> renderObjects;
-	std::vector<BoundingRect> collisionVec;
+//	std::vector<BoundingRect> collisionVec;
 	Player* player;
 	//std::vector<Enemy> enemyWave;
 	Enemy** enemyWave;

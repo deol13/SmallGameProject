@@ -7,8 +7,7 @@
 
 #include <glm\glm.hpp>
 #include <AL\alut.h>
-#include <AL\alext.h>
-#include <AL\efx.h>
+#include <AL\al.h>
 
 //states
 #define A_PLAYING 0
@@ -17,8 +16,8 @@
 #define A_FADEOUT 3
 #define FADEINTIME 0.15f
 #define FADEOUTTIME 0.4f
-#define MUSIC_BUFFERS 1 // one buffer for each file
-#define SOUND_BUFFERS 1 // one buffer for each file
+#define MUSIC_BUFFERS 3 // one buffer for each file
+#define SOUND_BUFFERS 3 // one buffer for each file
 #define SOUND_SOURCES 32 // maximum number of simultanious sounds
 
 using namespace std;
@@ -53,12 +52,8 @@ public:
 	void applySettings(float musicV, float soundV, float masterV, bool musicE, bool soundE, bool audioE);
 	void update(float deltaTime);
 	void playMusic(int file);
-	void playMusicFade(int file, float deltaTime);
 	void playSound(int file, bool looping);
-	void playSoundPitched(int file, float pitch, bool looping);
 	void playSoundAtPos(int file, glm::vec3 pos, float distance, bool looping);
-	ALuint playSoundSP(int file, bool looping);
-	ALuint playSoundAtPosSP(int file, glm::vec3 pos, float distance, bool looping);
 	void updateListener(glm::vec3 pos);
 	ALfloat* getListenerPos();
 	void shutdown();
