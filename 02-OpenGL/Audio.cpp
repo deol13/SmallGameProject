@@ -39,7 +39,7 @@ bool Audio::init(float musicV, float soundV, float masterV, bool musicE, bool so
 	listenerPos[1] = 0.0;
 	listenerPos[2] = 0.0;
 	ALfloat ListenerVel[] = { 0.0, 0.0, 0.0 };
-	ALfloat ListenerOri[] = { 0.0, 0.0, -1.0, 0.0, 1.0, 0.0 }; //up, lookat                                                                                
+	ALfloat ListenerOri[] = { 0.0, 0.0, 1.0, 0.0, 0.0, 0.0 }; //up, lookat                                                                                
 	alListenerfv(AL_POSITION, listenerPos); //Set position of the listener
 	alListenerfv(AL_VELOCITY, ListenerVel); //Set velocity of the listener
 	alListenerfv(AL_ORIENTATION, ListenerOri);

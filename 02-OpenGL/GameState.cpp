@@ -50,8 +50,8 @@ void GameState::init(int w, int h)
 	//Spawn first enemy wave
 	spawnEnemies("placeholder");
 	enemiesRemaining = waveSize;
-	//Set ingame music
-	Audio::getAudio().playMusic(1);
+
+	Audio::getAudio().init(1.0f, 1.0f, 1.0f, true, true, true);
 
 	onExitCleanUp = true;
 }
@@ -89,7 +89,9 @@ void GameState::update()
 {
 
  	player->update();
-	Audio::getAudio().update(1);
+
+	Audio::getAudio().playSoundAtPos(0, glm::vec3(player->getX(), 1, player->getZ()), 128.0, 1);
+	Audio::getAudio().update(0);
 	
 	if (menuUI->state != 3)
 	{
