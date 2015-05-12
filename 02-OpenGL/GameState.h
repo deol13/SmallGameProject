@@ -4,6 +4,7 @@
 #include <string>
 #include "Player.h"
 #include "InGameGui.h"
+#include "ShopUI.h"
 
 class GameState {
 	const int GASIZE = 256;				//Game Area max size
@@ -13,6 +14,7 @@ private:
 	Render* render;
 	GuiManager* menuUI;
 	InGameGui* gameUI;
+	ShopUI* shopUI;
 	std::vector<GObject*> renderObjects;
 	std::vector<BoundingRect> collisionVec;
 	Player* player;
@@ -43,6 +45,12 @@ public:
 	void leftMouseClick(long x, long y);
 	int getState() const;
 	int guiState();
+	int getShopState();
 	int screenClickesOn(float mx, float my);
+	void maxHeal();
+
+
+
+	int gold;
 };
 #endif

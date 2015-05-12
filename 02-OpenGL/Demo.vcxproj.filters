@@ -46,6 +46,9 @@
     <ClCompile Include="GuiManager.cpp">
       <Filter>GUI\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="ShopUI.cpp">
+      <Filter>GUI\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlitQuad.h">
@@ -115,6 +118,9 @@
       <Filter>Graphics\Headers</Filter>
     </ClInclude>
     <ClInclude Include="GuiManager.h">
+      <Filter>GUI\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopUI.h">
       <Filter>GUI\Headers</Filter>
     </ClInclude>
   </ItemGroup>

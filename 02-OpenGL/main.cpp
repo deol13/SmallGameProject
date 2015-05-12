@@ -130,7 +130,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				}
 				if( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) 
 				{
-					if (gameState->guiState() < 3)
+					if (gameState->guiState() < 3 && gameState->getShopState() == 0)
 					{
 						switch (msg.message) {
 						case  WM_LBUTTONDOWN:
@@ -173,18 +173,22 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							ScreenToClient(wndHandle, &newMpos);
 							float screenX = (newMpos.x * 2.0f / WINDOW_WIDTH) - 1.0f;
 							float screenY = -(newMpos.y * 2.0f / WINDOW_HEIGHT) + 1.0f;
-							int tmp = gameState->screenClickesOn(screenX, screenY);
+							int tmp = 0;
+							tmp = gameState->screenClickesOn(screenX, screenY);
 
 							if (tmp == 2)
 							{
 								playState = MENUSTATE;
 								gameState->clean();
 							}
+							else if (tmp == 1)
+								gameState->maxHeal();
 							break;
 						}
 						}
 						glDisable(GL_DEPTH_TEST);
-						gameState->uiUpdate();
+						if (playState != MENUSTATE)
+							gameState->uiUpdate();
 					}
 					TranslateMessage( &msg );
 					DispatchMessage( &msg );

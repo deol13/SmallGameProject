@@ -105,7 +105,7 @@ void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt el
 {
 	bool attacking = false;
 
-	if (type == MELEE && board[(int)x][(int)z] >= 0)		//atack if in range
+	if (type == MELEE && board[(int)x][(int)z] >= 0)		//attack if in range
 	{
 		if (abs(x - playerX) <= MELEERANGE && abs(z - playerZ) <= MELEERANGE)
 		{
