@@ -9,7 +9,7 @@ class GameState {
 	const int GASIZE = 256;				//Game Area max size
 private:
 	int state;
-	int** board;
+	int arenaMap[64][64];	//shows areas covered by buildings
 	Render* render;
 	GuiManager* menuUI;
 	InGameGui* gameUI;
@@ -29,7 +29,6 @@ private:
 	void spawnEnemies(std::string fileName);
 	void spawnPlayer();
 	bool playerCanMove( Player::Direction dir );
-	void createNegativePotential(int posX, int posZ, int size);
 
 public:
 	GameState(int w, int h);

@@ -198,13 +198,14 @@ void GObject::loadObjectFile(std::string fileName, int keyFrame)
 						indices[faceCount * 3 + n] = indexVERT; // set vertex index
 						vert[keyFrame][indexVERT].u = uv[indexUV].u;
 						vert[keyFrame][indexVERT].v = uv[indexUV].v;
-					} else if(vert[keyFrame][indexVERT].u == uv[indexUV].u && vert[keyFrame][indexVERT].v == uv[indexUV].v)			//Avoid duplicate vertices
+					} 
+					else if(vert[keyFrame][indexVERT].u == uv[indexUV].u && vert[keyFrame][indexVERT].v == uv[indexUV].v)			//Avoid duplicate vertices
 					{
 						indices[faceCount * 3 + n] = indexVERT;
 					}else
 					{
 						int temp = indexVERT;
-						indexVERT = vert.size();
+						indexVERT = vert[keyFrame].size();
 						vert[keyFrame].push_back(Vertex());
 						vert[keyFrame][indexVERT] = vert[keyFrame][temp];
 						vert[keyFrame][indexVERT].u = uv[indexUV].u;
@@ -280,6 +281,7 @@ void GObject::init()
 	{
 		currentVert.push_back(vert[0][i]);
 	}
+	Vertex temp = currentVert[currentVert.size() - 1];
 	bindBuffers();
 }
 

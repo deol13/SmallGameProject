@@ -20,21 +20,11 @@ void GameState::init(int w, int h)
 {
 	state = 0;
 	//initialize the board the AI uses
-	this->board = new int*[GASIZE];
-	for (int x = GASIZE - 1; x >= 0; x -- )
+	for (int i = 0; i < 64; i++)
 	{
-		this->board[x] = new int[GASIZE];
-
-		for (int z = GASIZE - 1; z >= 0; z --)
+		for(int j = 0; j < 64; j++)
 		{
-			if (x == GASIZE - 1 || z == GASIZE - 1 || x == 0 || z == 0)
-			{
-				this->board[x][z] = -10;		//if an edge of the board
-			}
-			else
-			{
-				this->board[x][z] = 0;
-			}
+			arenaMap[i][j] = 0;
 		}
 	}
 
@@ -68,24 +58,14 @@ void GameState::clean()
 		}
 		delete[] enemyWave;
 		enemyWave = nullptr;
-
 		delete player;
-
-		for (int i = 0; i < GASIZE; i++)
-		{
-			delete board[i];
-		}
-		delete[] board;
-
 		renderObjects.clear();
-
 		onExitCleanUp = false;
 	}
 }
 
 void GameState::update()
 {
-
  	player->update();
 	
 	if (menuUI->state != 3)
@@ -94,7 +74,19 @@ void GameState::update()
 		{
 			if (enemyWave[i]->getHealth() > 0)
 			{
-				enemyWave[i]->act(player->getX(), player->getZ(), board);
+				enemyWave[i]->clearPotential(arenaMap);
+				enemyWave[i]->setPotential(player->getX(), player->getZ(), 50);
+
+				float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) + pow((enemyWave[i]->getZ() - player->getZ()), 2));
+
+				if(enemyWave[i]->getRange() > playerDist)
+				{
+					enemyWave[i]->attack();
+				} else
+				{
+					enemyWave[i]->move();
+				}
+				//enemyWave[i]->act(player->getX(), player->getZ(), board);
 			}
 		}
 	}
@@ -376,7 +368,6 @@ void GameState::spawnEnemies(std::string fileName)
 			}
 			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex));
 			enemyWave[i] = tempEnemy;
-			createNegativePotential(enemyWave[i]->getX(), enemyWave[i]->getZ(), 2);	//for AI sets -4 at enemies location
 			renderObjects.push_back(tempEnemy->getGObject());
 		}
 		delete[] enemyArgs;
@@ -388,7 +379,7 @@ void GameState::spawnPlayer()
 {
 	//Hardcoded for now. Might be worth using lua later
 	render->createTexture("TestAnimation/testtexture.png");
-	player = new Player(render->getTexture(0), 100, 100);
+	player = new Player(render->getTexture(0), 100, 100, 6, 0);
 	renderObjects.push_back(player->getGObject());
 
 }
@@ -446,25 +437,6 @@ bool GameState::playerCanMove(Player::Direction dir)
 	//	}
 	//}
 	return true;
-}
-
-void GameState::createNegativePotential(int posX, int posZ, int size)
-{
-	board[posZ][posX] += -4;
-
-	int length = 0;
-	for (int i = posZ - size; i <= posZ + size; i++)
-	{
-		for (int j = posX - size; j <= posX + size; j++)
-		{
-			length = sqrt(((j - posX)*(j - posX)) + ((i - posZ)*(i - posZ)));
-			if (length < size)
-			{
-				if (length > 0)
-					board[i][j] -= size - length;
-			}
-		}
-	}
 }
 
 int GameState::guiState()
