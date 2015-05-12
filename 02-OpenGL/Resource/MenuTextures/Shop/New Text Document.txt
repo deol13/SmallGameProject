@@ -1,0 +1,45 @@
+upgradeCost = { sword1 = 15, sword2 = 25, sword3 = 35, swordMax = 9999,
+				spear1 = 15, spear3 = 25, spear3 = 35, spearMax = 9999,
+				health1 = 20, health2 = 30, health3 = 40, healthMax = 9999,
+				armor1 = 30, armor2 = 40, armorMax = 9999}
+
+textures = { sword1 = 1, sword2 = 2, sword3 = 3, swordMax = 4,
+			 spear1 = 5, spear3 = 6, spear3 = 7, spearMax = 8,
+			 health1 = 9, health2 = 10, health3 = 11, healthMax = 12,
+			 armor1 = 13, armor2 = 14, armorMax = 15}
+
+upgradeTo = {0, 4, 8, 12}--{sword1, spear1, health1, armor1}
+
+upgrades = {"sword1", "sword2", "sword3", "swordMax",
+			"spear1", "spear2", "spear3", "spearMax",
+			"health1", "health2", "health3", "healthMax",
+			"armor1", "armor2", "armorMax" } 
+
+
+
+function spearUpgrade( gold )
+	if upgradeCost[upgrades[upgradeTo[1]]] < gold then --upgradeCost[upgradeTo[1]] == gold then
+		gold = gold - upgradeCost[upgrades[upgradeTo[1]]]
+		upgradeTo[1] = textures[upgradeTo[1] + 1]
+		return textures[upgradeTo], 1, gold
+	end
+	return -1, -1, gold
+end
+
+function healthUpgrade( gold )
+	if upgradeCost[upgrades[upgradeTo[2]]] < gold then --upgradeCost[upgradeTo[2]] == gold then
+		gold = gold - upgradeCost[upgrades[upgradeTo[2]]]
+		upgradeTo[2] = textures[upgradeTo[2] + 1]
+		return textures[upgradeTo], 2, gold
+	end
+	return -1, -1, gold
+end
+
+function armorUpgrade( gold )
+	if upgradeCost[upgrades[upgradeTo[3]]] < gold then --upgradeCost[upgradeTo[3]] == gold then
+		gold = gold - upgradeCost[upgrades[upgradeTo[3]]]
+		upgradeTo[3] = textures[upgradeTo[3] + 1]
+		return textures[upgradeTo], 3, gold
+	end
+	return -1, -1, gold
+end

@@ -118,7 +118,7 @@
       <Filter>GUI\Headers</Filter>
     </ClInclude>
     <ClInclude Include="BoundingPolygon.h">
-      <Filter>Header Files\Structs</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

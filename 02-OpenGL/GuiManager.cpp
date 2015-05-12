@@ -317,21 +317,24 @@ void GuiManager::createTexture(std::string fileName)
 
 void GuiManager::loadTextures()
 {
-	createTexture("NewMenuTextures/backGround.png");
-	createTexture("NewMenuTextures/newgame.png");
-	createTexture("NewMenuTextures/conti.png");
-	createTexture("NewMenuTextures/howto.png");
-	createTexture("NewMenuTextures/mapedit.png");
-	createTexture("NewMenuTextures/exit.png");
+	createTexture("MenuTextures/backGround.png"); //0
+	createTexture("MenuTextures/newgame.png");    //1
+	createTexture("MenuTextures/conti.png");	  //2
+	createTexture("MenuTextures/howto.png");	  //3
+	createTexture("MenuTextures/mapedit.png");    //4
+	createTexture("MenuTextures/exit.png");       //5
 
-	createTexture("NewMenuTextures/howtoplaybk.png");
-	createTexture("NewMenuTextures/newback.png");
+	createTexture("MenuTextures/howtoplaybk.png");//6
+	createTexture("MenuTextures/newback.png");    //7
 
-	createTexture("Resume.png");
-	createTexture("Quit.png");
+	createTexture("moregui/continue2.png");        //8
+	createTexture("moregui/quit.png");			  //9
 
-	createTexture("Victory.png");
-	createTexture("Defeat.png");
-	createTexture("Restart.png");
-	createTexture("LoadSave.png");
+	createTexture("moregui/victory.png");         //10
+	createTexture("moregui/defeat.png");		  //11
+	createTexture("moregui/restartfree.png");     //12
+	createTexture("moregui/restart5g.png");       //13
+	createTexture("moregui/pause.png");           //14
+
+	
 }

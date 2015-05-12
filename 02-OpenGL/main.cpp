@@ -16,7 +16,7 @@
 #define GLM_FORCE_RADIANS
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
-//#include "Audio.h"
+#include "Audio.h"
 
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glew32.lib")
@@ -78,6 +78,9 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		mGUI->startMenuR();
 
 		ShowWindow( wndHandle, nCmdShow );
+		//init music
+		Audio::getAudio().init(1.0f, 1.0f, 1.0f, true, true, true);
+		Audio::getAudio().playMusic(0);
 
 		start = std::clock();
 
@@ -85,8 +88,10 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			currentFrame = std::clock();
 			switch( playState ) {
 			case MENUSTATE:
-				//Audio::getAudio().init(1.0f, 1.0f, 1.0f, true, true, true);
-				//Audio::getAudio().playMusic(0);
+				//Play the music
+				Audio::getAudio().playMusic(0);
+				Audio::getAudio().update(1);
+
 				glDisable(GL_DEPTH_TEST);
 
 				if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -130,7 +135,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				}
 				if( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) 
 				{
-					if (gameState->guiState() < 3)
+					if (gameState->guiState() < 3 && gameState->getShopState() == 0)
 					{
 						switch (msg.message) {
 						case  WM_LBUTTONDOWN:
@@ -173,18 +178,22 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							ScreenToClient(wndHandle, &newMpos);
 							float screenX = (newMpos.x * 2.0f / WINDOW_WIDTH) - 1.0f;
 							float screenY = -(newMpos.y * 2.0f / WINDOW_HEIGHT) + 1.0f;
-							int tmp = gameState->screenClickesOn(screenX, screenY);
+							int tmp = 0;
+							tmp = gameState->screenClickesOn(screenX, screenY);
 
 							if (tmp == 2)
 							{
 								playState = MENUSTATE;
 								gameState->clean();
 							}
+							else if (tmp == 1)
+								gameState->maxHeal();
 							break;
 						}
 						}
 						glDisable(GL_DEPTH_TEST);
-						gameState->uiUpdate();
+						if (playState != MENUSTATE)
+							gameState->uiUpdate();
 					}
 					TranslateMessage( &msg );
 					DispatchMessage( &msg );

@@ -87,7 +87,6 @@
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BlitQuad.cpp" />
-    <ClCompile Include="BoundingPolygon.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GAShader.cpp" />
@@ -100,6 +99,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Render.cpp" />
+    <ClCompile Include="ShopUI.cpp" />
     <ClCompile Include="stb_image.c" />
   </ItemGroup>
   <ItemGroup>
@@ -121,8 +121,9 @@
     <ClInclude Include="lualib.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="BoundingPolygon.h" />
+    <ClInclude Include="BoundingRect.h" />
     <ClInclude Include="Render.h" />
+    <ClInclude Include="ShopUI.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Vertex.h" />
