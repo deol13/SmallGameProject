@@ -86,7 +86,7 @@ void Audio::loadFiles()
 
 	soundFiles[0] = "../soundfiles/swordswing.wav";
 	soundFiles[1] = "../soundfiles/spearthrust.wav";
-	soundFiles[2] = "../soundFiles/Arrow.wav;";
+	soundFiles[2] = "../soundFiles/Arrow.wav";
 
 }
 

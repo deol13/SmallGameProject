@@ -1,27 +1,7 @@
-﻿Build started 5/12/2015 12:54:05 PM.
+﻿Build started 5/12/2015 3:58:26 PM.
      1>Project "C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Audio.cpp Enemy.cpp GameState.cpp Render.cpp main.cpp
-         Audio.cpp
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(32): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(35): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(98): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(99): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(107): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(113): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(118): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(133): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(161): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(165): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(144): warning C4101: 'state' : unreferenced local variable
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(177): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(208): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(222): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(429): warning C4244: 'argument' : conversion from 'float' to 'ALint', possible loss of data
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(483): warning C4244: 'argument' : conversion from 'float' to 'ALint', possible loss of data
-         Generating Code...
-         Compiling...
          main.cpp
          Render.cpp
          GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
@@ -56,6 +36,24 @@
      1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(489): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
      1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(503): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
      1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(522): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+         Audio.cpp
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(32): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(35): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(98): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(99): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(107): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(113): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(118): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(133): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(161): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(165): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(144): warning C4101: 'state' : unreferenced local variable
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(177): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(208): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(222): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(429): warning C4244: 'argument' : conversion from 'float' to 'ALint', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(483): warning C4244: 'argument' : conversion from 'float' to 'ALint', possible loss of data
          Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
@@ -74,6 +72,7 @@
          Debug\Player.obj
          Debug\Render.obj
          Debug\stb_image.obj
+         LINK : C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.exe not found or not built by the last incremental link; performing full link
      1>LuaLib.lib(lapi.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
      1>LuaLib.lib(lauxlib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
      1>LuaLib.lib(lbaselib.obj) : warning LNK4204: 'C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
@@ -111,4 +110,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:14.00
+Time Elapsed 00:00:13.58
