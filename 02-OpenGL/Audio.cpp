@@ -81,8 +81,9 @@ void Audio::loadFiles()
 {
 	//load music files
 	musicFiles[0] = "../soundfiles/mainmenu.wav";
+	musicFiles[1] = "../soundfiles/mainmenu1.wav";
 
-	soundFiles[0] = "../soundfiles/mainmenu.wav";
+	soundFiles[0] = "../soundfiles/mainmenu2.wav";
 
 }
 

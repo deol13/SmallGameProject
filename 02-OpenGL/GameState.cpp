@@ -1,5 +1,5 @@
 #include "GameState.h"
-
+#include "Audio.h"
 GameState::GameState( int w, int h)
 {
 	onExitCleanUp = false;
@@ -50,6 +50,8 @@ void GameState::init(int w, int h)
 	//Spawn first enemy wave
 	spawnEnemies("placeholder");
 	enemiesRemaining = waveSize;
+	//Set ingame music
+	Audio::getAudio().playMusic(1);
 
 	onExitCleanUp = true;
 }
@@ -87,6 +89,7 @@ void GameState::update()
 {
 
  	player->update();
+	Audio::getAudio().update(1);
 	
 	if (menuUI->state != 3)
 	{
@@ -388,7 +391,7 @@ void GameState::spawnPlayer()
 {
 	//Hardcoded for now. Might be worth using lua later
 	render->createTexture("TestAnimation/testtexture.png");
-	player = new Player(render->getTexture(0), 100, 100);
+	player = new Player(render->getTexture(0), 100, 100, 1, 1);
 	renderObjects.push_back(player->getGObject());
 
 }
