@@ -16,8 +16,8 @@
 #define A_FADEOUT 3
 #define FADEINTIME 0.15f
 #define FADEOUTTIME 0.4f
-#define MUSIC_BUFFERS 2 // one buffer for each file
-#define SOUND_BUFFERS 1 // one buffer for each file
+#define MUSIC_BUFFERS 3 // one buffer for each file
+#define SOUND_BUFFERS 3 // one buffer for each file
 #define SOUND_SOURCES 32 // maximum number of simultanious sounds
 
 using namespace std;

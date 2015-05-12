@@ -82,9 +82,11 @@ void Audio::loadFiles()
 	//load music files
 	musicFiles[0] = "../soundfiles/mainmenu.wav";
 	musicFiles[1] = "../soundfiles/ingame.wav";
+	musicFiles[2] = "../soundfiles/shopmusic.wav";
 
 	soundFiles[0] = "../soundfiles/swordswing.wav";
-	soundFiles[0] = "../soundfiles/spearthrust.wav";
+	soundFiles[1] = "../soundfiles/spearthrust.wav";
+	soundFiles[2] = "../soundFiles/Arrow.wav;";
 
 }
 
