@@ -23,8 +23,10 @@ class Enemy
 		float moveSpeed;
 		int health;
 		int type;
+		int attackRange;
 		GObject* loadObj;
 		BoundingPolygon collisionRect;
+		float neighbourPos[8];					//index goes NW, N, NE, W, E, SW, S, SE
 
 	public:
 		Enemy();
@@ -37,14 +39,16 @@ class Enemy
 		float getX()const;
 		float getZ()const;
 		int getHealth()const;
+		int getRange()const;
 		BoundingPolygon getBounds() const;
 		bool takeDamage(const int dmg);					//returns true if still alive
 
 		void attack();
-		void act(float playerX, float playerZ, int** board);
-		
-		void createNegativePotential(int** board, int posX, int posZ);
-		void createPositivePotential(int** board, int posX, int posZ);
+		void move();
+
+		/*adds base power at distance 1 from origin and degrades with radius*/
+		void setPotential(int origX, int origZ, int basePower);
+		void clearPotential(const int staticBoard[64][64]);
 
 };
 #endif

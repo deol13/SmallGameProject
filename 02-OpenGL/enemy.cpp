@@ -10,6 +10,7 @@ Enemy::Enemy()
 	this->z = 100.0f;
 	Point colPoints [4] = {{x - 5.0, z - 5.0}, {x - 5.0, z + 5.0}, {x + 5.0, z - 5.0}, {x + 5.0, z + 5.0}};
 	collisionRect = BoundingPolygon(colPoints, 4);
+
 }
 
 Enemy::Enemy(int type, float x, float z, GLuint texture)
@@ -25,12 +26,17 @@ Enemy::Enemy(int type, float x, float z, GLuint texture)
 		loadObj = new GObject( "enemyobj/wolflowpoly.obj", GL_TRIANGLES, texture );
 		health = 20;
 		this->type = MELEE;
-		moveSpeed = 2.0f;	
+		moveSpeed = 2.0f;
+		this->attackRange = 8;
 		break;
 	default:
 		break;
 	}
 	loadObj->translate(x, 17, z);
+	for(int i = 0; i < 8; i++)
+	{
+		neighbourPos[i] = 0;
+	}
 }
 
 Enemy::~Enemy()
@@ -77,6 +83,11 @@ int Enemy::getHealth() const
 	return this->health;
 }
 
+int Enemy::getRange() const
+{
+	return this->attackRange;
+}
+
 BoundingPolygon Enemy::getBounds() const
 {
 	return collisionRect;
@@ -92,439 +103,73 @@ void Enemy::attack()
 {
 	if (type == MELEE)
 	{
-		Audio::getAudio().playSoundAtPos(1, glm::vec3(x, 1, z), 256, 0);
+
 	}
 	else if (type == RANGED)
 	{
-		Audio::getAudio().playSoundAtPos(2, glm::vec3(x, 1, z), 256, 0);
+
 	}
 	else
 	{
-		Audio::getAudio().playSoundAtPos(0, glm::vec3(x, 1, z), 256, 0);
+
 	}
 }
 
-void Enemy::act(float playerX, float playerZ, int** board) //spelarens objekt eller plats
+void Enemy::move()
 {
-	bool attacking = false;
-
-	if (type == MELEE && board[(int)x][(int)z] >= 0)		//attack if in range
+	int highIndex = 0;
+	for(int i = 1; i < 8; i++)
 	{
-		if (abs(x - playerX) <= MELEERANGE && abs(z - playerZ) <= MELEERANGE)
+		if(neighbourPos[i] > neighbourPos[highIndex])
 		{
-			attacking = true;
-			attack();
+			highIndex = i;
 		}
 	}
-	else if (type == RANGED && board[(int)x][(int)z] >= 0)
+	if(neighbourPos[highIndex] > 0)
 	{
-		if (abs(x - playerX) <= RANGEDRANGE && abs(z - playerZ) <= RANGEDRANGE)
-		{
-			attacking = true;
-			attack();
-		}
-	}
-	else if (type == TANK && board[(int)x][(int)z] >= 0)
-	{
-		if (abs(x - playerX) <= TANKRANGE && abs(z - playerZ) <= TANKRANGE)
-		{
-			attacking = true;
-			attack();
-		}
-	}
-
-	if (attacking == false)	//If not attacking then move
-	{
-		float moveX = 0.0f;
-		float moveZ = 0.0f;
-
-		int lowest = -100;
-		float biggestX = -100.0;
-		float biggestZ = -100.0;
-
-		if (x < playerX)		//suggested movement
-		{
-			moveX++;
-		}
-		else if (x > playerX)
-		{
-			moveX--;
-		}
-		if (z < playerZ)
-		{
-			moveZ++;
-		}
-		else if (z > playerZ)
-		{
-			moveZ--;
-		}
-
-		createPositivePotential(board, x, z);	//take away the enemies own negative field
-
-		if (board[(int)(x + moveX)][(int)(z + moveZ)] < 0 || board[(int)x][(int)z] < 0)
-		{
-			int testerX = (int)moveX;
-			int testerZ = (int)moveZ;
-
-			if (testerX == -1 && testerZ == -1)	//if trying to move down right
-			{
-				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
-				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
-					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
-					}
-
-					if (testerX == -1 && testerZ == -1)
-					{
-						testerX++;	// (0, -1) down
-					}
-					else if (testerX == 0 && testerZ == -1)
-					{
-						testerX++; // (1, -1) down left
-					}
-					else if (testerX == 1 && testerZ == -1)
-					{
-						testerX -= 2;
-						testerZ++; // (-1, 0) right
-					}
-					else if (testerX == -1 && testerZ == 0)
-					{
-						testerZ++;		// (-1, 1) up right
-					}
-					else
-					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
-						break;
-					}
-				}
-			}
-			else if (testerX == -1 && testerZ == 0)	//if trying to move right
-			{
-				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
-				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
-					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
-					}
-
-					if (testerX == -1 && testerZ == 0)
-					{
-						testerX += 2;
-						testerZ--;	// (1,-1) up right
-					}
-					else if (testerX == 1 && testerZ == -1)
-					{
-						testerX -= 2;	// (-1,-1) down right
-					}
-					else if (testerX == -1 && testerZ == -1)
-					{
-						testerX++;		//(0,-1) down
-					}
-					else if (testerX == 0 && testerZ == -1)
-					{
-						testerZ += 2;	// (0,1) up;
-					}
-					else
-					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
-						break;
-					}
-				}
-			}
-			else if (testerX == 1 && testerZ == -1)	//if trying to move up right
-			{
-				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
-				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
-					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
-					}
-
-					if (testerX == 1 && testerZ == -1)
-					{
-						testerX -= 2;	// (-1,0)  right
-						testerZ++;
-					}
-					else if (testerX == -1 && testerZ == 0)
-					{
-						testerZ++;	// (0,1) up
-						testerX++;
-					}
-					else if (testerX == 0 && testerZ == 1)
-					{
-						testerX++;		//(1,1) up left
-					}
-					else if (testerX == 1 && testerZ == 1)
-					{
-						testerZ -= 2;	// (-1,-1) down right;
-						testerX -= 2;
-					}
-					else
-					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
-
-						break;
-					}
-				}
-
-			}
-			else if (testerX == 0 && testerZ == 1)	//if trying to move up
-			{
-				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
-				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
-					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
-					}
-
-					if (testerX == 0 && testerZ == 1)
-					{
-						testerX--; // (-1,1) up right
-					}
-					else if (testerX == -1 && testerZ == 1)
-					{
-						testerX += 2; // (1,1) up left
-					}
-					else if (testerX == 1 && testerZ == 1)
-					{
-						testerZ--;	// (1,0) left
-					}
-					else if (testerX == 1 && testerZ == 0)
-					{
-						testerX -= 2;	// (-1,0) right
-					}
-					else
-					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
-						break;
-					}
-				}
-			}
-			else if (testerX == 1 && testerZ == 1)//if trying to move up left
-			{
-				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
-				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
-					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
-					}
-
-					if (testerX == 1 && testerZ == 1)
-					{
-						testerX--; // (0,1) up
-					}
-					else if (testerX == 0 && testerZ == 1)
-					{
-						testerX++;	// (1,0) left
-						testerZ--;
-					}
-					else if (testerX == 1 && testerZ == 0)
-					{
-						testerX -= 2;	// (-1,1) up right
-						testerZ++;
-					}
-					else if (testerX == -1 && testerZ == 1)
-					{
-						testerX += 2;	//(1, -1) down left
-						testerZ -= 2;
-					}
-					else
-					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
-						break;
-					}
-				}
-
-			}
-			else if (testerX == 1 && testerZ == 0)	//if trying to move left
-			{
-				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
-				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
-					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
-					}
-
-					if (testerX == 1 && testerZ == 0)
-					{
-						testerZ++; // (1,1) up left
-					}
-					else if (testerX == 1 && testerZ == 1)
-					{
-						testerZ -= 2; // (1,-1) down left
-					}
-					else if (testerX == 1 && testerZ == -1)
-					{
-						testerX--; // (0,-1) down
-					}
-					else if (testerX == 0 && testerZ == -1)
-					{
-						testerZ += 2; // (0,1) up
-					}
-					else
-					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
-						break;
-					}
-				}
-			}
-			else if (testerX == 1 && testerZ == -1)	//if trying to move down left
-			{
-				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
-				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
-					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
-					}
-
-					if (testerX == 1 && testerZ == -1)
-					{
-						testerZ++;	// (1,0) left
-					}
-					else if (testerX == 1 && testerZ == 0)
-					{
-						testerX--;	// (0,-1) down
-						testerZ--;
-					}
-					else if (testerX == 0 && testerZ == -1)
-					{
-						testerX++;		// (1,1) up left
-						testerZ += 2;
-					}
-					else if (testerX == 1 && testerZ == 1)
-					{
-						testerX -= 2;	// (-1,-1) down right
-						testerZ -= 2;
-					}
-					else
-					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
-						break;
-					}
-				}
-
-			}
-			else if (testerX == 0 && testerZ == -1)	//if trying to move down
-			{
-				while (board[(int)(x + testerX)][(int)(z + testerZ)] < 0)
-				{
-					if (board[(int)(x + testerX)][(int)(z + testerZ)] > lowest)
-					{
-						biggestX = moveX;		//looks for the lesser evil
-						biggestZ = moveZ;
-						lowest = board[(int)(biggestX + x)][(int)(biggestZ + z)];
-					}
-
-					if (testerX == 0 && testerZ == -1)
-					{
-						testerX++;	// (1,-1) down left
-					}
-					else if (testerX == 1 && testerZ == -1)
-					{
-						testerX -= 2; // (-1,-1) down right
-					}
-					else if (testerX == -1 && testerZ == -1)
-					{
-						testerX += 2;	// (1,0) left
-						testerZ++;
-					}
-					else if (testerX == 1 && testerZ == 0)
-					{
-						testerX -= 2; // (-1,0) right
-					}
-					else
-					{
-						testerX = biggestX;	//chosing path of least resistence
-						testerZ = biggestZ;
-						break;
-					}
-				}
-
-			}
-
-			moveX = testerX * moveSpeed;	//Got where we are moving 
-			moveZ = testerZ * moveSpeed;
-		}
-
-		float tempX = x;
-		float tempZ = z;
-
-		if (moveX != 0)
-		{
-			x = x + moveX;
-			loadObj->translate(moveX, 0, 0);
-
-		}
-		if (moveZ != 0)
-		{
-			z = z + moveZ;
-			loadObj->translate(0, 0, moveZ);
-
-		}
-
-		if (attacking == false)
-		{
-			createNegativePotential(board, x, z);	//tell the board where we are standing
-		}
+		int xMove = (highIndex + highIndex / 4) % 3 - 1;
+		int zMove = (highIndex + highIndex / 4) / 3 - 1;
+		this->x += xMove;
+		this->z += zMove;
+		loadObj->translate(xMove, 0.0, zMove);
+		collisionRect.move(xMove, zMove);
 	}
 }
 
-void Enemy::createNegativePotential(int** board, int posX, int posZ)
+void Enemy::setPotential(int origX, int origZ, int basePower)
 {
-	board[posZ][posX] -= 8;
-
-	int length = 0;
-	for (int i = posZ - potentialRange; i <= posZ + potentialRange; i++)
+	//float radii[9];
+	for(int i = -1; i < 2; i++)
 	{
-		for (int j = posX - potentialRange; j <= posX + potentialRange; j++)
+		for(int j = -1; j < 2; j++)
 		{
-			length = sqrt(((j - posX)*(j - posX)) + ((i - posZ)*(i - posZ)));
-			if (length < potentialRange)
+			if(i == 0 && j == 0){ continue;	}		//Skip the middle position
+
+			float radius = sqrt(pow((x + j - origX), 2) + pow((z + i - origZ), 2));
+			if(radius < 1 )
 			{
-				if (length > 0)
-					board[i][j] -= potentialRange - length;
+				neighbourPos[3 * (i + 1) + (j + 1)] = -100;
+			} else
+			{
+				neighbourPos[3 * (i + 1) + (j + 1)] += basePower / radius;
 			}
 		}
 	}
 }
 
-void Enemy::createPositivePotential(int** board, int posX, int posZ)
+void Enemy::clearPotential(const int staticBoard[64][64])
 {
-	board[posZ][posX] += 8;
-
-	int length = 0;
-	for (int i = posZ - potentialRange; i <= posZ + potentialRange; i++)
+	//float radii[9];
+	for(int i = -1; i < 2; i++)
 	{
-		for (int j = posX - potentialRange; j <= posX + potentialRange; j++)
+		for(int j = -1; j < 2; j++)
 		{
-			length = sqrt(((j - posX)*(j - posX)) + ((i - posZ)*(i - posZ)));
-			if (length < potentialRange)
-			{
-				if (length > 0)
-					board[i][j] += potentialRange - length;
-			}
+			if(i == 0 && j == 0){ continue; }		//Skip the middle position
+
+			int boardPosX = (int)x / 4 + j;
+			int boardPosZ = (int)z / 4 + i;
+
+			neighbourPos[3 * (i + 1) + (j + 1)] = staticBoard[boardPosX][boardPosZ];
 		}
 	}
 }

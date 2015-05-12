@@ -1,13 +1,18 @@
-﻿Build started 5/12/2015 6:26:35 PM.
-     1>Project "C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
+﻿Build started 5/12/2015 6:27:01 PM.
+     1>Project "C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Demo (Konfliktkopia för laptop 2015-05-12).vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glew-1.11.0" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Render.cpp main.cpp
-         Skipping... (no relevant changes detected)
-         main.cpp
-         Render.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Enemy.cpp
+         Enemy.cpp
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\enemy.cpp(11): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\enemy.cpp(21): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\enemy.cpp(134): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\enemy.cpp(135): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\enemy.cpp(172): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
          Debug\BlitQuad.obj
+         Debug\BoundingPolygon.obj
          Debug\Enemy.obj
          Debug\GameState.obj
          Debug\GAShader.obj
@@ -20,24 +25,10 @@
          Debug\main.obj
          Debug\Player.obj
          Debug\Render.obj
-         Debug\ShopUI.obj
          Debug\stb_image.obj
-     1>Enemy.obj : error LNK2019: unresolved external symbol "public: __thiscall BoundingPolygon::BoundingPolygon(void)" (??0BoundingPolygon@@QAE@XZ) referenced in function "public: __thiscall Enemy::Enemy(int,float,float,unsigned int)" (??0Enemy@@QAE@HMMI@Z)
-     1>Player.obj : error LNK2001: unresolved external symbol "public: __thiscall BoundingPolygon::BoundingPolygon(void)" (??0BoundingPolygon@@QAE@XZ)
-     1>Enemy.obj : error LNK2019: unresolved external symbol "public: __thiscall BoundingPolygon::BoundingPolygon(struct Point * const,int)" (??0BoundingPolygon@@QAE@QAUPoint@@H@Z) referenced in function "public: __thiscall Enemy::Enemy(int,float,float,unsigned int)" (??0Enemy@@QAE@HMMI@Z)
-     1>GameState.obj : error LNK2001: unresolved external symbol "public: __thiscall BoundingPolygon::BoundingPolygon(struct Point * const,int)" (??0BoundingPolygon@@QAE@QAUPoint@@H@Z)
-     1>Player.obj : error LNK2001: unresolved external symbol "public: __thiscall BoundingPolygon::BoundingPolygon(struct Point * const,int)" (??0BoundingPolygon@@QAE@QAUPoint@@H@Z)
-     1>Enemy.obj : error LNK2019: unresolved external symbol "public: __thiscall BoundingPolygon::~BoundingPolygon(void)" (??1BoundingPolygon@@QAE@XZ) referenced in function "public: __thiscall Enemy::Enemy(int,float,float,unsigned int)" (??0Enemy@@QAE@HMMI@Z)
-     1>GameState.obj : error LNK2001: unresolved external symbol "public: __thiscall BoundingPolygon::~BoundingPolygon(void)" (??1BoundingPolygon@@QAE@XZ)
-     1>Player.obj : error LNK2001: unresolved external symbol "public: __thiscall BoundingPolygon::~BoundingPolygon(void)" (??1BoundingPolygon@@QAE@XZ)
-     1>GameState.obj : error LNK2019: unresolved external symbol "public: bool __thiscall BoundingPolygon::collides(class BoundingPolygon const &)" (?collides@BoundingPolygon@@QAE_NABV1@@Z) referenced in function "public: void __thiscall GameState::leftMouseClick(long,long)" (?leftMouseClick@GameState@@QAEXJJ@Z)
-     1>GameState.obj : error LNK2019: unresolved external symbol "public: void __thiscall BoundingPolygon::move(float,float)" (?move@BoundingPolygon@@QAEXMM@Z) referenced in function "private: bool __thiscall GameState::playerCanMove(enum Player::Direction)" (?playerCanMove@GameState@@AAE_NW4Direction@Player@@@Z)
-     1>Player.obj : error LNK2001: unresolved external symbol "public: void __thiscall BoundingPolygon::move(float,float)" (?move@BoundingPolygon@@QAEXMM@Z)
-     1>GameState.obj : error LNK2019: unresolved external symbol "public: float __thiscall BoundingPolygon::findMin(struct Point)const " (?findMin@BoundingPolygon@@QBEMUPoint@@@Z) referenced in function "private: bool __thiscall GameState::playerCanMove(enum Player::Direction)" (?playerCanMove@GameState@@AAE_NW4Direction@Player@@@Z)
-     1>GameState.obj : error LNK2019: unresolved external symbol "public: float __thiscall BoundingPolygon::findMax(struct Point)const " (?findMax@BoundingPolygon@@QBEMUPoint@@@Z) referenced in function "private: bool __thiscall GameState::playerCanMove(enum Player::Direction)" (?playerCanMove@GameState@@AAE_NW4Direction@Player@@@Z)
-     1>C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.exe : fatal error LNK1120: 7 unresolved externals
-     1>Done Building Project "C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)) -- FAILED.
+         Demo.vcxproj -> C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.exe
+     1>Done Building Project "C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:00.42
+Time Elapsed 00:00:00.86
