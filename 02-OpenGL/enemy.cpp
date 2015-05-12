@@ -92,7 +92,7 @@ void Enemy::attack()
 {
 	if (type == MELEE)
 	{
-
+		Audio::getAudio().playSoundAtPos(0, glm::vec3(x, 1, z), 256, 0);
 	}
 	else if (type == RANGED)
 	{

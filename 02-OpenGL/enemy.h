@@ -2,6 +2,7 @@
 #define Enemy_H
 #include "GObject.h"
 #include "BoundingPolygon.h"
+#include "Audio.h"
 
 const int MELEE = 1;
 const int RANGED = 2;
