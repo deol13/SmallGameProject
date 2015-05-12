@@ -174,36 +174,6 @@ bool Audio::createBuffers(char** files, ALuint* buffers, int elements)
 
 void Audio::update(float deltaTime)
 {
-	for (int i = 0; i < musicSources.size(); i++) // check the state of all music sources
-	{
-		if (musicEnabled && audioEnabled)// music is enabled
-		{
-			if (musicSources[i].state == A_FADEIN) //new music track is fading in
-			{
-				musicSources[i].volume += FADEINTIME * deltaTime;
-				if (musicSources[i].volume >= musicVolume)
-				{
-					musicSources[i].state = A_PLAYING;
-					musicSources[i].volume = musicVolume;
-				}
-				alSourcef(musicSources[i].source, AL_GAIN, musicSources[i].volume * masterVolume);
-			}
-
-			else if (musicSources[i].state == A_FADEOUT) //old music track is fading out
-			{
-				musicSources[i].volume -= FADEOUTTIME * deltaTime;
-				if (musicSources[i].volume <= 0.0f)
-				{
-					musicSources[i].volume = 0.0f;
-					alSourceStop(musicSources[i].source);
-				}
-				alSourcef(musicSources[i].source, AL_GAIN, musicSources[i].volume * masterVolume);
-			}
-		}
-		else // music is disabled
-			alSourcef(musicSources[i].source, AL_GAIN, 0.0f);
-	}
-
 	// clean and remove music sources that's finished playing
 	for (int i = 0; i < musicSources.size(); i++)
 	{
@@ -230,9 +200,6 @@ void Audio::update(float deltaTime)
 			break;
 		}
 	}
-	/* print # of buffers for debug purposes
-	Debug::DebugOutput("Audio sources %i\n", soundSources.size());
-	Debug::DebugOutput("sBuffers: %i, mBuffers: %i\n", soundSources.size(), musicSources.size());*/
 }
 
 void Audio::playMusic(int file)
@@ -296,72 +263,6 @@ void Audio::playMusic(int file)
 	}
 }
 
-void Audio::playMusicFade(int file, float deltaTime)
-{
-	if (file < MUSIC_BUFFERS && file >= 0)
-	{
-		if (musicSources.size() == 0)// check if no music is playing yet
-		{
-			MusicStruct music;
-			alGenSources(1, &music.source);
-
-			ALfloat SourcePos[] = { 0.0, 0.0, 0.0 };
-			ALfloat SourceVel[] = { 0.0, 0.0, 0.0 };
-
-			alSourcei(music.source, AL_BUFFER, musicBuffer[file]);
-			alSourcef(music.source, AL_PITCH, 1.0f);
-			alSourcef(music.source, AL_GAIN, 0.0f);
-			alSourcei(music.source, AL_SOURCE_RELATIVE, AL_TRUE); // 2D sound
-			alSourcefv(music.source, AL_POSITION, SourcePos);
-			alSourcefv(music.source, AL_VELOCITY, SourceVel);
-			alSourcei(music.source, AL_LOOPING, AL_TRUE);
-
-			//fade in new track
-			alSourcePlay(music.source);
-			music.volume = 0.0f;
-			music.state = A_FADEIN;
-			music.track = file;
-
-			//add new music source to the source list
-			musicSources.push_back(music);
-		}
-		else if (musicSources.begin()->track != file) // check so that it's not the current track
-		{
-			MusicStruct music;
-			alGenSources(1, &music.source);
-
-			ALfloat SourcePos[] = { 0.0, 0.0, 0.0 };
-			ALfloat SourceVel[] = { 0.0, 0.0, 0.0 };
-
-			alSourcei(music.source, AL_BUFFER, musicBuffer[file]);
-			alSourcef(music.source, AL_PITCH, 1.0f);
-			alSourcef(music.source, AL_GAIN, 0.0f);
-			alSourcei(music.source, AL_SOURCE_RELATIVE, AL_TRUE); // 2D sound
-			alSourcefv(music.source, AL_POSITION, SourcePos);
-			alSourcefv(music.source, AL_VELOCITY, SourceVel);
-			alSourcei(music.source, AL_LOOPING, AL_TRUE);
-
-			//fade in new track
-			alSourcePlay(music.source);
-			music.volume = 0.0f;
-			music.state = A_FADEIN;
-			music.track = file;
-
-			//fade out old track
-			musicSources.begin()->state = A_FADEOUT;
-
-			//add new music source to the source list
-			musicSources.insert(musicSources.begin(), music); // add new music to the start of the vector
-		}
-
-	}
-	else //track is -1 stop music
-	{
-		if (musicSources.size() > 0)
-			musicSources.begin()->state = A_FADEOUT;
-	}
-}
-
 void Audio::playSound(int file, bool looping)
 {
 if (soundEnabled && audioEnabled) //sound is enabled
@@ -375,31 +276,6 @@ if (soundEnabled && audioEnabled) //sound is enabled
 
 		alSourcei(source, AL_BUFFER, soundBuffer[file]);
 		alSourcef(source, AL_PITCH, 1.0f);
-		alSourcef(source, AL_GAIN, masterVolume * soundVolume);
-		alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE); // 2D sound
-		alSourcefv(source, AL_POSITION, SourcePos);
-		alSourcefv(source, AL_VELOCITY, SourceVel);
-		alSourcei(source, AL_LOOPING, looping);
-
-		alSourcePlay(source);
-
-		soundSources.push_back(source);
-	}
-}
-
-void Audio::playSoundPitched(int file, float pitch, bool looping)
-{
-	if (soundEnabled && audioEnabled) //sound is enabled
-	if (file < SOUND_BUFFERS && soundSources.size() < SOUND_SOURCES) //check to see that there are available sound buffers
-	{
-		ALuint source;
-		alGenSources(1, &source);
-
-		ALfloat SourcePos[] = { 0.0, 0.0, 0.0 };
-		ALfloat SourceVel[] = { 0.0, 0.0, 0.0 };
-
-		alSourcei(source, AL_BUFFER, soundBuffer[file]);
-		alSourcef(source, AL_PITCH, pitch);
 		alSourcef(source, AL_GAIN, masterVolume * soundVolume);
 		alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE); // 2D sound
 		alSourcefv(source, AL_POSITION, SourcePos);
@@ -435,64 +311,6 @@ if (soundEnabled && audioEnabled) //sound is enabled
 
 		soundSources.push_back(source);
 	}
-}
-
-ALuint Audio::playSoundSP(int file, bool looping)
-{
-	if (soundEnabled && audioEnabled) //sound is enabled
-	if (file < SOUND_BUFFERS && soundSources.size() < SOUND_SOURCES) //check to see that there are available sound buffers
-	{
-		ALuint source;
-		alGenSources(1, &source);
-
-		ALfloat SourcePos[] = { 0.0, 0.0, 0.0 };
-		ALfloat SourceVel[] = { 0.0, 0.0, 0.0 };
-
-		alSourcei(source, AL_BUFFER, soundBuffer[file]);
-		alSourcef(source, AL_PITCH, 1.0f);
-		alSourcef(source, AL_GAIN, masterVolume * soundVolume);
-		alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE); // 2D sound
-		alSourcefv(source, AL_POSITION, SourcePos);
-		alSourcefv(source, AL_VELOCITY, SourceVel);
-		alSourcei(source, AL_LOOPING, looping);
-
-		alSourcePlay(source);
-
-		soundSources.push_back(source);
-
-		return source;
-	}
-
-	return NULL;
-}
-
-ALuint Audio::playSoundAtPosSP(int file, glm::vec3 pos, float distance, bool looping)
-{
-	if (soundEnabled && audioEnabled) //sound is enabled
-		if (file < SOUND_BUFFERS && soundSources.size() < SOUND_SOURCES) //check to see that there are available sound buffers
-		{
-			ALuint source;
-			alGenSources(1, &source);
-
-			ALfloat SourcePos[] = { pos.x, pos.y, pos.z };
-			ALfloat SourceVel[] = { 0.0, 0.0, 0.0 };
-
-			alSourcei(source, AL_BUFFER, soundBuffer[file]);
-			alSourcef(source, AL_PITCH, 1.0f);
-			alSourcef(source, AL_GAIN, masterVolume * soundVolume);
-			alSourcei(source, AL_REFERENCE_DISTANCE, distance);
-			alSourcefv(source, AL_POSITION, SourcePos);
-			alSourcefv(source, AL_VELOCITY, SourceVel);
-			alSourcei(source, AL_LOOPING, looping);
-
-			alSourcePlay(source);
-
-			soundSources.push_back(source);
-
-			return source;
-		}
-
-	return NULL;
 }
 
 void Audio::updateListener(glm::vec3 pos)

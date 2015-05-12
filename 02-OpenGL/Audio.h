@@ -52,12 +52,8 @@ public:
 	void applySettings(float musicV, float soundV, float masterV, bool musicE, bool soundE, bool audioE);
 	void update(float deltaTime);
 	void playMusic(int file);
-	void playMusicFade(int file, float deltaTime);
 	void playSound(int file, bool looping);
-	void playSoundPitched(int file, float pitch, bool looping);
 	void playSoundAtPos(int file, glm::vec3 pos, float distance, bool looping);
-	ALuint playSoundSP(int file, bool looping);
-	ALuint playSoundAtPosSP(int file, glm::vec3 pos, float distance, bool looping);
 	void updateListener(glm::vec3 pos);
 	ALfloat* getListenerPos();
 	void shutdown();
