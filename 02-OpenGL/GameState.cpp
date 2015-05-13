@@ -244,9 +244,9 @@ void GameState::leftMouseClick(long x, long y)
 		float weaponRange = 5.0f;	//multiplier for the direction vector
 		glm::vec2 dirVec = glm::normalize(glm::vec2(weaponRange *(x - player->getX()), weaponRange *(y - player->getZ())));
 		Point points[3];
-		points[0] = { player->getX(), player->getZ() };
-		points[1] = { player->getX() + dirVec.x - dirVec.y, player->getZ() + dirVec.y + dirVec.x };
-		points[2] = { player->getX() + dirVec.x + dirVec.y, player->getZ() + dirVec.y - dirVec.x };
+		points[0] = { -player->getZ(), player->getX() };
+		points[1] = { -(player->getZ() + dirVec.y + dirVec.x), player->getX() + dirVec.x - dirVec.y };
+		points[2] = { -(player->getZ() + dirVec.y - dirVec.x), player->getX() + dirVec.x + dirVec.y };
 		hitbox = BoundingPolygon(points, 3);
 	}
 	else		//Using spear
@@ -256,7 +256,7 @@ void GameState::leftMouseClick(long x, long y)
 		
 		Point point[1];
 
-		point[0] = { ((player->getX() + (dirVec.x * weaponRange)), (player->getZ() + +(dirVec.y * weaponRange))) };
+		point[0] = { (-(player->getZ() + +(dirVec.y * weaponRange)), (player->getX() + (dirVec.x * weaponRange))) };
 		hitbox = BoundingPolygon(point, 1);
 	}
 
