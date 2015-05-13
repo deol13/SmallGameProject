@@ -26,7 +26,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture)
 		loadObj = new GObject( "enemyobj/wolflowpoly.obj", GL_TRIANGLES, texture );
 		health = 20;
 		this->type = MELEE;
-		moveSpeed = 2.0f;
+		moveSpeed = 1.0f;
 		this->attackRange = 8;
 		break;
 	default:
@@ -145,19 +145,20 @@ void Enemy::setPotential(int origX, int origZ, int basePower)
 		{
 			if(i == 0 && j == 0){ continue;	}		//Skip the middle position
 
-			float radius = sqrt(pow((x + j - origX), 2) + pow((z + i - origZ), 2));
+			float radius = sqrt(pow((x + (j * moveSpeed) - (float)origX), 2) + pow((z + (i * moveSpeed) - (float)origZ), 2));
+			int index = 3 * (i + 1) + (j + 1) - (3 * (i + 1) + (j + 1)) / 5;		//translates to 0-7 index
 			if(radius < 1 )
 			{
-				neighbourPos[3 * (i + 1) + (j + 1)] = -100;
+				neighbourPos[index] = -100;
 			} else
 			{
-				neighbourPos[3 * (i + 1) + (j + 1)] += basePower / radius;
+				neighbourPos[index] += basePower / radius;
 			}
 		}
 	}
 }
 
-void Enemy::clearPotential(const int staticBoard[64][64])
+void Enemy::clearPotential(const int staticBoard[256][256])
 {
 	//float radii[9];
 	for(int i = -1; i < 2; i++)
@@ -166,10 +167,10 @@ void Enemy::clearPotential(const int staticBoard[64][64])
 		{
 			if(i == 0 && j == 0){ continue; }		//Skip the middle position
 
-			int boardPosX = (int)x / 4 + j;
-			int boardPosZ = (int)z / 4 + i;
+			int boardPosX = (int)x + j;
+			int boardPosZ = (int)z + i;
 
-			neighbourPos[3 * (i + 1) + (j + 1)] = staticBoard[boardPosX][boardPosZ];
+			neighbourPos[3 * (i + 1) + (j + 1) - (3 * (i + 1) + (j + 1)) / 5] = staticBoard[boardPosX][boardPosZ];
 		}
 	}
 }

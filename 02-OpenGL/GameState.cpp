@@ -21,9 +21,9 @@ void GameState::init(int w, int h)
 {
 	state = 0;
 	//initialize the board the AI uses
-	for (int i = 0; i < 64; i++)
+	for (int i = 0; i < 256; i++)
 	{
-		for(int j = 0; j < 64; j++)
+		for(int j = 0; j < 256; j++)
 		{
 			arenaMap[i][j] = 0;
 		}
@@ -393,7 +393,11 @@ void GameState::spawnPlayer()
 	//Hardcoded for now. Might be worth using lua later
 	render->createTexture("TestAnimation/testtexture.png");
 	player = new Player(render->getTexture(0), 100, 100, 6, 0);
-	renderObjects.push_back(player->getGObject());
+	GObject** tempGraphic = player->getGObjects();
+	for(int i = 0; i < 1; i++)					//change to 3
+	{
+		renderObjects.push_back(tempGraphic[i]);
+	}
 
 }
 

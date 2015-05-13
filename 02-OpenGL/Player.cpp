@@ -2,7 +2,8 @@
 
 Player::Player()
 {
-	loadObj = new GObject();
+	loadObj = new GObject*[1];		//change to 3
+	loadObj[0] = new GObject();
 	x = 5.0f;
 	z = 5.0f;
 	Point* colPoints = new Point[4]{{0.0, 0.0}, {0.0, 10.0}, {10.0, 0.0}, {10.0, 10.0}};
@@ -18,9 +19,9 @@ Player::Player()
 }
 Player::Player(GLuint texture, float x, float z, int health, int armour)
 {
-	//std::string files[] = {"WalkingAnimation/StandStill.obj", "WalkingAnimation/10frames.obj", "WalkingAnimation/10framesleft.obj"};
 	std::string files[] = {"TestAnimation/StartFrame.obj", "TestAnimation/Frame10.obj", "TestAnimation/Frame20.obj"};
-	loadObj = new GObject(files, 3, texture);
+	loadObj = new GObject*[1];
+	loadObj[0] = new GObject(files, 3, texture);
 	this->x = x;
 	this->z = z;
 	Point colPoints[4] ={{x - 5.0, z - 5.0}, {x - 5.0, z + 5.0}, {x + 5.0, z - 5.0}, {x + 5.0, z + 5.0}};
@@ -30,7 +31,10 @@ Player::Player(GLuint texture, float x, float z, int health, int armour)
 	this->armour = armour;
 	this->gold = 0;
 
-	loadObj->translate(x,17,z);
+	for(int i = 0; i < 1; i++)		//again, change to 3
+	{
+		loadObj[i]->translate(x, 17, z);
+	}
 	for (int i = 0; i < 4; i++)
 	{
 		movement[i] = false;
@@ -39,7 +43,11 @@ Player::Player(GLuint texture, float x, float z, int health, int armour)
 
 Player::~Player()
 {
-	delete loadObj;
+	for(int i = 0; i < 1; i++)
+	{
+		delete loadObj[i];
+	}
+	delete[] loadObj;
 }
 
 void Player::attack()
@@ -56,65 +64,66 @@ bool Player::takeDamage(const int dmg)
 	return (health > 0);
 }
 
-GObject* Player::getGObject() const
+GObject** Player::getGObjects() const
 {
 	return loadObj;
 }
 
 void Player::update()
 {
-	int moving = 0;
+	float zMove = 0.0;
+	float xMove = 0.0;
+
 	if (movement[0]) //UP
 	{
-		z += moveSpeed;
-		loadObj->translate(0,0,moveSpeed);
-		collisionRect.move( 0, moveSpeed );
-		moving++;
+		zMove += moveSpeed;
 	}
 	if (movement[1]) //DOWN
 	{
-		z -= moveSpeed;
-		loadObj->translate(0, 0, -moveSpeed);
-		collisionRect.move( 0, -moveSpeed );
-		moving++;
+		zMove -= moveSpeed;
 	}
 	if (movement[2]) //LEFT
 	{
-		x += moveSpeed;
-		loadObj->translate(moveSpeed, 0, 0);
-		collisionRect.move( moveSpeed, 0 );
-		moving++;
+		xMove += moveSpeed;
 	}
 	if (movement[3]) //RIGHT
 	{
-		x -= moveSpeed;
-		loadObj->translate(-moveSpeed, 0, 0);
-		collisionRect.move( -moveSpeed, 0 );
-		moving++;
+		xMove -= moveSpeed;
 	}
-	if(moving == 0)
+
+	if(abs(xMove)< 0.001 && abs(zMove)< 0.001)
 	{	
-		loadObj->setAnimationState(0.0);
+		for(int i = 0; i < 1; i++)
+		{
+			loadObj[i]->setAnimationState(0.0);
+		}
 	}
-	loadObj->animate();
+	for(int i = 0; i < 1; i++)
+	{
+		loadObj[i]->translate(xMove, 0, zMove);
+		loadObj[i]->animate();
+	}
+	x += xMove;
+	z += zMove;
+	collisionRect.move(xMove, zMove);
 }
 
-	void Player::setGold(const int gold)
-	{
-		this->gold = gold;
-	}
-	void Player::setMaxHealth(const int health)
-	{
-		this->maxHealth = health;
-	}
-	void Player::setHealth(const int health)
-	{
-		this->health = health;
-	}
-	void Player::setArmour(const int armour)
-	{
-		this->armour = armour;
-	}
+void Player::setGold(const int gold)
+{
+	this->gold = gold;
+}
+void Player::setMaxHealth(const int health)
+{
+	this->maxHealth = health;
+}
+void Player::setHealth(const int health)
+{
+	this->health = health;
+}
+void Player::setArmour(const int armour)
+{
+	this->armour = armour;
+}
 
 float Player::getX() const
 {

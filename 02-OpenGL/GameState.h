@@ -10,7 +10,7 @@ class GameState {
 	const int GASIZE = 256;				//Game Area max size
 private:
 	int state;
-	int arenaMap[64][64];	//shows areas covered by buildings
+	int arenaMap[256][256];	//shows areas covered by buildings
 	Render* render;
 	GuiManager* menuUI;
 	InGameGui* gameUI;

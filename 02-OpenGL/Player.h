@@ -14,7 +14,7 @@ private:
 	float x, z;
 	float angle;
 	float moveSpeed;
-	GObject* loadObj;
+	GObject** loadObj;
 	bool movement[4];
 	BoundingPolygon collisionRect;
 
@@ -26,7 +26,7 @@ public:
 	void attack();
 	void setMovement(int dir, bool isMoving);
 	bool takeDamage(const int dmg);
-	GObject* getGObject() const;
+	GObject** getGObjects() const;
 	void update();
 
 	void setGold(const int gold);

@@ -48,7 +48,7 @@ class Enemy
 
 		/*adds base power at distance 1 from origin and degrades with radius*/
 		void setPotential(int origX, int origZ, int basePower);
-		void clearPotential(const int staticBoard[64][64]);
+		void clearPotential(const int staticBoard[256][256]);
 
 };
 #endif
