@@ -237,21 +237,36 @@ void GameState::leftMouseClick(long x, long y)
 	//glm::vec2 vecFromPlayer = glm::vec2(x - player->getX(), y - player->getZ());
 	//float angle = atan(vecFromPlayer.y / vecFromPlayer.x);
 	//glm::vec2 dirVec =  glm::normalize(glm::vec2(x - player->getX(), y - player->getZ()));
-	
+	BoundingPolygon hitbox;
 
-	//
-	float weaponSize = 5.0f;	//multiplier for the direction vector
-	glm::vec2 dirVec = glm::normalize(glm::vec2(weaponSize*(x - player->getX()), weaponSize*(y - player->getZ())));
-	Point points[3];
-	points[0] = {player->getX(), player->getZ()};
-	points[1] = {player->getX() + dirVec.x - dirVec.y, player->getZ() + dirVec.y + dirVec.x};		
-	points[1] = {player->getX() + dirVec.x + dirVec.y, player->getZ() + dirVec.y - dirVec.x};
-	BoundingPolygon hitbox = BoundingPolygon(points, 3);
+	if (player->getWeapon() == SWORD)
+	{
+		float weaponRange = 5.0f;	//multiplier for the direction vector
+		glm::vec2 dirVec = glm::normalize(glm::vec2(weaponRange *(x - player->getX()), weaponRange *(y - player->getZ())));
+		Point points[3];
+		points[0] = { player->getX(), player->getZ() };
+		points[1] = { player->getX() + dirVec.x - dirVec.y, player->getZ() + dirVec.y + dirVec.x };
+		points[2] = { player->getX() + dirVec.x + dirVec.y, player->getZ() + dirVec.y - dirVec.x };
+		hitbox = BoundingPolygon(points, 3);
+	}
+	else		//Using spear
+	{
+		float weaponRange = 9.0f;
+		glm::vec2 dirVec = glm::normalize(glm::vec2(weaponRange *(x - player->getX()), weaponRange *(y - player->getZ())));
+		
+		Point point[1];
+
+		point[0] = { ((player->getX() + (dirVec.x * weaponRange)), (player->getZ() + +(dirVec.y * weaponRange))) };
+		hitbox = BoundingPolygon(point, 1);
+	}
+
 	for(int i = 0; i < waveSize; i++)
 	{
 		if(enemyWave[i]->getBounds().collides(hitbox))
 		{
-			if(!enemyWave[i]->takeDamage(10))			//Checks if the enemy is killed by the damage
+			int damage = player->getDamageDealt();
+			
+			if(!enemyWave[i]->takeDamage(damage))			//Checks if the enemy is killed by the damage
 			{	
 				enemiesRemaining--;
 				state = 1;

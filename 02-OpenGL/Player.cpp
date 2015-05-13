@@ -11,6 +11,10 @@ Player::Player()
 	health = 6;
 	armour = 0;
 	gold = 0;
+	this->weapon = SWORD;
+	this->spearUpgrade = 1;
+	this->swordUpgrade = 1;
+
 	for (int i = 0; i < 4; i++)
 	{
 		movement[i] = false;
@@ -29,6 +33,10 @@ Player::Player(GLuint texture, float x, float z, int health, int armour)
 	this->health = health;
 	this->armour = armour;
 	this->gold = 0;
+	this->weapon = SWORD;
+	this->spearUpgrade = 1;
+	this->swordUpgrade = 1;
+
 
 	loadObj->translate(x,17,z);
 	for (int i = 0; i < 4; i++)
@@ -40,21 +48,6 @@ Player::Player(GLuint texture, float x, float z, int health, int armour)
 Player::~Player()
 {
 	delete loadObj;
-}
-
-void Player::attack()
-{
-	int damage = 0;
-
-	if (weapon == SWORD)
-	{
-		damage = 7 + ( 3 * swordUpgrade);
-	}
-
-	if (weapon == SPEAR)
-	{
-		damage = 5 + (2 * spearUpgrade);
-	}
 }
 
 void Player::setMovement(int dir, bool isMoving)
@@ -142,6 +135,28 @@ void Player::setWeaponUpgrade(const int weapon, const int weaponLevel)
 		spearUpgrade = weaponLevel;
 
 	}
+}
+
+int Player::getDamageDealt()
+{
+	int damage = 0;
+
+	if (weapon == SWORD)
+	{
+		damage = 7 + (3 * swordUpgrade);
+	}
+
+	if (weapon == SPEAR)
+	{
+		damage = 5 + (2 * spearUpgrade);
+	}
+
+	return damage;
+}
+
+int Player::getWeapon()
+{
+	return this->weapon;
 }
 
 float Player::getX() const

@@ -31,7 +31,6 @@ public:
 	Player();
 	Player(GLuint texture, float x, float y, int health, int armour);
 	~Player();
-	void attack();
 	void setMovement(int dir, bool isMoving);
 	bool takeDamage(const int dmg);
 	GObject* getGObject() const;
@@ -45,6 +44,8 @@ public:
 	void setWeapon(const int weapon);
 	void setWeaponUpgrade(const int weapon, const int weaponLevel);
 
+	int getDamageDealt();
+	int getWeapon();
 	float getX() const;
 	float getZ() const;
 	float getAngle() const;
