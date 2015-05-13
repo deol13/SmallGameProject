@@ -11,6 +11,7 @@ class GameState {
 private:
 	int state;
 	int arenaMap[64][64];	//shows areas covered by buildings
+	int waveNumber;
 	Render* render;
 	GuiManager* menuUI;
 	InGameGui* gameUI;
@@ -28,7 +29,7 @@ private:
 	bool onExitCleanUp;
 
 	void loadArena(std::string fileName);
-	void spawnEnemies(std::string fileName);
+	void spawnEnemies(int waveNumber);
 	void spawnPlayer();
 	bool playerCanMove( Player::Direction dir );
 
