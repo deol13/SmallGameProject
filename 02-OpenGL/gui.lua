@@ -188,7 +188,7 @@ end
 
 
 function swordUpgrade( gold )
-	if upgradeCost[upgradeTo[1]] < gold then --upgradeCost[upgradeTo[1]] == gold then
+	if upgradeCost[upgradeTo[1]] <= gold then --upgradeCost[upgradeTo[1]] == gold then
 		gold = gold - upgradeCost[upgradeTo[1]]
 		upgradeTo[1] = textures[upgradeTo[1] + 1]
 		return textures[upgradeTo[1]], 1, gold
@@ -197,7 +197,7 @@ function swordUpgrade( gold )
 end
 
 function spearUpgrade( gold )
-	if upgradeCost[upgradeTo[2]] < gold then --upgradeCost[upgradeTo[2]] == gold then
+	if upgradeCost[upgradeTo[2]] <= gold then --upgradeCost[upgradeTo[2]] == gold then
 		gold = gold - upgradeCost[upgradeTo[2]]
 		upgradeTo[2] = textures[upgradeTo[2] + 1]
 		return textures[upgradeTo[2]], 2, gold
@@ -206,7 +206,7 @@ function spearUpgrade( gold )
 end
 
 function healthUpgrade( gold )
-	if upgradeCost[upgradeTo[3]] < gold then --upgradeCost[upgradeTo[3]] == gold then
+	if upgradeCost[upgradeTo[3]] <= gold then --upgradeCost[upgradeTo[3]] == gold then
 		gold = gold - upgradeCost[upgradeTo[3]]
 		upgradeTo[3] = textures[upgradeTo[3] + 1]
 		return textures[upgradeTo[3]], 3, gold
@@ -215,7 +215,7 @@ function healthUpgrade( gold )
 end
 
 function armorUpgrade( gold )
-	if upgradeCost[upgradeTo[4]] < gold then --upgradeCost[upgradeTo[4]] == gold then
+	if upgradeCost[upgradeTo[4]] <= gold then --upgradeCost[upgradeTo[4]] == gold then
 		gold = gold - upgradeCost[upgradeTo[4]]
 		upgradeTo[4] = textures[upgradeTo[4] + 1]
 		return textures[upgradeTo[4]], 4, gold
