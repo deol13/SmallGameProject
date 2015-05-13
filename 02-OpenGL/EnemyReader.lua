@@ -33,8 +33,10 @@ function readFile()
 				if enemyType == "melee"			
 				then
 					enemyArr[i] = 1
-				else
-					enemyArr[i] = 0
+				end
+				if enemyType == "animal"
+				then
+					enemyArr[i] = 3
 				end
 				i = i + 1
 			elseif i % 6 == 3							-- decide texture index, while avoiding repeats

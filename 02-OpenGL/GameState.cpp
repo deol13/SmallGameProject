@@ -20,6 +20,7 @@ GameState::~GameState()
 void GameState::init(int w, int h) 
 {
 	state = 0;
+	waveNumber = 2;
 	//initialize the board the AI uses
 	for (int i = 0; i < 64; i++)
 	{
@@ -41,7 +42,7 @@ void GameState::init(int w, int h)
 	//Load arena
 	loadArena("temp");
 	//Spawn first enemy wave
-	spawnEnemies("placeholder");
+	spawnEnemies(waveNumber);
 	enemiesRemaining = waveSize;
 
 	onExitCleanUp = true;
@@ -75,6 +76,11 @@ void GameState::update()
 	
 	if (menuUI->state != 3)
 	{
+		if (enemiesRemaining == 0)
+		{
+			waveNumber++;
+			spawnEnemies(waveNumber);
+		}
 		for (int i = 0; i < waveSize; i++)
 		{
 			if (enemyWave[i]->getHealth() > 0)
@@ -325,11 +331,11 @@ void GameState::loadArena(std::string fileName)
 	}
 }
 
-void GameState::spawnEnemies(std::string fileName)
+void GameState::spawnEnemies(int waveNumber)
 {
 	//Grab from lua
 	int error = 0;
-	int waveNr = 1;
+	int waveNr = waveNumber;
 	lua_State *L = luaL_newstate();
 	luaL_openlibs(L);
 
@@ -379,7 +385,7 @@ void GameState::spawnEnemies(std::string fileName)
 			if( texIndex >= render->getTextureSize()  ) {
 				render->createTexture(enemyArgs[6*i + 2]);
 			}
-			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex));
+			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), enemyArgs[(6 * i) + 1].c_str());
 			enemyWave[i] = tempEnemy;
 			renderObjects.push_back(tempEnemy->getGObject());
 		}

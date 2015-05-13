@@ -6,11 +6,11 @@
 
 const int MELEE = 1;
 const int RANGED = 2;
-const int TANK = 3;
+const int ANIMAL = 3;
 
 const int MELEERANGE = 8;
 const int RANGEDRANGE = 16;
-const int TANKRANGE = 12;
+const int ANIMALRANGE = 12;
 
 const int potentialRange = 8;
 
@@ -30,7 +30,7 @@ class Enemy
 
 	public:
 		Enemy();
-		Enemy(int type, float x, float z, GLuint texture);
+		Enemy(int type, float x, float z, GLuint texture, string objectFile);
 		~Enemy();
 
 		void setEnemy(int type);

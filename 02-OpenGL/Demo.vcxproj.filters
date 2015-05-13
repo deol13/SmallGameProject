@@ -131,9 +131,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AltWave.dat">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="Arena.dat">
       <Filter>Resource Files</Filter>
     </None>
