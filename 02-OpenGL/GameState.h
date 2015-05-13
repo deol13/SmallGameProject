@@ -50,6 +50,7 @@ public:
 	void keyDown(char c);
 	void keyUp(char c);
 	void leftMouseClick(float x, float y);
+	void playerAttack();
 	int getState() const;
 	int guiState();
 	int getShopState();

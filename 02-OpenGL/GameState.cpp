@@ -298,6 +298,11 @@ void GameState::leftMouseClick(float x, float y)
 	}
 }
 
+void GameState::playerAttack()
+{
+
+}
+
 int GameState::getState()const
 {
 	return state;
