@@ -4,6 +4,9 @@
 #include "BoundingPolygon.h"
 #include "GObject.h"
 
+const int SWORD = 1;
+const int SPEAR = 2;
+
 class Player 
 {
 private:
@@ -11,6 +14,11 @@ private:
 	int maxHealth;
 	int armour;
 	int gold;
+	
+	int weapon;
+	int spearUpgrade;
+	int swordUpgrade;
+
 	float x, z;
 	float angle;
 	float moveSpeed;
@@ -33,6 +41,9 @@ public:
 	void setMaxHealth(const int health);
 	void setHealth(const int health);
 	void setArmour(const int armour);
+	
+	void setWeapon(const int weapon);
+	void setWeaponUpgrade(const int weapon, const int weaponLevel);
 
 	float getX() const;
 	float getZ() const;

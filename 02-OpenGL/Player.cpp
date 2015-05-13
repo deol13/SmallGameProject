@@ -43,7 +43,19 @@ Player::~Player()
 }
 
 void Player::attack()
-{}
+{
+	int damage = 0;
+
+	if (weapon == SWORD)
+	{
+		damage = 7 + ( 3 * swordUpgrade);
+	}
+
+	if (weapon == SPEAR)
+	{
+		damage = 5 + (2 * spearUpgrade);
+	}
+}
 
 void Player::setMovement(int dir, bool isMoving)
 {
@@ -99,22 +111,38 @@ void Player::update()
 	loadObj->animate();
 }
 
-	void Player::setGold(const int gold)
+void Player::setGold(const int gold)
+{
+	this->gold = gold;
+}
+void Player::setMaxHealth(const int health)
+{
+	this->maxHealth = health;
+}
+void Player::setHealth(const int health)
+{
+	this->health = health;
+}
+void Player::setArmour(const int armour)
+{
+	this->armour = armour;
+}
+void Player::setWeapon(const int weapon)
+{
+	this->weapon = weapon;
+}
+void Player::setWeaponUpgrade(const int weapon, const int weaponLevel)
+{
+	if (weapon == SWORD)
 	{
-		this->gold = gold;
+		swordUpgrade = weaponLevel;
 	}
-	void Player::setMaxHealth(const int health)
+	if (weapon == SPEAR)
 	{
-		this->maxHealth = health;
+		spearUpgrade = weaponLevel;
+
 	}
-	void Player::setHealth(const int health)
-	{
-		this->health = health;
-	}
-	void Player::setArmour(const int armour)
-	{
-		this->armour = armour;
-	}
+}
 
 float Player::getX() const
 {
