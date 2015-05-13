@@ -23,12 +23,12 @@ function readFile()
 	nrOfObjects = tonumber(nrOfObjects)
 	if nrOfObjects ~= nil or nrOfObjects ~= 0 --Is there any meaning to doing the rest?
 	then
-		c = nrOfObjects * 6	
+		c = nrOfObjects * 8	
 		i = 1
 		while i < c
 		do
 			arenaArr[i] = io.read("*l")	
-			if i % 6 == 5
+			if i % 8 == 5
 			then
 				arenaArr[i + 1] = findTexture(arenaArr[i])
 				i = i + 1
