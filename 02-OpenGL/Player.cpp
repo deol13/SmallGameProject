@@ -11,7 +11,6 @@ Player::Player()
 	moveSpeed = 1;
 	health = 6;
 	armour = 0;
-	gold = 0;
 	this->weapon = SWORD;
 	this->spearUpgrade = 1;
 	this->swordUpgrade = 1;
@@ -29,7 +28,6 @@ Player::Player(GLuint texture, float x, float z, int health, int armour)
 	moveSpeed = 0.9;
 	this->health = health;
 	this->armour = armour;
-	this->gold = 0;
 	this->weapon = SWORD;
 	this->spearUpgrade = 1;
 	this->swordUpgrade = 1;
@@ -86,8 +84,13 @@ void Player::stop(bool stopX, bool stopZ)
 
 bool Player::takeDamage(const int dmg)
 {
-	health -= dmg;
-	return (health > 0);
+	start = clock();
+
+	if (std::clock() - start < 8)
+	{
+		health -= dmg;
+		return (health > 0);
+	}
 }
 
 GObject** Player::getGObjects() const
@@ -118,10 +121,6 @@ void Player::update()
 	collisionRect.move(xMove, zMove);
 }
 
-void Player::setGold(const int gold)
-{
-	this->gold = gold;
-}
 void Player::setMaxHealth(const int health)
 {
 	this->maxHealth = health;
@@ -151,6 +150,11 @@ void Player::setWeaponUpgrade(const int weapon, const int weaponLevel)
 	}
 }
 
+void Player::setGold(const int gold)
+{
+	this->gold = gold;
+}
+
 int Player::getDamageDealt()
 {
 	int damage = 0;
@@ -171,6 +175,11 @@ int Player::getDamageDealt()
 int Player::getWeapon()
 {
 	return this->weapon;
+}
+
+int Player::getHealth()
+{
+	return this->health;
 }
 
 float Player::getX() const
@@ -196,4 +205,9 @@ BoundingPolygon Player::getBounds() const
 float Player::getMoveSpeed() const
 {
 	return moveSpeed;
+}
+
+int Player::getGold() const
+{
+	return gold;
 }

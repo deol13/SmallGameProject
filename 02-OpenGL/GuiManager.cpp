@@ -22,6 +22,8 @@ GuiManager::~GuiManager()
 	clean();
 	delete gShader;
 	glDeleteShader(gGuiShader);
+	if (L != nullptr)
+		lua_close(L);
 }
 
 void GuiManager::clean()

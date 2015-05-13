@@ -106,11 +106,13 @@ bool Enemy::takeDamage(const int dmg)
 	return (health > 0);
 }
 
-void Enemy::attack()
+int Enemy::attack()
 {
+	int damage = 0;
+
 	if (type == MELEE)
 	{
-
+		damage = 1;
 	}
 	else if (type == RANGED)
 	{
@@ -118,8 +120,10 @@ void Enemy::attack()
 	}
 	else
 	{
-
+		damage = 2;		//Animal damage
 	}
+
+	return damage;
 }
 
 void Enemy::move()

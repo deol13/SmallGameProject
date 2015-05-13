@@ -48,8 +48,12 @@ class ShopUI
 
 		void setState();
 		int getState();
+		lua_State* getL();
 
 		void showGold(int gold);
+
+		void getFileLuaTable(lua_State *L);
+		void setSavedGameInfo(int sword, int spear, int health, int armor);
 
 		GLuint* guiAttribute;
 		GLuint* guiBuffer;

@@ -3,6 +3,7 @@
 
 #include "BoundingPolygon.h"
 #include "GObject.h"
+#include <ctime>
 
 const int SWORD = 1;
 const int SPEAR = 2;
@@ -18,6 +19,8 @@ private:
 	int weapon;
 	int spearUpgrade;
 	int swordUpgrade;
+
+	clock_t start;
 
 	float x, z;
 	glm::vec2 dirVec;
@@ -37,20 +40,22 @@ public:
 	GObject** getGObjects() const;
 	void update();
 
-	void setGold(const int gold);
 	void setMaxHealth(const int health);
 	void setHealth(const int health);
 	void setArmour(const int armour);
 	
 	void setWeapon(const int weapon);
 	void setWeaponUpgrade(const int weapon, const int weaponLevel);
+	void setGold(const int gold);
 
 	int getDamageDealt();
 	int getWeapon();
+	int getHealth();
 	float getX() const;
 	float getZ() const;
 	glm::vec2 getDirection() const;
 	BoundingPolygon getBounds() const;
 	float getMoveSpeed() const;
+	int getGold() const;
 };
 #endif

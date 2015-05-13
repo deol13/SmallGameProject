@@ -43,7 +43,7 @@ class Enemy
 		BoundingPolygon getBounds() const;
 		bool takeDamage(const int dmg);					//returns true if still alive
 
-		void attack();
+		int attack();
 		void move();
 
 		/*adds base power at distance 1 from origin and degrades with radius*/

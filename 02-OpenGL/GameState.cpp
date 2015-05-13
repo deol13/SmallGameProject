@@ -2,7 +2,7 @@
 
 GameState::GameState( int w, int h)
 {
-	gold = 999;
+	gold = 250;
 	onExitCleanUp = false;
 	//init(w, h);
 	//Set render
@@ -19,6 +19,7 @@ GameState::~GameState()
 
 void GameState::init(int w, int h) 
 {
+	realTemp = false;
 	state = 0;
 	waveNumber = 1;
 	//initialize the board the AI uses
@@ -76,17 +77,29 @@ void GameState::update()
 	
 	if (menuUI->state != 3)
 	{
-		if (enemiesRemaining == 0)
+		if (player->getHealth() <= 0)		//Are we dead?
 		{
-			delete enemyWave;
-			enemyWave = nullptr;
-
-			waveNumber++;
-			spawnEnemies(waveNumber);
+			if (realTemp == false)
+			{
+				realTemp = true;
+				menuUI->defeat();
+			}
+		}
+		if (enemiesRemaining <= 0)
+		{
+			if (waveNumber == 6) //If we finished the game and / or map
+			{
+				player->setMovement(Player::STILL, false);
+				menuUI->won();
+			}
+			else				//Spawn next wave
+			{
+				nextWave();
+			}
 		}
 		for (int i = 0; i < waveSize; i++)
 		{
-			if (enemyWave[i]->getHealth() > 0)
+			if (enemyWave[i]->getHealth() >= 0)
 			{
 				enemyWave[i]->clearPotential(arenaMap);
 				enemyWave[i]->setPotential(player->getX(), player->getZ(), 50);
@@ -95,8 +108,11 @@ void GameState::update()
 
 				if(enemyWave[i]->getRange() > playerDist)
 				{
-					enemyWave[i]->attack();
-				} else
+					int damage = enemyWave[i]->attack();
+					gameUI->dmgTaken(damage); //Deals instant damage to the player
+					player->takeDamage(damage);
+				} 
+				else
 				{
 					//enemyWave[i]->move();
 				}
@@ -175,13 +191,6 @@ void GameState::keyDown(char c)
 		skipSetDir = true; //Temporary
 		gameUI->addHealth(); //Temporary
 		break; //Temporary
-	case 'r': //Temporary
-	case 'R': //Temporary
-		skipSetDir = true; //Temporary
-		tmp = gameUI->dmgTaken(3); //Temporary
-		if (tmp == 1)
-			menuUI->defeat();
-		break; //Temporary
 	case 'f': //Temporary
 	case 'F': //Temporary
 		skipSetDir = true; //Temporary
@@ -197,25 +206,20 @@ void GameState::keyDown(char c)
 		skipSetDir = true; //Temporary
 		gameUI->comboLost(); //Temporary
 		break; //Temporary
-	case 'c': //Temporary
-	case 'C': //Temporary
+	case 'm': //Temporary
+	case 'M': //Temporary
 		skipSetDir = true; //Temporary
-		menuUI->defeat(); //Temporary
+		saveGame(); //Temporary
 		break; //Temporary
-	case 'v': //Temporary
-	case 'V': //Temporary
+	case 'n': //Temporary
+	case 'N': //Temporary
 		skipSetDir = true; //Temporary
-		menuUI->won(); //Temporary
-		break; //Temporary
-	case 'o': //Temporary
-	case 'O': //Temporary
-		skipSetDir = true; //Temporary
-		shopUI->setState(); //Temporary
-		shopUI->showGold(gold);
+		loadSavedGame(); //Temporary
 		break; //Temporary
 	default: 
 		break;
 	}
+
 	if (!skipSetDir)
 	{
 		if (playerCanMove(moveX, moveZ))
@@ -362,6 +366,7 @@ void GameState::loadArena(std::string fileName)
 		}
 		delete[] arenaArr;
 	}
+	lua_close(L);
 }
 
 void GameState::spawnEnemies(int waveNumber)
@@ -426,6 +431,7 @@ void GameState::spawnEnemies(int waveNumber)
 		delete[] enemyArgs;
 	}
 	//renderObjects.push_back(enemies[i].getLoadObj();
+	lua_close(L);
 }
 
 void GameState::spawnPlayer()
@@ -469,6 +475,31 @@ bool GameState::playerCanMove(int x, int z)
 	return true;
 }
 
+void GameState::nextWave()
+{
+
+	delete enemyWave;	//Remove last wave
+	enemyWave = nullptr;
+
+	if (waveNumber == 6 || waveNumber == 12)
+	{
+		gold += 30;	//Grant gold for finished boss
+	}
+	else
+	{
+		gold += 10;		//Grant gold for finished wave
+	}
+	player->setMovement(Player::STILL, false);
+
+	shopUI->setState();	//Show shop
+	shopUI->showGold(gold);
+
+	waveNumber++;		//Load in next wave
+	spawnEnemies(waveNumber);
+
+	player->setMovement(Player::STILL, false);
+}
+
 int GameState::guiState()
 {
 	return menuUI->state;
@@ -490,4 +521,103 @@ int GameState::screenClickesOn(float mx, float my)
 void GameState::maxHeal()
 {
 	gameUI->heal(true);
+}
+
+void GameState::saveGame()
+{
+	int error = 0;
+	lua_State* L = shopUI->getL();
+
+	lua_getglobal(L, "saveGame");
+	lua_pushnumber(L, gold);
+	lua_pushnumber(L, 1);
+
+	error = lua_pcall(L, 2, 0, 0);
+	if (error)
+	{
+		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+		lua_pop(L, 1);
+	}
+	lua_pop(L, 1);
+}
+
+void GameState::loadSavedGame()
+{
+	int error = 0;
+	lua_State* L = shopUI->getL();
+
+	lua_pushcfunction(L, savedGameInfo);
+	lua_setglobal(L, "savedGameInfo");
+
+	lua_getglobal(L, "loadGame");
+	lua_pushlightuserdata(L, gameUI);
+	lua_pushlightuserdata(L, shopUI);
+	lua_pushlightuserdata(L, player);
+	//lua_pushlightuserdata(L, enemyWaveController);
+
+	error = lua_pcall(L, 3, 0, 0);
+	if (error)
+	{
+		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+		lua_pop(L, 1);
+	}
+	lua_pop(L, 1);
+
+	gold = player->getGold();
+}
+
+int GameState::savedGameInfo(lua_State *L) //Called from lua
+{
+	Player* tmpPlayer;
+	InGameGui* tmpGUI;
+	ShopUI* tmpShopUI;
+	//EnemyWaveController*
+
+	int ggold = -1;
+	int whichMap = -1;
+	int upgradeSword = -1;
+	int upgradeSpear = -1;
+	int upgradeHealth = -1;
+	int upgradeArmor = -1;
+	int nrOfHp = -1;
+
+	tmpPlayer = static_cast<Player*>(lua_touserdata(L, -1));
+	lua_pop(L, 1);
+	tmpGUI = static_cast<InGameGui*>(lua_touserdata(L, -1));
+	lua_pop(L, 1);
+	tmpShopUI = static_cast<ShopUI*>(lua_touserdata(L, -1));
+	lua_pop(L, 1);
+
+	//EnemyWavecontroller = static_cast<EnemyWavecontroller*>(lua_touserdata(L, -1));
+	//lua_pop(L, 1);
+
+	ggold = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+	whichMap = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+
+	upgradeArmor = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+	upgradeHealth = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+	upgradeSpear = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+	upgradeSword = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+	nrOfHp = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+
+	tmpGUI->getFileLuaTable(L, nrOfHp);
+
+	tmpPlayer->setGold(ggold);
+	tmpPlayer->setHealth(3 + nrOfHp);
+	tmpPlayer->setArmour(upgradeArmor);
+	tmpPlayer->setWeaponUpgrade(1, upgradeSword);
+	tmpPlayer->setWeaponUpgrade(2, upgradeSpear);
+
+	tmpShopUI->setSavedGameInfo(upgradeSword, upgradeSpear, upgradeHealth, upgradeArmor);
+
+	//EnemyWavecontroller->setMap(whichMap);
+
+	return 0;
 }

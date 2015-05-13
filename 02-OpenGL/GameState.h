@@ -13,6 +13,7 @@ private:
 	int state;
 	int arenaMap[256][256];	//shows areas covered by buildings
 	int waveNumber;
+	int gold;
 	Render* render;
 	GuiManager* menuUI;
 	InGameGui* gameUI;
@@ -33,6 +34,11 @@ private:
 	void spawnEnemies(int waveNumber);
 	void spawnPlayer();
 	bool playerCanMove( int x, int z );
+	void nextWave();
+
+	bool realTemp;	//Just for debugging purposes
+
+	static int savedGameInfo(lua_State *L);
 
 public:
 	GameState(int w, int h);
@@ -50,8 +56,7 @@ public:
 	int screenClickesOn(float mx, float my);
 	void maxHeal();
 
-
-
-	int gold;
+	void loadSavedGame();
+	void saveGame();
 };
 #endif
