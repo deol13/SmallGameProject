@@ -11,6 +11,7 @@ Player::Player()
 	moveSpeed = 1;
 	health = 6;
 	armour = 0;
+	gold = 0;
 	this->weapon = SWORD;
 	this->spearUpgrade = 1;
 	this->swordUpgrade = 1;
@@ -32,6 +33,7 @@ Player::Player(GLuint texture, float x, float z, int health, int armour)
 	moveSpeed = 0.9;
 	this->health = health;
 	this->armour = armour;
+	this->gold = 0;
 	this->weapon = SWORD;
 	this->spearUpgrade = 1;
 	this->swordUpgrade = 1;
@@ -63,13 +65,8 @@ void Player::setMovement(int dir, bool isMoving)
 
 bool Player::takeDamage(const int dmg)
 {
-	start = clock();
-
-	if (std::clock() - start < 8)
-	{
-		health -= dmg;
-		return (health > 0);
-	}
+	health -= dmg;
+	return (health > 0);
 }
 
 GObject** Player::getGObjects() const
@@ -99,6 +96,7 @@ void Player::update()
 		xMove -= moveSpeed;
 	}
 
+<<<<<<< HEAD
 	if(abs(xMove)< 0.001 && abs(zMove)< 0.001)
 	{	
 		for(int i = 0; i < 1; i++)
@@ -110,12 +108,11 @@ void Player::update()
 	{
 		loadObj[i]->translate(xMove, 0, zMove);
 		loadObj[i]->animate();
-	}
-	x += xMove;
-	z += zMove;
-	collisionRect.move(xMove, zMove);
+=======
+void Player::setGold(const int gold)
+{
+	this->gold = gold;
 }
-
 void Player::setMaxHealth(const int health)
 {
 	this->maxHealth = health;
@@ -157,7 +154,29 @@ int Player::getDamageDealt()
 	if (weapon == SPEAR)
 	{
 		damage = 5 + (2 * spearUpgrade);
+>>>>>>> 0285629869ed94c15d3342d994ebe6891f92ba17
 	}
+	x += xMove;
+	z += zMove;
+	collisionRect.move(xMove, zMove);
+}
+
+void Player::setGold(const int gold)
+{
+	this->gold = gold;
+}
+void Player::setMaxHealth(const int health)
+{
+	this->maxHealth = health;
+}
+void Player::setHealth(const int health)
+{
+	this->health = health;
+}
+void Player::setArmour(const int armour)
+{
+	this->armour = armour;
+}
 
 	return damage;
 }
@@ -165,11 +184,6 @@ int Player::getDamageDealt()
 int Player::getWeapon()
 {
 	return this->weapon;
-}
-
-int Player::getHealth()
-{
-	return this->health;
 }
 
 float Player::getX() const

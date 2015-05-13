@@ -2,7 +2,7 @@
 
 GameState::GameState( int w, int h)
 {
-	gold = 999;
+	gold = 0;
 	onExitCleanUp = false;
 	//init(w, h);
 	//Set render
@@ -19,12 +19,13 @@ GameState::~GameState()
 
 void GameState::init(int w, int h) 
 {
+	realTemp = false;
 	state = 0;
-	waveNumber = 2;
+	waveNumber = 1;
 	//initialize the board the AI uses
-	for (int i = 0; i < 64; i++)
+	for (int i = 0; i < 256; i++)
 	{
-		for(int j = 0; j < 64; j++)
+		for(int j = 0; j < 256; j++)
 		{
 			arenaMap[i][j] = 0;
 		}
@@ -76,14 +77,29 @@ void GameState::update()
 	
 	if (menuUI->state != 3)
 	{
-		if (enemiesRemaining == 0)
+		if (player->getHealth() <= 0)		//Are we dead?
 		{
-			waveNumber++;
-			spawnEnemies(waveNumber);
+			if (realTemp == false)
+			{
+				realTemp = true;
+				menuUI->defeat();
+			}
+		}
+		if (enemiesRemaining <= 0)
+		{
+			if (waveNumber == 6) //If we finished the game and / or map
+			{
+				player->setMovement(Player::STILL, false);
+				menuUI->won();
+			}
+			else				//Spawn next wave
+			{
+				nextWave();
+			}
 		}
 		for (int i = 0; i < waveSize; i++)
 		{
-			if (enemyWave[i]->getHealth() > 0)
+			if (enemyWave[i]->getHealth() >= 0)
 			{
 				enemyWave[i]->clearPotential(arenaMap);
 				enemyWave[i]->setPotential(player->getX(), player->getZ(), 50);
@@ -92,8 +108,11 @@ void GameState::update()
 
 				if(enemyWave[i]->getRange() > playerDist)
 				{
-					enemyWave[i]->attack();
-				} else
+					int damage = enemyWave[i]->attack();
+					gameUI->dmgTaken(damage); //Deals instant damage to the player
+					player->takeDamage(damage);
+				} 
+				else
 				{
 					enemyWave[i]->move();
 				}
@@ -156,18 +175,20 @@ void GameState::keyDown(char c)
 	case 'Q':
 		skipSetDir = true;
 		gameUI->changeWeapon();
+
+		if (player->getWeapon() == SWORD)
+		{
+			player->setWeapon(SPEAR);
+		}
+		else		//Using spear so change to sword
+		{
+			player->setWeapon(SWORD);
+		}
 		break;
 	case 'e': //Temporary
 	case 'E': //Temporary
 		skipSetDir = true; //Temporary
 		gameUI->addHealth(); //Temporary
-		break; //Temporary
-	case 'r': //Temporary
-	case 'R': //Temporary
-		skipSetDir = true; //Temporary
-		tmp = gameUI->dmgTaken(3); //Temporary
-		if (tmp == 1)
-			menuUI->defeat();
 		break; //Temporary
 	case 'f': //Temporary
 	case 'F': //Temporary
@@ -191,15 +212,6 @@ void GameState::keyDown(char c)
 		break; //Temporary
 	case 'v': //Temporary
 	case 'V': //Temporary
-		skipSetDir = true; //Temporary
-		menuUI->won(); //Temporary
-		break; //Temporary
-	case 'o': //Temporary
-	case 'O': //Temporary
-		skipSetDir = true; //Temporary
-		shopUI->setState(); //Temporary
-		shopUI->showGold(gold);
-		break; //Temporary
 	default: 
 		dir = Player::STILL;
 		break;
@@ -242,7 +254,11 @@ void GameState::leftMouseClick(long x, long y)
 	if (player->getWeapon() == SWORD)
 	{
 		float weaponRange = 5.0f;	//multiplier for the direction vector
-		glm::vec2 dirVec = glm::normalize(glm::vec2(weaponRange *(x - player->getX()), weaponRange *(y - player->getZ())));
+		glm::vec2 dirVec = glm::normalize(glm::vec2(x - player->getX(), y - player->getZ()));
+
+		dirVec.x *= weaponRange;
+		dirVec.y *= weaponRange;
+
 		Point points[3];
 		points[0] = { player->getX(), player->getZ() };
 		points[1] = { player->getX() + dirVec.x - dirVec.y, player->getZ() + dirVec.y + dirVec.x };
@@ -252,24 +268,30 @@ void GameState::leftMouseClick(long x, long y)
 	else		//Using spear
 	{
 		float weaponRange = 9.0f;
-		glm::vec2 dirVec = glm::normalize(glm::vec2(weaponRange *(x - player->getX()), weaponRange *(y - player->getZ())));
-		
-		Point point[1];
+		glm::vec2 dirVec = glm::normalize(glm::vec2(x - player->getX(), y - player->getZ()));
 
-		point[0] = { ((player->getX() + (dirVec.x * weaponRange)), (player->getZ() + +(dirVec.y * weaponRange))) };
-		hitbox = BoundingPolygon(point, 1);
+		dirVec.x *= weaponRange;
+		dirVec.y *= weaponRange;
+
+		Point point[2];
+
+		point[0] = { player->getX(), player->getZ() };
+		point[1] = { player->getX() + dirVec.x, player->getZ() + dirVec.y };
+		hitbox = BoundingPolygon(point, 2);
 	}
 
 	for(int i = 0; i < waveSize; i++)
 	{
-		if(enemyWave[i]->getBounds().collides(hitbox))
+		BoundingPolygon test = enemyWave[i]->getBounds();
+		bool hit = test.collides(hitbox);
+		if(hit)
 		{
 			int damage = player->getDamageDealt();
 			
 			if(!enemyWave[i]->takeDamage(damage))			//Checks if the enemy is killed by the damage
 			{	
 				enemiesRemaining--;
-				state = 1;
+				state = 1;									// ?
 			}
 				
 		}
@@ -316,7 +338,7 @@ void GameState::loadArena(std::string fileName)
 	{
 		nrOfArenaObjects = lua_tointeger(L, -1);
 		lua_pop(L, 1);
-		std::string* arenaArr = new std::string[6 * nrOfArenaObjects];					//0: obj, 1-3: x,y,z, 4: tex-name, 5: tex-index
+		std::string* arenaArr = new std::string[8 * nrOfArenaObjects];					//0: obj, 1-3: x,y,z, 4: tex-name, 5: tex-index
 		int texOffset = render->getTextureSize()-1;
 		
 		int c = 0;
@@ -330,13 +352,13 @@ void GameState::loadArena(std::string fileName)
 		}
 		for(int i = 0; i < nrOfArenaObjects; i++)
 		{
-			int texIndex = atoi(arenaArr[6*i+5].c_str()) + texOffset;
+			int texIndex = atoi(arenaArr[8*i+5].c_str()) + texOffset;
 			if( texIndex >= render->getTextureSize()  ) {
-				render->createTexture(arenaArr[6*i + 4]);
+				render->createTexture(arenaArr[8*i + 4]);
 			}
 			//float x = atoi(arenaArr[6*i+2].c_str());
-			GObject* temp = new GObject(arenaArr[6 * i], GL_TRIANGLES, render->getTexture(texIndex));
-			temp->translate(atoi(arenaArr[6*i+1].c_str()), atoi(arenaArr[6*i+2].c_str()), atoi(arenaArr[6*i+3].c_str()));
+			GObject* temp = new GObject(arenaArr[8 * i], GL_TRIANGLES, render->getTexture(texIndex));
+			temp->translate(atoi(arenaArr[8*i+1].c_str()), atoi(arenaArr[8*i+2].c_str()), atoi(arenaArr[8*i+3].c_str()));
 			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
 			//temp->scale(0.05f, 0.05f, 0.05f);
 			renderObjects.push_back(temp);
@@ -392,6 +414,7 @@ void GameState::spawnEnemies(int waveNumber)
 			lua_pop(L, 1);
 			c++;
 		}
+		enemiesRemaining = waveSize;
 		enemyWave = new Enemy*[waveSize];
 		firstEnemyIndex = renderObjects.size();			//Note: There could possibly be an offset.
 		for(int i = 0; i < waveSize; i++)
@@ -400,7 +423,7 @@ void GameState::spawnEnemies(int waveNumber)
 			if( texIndex >= render->getTextureSize()  ) {
 				render->createTexture(enemyArgs[6*i + 2]);
 			}
-			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), enemyArgs[(6 * i) + 1].c_str());
+			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), enemyArgs[(6 * i) + 1].c_str(), waveNumber);
 			enemyWave[i] = tempEnemy;
 			renderObjects.push_back(tempEnemy->getGObject());
 		}
@@ -414,7 +437,11 @@ void GameState::spawnPlayer()
 	//Hardcoded for now. Might be worth using lua later
 	render->createTexture("TestAnimation/testtexture.png");
 	player = new Player(render->getTexture(0), 100, 100, 6, 0);
-	renderObjects.push_back(player->getGObject());
+	GObject** tempGraphic = player->getGObjects();
+	for(int i = 0; i < 1; i++)					//change to 3
+	{
+		renderObjects.push_back(tempGraphic[i]);
+	}
 
 }
 
@@ -471,6 +498,31 @@ bool GameState::playerCanMove(Player::Direction dir)
 	//	}
 	//}
 	return true;
+}
+
+void GameState::nextWave()
+{
+
+	delete enemyWave;	//Remove last wave
+	enemyWave = nullptr;
+
+	if (waveNumber == 6 || waveNumber == 12)
+	{
+		gold += 30;	//Grant gold for finished boss
+	}
+	else
+	{
+		gold += 10;		//Grant gold for finished wave
+	}
+	player->setMovement(Player::STILL, false);
+
+	shopUI->setState();	//Show shop
+	shopUI->showGold(gold);
+
+	waveNumber++;		//Load in next wave
+	spawnEnemies(waveNumber);
+
+	player->setMovement(Player::STILL, false);
 }
 
 int GameState::guiState()

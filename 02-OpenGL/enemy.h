@@ -30,7 +30,7 @@ class Enemy
 
 	public:
 		Enemy();
-		Enemy(int type, float x, float z, GLuint texture, string objectFile);
+		Enemy(int type, float x, float z, GLuint texture, string objectFile, int waveNr);
 		~Enemy();
 
 		void setEnemy(int type);
@@ -43,12 +43,12 @@ class Enemy
 		BoundingPolygon getBounds() const;
 		bool takeDamage(const int dmg);					//returns true if still alive
 
-		void attack();
+		int attack();
 		void move();
 
 		/*adds base power at distance 1 from origin and degrades with radius*/
 		void setPotential(int origX, int origZ, int basePower);
-		void clearPotential(const int staticBoard[64][64]);
+		void clearPotential(const int staticBoard[256][256]);
 
 };
 #endif

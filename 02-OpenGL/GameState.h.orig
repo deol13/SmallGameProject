@@ -4,17 +4,24 @@
 #include <string>
 #include "Player.h"
 #include "InGameGui.h"
+#include "ShopUI.h"
 
 class GameState {
 	const int GASIZE = 256;				//Game Area max size
 private:
 	int state;
-	int** board;
+<<<<<<< HEAD
+	int arenaMap[256][256];	//shows areas covered by buildings
+=======
+	int arenaMap[64][64];	//shows areas covered by buildings
+	int waveNumber;
+>>>>>>> 0285629869ed94c15d3342d994ebe6891f92ba17
 	Render* render;
 	GuiManager* menuUI;
 	InGameGui* gameUI;
+	ShopUI* shopUI;
 	std::vector<GObject*> renderObjects;
-	std::vector<BoundingRect> collisionVec;
+//	std::vector<BoundingRect> collisionVec;
 	Player* player;
 	//std::vector<Enemy> enemyWave;
 	Enemy** enemyWave;
@@ -23,17 +30,12 @@ private:
 	int nrOfArenaObjects;
 	int firstEnemyIndex;		//Start of enemies in renderObjects. Useful for enemy deaths etc.
 
-<<<<<<< HEAD
-=======
 	bool onExitCleanUp;
 
-	
->>>>>>> origin/master
 	void loadArena(std::string fileName);
-	void spawnEnemies(std::string fileName);
+	void spawnEnemies(int waveNumber);
 	void spawnPlayer();
 	bool playerCanMove( Player::Direction dir );
-	void createNegativePotential(int posX, int posZ, int size);
 
 public:
 	GameState(int w, int h);
@@ -47,6 +49,12 @@ public:
 	void leftMouseClick(long x, long y);
 	int getState() const;
 	int guiState();
+	int getShopState();
 	int screenClickesOn(float mx, float my);
+	void maxHeal();
+
+
+
+	int gold;
 };
 #endif

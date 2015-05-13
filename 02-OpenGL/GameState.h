@@ -5,13 +5,15 @@
 #include "Player.h"
 #include "InGameGui.h"
 #include "ShopUI.h"
+#include "Enemy.h"
 
 class GameState {
 	const int GASIZE = 256;				//Game Area max size
 private:
 	int state;
-	int arenaMap[64][64];	//shows areas covered by buildings
+	int arenaMap[256][256];	//shows areas covered by buildings
 	int waveNumber;
+	int gold;
 	Render* render;
 	GuiManager* menuUI;
 	InGameGui* gameUI;
@@ -32,6 +34,9 @@ private:
 	void spawnEnemies(int waveNumber);
 	void spawnPlayer();
 	bool playerCanMove( Player::Direction dir );
+	void nextWave();
+
+	bool realTemp;	//Just for debugging purposes
 
 public:
 	GameState(int w, int h);
@@ -48,9 +53,5 @@ public:
 	int getShopState();
 	int screenClickesOn(float mx, float my);
 	void maxHeal();
-
-
-
-	int gold;
 };
 #endif
