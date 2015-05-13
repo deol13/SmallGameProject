@@ -14,6 +14,7 @@ private:
 	int health;
 	int maxHealth;
 	int armour;
+	int gold;
 	
 	int weapon;
 	int spearUpgrade;
@@ -44,6 +45,7 @@ public:
 	
 	void setWeapon(const int weapon);
 	void setWeaponUpgrade(const int weapon, const int weaponLevel);
+	void setGold(const int gold);
 
 	int getDamageDealt();
 	int getWeapon();
@@ -53,5 +55,6 @@ public:
 	float getAngle() const;
 	BoundingPolygon getBounds() const;
 	float getMoveSpeed() const;
+	int getGold() const;
 };
 #endif

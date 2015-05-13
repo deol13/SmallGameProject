@@ -149,6 +149,9 @@
     <None Include="LuaButton.lua">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="savedGame.dat">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

@@ -38,6 +38,8 @@ private:
 
 	bool realTemp;	//Just for debugging purposes
 
+	static int savedGameInfo(lua_State *L);
+
 public:
 	GameState(int w, int h);
 	~GameState();
@@ -53,5 +55,8 @@ public:
 	int getShopState();
 	int screenClickesOn(float mx, float my);
 	void maxHeal();
+
+	void loadSavedGame();
+	void saveGame();
 };
 #endif

@@ -47,16 +47,6 @@ stadardInGameGui = { -1.0, 1.0, 1.0, 0.848, 0, 0, 1, 1, 0,          --Background
 					 -- -0.2045, 0.972, 0.1085 , 0.750, 0, 0, 1, 1, 5 } --Sword and spear
 
 
-heartOne = { -0.7382, 0.979, -0.6757, 0.869, 0, 0, 1, 1, 1 }    --Heart
-heartTwo = { -0.6674, 0.979, -0.6049, 0.869, 0, 0, 1, 1, 1 }    --Heart
-heartThree = { -0.5966, 0.979, -0.5341, 0.869, 0, 0, 1, 1, 1 }  --Heart
-
-empty = {}
-maxHearts = 6
-currentHearts = 3
-
-
-
 function init() --[[ When the game starts, lua returns how the start menu should look like ]]
 	return startMenu, 1
 end
@@ -122,6 +112,16 @@ function onDeath()
 	return defeat, 5
 end
 
+
+-----------------------------------------------------------------------Health
+heartOne = { -0.7382, 0.979, -0.6757, 0.869, 0, 0, 1, 1, 1 }    --Heart
+heartTwo = { -0.6674, 0.979, -0.6049, 0.869, 0, 0, 1, 1, 1 }    --Heart
+heartThree = { -0.5966, 0.979, -0.5341, 0.869, 0, 0, 1, 1, 1 }  --Heart
+
+empty = {}
+maxHearts = 6
+currentHearts = 3
+
 function addHeart()
 	if currentHearts == 3 then
 		currentHearts = currentHearts + 1
@@ -136,10 +136,10 @@ function addHeart()
 		return empty
 	end
 end
+-----------------------------------------------------------------------Health END
 
 
-
-
+---------------------------------------------------------------------------SHOP
 shopMenu = { -1.0, 1.0, 1.0, -1.0, 0, 0, 1, 1, 0, --Background
 			 -0.885, 0.895, -0.483, 0.553, 0, 0, 1, 1, 1,   --Sword
 			 -0.885, 0.533, -0.483, 0.191, 0, 0, 1, 1, 5,   --Spear
@@ -230,3 +230,53 @@ function healCheck(gold)
 	end
 	return -1, -1, gold;
 end
+---------------------------------------------------------------------------SHOP END
+
+---------------------------------------------------------------------------Save/Load
+function saveGame(gold, whichMap)
+	local file = io.open("savedGame.dat", "w+")	-- Opens a file in read
+	io.output(file)							-- sets the default input file as test.lua
+
+	io.write(currentHearts - 3, "\n")
+	io.write(upgradeTo[1] - 1, "\n")
+	io.write(upgradeTo[2] - 5, "\n")
+	io.write(upgradeTo[3] - 9, "\n")
+	io.write(upgradeTo[4] - 13, "\n")
+	io.write(whichMap, "\n")
+	io.write(gold, "\n")
+
+	io.close(file)
+end
+
+function loadGame(gameUI, shopUI, player) --Add enemy to input and output
+	local counter = 0
+	local tmp = {};
+	local file = io.open("savedGame.dat", "r")
+	io.input(file)
+
+	while counter < 8
+	do
+		counter = counter + 1
+		tmp[counter] = io.read("*l")
+	end
+	counter = nil
+
+	upgradeTo[1] = tmp[2] + 1
+	upgradeTo[2] = tmp[3] + 5
+	upgradeTo[3] = tmp[4] + 9
+	upgradeTo[4] = tmp[5] + 13
+	
+	io.close(file)
+
+	if tonumber(tmp[1]) == 1 then
+		savedGameInfo(heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], shopUI, gameUI, player)
+	elseif tonumber(tmp[1]) == 2 then
+		savedGameInfo(heartTwo, heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], shopUI, gameUI, player)
+	elseif tonumber(tmp[1]) == 3 then
+		savedGameInfo(heartThree, heartTwo, heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], shopUI, gameUI, player)
+	else
+		savedGameInfo(empty, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], shopUI, gameUI, player)
+	end
+
+end
+---------------------------------------------------------------------------Save/Load END

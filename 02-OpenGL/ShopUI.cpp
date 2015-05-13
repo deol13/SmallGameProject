@@ -33,6 +33,8 @@ ShopUI::~ShopUI()
 
 	delete gShader;
 	glDeleteShader(gGuiShader);
+	if (L != nullptr)
+		lua_close(L);
 }
 
 void ShopUI::init()
@@ -290,6 +292,11 @@ int ShopUI::getState()
 	return state;
 }
 
+lua_State* ShopUI::getL()
+{
+	return L;
+}
+
 void ShopUI::showGold( int gold )
 {
 	int tmp = gold;
@@ -303,4 +310,12 @@ void ShopUI::showGold( int gold )
 	guiObjects[7].textureIndex = t + 16;
 	guiObjects[8].textureIndex = o + 16;
 
+}
+
+void ShopUI::setSavedGameInfo(int sword, int spear, int health, int armor)
+{
+	guiObjects[1].textureIndex = sword + 1;
+	guiObjects[2].textureIndex = spear + 5;
+	guiObjects[3].textureIndex = health + 9;
+	guiObjects[4].textureIndex = armor + 13;
 }

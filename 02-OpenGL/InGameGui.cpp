@@ -30,6 +30,8 @@ InGameGui::~InGameGui()
 
 	delete gShader;
 	glDeleteShader(gGuiShader);
+	if (L != nullptr)
+		lua_close(L);
 }
 
 void InGameGui::init() 
@@ -335,4 +337,65 @@ void InGameGui::loadTextures()
 
 }
 
+void InGameGui::getFileLuaTable(lua_State *L, int nrOfHp)
+{
+	maxHealth += nrOfHp;
+	currentHealth = maxHealth;
 
+	int counter = 0;
+	int other = 0;
+	float x, y, x2, y2, u, v, u2, v2;
+	int textureIndex;
+
+	lua_pushnil(L);
+	while (lua_next(L, -2))
+	{
+		if (counter == 0)
+		{
+			x = lua_tonumber(L, -1);
+		}
+		else if (counter == 1)
+		{
+			y = lua_tonumber(L, -1);
+		}
+		else if (counter == 2)
+		{
+			x2 = lua_tonumber(L, -1);
+		}
+		else if (counter == 3)
+		{
+			y2 = lua_tonumber(L, -1);
+		}
+		else if (counter == 4)
+		{
+			u = lua_tonumber(L, -1);
+		}
+		else if (counter == 5)
+		{
+			v = lua_tonumber(L, -1);
+		}
+		else if (counter == 6)
+		{
+			u2 = lua_tonumber(L, -1);
+		}
+		else if (counter == 7)
+		{
+			v2 = lua_tonumber(L, -1);
+		}
+		else if (counter == 8)
+		{
+			textureIndex = lua_tonumber(L, -1);
+			counter = -1;
+
+			Vertex tmp[4] = { { x, y, 1.0f, u, v }, { x, y2, 1.0f, 0.0f, 1.0f }, { x2, y, 1.0f, 1.0f, 0.0f }, { x2, y2, 1.0f, u2, v2 } };
+			MenuButton tempButton = { textureIndex, tmp[0], tmp[1], tmp[2], tmp[3] };
+			guiObjects.push_back(tempButton);
+			nrOfObjects++;
+			createExtraBuffer();
+		}
+		counter++;
+
+		lua_pop(L, 1);
+	}
+
+}

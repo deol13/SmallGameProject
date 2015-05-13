@@ -50,6 +50,8 @@ class InGameGui
 		void createTexture(std::string fileName);
 		void loadTextures();
 
+		void getFileLuaTable(lua_State *L, int nrOfHp);
+
 		GLuint* guiAttribute;
 		GLuint* guiBuffer;
 };

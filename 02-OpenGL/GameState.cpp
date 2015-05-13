@@ -2,7 +2,7 @@
 
 GameState::GameState( int w, int h)
 {
-	gold = 0;
+	gold = 250;
 	onExitCleanUp = false;
 	//init(w, h);
 	//Set render
@@ -205,17 +205,21 @@ void GameState::keyDown(char c)
 		skipSetDir = true; //Temporary
 		gameUI->comboLost(); //Temporary
 		break; //Temporary
-	case 'c': //Temporary
-	case 'C': //Temporary
+	case 'm': //Temporary
+	case 'M': //Temporary
 		skipSetDir = true; //Temporary
-		menuUI->defeat(); //Temporary
+		saveGame(); //Temporary
 		break; //Temporary
-	case 'v': //Temporary
-	case 'V': //Temporary
+	case 'n': //Temporary
+	case 'N': //Temporary
+		skipSetDir = true; //Temporary
+		loadSavedGame(); //Temporary
+		break; //Temporary
 	default: 
 		dir = Player::STILL;
 		break;
 	}
+
 	if (!skipSetDir)
 	{
 		if (playerCanMove(dir))
@@ -366,6 +370,7 @@ void GameState::loadArena(std::string fileName)
 		}
 		delete[] arenaArr;
 	}
+	lua_close(L);
 }
 
 void GameState::spawnEnemies(int waveNumber)
@@ -430,6 +435,7 @@ void GameState::spawnEnemies(int waveNumber)
 		delete[] enemyArgs;
 	}
 	//renderObjects.push_back(enemies[i].getLoadObj();
+	lua_close(L);
 }
 
 void GameState::spawnPlayer()
@@ -546,4 +552,103 @@ int GameState::screenClickesOn(float mx, float my)
 void GameState::maxHeal()
 {
 	gameUI->heal(true);
+}
+
+void GameState::saveGame()
+{
+	int error = 0;
+	lua_State* L = shopUI->getL();
+
+	lua_getglobal(L, "saveGame");
+	lua_pushnumber(L, gold);
+	lua_pushnumber(L, 1);
+
+	error = lua_pcall(L, 2, 0, 0);
+	if (error)
+	{
+		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+		lua_pop(L, 1);
+	}
+	lua_pop(L, 1);
+}
+
+void GameState::loadSavedGame()
+{
+	int error = 0;
+	lua_State* L = shopUI->getL();
+
+	lua_pushcfunction(L, savedGameInfo);
+	lua_setglobal(L, "savedGameInfo");
+
+	lua_getglobal(L, "loadGame");
+	lua_pushlightuserdata(L, gameUI);
+	lua_pushlightuserdata(L, shopUI);
+	lua_pushlightuserdata(L, player);
+	//lua_pushlightuserdata(L, enemyWaveController);
+
+	error = lua_pcall(L, 3, 0, 0);
+	if (error)
+	{
+		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+		lua_pop(L, 1);
+	}
+	lua_pop(L, 1);
+
+	gold = player->getGold();
+}
+
+int GameState::savedGameInfo(lua_State *L) //Called from lua
+{
+	Player* tmpPlayer;
+	InGameGui* tmpGUI;
+	ShopUI* tmpShopUI;
+	//EnemyWaveController*
+
+	int ggold = -1;
+	int whichMap = -1;
+	int upgradeSword = -1;
+	int upgradeSpear = -1;
+	int upgradeHealth = -1;
+	int upgradeArmor = -1;
+	int nrOfHp = -1;
+
+	tmpPlayer = static_cast<Player*>(lua_touserdata(L, -1));
+	lua_pop(L, 1);
+	tmpGUI = static_cast<InGameGui*>(lua_touserdata(L, -1));
+	lua_pop(L, 1);
+	tmpShopUI = static_cast<ShopUI*>(lua_touserdata(L, -1));
+	lua_pop(L, 1);
+
+	//EnemyWavecontroller = static_cast<EnemyWavecontroller*>(lua_touserdata(L, -1));
+	//lua_pop(L, 1);
+
+	ggold = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+	whichMap = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+
+	upgradeArmor = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+	upgradeHealth = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+	upgradeSpear = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+	upgradeSword = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+	nrOfHp = lua_tointeger(L, -1);
+	lua_pop(L, 1);
+
+	tmpGUI->getFileLuaTable(L, nrOfHp);
+
+	tmpPlayer->setGold(ggold);
+	tmpPlayer->setHealth(3 + nrOfHp);
+	tmpPlayer->setArmour(upgradeArmor);
+	tmpPlayer->setWeaponUpgrade(1, upgradeSword);
+	tmpPlayer->setWeaponUpgrade(2, upgradeSpear);
+
+	tmpShopUI->setSavedGameInfo(upgradeSword, upgradeSpear, upgradeHealth, upgradeArmor);
+
+	//EnemyWavecontroller->setMap(whichMap);
+
+	return 0;
 }

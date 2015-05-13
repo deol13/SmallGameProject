@@ -145,6 +145,11 @@ void Player::setWeaponUpgrade(const int weapon, const int weaponLevel)
 	}
 }
 
+void Player::setGold(const int gold)
+{
+	this->gold = gold;
+}
+
 int Player::getDamageDealt()
 {
 	int damage = 0;
@@ -195,4 +200,9 @@ BoundingPolygon Player::getBounds() const
 float Player::getMoveSpeed() const
 {
 	return moveSpeed;
+}
+
+int Player::getGold() const
+{
+	return gold;
 }
