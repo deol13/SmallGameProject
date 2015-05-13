@@ -3,6 +3,7 @@
 
 #include "BoundingPolygon.h"
 #include "GObject.h"
+#include <ctime>
 
 const int SWORD = 1;
 const int SPEAR = 2;
@@ -13,11 +14,12 @@ private:
 	int health;
 	int maxHealth;
 	int armour;
-	int gold;
 	
 	int weapon;
 	int spearUpgrade;
 	int swordUpgrade;
+
+	clock_t start;
 
 	float x, z;
 	float angle;
@@ -36,7 +38,6 @@ public:
 	GObject** getGObjects() const;
 	void update();
 
-	void setGold(const int gold);
 	void setMaxHealth(const int health);
 	void setHealth(const int health);
 	void setArmour(const int armour);
@@ -46,6 +47,7 @@ public:
 
 	int getDamageDealt();
 	int getWeapon();
+	int getHealth();
 	float getX() const;
 	float getZ() const;
 	float getAngle() const;

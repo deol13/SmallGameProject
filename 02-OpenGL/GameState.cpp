@@ -2,7 +2,7 @@
 
 GameState::GameState( int w, int h)
 {
-	gold = 999;
+	gold = 0;
 	onExitCleanUp = false;
 	//init(w, h);
 	//Set render
@@ -19,6 +19,7 @@ GameState::~GameState()
 
 void GameState::init(int w, int h) 
 {
+	realTemp = false;
 	state = 0;
 	waveNumber = 1;
 	//initialize the board the AI uses
@@ -76,17 +77,29 @@ void GameState::update()
 	
 	if (menuUI->state != 3)
 	{
-		if (enemiesRemaining == 0)
+		if (player->getHealth() <= 0)		//Are we dead?
 		{
-			delete enemyWave;
-			enemyWave = nullptr;
-
-			waveNumber++;
-			spawnEnemies(waveNumber);
+			if (realTemp == false)
+			{
+				realTemp = true;
+				menuUI->defeat();
+			}
+		}
+		if (enemiesRemaining <= 0)
+		{
+			if (waveNumber == 6) //If we finished the game and / or map
+			{
+				player->setMovement(Player::STILL, false);
+				menuUI->won();
+			}
+			else				//Spawn next wave
+			{
+				nextWave();
+			}
 		}
 		for (int i = 0; i < waveSize; i++)
 		{
-			if (enemyWave[i]->getHealth() > 0)
+			if (enemyWave[i]->getHealth() >= 0)
 			{
 				enemyWave[i]->clearPotential(arenaMap);
 				enemyWave[i]->setPotential(player->getX(), player->getZ(), 50);
@@ -95,8 +108,11 @@ void GameState::update()
 
 				if(enemyWave[i]->getRange() > playerDist)
 				{
-					enemyWave[i]->attack();
-				} else
+					int damage = enemyWave[i]->attack();
+					gameUI->dmgTaken(damage); //Deals instant damage to the player
+					player->takeDamage(damage);
+				} 
+				else
 				{
 					enemyWave[i]->move();
 				}
@@ -174,13 +190,6 @@ void GameState::keyDown(char c)
 		skipSetDir = true; //Temporary
 		gameUI->addHealth(); //Temporary
 		break; //Temporary
-	case 'r': //Temporary
-	case 'R': //Temporary
-		skipSetDir = true; //Temporary
-		tmp = gameUI->dmgTaken(3); //Temporary
-		if (tmp == 1)
-			menuUI->defeat();
-		break; //Temporary
 	case 'f': //Temporary
 	case 'F': //Temporary
 		skipSetDir = true; //Temporary
@@ -203,15 +212,6 @@ void GameState::keyDown(char c)
 		break; //Temporary
 	case 'v': //Temporary
 	case 'V': //Temporary
-		skipSetDir = true; //Temporary
-		menuUI->won(); //Temporary
-		break; //Temporary
-	case 'o': //Temporary
-	case 'O': //Temporary
-		skipSetDir = true; //Temporary
-		shopUI->setState(); //Temporary
-		shopUI->showGold(gold);
-		break; //Temporary
 	default: 
 		dir = Player::STILL;
 		break;
@@ -498,6 +498,31 @@ bool GameState::playerCanMove(Player::Direction dir)
 	//	}
 	//}
 	return true;
+}
+
+void GameState::nextWave()
+{
+
+	delete enemyWave;	//Remove last wave
+	enemyWave = nullptr;
+
+	if (waveNumber == 6 || waveNumber == 12)
+	{
+		gold += 30;	//Grant gold for finished boss
+	}
+	else
+	{
+		gold += 10;		//Grant gold for finished wave
+	}
+	player->setMovement(Player::STILL, false);
+
+	shopUI->setState();	//Show shop
+	shopUI->showGold(gold);
+
+	waveNumber++;		//Load in next wave
+	spawnEnemies(waveNumber);
+
+	player->setMovement(Player::STILL, false);
 }
 
 int GameState::guiState()
