@@ -100,7 +100,7 @@ void BoundingPolygon::findNormals()
 {
 	for(int i = 0; i < nrOfEdges - 1; i++)
 	{
-		normals.push_back({points[i].z - points[i + 1].z, points[i + 1].x - points[i].x});
+		normals.push_back({points[i + 1].z - points[i].z, points[i].x - points[i + 1].x});
 	}
-	normals.push_back({points[nrOfEdges - 1].z - points[0].z, points[0].x - points[nrOfEdges - 1].x});
+	normals.push_back({ points[0].z - points[nrOfEdges - 1].z, points[nrOfEdges - 1].x - points[0].x });
 }

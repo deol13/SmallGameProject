@@ -13,7 +13,6 @@
 #include "GObject.h"
 
 #include "GuiManager.h"
-#include "EnemyHandler.h"
 
 #include "LightShader.h"
 #include "gbuffer.h"
@@ -73,9 +72,6 @@ class Render
 
 		GObject testObj;
 		std::vector<GLuint> textures;
-
-		EnemyHandler* eHandler;
-
 };
 
 #endif

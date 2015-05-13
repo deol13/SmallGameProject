@@ -30,7 +30,7 @@ class Enemy
 
 	public:
 		Enemy();
-		Enemy(int type, float x, float z, GLuint texture, string objectFile);
+		Enemy(int type, float x, float z, GLuint texture, string objectFile, int waveNr);
 		~Enemy();
 
 		void setEnemy(int type);

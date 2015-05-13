@@ -69,6 +69,7 @@ enemyobj/wolflowpoly.obj
 enemyobj/wolflowpoly.png
 30.0
 30.0
+melee
 enemyobj/gingerlowpoly.obj
 enemyobj/gingerlowpoly.png
 40.0
@@ -100,6 +101,7 @@ enemyobj/wolflowpoly.obj
 enemyobj/wolflowpoly.png
 30.0
 30.0
+melee
 enemyobj/gingerlowpoly.obj
 enemyobj/gingerlowpoly.png
 40.0
@@ -136,17 +138,18 @@ enemyobj/wolflowpoly.obj
 enemyobj/wolflowpoly.png
 30.0
 30.0
-enemyobj/wolflowpoly.obj
+melee
+enemyobj/gingerlowpoly.obj
 enemyobj/gingerlowpoly.png
 40.0
 40.0
 melee
-enemyobj/wolflowpoly.obj
+enemyobj/gingerlowpoly.obj
 enemyobj/gingerlowpoly.png
 140.0
 140.0
 melee
-enemyobj/wolflowpoly.obj
+enemyobj/gingerlowpoly.obj
 enemyobj/gingerlowpoly.png
 50.0
 50.0
@@ -162,3 +165,8 @@ enemyobj/gingerlowpoly.png
 70.0
 x6
 1
+animal
+enemyobj/wolflowpoly.obj
+enemyobj/wolflowpoly.png
+30.0
+30.0
