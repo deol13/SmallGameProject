@@ -13,7 +13,7 @@ Enemy::Enemy()
 
 }
 
-Enemy::Enemy(int type, float x, float z, GLuint texture)
+Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile)
 {
 	this->x = x;
 	this->z = z;
@@ -23,11 +23,18 @@ Enemy::Enemy(int type, float x, float z, GLuint texture)
 	switch ( type )
 	{
 	case MELEE:
-		loadObj = new GObject( "enemyobj/wolflowpoly.obj", GL_TRIANGLES, texture );
+		loadObj = new GObject(objectFile, GL_TRIANGLES, texture);
 		health = 20;
 		this->type = MELEE;
 		moveSpeed = 1.0f;
-		this->attackRange = 8;
+		this->attackRange = MELEERANGE;
+		break;
+	case ANIMAL:
+		loadObj = new GObject(objectFile, GL_TRIANGLES, texture);
+		health = 30;
+		this->type = ANIMAL;
+		moveSpeed = 2.0f;
+		this->attackRange = ANIMALRANGE;
 		break;
 	default:
 		break;
@@ -59,7 +66,7 @@ void Enemy::setEnemy(int type)
 	else
 	{
 		health = 40;
-		this->type = TANK;
+		this->type = ANIMAL;
 	}
 
 }

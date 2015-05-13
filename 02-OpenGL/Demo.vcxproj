@@ -131,7 +131,6 @@
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AltWave.dat" />
     <None Include="Arena.dat" />
     <None Include="ArenaReader.lua" />
     <None Include="EnemyReader.lua" />
