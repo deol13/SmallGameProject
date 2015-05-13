@@ -20,7 +20,7 @@ GameState::~GameState()
 void GameState::init(int w, int h) 
 {
 	state = 0;
-	waveNumber = 2;
+	waveNumber = 1;
 	//initialize the board the AI uses
 	for (int i = 0; i < 256; i++)
 	{
@@ -78,6 +78,9 @@ void GameState::update()
 	{
 		if (enemiesRemaining == 0)
 		{
+			delete enemyWave;
+			enemyWave = nullptr;
+
 			waveNumber++;
 			spawnEnemies(waveNumber);
 		}
@@ -156,6 +159,15 @@ void GameState::keyDown(char c)
 	case 'Q':
 		skipSetDir = true;
 		gameUI->changeWeapon();
+
+		if (player->getWeapon() == SWORD)
+		{
+			player->setWeapon(SPEAR);
+		}
+		else		//Using spear so change to sword
+		{
+			player->setWeapon(SWORD);
+		}
 		break;
 	case 'e': //Temporary
 	case 'E': //Temporary
@@ -242,34 +254,44 @@ void GameState::leftMouseClick(long x, long y)
 	if (player->getWeapon() == SWORD)
 	{
 		float weaponRange = 5.0f;	//multiplier for the direction vector
-		glm::vec2 dirVec = glm::normalize(glm::vec2(weaponRange *(x - player->getX()), weaponRange *(y - player->getZ())));
+		glm::vec2 dirVec = glm::normalize(glm::vec2(x - player->getX(), y - player->getZ()));
+
+		dirVec.x *= weaponRange;
+		dirVec.y *= weaponRange;
+
 		Point points[3];
-		points[0] = { -player->getZ(), player->getX() };
-		points[1] = { -(player->getZ() + dirVec.y + dirVec.x), player->getX() + dirVec.x - dirVec.y };
-		points[2] = { -(player->getZ() + dirVec.y - dirVec.x), player->getX() + dirVec.x + dirVec.y };
+		points[0] = { player->getX(), player->getZ() };
+		points[1] = { player->getX() + dirVec.x - dirVec.y, player->getZ() + dirVec.y + dirVec.x };
+		points[2] = { player->getX() + dirVec.x + dirVec.y, player->getZ() + dirVec.y - dirVec.x };
 		hitbox = BoundingPolygon(points, 3);
 	}
 	else		//Using spear
 	{
 		float weaponRange = 9.0f;
-		glm::vec2 dirVec = glm::normalize(glm::vec2(weaponRange *(x - player->getX()), weaponRange *(y - player->getZ())));
-		
-		Point point[1];
+		glm::vec2 dirVec = glm::normalize(glm::vec2(x - player->getX(), y - player->getZ()));
 
-		point[0] = { (-(player->getZ() + +(dirVec.y * weaponRange)), (player->getX() + (dirVec.x * weaponRange))) };
-		hitbox = BoundingPolygon(point, 1);
+		dirVec.x *= weaponRange;
+		dirVec.y *= weaponRange;
+
+		Point point[2];
+
+		point[0] = { player->getX(), player->getZ() };
+		point[1] = { player->getX() + dirVec.x, player->getZ() + dirVec.y };
+		hitbox = BoundingPolygon(point, 2);
 	}
 
 	for(int i = 0; i < waveSize; i++)
 	{
-		if(enemyWave[i]->getBounds().collides(hitbox))
+		BoundingPolygon test = enemyWave[i]->getBounds();
+		bool hit = test.collides(hitbox);
+		if(hit)
 		{
 			int damage = player->getDamageDealt();
 			
 			if(!enemyWave[i]->takeDamage(damage))			//Checks if the enemy is killed by the damage
 			{	
 				enemiesRemaining--;
-				state = 1;
+				state = 1;									// ?
 			}
 				
 		}
@@ -392,6 +414,7 @@ void GameState::spawnEnemies(int waveNumber)
 			lua_pop(L, 1);
 			c++;
 		}
+		enemiesRemaining = waveSize;
 		enemyWave = new Enemy*[waveSize];
 		firstEnemyIndex = renderObjects.size();			//Note: There could possibly be an offset.
 		for(int i = 0; i < waveSize; i++)
@@ -400,7 +423,7 @@ void GameState::spawnEnemies(int waveNumber)
 			if( texIndex >= render->getTextureSize()  ) {
 				render->createTexture(enemyArgs[6*i + 2]);
 			}
-			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), enemyArgs[(6 * i) + 1].c_str());
+			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), enemyArgs[(6 * i) + 1].c_str(), waveNumber);
 			enemyWave[i] = tempEnemy;
 			renderObjects.push_back(tempEnemy->getGObject());
 		}

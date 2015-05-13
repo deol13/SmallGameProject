@@ -13,7 +13,7 @@ Enemy::Enemy()
 
 }
 
-Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile)
+Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile, int waveNr)
 {
 	this->x = x;
 	this->z = z;
@@ -24,14 +24,14 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile)
 	{
 	case MELEE:
 		loadObj = new GObject(objectFile, GL_TRIANGLES, texture);
-		health = 20;
+		health = 20 + 2 * waveNr;
 		this->type = MELEE;
 		moveSpeed = 1.0f;
 		this->attackRange = MELEERANGE;
 		break;
 	case ANIMAL:
 		loadObj = new GObject(objectFile, GL_TRIANGLES, texture);
-		health = 30;
+		health = 30 + 3 * waveNr;
 		this->type = ANIMAL;
 		moveSpeed = 2.0f;
 		this->attackRange = ANIMALRANGE;

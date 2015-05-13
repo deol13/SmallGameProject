@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "InGameGui.h"
 #include "ShopUI.h"
+#include "Enemy.h"
 
 class GameState {
 	const int GASIZE = 256;				//Game Area max size
