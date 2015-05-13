@@ -32,7 +32,7 @@ private:
 	void loadArena(std::string fileName);
 	void spawnEnemies(int waveNumber);
 	void spawnPlayer();
-	bool playerCanMove( Player::Direction dir );
+	bool playerCanMove( int x, int z );
 
 public:
 	GameState(int w, int h);
@@ -43,7 +43,7 @@ public:
 	void uiUpdate();
 	void keyDown(char c);
 	void keyUp(char c);
-	void leftMouseClick(long x, long y);
+	void leftMouseClick(float x, float y);
 	int getState() const;
 	int guiState();
 	int getShopState();

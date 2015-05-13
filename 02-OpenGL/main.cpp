@@ -33,8 +33,6 @@ GLuint gVertexAttribute = 0;
 GLuint gShaderProgram = 0;
 GLuint bth_tex = 0;
 
-Player* player;
-
 bool isQuitting = false;
 bool mDepthTest = false;
 
@@ -42,9 +40,6 @@ const double FPSLOCK = 60.0;
 int FPScount = 0;
 clock_t start = clock();
 clock_t currentFrame;
-
-void keySwitchFunc( const char c );
-void keySwitchFuncFalse( const char c );
 
 enum State { GAMESTATE, MENUSTATE, SHOPSTATE };
 
@@ -143,7 +138,9 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							POINT newMpos;
 							GetCursorPos(&newMpos);
 							ScreenToClient(wndHandle, &newMpos);
-							gameState->leftMouseClick(newMpos.x, newMpos.y);
+							float posX = 2 * newMpos.x / (float)WINDOW_WIDTH - 1;
+							float posY = 2 * newMpos.y / (float)WINDOW_HEIGHT - 1;
+							gameState->leftMouseClick(posX, posY);
 							break;
 						}
 						case WM_KEYDOWN:
@@ -236,7 +233,6 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 		delete mGUI;
 		delete gameState;
-		delete player;
 		wglMakeCurrent( NULL, NULL );
 		ReleaseDC( wndHandle, hDC );
 		wglDeleteContext( hRC );
@@ -332,35 +328,4 @@ HGLRC CreateOpenGLContext( HWND wndHandle ) {
 	wglMakeCurrent( hDC, hRC );
 
 	return hRC;
-}
-
-
-void keySwitchFunc( const char c ) {
-	if( c == 'w' || c == 'W' ) {
-		player->setMovement( player->UP, true );
-	}
-	if( c == 's' || c == 'S' ) {
-		player->setMovement( player->DOWN, true );
-	}
-	if( c == 'a' || c == 'A' ) {
-		player->setMovement( player->LEFT, true );
-	}
-	if( c == 'd' || c == 'D' ) {
-		player->setMovement( player->RIGHT, true );
-	}
-}
-
-void keySwitchFuncFalse( const char c ) {
-	if( c == 'w' || c == 'W' ) {
-		player->setMovement( player->UP, false );
-	}
-	if( c == 's' || c == 'S' ) {
-		player->setMovement( player->DOWN, false );
-	}
-	if( c == 'a' || c == 'A' ) {
-		player->setMovement( player->LEFT, false );
-	}
-	if( c == 'd' || c == 'D' ) {
-		player->setMovement( player->RIGHT, false );
-	}
 }

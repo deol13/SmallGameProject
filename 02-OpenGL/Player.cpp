@@ -15,11 +15,7 @@ Player::Player()
 	this->weapon = SWORD;
 	this->spearUpgrade = 1;
 	this->swordUpgrade = 1;
-
-	for (int i = 0; i < 4; i++)
-	{
-		movement[i] = false;
-	}
+	this->dirVec = glm::vec2(0.0, 0.0);
 }
 Player::Player(GLuint texture, float x, float z, int health, int armour)
 {
@@ -37,15 +33,11 @@ Player::Player(GLuint texture, float x, float z, int health, int armour)
 	this->weapon = SWORD;
 	this->spearUpgrade = 1;
 	this->swordUpgrade = 1;
-
+	this->dirVec = glm::vec2(0.0, 0.0);
 
 	for(int i = 0; i < 1; i++)		//again, change to 3
 	{
 		loadObj[i]->translate(x, 17, z);
-	}
-	for (int i = 0; i < 4; i++)
-	{
-		movement[i] = false;
 	}
 }
 
@@ -58,9 +50,38 @@ Player::~Player()
 	delete[] loadObj;
 }
 
-void Player::setMovement(int dir, bool isMoving)
+void Player::setMovement(int x, int y)
 {
-	movement[dir] = isMoving;
+	dirVec.x += x;
+	dirVec.y += y;
+	if(dirVec.x > 1)
+	{
+		dirVec.x = 1;
+	}
+	if(dirVec.y > 1)
+	{
+		dirVec.y = 1;
+	}
+	if(dirVec.x < -1)
+	{
+		dirVec.x = -1;
+	}
+	if(dirVec.y < -1)
+	{
+		dirVec.y = -1;
+	}
+}
+
+void Player::stop(bool stopX, bool stopZ)
+{
+	if(stopX)
+	{
+		dirVec.x = 0;
+	}
+	if(stopZ)
+	{
+		dirVec.y = 0;
+	}
 }
 
 bool Player::takeDamage(const int dmg)
@@ -76,25 +97,9 @@ GObject** Player::getGObjects() const
 
 void Player::update()
 {
-	float zMove = 0.0;
-	float xMove = 0.0;
 
-	if (movement[0]) //UP
-	{
-		zMove += moveSpeed;
-	}
-	if (movement[1]) //DOWN
-	{
-		zMove -= moveSpeed;
-	}
-	if (movement[2]) //LEFT
-	{
-		xMove += moveSpeed;
-	}
-	if (movement[3]) //RIGHT
-	{
-		xMove -= moveSpeed;
-	}
+	float xMove = moveSpeed * dirVec.x;
+	float zMove = moveSpeed * dirVec.y;
 
 	if(abs(xMove)< 0.001 && abs(zMove)< 0.001)
 	{	
@@ -178,9 +183,9 @@ float Player::getZ() const
 	return z;
 }
 
-float Player::getAngle() const 
+glm::vec2 Player::getDirection() const 
 {
-	return angle;
+	return dirVec;
 }
 
 BoundingPolygon Player::getBounds() const 
