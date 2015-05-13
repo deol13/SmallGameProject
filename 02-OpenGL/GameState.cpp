@@ -316,7 +316,7 @@ void GameState::loadArena(std::string fileName)
 	{
 		nrOfArenaObjects = lua_tointeger(L, -1);
 		lua_pop(L, 1);
-		std::string* arenaArr = new std::string[6 * nrOfArenaObjects];					//0: obj, 1-3: x,y,z, 4: tex-name, 5: tex-index
+		std::string* arenaArr = new std::string[8 * nrOfArenaObjects];					//0: obj, 1-3: x,y,z, 4: tex-name, 5: tex-index
 		int texOffset = render->getTextureSize()-1;
 		
 		int c = 0;
@@ -330,13 +330,13 @@ void GameState::loadArena(std::string fileName)
 		}
 		for(int i = 0; i < nrOfArenaObjects; i++)
 		{
-			int texIndex = atoi(arenaArr[6*i+5].c_str()) + texOffset;
+			int texIndex = atoi(arenaArr[8*i+5].c_str()) + texOffset;
 			if( texIndex >= render->getTextureSize()  ) {
-				render->createTexture(arenaArr[6*i + 4]);
+				render->createTexture(arenaArr[8*i + 4]);
 			}
 			//float x = atoi(arenaArr[6*i+2].c_str());
-			GObject* temp = new GObject(arenaArr[6 * i], GL_TRIANGLES, render->getTexture(texIndex));
-			temp->translate(atoi(arenaArr[6*i+1].c_str()), atoi(arenaArr[6*i+2].c_str()), atoi(arenaArr[6*i+3].c_str()));
+			GObject* temp = new GObject(arenaArr[8 * i], GL_TRIANGLES, render->getTexture(texIndex));
+			temp->translate(atoi(arenaArr[8*i+1].c_str()), atoi(arenaArr[8*i+2].c_str()), atoi(arenaArr[8*i+3].c_str()));
 			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
 			//temp->scale(0.05f, 0.05f, 0.05f);
 			renderObjects.push_back(temp);
