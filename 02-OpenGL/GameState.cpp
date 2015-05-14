@@ -656,8 +656,8 @@ int GameState::screenClickesOn(float mx, float my)
 {
 	if (menuUI->state > 2)
 		return menuUI->mouseClick(mx, my);
-	else if (shopUI->getState() == 1)
-		return shopUI->mouseClick(mx, my, gold);
+	else if (shopUI->getState() == 1)	//In shop
+		return shopUI->mouseClick(mx, my, gold, player);
 }
 
 void GameState::maxHeal()

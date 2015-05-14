@@ -88,7 +88,7 @@ int ShopUI::stateChange(lua_State *L)
 	return 0;
 }
 
-int ShopUI::mouseClick(float mx, float my, int &gold)
+int ShopUI::mouseClick(float mx, float my, int &gold, Player* player)
 {
 	continueOn = 0;
 	newTexture = -1;
@@ -100,6 +100,20 @@ int ShopUI::mouseClick(float mx, float my, int &gold)
 	lua_pushinteger(L, gold);
 
 	getNewTexture();
+
+	if (whichObject == 1)	//Wants to upgrade sword
+	{
+		player->setWeaponUpgrade(SWORD, player->getWeaponUpgrade(SWORD) + 1);
+	}
+	else if (whichObject == 2)	//Wants to upgrade spear
+	{
+		player->setWeaponUpgrade(SPEAR, player->getWeaponUpgrade(SPEAR) + 1);
+	}
+	else if (whichObject == 3)	//Wants to upgrade health
+	{
+		player->setMaxHealth(player->getMaxHealth() + 1);
+		player->setHealth(player->getMaxHealth());
+	}
 
 	gold = newGold;
 

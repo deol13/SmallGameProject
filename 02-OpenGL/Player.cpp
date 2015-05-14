@@ -189,6 +189,26 @@ int Player::getWeapon()
 	return this->weapon;
 }
 
+int Player::getWeaponUpgrade(int weaponChosen)
+{
+	int upgrade = 0;
+
+	if (weaponChosen == SWORD)
+	{
+		upgrade = swordUpgrade;
+	}
+	else
+	{
+		upgrade = spearUpgrade;
+	}
+	return upgrade;
+}
+
+int Player::getMaxHealth()
+{
+	return maxHealth;
+}
+
 int Player::getHealth()
 {
 	return this->health;

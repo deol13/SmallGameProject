@@ -50,6 +50,8 @@ public:
 
 	int getDamageDealt();
 	int getWeapon();
+	int getWeaponUpgrade(int weaponChosen);
+	int getMaxHealth();
 	int getHealth();
 	int getInvulTimer();
 
