@@ -15,7 +15,8 @@ Player::Player()
 	this->weapon = SWORD;
 	this->spearUpgrade = 1;
 	this->swordUpgrade = 1;
-	this->dirVec = glm::vec2(0.0, 0.0);
+	this->dirVec = glm::vec2(0.0, 1.0);
+	this->moveVec = glm::vec2(0.0, 0.0);
 }
 Player::Player(GLuint texture, float x, float z, int health, int armour)
 {
@@ -33,7 +34,8 @@ Player::Player(GLuint texture, float x, float z, int health, int armour)
 	this->weapon = SWORD;
 	this->spearUpgrade = 1;
 	this->swordUpgrade = 1;
-	this->dirVec = glm::vec2(0.0, 0.0);
+	this->dirVec = glm::vec2(0.0, 1.0);
+	this->moveVec = glm::vec2(0.0, 0.0);
 
 	for(int i = 0; i < 1; i++)		//again, change to 3
 	{
@@ -52,23 +54,23 @@ Player::~Player()
 
 void Player::setMovement(int x, int y)
 {
-	dirVec.x += x;
-	dirVec.y += y;
-	if(dirVec.x > 1)
+	if(x != 0)
 	{
-		dirVec.x = 1;
+		moveVec.x = x;
 	}
-	if(dirVec.y > 1)
+	if(y != 0)
 	{
-		dirVec.y = 1;
+		moveVec.y = y;
 	}
-	if(dirVec.x < -1)
+	
+	if(abs(moveVec.x) + abs(moveVec.y) > 1.9)			// Should be 2. The decimal's just a float precaution
 	{
-		dirVec.x = -1;
+		moveVec.x *= sqrt(2.0) / 2.0;
+		moveVec.y *= sqrt(2.0) / 2.0;
 	}
-	if(dirVec.y < -1)
+	if(abs(moveVec.x) + abs(moveVec.y) > 0.0)
 	{
-		dirVec.y = -1;
+		dirVec = moveVec;
 	}
 }
 
@@ -76,11 +78,11 @@ void Player::stop(bool stopX, bool stopZ)
 {
 	if(stopX)
 	{
-		dirVec.x = 0;
+		moveVec.x = 0;
 	}
 	if(stopZ)
 	{
-		dirVec.y = 0;
+		moveVec.y = 0;
 	}
 }
 
@@ -102,8 +104,8 @@ GObject** Player::getGObjects() const
 void Player::update()
 {
 
-	float xMove = moveSpeed * dirVec.x;
-	float zMove = moveSpeed * dirVec.y;
+	float xMove = moveSpeed * moveVec.x;
+	float zMove = moveSpeed * moveVec.y;
 
 	if(abs(xMove)< 0.001 && abs(zMove)< 0.001)
 	{	

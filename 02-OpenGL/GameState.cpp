@@ -143,6 +143,7 @@ void GameState::update()
 		{
 			if (waveNumber == 18) //If we finished the game and / or map
 			{
+				player->stop(true, true);
 				menuUI->won();
 			}
 			else if (waveNumber == 6 || waveNumber == 12)
@@ -363,7 +364,44 @@ void GameState::leftMouseClick(float x, float y)
 
 void GameState::playerAttack()
 {
+	BoundingPolygon hitbox;
+	glm::vec2 dirVec = player->getDirection();
+	if(player->getWeapon() == SWORD)
+	{
+		float weaponRange = 5.0f;	//multiplier for the direction vector
+		dirVec.x *= weaponRange;
+		dirVec.y *= weaponRange;
 
+		Point points[3];
+		points[0] = {player->getX(), player->getZ()};
+		points[1] = {player->getX() + dirVec.x - dirVec.y, player->getZ() + dirVec.y + dirVec.x};
+		points[2] = {player->getX() + dirVec.x + dirVec.y, player->getZ() + dirVec.y - dirVec.x};
+		hitbox = BoundingPolygon(points, 3);
+	} else													//Using spear
+	{
+		float weaponRange = 9.0f;
+		dirVec.x *= weaponRange;
+		dirVec.y *= weaponRange;
+
+		Point points[2];
+		points[0] = {player->getX(), player->getZ()};
+		points[1] = {player->getX() + dirVec.x, player->getZ() + dirVec.y};
+		hitbox = BoundingPolygon(points, 2);
+	}
+	for(int i = 0; i < waveSize; i++)
+	{
+		BoundingPolygon test = enemyWave[i]->getBounds();
+		bool hit = test.collides(hitbox);
+		if(hit)
+		{
+			int damage = player->getDamageDealt();
+			if(!enemyWave[i]->takeDamage(damage))			//Checks if the enemy is killed by the damage
+			{
+				enemiesRemaining--;
+				state = 1;									// ?
+			}
+		}
+	}
 }
 
 int GameState::getState()const
@@ -558,6 +596,7 @@ void GameState::nextWave()
 	{
 		gold += 10;		//Grant gold for finished wave
 	}
+	player->stop(true, true);
 
 	player->stop(true, true);
 	shopUI->setState();	//Show shop

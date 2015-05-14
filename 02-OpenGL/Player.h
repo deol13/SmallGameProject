@@ -22,7 +22,8 @@ private:
 	int invulTimer;
 
 	float x, z;
-	glm::vec2 dirVec;
+	glm::vec2 dirVec;		//does not reset when stopping
+	glm::vec2 moveVec;		//does reset when stopping
 	float moveSpeed;
 	GObject** loadObj;
 	//bool movement[4];

@@ -133,6 +133,7 @@
   <ItemGroup>
     <None Include="Arena.dat" />
     <None Include="ArenaReader.lua" />
+    <None Include="debugWave.dat" />
     <None Include="EnemyReader.lua" />
     <None Include="EnemyWaves.dat" />
     <None Include="gui.lua" />

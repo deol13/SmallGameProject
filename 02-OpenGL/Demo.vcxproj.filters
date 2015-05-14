@@ -152,7 +152,7 @@
     <None Include="savedGame.dat">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="defeatSave.dat">
+    <None Include="debugWave.dat">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
