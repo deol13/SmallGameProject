@@ -83,19 +83,19 @@ void GameState::continueInit(int w, int h)
 	loadSavedGame(); //
 
 	//Load arena
-	if (currentMap == (int*)1)
+	if (*currentMap == 1)
 	{
-		loadArena((int)currentMap);
+		loadArena(*currentMap);
 		waveNumber = 1;
 	}
-	else if (currentMap == (int*)2)
+	else if (*currentMap == 2)
 	{
-		loadArena((int)currentMap);
+		loadArena(*currentMap);
 		waveNumber = 7;
 	}
-	else if (currentMap == (int*)3)
+	else if (*currentMap == 3)
 	{
-		loadArena((int)currentMap);
+		loadArena(*currentMap);
 		waveNumber = 13;
 	}
 	//Spawn first enemy wave
