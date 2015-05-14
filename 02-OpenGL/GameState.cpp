@@ -108,8 +108,12 @@ void GameState::update()
 				if(enemyWave[i]->getRange() > playerDist)
 				{
 					int damage = enemyWave[i]->attack();
-					gameUI->dmgTaken(damage); //Deals instant damage to the player
-					player->takeDamage(damage);
+				
+					if (player->getInvulTimer() == 0)
+					{
+						gameUI->dmgTaken(damage); //Deals instant damage to the player
+						player->takeDamage(damage);
+					}
 				} 
 				else
 				{
