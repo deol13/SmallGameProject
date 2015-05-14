@@ -645,8 +645,8 @@ void GameState::nextWave()
 		gold += 30;	//Grant gold for finished boss
 
 		arenaCleanUp();		//Load the next map
-		currentMap++;
-		loadArena(*currentMap);
+		*currentMap = *currentMap + 1;
+   		loadArena(*currentMap);
 	}
 	else
 	{
