@@ -3,7 +3,6 @@
 
 #include "BoundingPolygon.h"
 #include "GObject.h"
-#include <ctime>
 
 const int SWORD = 1;
 const int SPEAR = 2;
@@ -20,21 +19,22 @@ private:
 	int spearUpgrade;
 	int swordUpgrade;
 
-	clock_t start;
+	int invulTimer;
 
 	float x, z;
-	float angle;
+	glm::vec2 dirVec;
 	float moveSpeed;
 	GObject** loadObj;
-	bool movement[4];
+	//bool movement[4];
 	BoundingPolygon collisionRect;
 
 public:
-	enum Direction { UP, DOWN, LEFT, RIGHT, STILL };
+	//enum Direction { UP, DOWN, LEFT, RIGHT, STILL };
 	Player();
 	Player(GLuint texture, float x, float y, int health, int armour);
 	~Player();
-	void setMovement(int dir, bool isMoving);
+	void setMovement(int x, int y);
+	void stop(bool stopX, bool stopZ);
 	bool takeDamage(const int dmg);
 	GObject** getGObjects() const;
 	void update();
@@ -50,9 +50,11 @@ public:
 	int getDamageDealt();
 	int getWeapon();
 	int getHealth();
+	int getInvulTimer();
+
 	float getX() const;
 	float getZ() const;
-	float getAngle() const;
+	glm::vec2 getDirection() const;
 	BoundingPolygon getBounds() const;
 	float getMoveSpeed() const;
 	int getGold() const;

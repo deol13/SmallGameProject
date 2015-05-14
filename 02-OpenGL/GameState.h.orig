@@ -5,17 +5,15 @@
 #include "Player.h"
 #include "InGameGui.h"
 #include "ShopUI.h"
+#include "Enemy.h"
 
 class GameState {
 	const int GASIZE = 256;				//Game Area max size
 private:
 	int state;
-<<<<<<< HEAD
 	int arenaMap[256][256];	//shows areas covered by buildings
-=======
-	int arenaMap[64][64];	//shows areas covered by buildings
 	int waveNumber;
->>>>>>> 0285629869ed94c15d3342d994ebe6891f92ba17
+	int gold;
 	Render* render;
 	GuiManager* menuUI;
 	InGameGui* gameUI;
@@ -35,7 +33,16 @@ private:
 	void loadArena(std::string fileName);
 	void spawnEnemies(int waveNumber);
 	void spawnPlayer();
+<<<<<<< HEAD
+	bool playerCanMove( int x, int z );
+=======
 	bool playerCanMove( Player::Direction dir );
+	void nextWave();
+
+	bool realTemp;	//Just for debugging purposes
+
+	static int savedGameInfo(lua_State *L);
+>>>>>>> cd04232b5fd4b0cd185d450b170e69290588aeb0
 
 public:
 	GameState(int w, int h);
@@ -46,15 +53,14 @@ public:
 	void uiUpdate();
 	void keyDown(char c);
 	void keyUp(char c);
-	void leftMouseClick(long x, long y);
+	void leftMouseClick(float x, float y);
 	int getState() const;
 	int guiState();
 	int getShopState();
 	int screenClickesOn(float mx, float my);
 	void maxHeal();
 
-
-
-	int gold;
+	void loadSavedGame();
+	void saveGame();
 };
 #endif

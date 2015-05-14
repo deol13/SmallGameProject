@@ -121,7 +121,6 @@ void GameState::update()
 		{
 			if (waveNumber == 6) //If we finished the game and / or map
 			{
-				player->setMovement(Player::STILL, false);
 				menuUI->won();
 			}
 			else				//Spawn next wave
@@ -141,12 +140,16 @@ void GameState::update()
 				if(enemyWave[i]->getRange() > playerDist)
 				{
 					int damage = enemyWave[i]->attack();
-					gameUI->dmgTaken(damage); //Deals instant damage to the player
-					player->takeDamage(damage);
+				
+					if (player->getInvulTimer() == 0)
+					{
+						gameUI->dmgTaken(damage); //Deals instant damage to the player
+						player->takeDamage(damage);
+					}
 				} 
 				else
 				{
-					enemyWave[i]->move();
+					//enemyWave[i]->move();
 				}
 				//enemyWave[i]->act(player->getX(), player->getZ(), board);
 			}
@@ -176,7 +179,8 @@ void GameState::uiUpdate()
 
 void GameState::keyDown(char c)
 {
-	Player::Direction dir;
+	int moveX = 0;
+	int moveZ = 0;
 	int tmp = 0;
 	bool skipSetDir = false;
 
@@ -184,23 +188,23 @@ void GameState::keyDown(char c)
 	{
 	case 'w':
 	case 'W':
-		dir = Player::UP;
+		moveZ = 1;
 		break; 
 	case 's':
 	case 'S':
-		dir = Player::DOWN;
+		moveZ = -1;
 		break;
 	case 'a':
 	case 'A':
-		dir = Player::LEFT;
+		moveX = 1;
 		break;
 	case 'd':
 	case 'D':
-		dir = Player::RIGHT;
+		moveX = -1;
 		break;
 	case 'p':
 	case 'P':
-		dir = Player::STILL;
+		player->stop(true, true);
 		menuUI->pauseGame();
 		break;
 	case 'q':
@@ -248,39 +252,34 @@ void GameState::keyDown(char c)
 		loadSavedGame(); //Temporary
 		break; //Temporary
 	default: 
-		dir = Player::STILL;
 		break;
 	}
 
 	if (!skipSetDir)
 	{
-		if (playerCanMove(dir))
+		if (playerCanMove(moveX, moveZ))
 		{
-			player->setMovement(dir, true);
-		}
-		else
-		{
-			player->setMovement(dir, false);
+			player->setMovement(moveX, moveZ);
 		}
 	}
 }
 void GameState::keyUp(char c)
 {
 	if ( c == 'w' || c == 'W' ) {
-		player->setMovement( Player::UP, false );
+		player->stop(false, true);
 	}
 	if ( c == 's' || c == 'S' ) {
-		player->setMovement( Player::DOWN, false );
+		player->stop(false, true);
 	}
 	if ( c == 'a' || c == 'A' ) {
-		player->setMovement( Player::LEFT, false );
+		player->stop(true, false);
 	}
 	if ( c == 'd' || c == 'D' ) {
-		player->setMovement( Player::RIGHT, false );
+		player->stop(true, false);
 	}
 }
 
-void GameState::leftMouseClick(long x, long y)
+void GameState::leftMouseClick(float x, float y)
 {
 	//glm::vec2 vecFromPlayer = glm::vec2(x - player->getX(), y - player->getZ());
 	//float angle = atan(vecFromPlayer.y / vecFromPlayer.x);
@@ -332,6 +331,11 @@ void GameState::leftMouseClick(long x, long y)
 				
 		}
 	}
+}
+
+void GameState::playerAttack()
+{
+
 }
 
 int GameState::getState()const
@@ -483,49 +487,22 @@ void GameState::spawnPlayer()
 
 }
 
-bool GameState::playerCanMove(Player::Direction dir)
+bool GameState::playerCanMove(int x, int z)
 {
 	BoundingPolygon playerBounds = player->getBounds();
-
-	if(dir == Player::UP)
+	playerBounds.move(x, z);
+	if(playerBounds.findMax({0.0f, 1.0f}) >= GASIZE)
 	{
-		if(playerBounds.findMax({0.0f, 1.0f}) >= GASIZE)
-		{
-			return false;
-		} else
-		{
-			playerBounds.move(0.0f, player->getMoveSpeed());
-		}
-	}
-	if(dir == Player::DOWN)
+		return false;
+	} else if(playerBounds.findMin({0.0f, 1.0f}) <= 0)
 	{
-		if(playerBounds.findMin({0.0f, 1.0f}) <= 0)
-		{
-			return false;
-		} else
-		{
-			playerBounds.move(0.0f, -player->getMoveSpeed());
-		}
-	}
-	if(dir == Player::LEFT)
+		return false;
+	} else if(playerBounds.findMax({0.0f, 1.0f}) >= GASIZE)
 	{
-		if(playerBounds.findMax({0.0f, 1.0f}) >= GASIZE)
-		{
-			return false;
-		} else
-		{
-			playerBounds.move(player->getMoveSpeed(), 0.0f);
-		}
-	}
-	if(dir == Player::RIGHT)
+		return false;
+	} else if(playerBounds.findMin({0.0f, 1.0f}) <= 0)
 	{
-		if(playerBounds.findMin({0.0f, 1.0f}) <= 0)
-		{
-			return false;
-		} else
-		{
-			playerBounds.move(-player->getMoveSpeed(), 0.0f);
-		}
+		return false;
 	}
 
 	//for(int i = 0; i < waveSize; i++)		//only checks with enemies right now. Need to add environment check
@@ -552,15 +529,14 @@ void GameState::nextWave()
 	{
 		gold += 10;		//Grant gold for finished wave
 	}
-	player->setMovement(Player::STILL, false);
 
+	player->stop(true, true);
 	shopUI->setState();	//Show shop
 	shopUI->showGold(gold);
 
 	waveNumber++;		//Load in next wave
 	spawnEnemies(waveNumber);
 
-	player->setMovement(Player::STILL, false);
 }
 
 int GameState::guiState()
