@@ -6,8 +6,7 @@ function readFile()
 	enemyArr = {}
 	texArr = {}
 	texCount = 0;
-	--file = io.open("EnemyWaves.dat", "r")	-- Opens a file in read
-	file = io.open("debugWave.dat", "r")
+	file = io.open("EnemyWaves.dat", "r")	-- Opens a file in read
 	io.input(file)							-- sets the default input file as test.lua
 
 	if waveNr == nil then waveNr = 1 end
