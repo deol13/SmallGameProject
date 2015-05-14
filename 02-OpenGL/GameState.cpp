@@ -89,7 +89,6 @@ void GameState::update()
 		{
 			if (waveNumber == 6) //If we finished the game and / or map
 			{
-				player->setMovement(Player::STILL, false);
 				menuUI->won();
 			}
 			else				//Spawn next wave
@@ -494,15 +493,14 @@ void GameState::nextWave()
 	{
 		gold += 10;		//Grant gold for finished wave
 	}
-	player->setMovement(Player::STILL, false);
 
+	player->stop(true, true);
 	shopUI->setState();	//Show shop
 	shopUI->showGold(gold);
 
 	waveNumber++;		//Load in next wave
 	spawnEnemies(waveNumber);
 
-	player->setMovement(Player::STILL, false);
 }
 
 int GameState::guiState()
