@@ -177,45 +177,46 @@ void GameState::update()
 				nextWave();
 			}
 		}
-		for (int i = 0; i < waveSize; i++)
+		else
 		{
-			if (enemyWave[i]->getHealth() >= 0)
+			for (int i = 0; i < waveSize; i++)
 			{
-				enemyWave[i]->clearPotential(arenaMap);
-				enemyWave[i]->setPotential(player->getX(), player->getZ(), 50);
-				for(int j = 0; j < waveSize; j++)
+				if (enemyWave[i]->getHealth() >= 0)
 				{
-					if(i != j)
+					enemyWave[i]->clearPotential(arenaMap);
+					enemyWave[i]->setPotential(player->getX(), player->getZ(), 50);
+					for (int j = 0; j < waveSize; j++)
 					{
-						enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -5);
+						if (i != j)
+						{
+							enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -5);
+						}
 					}
-				}
 
-				float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) + pow((enemyWave[i]->getZ() - player->getZ()), 2));
+					float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) + pow((enemyWave[i]->getZ() - player->getZ()), 2));
 
-				if(enemyWave[i]->getRange() > playerDist)
-				{
-					int damage = enemyWave[i]->attack();
-				
-					if (player->getInvulTimer() == 0)
+					if (enemyWave[i]->getRange() > playerDist)
 					{
-						gameUI->dmgTaken(damage); //Deals instant damage to the player
-						player->takeDamage(damage);
+						int damage = enemyWave[i]->attack();
+
+						if (player->getInvulTimer() == 0)
+						{
+							gameUI->dmgTaken(damage); //Deals instant damage to the player
+							player->takeDamage(damage);
+						}
 					}
-				} 
-				else
-				{
-					enemyWave[i]->move();
+					else
+					{
+						enemyWave[i]->move();
+					}
+					//enemyWave[i]->act(player->getX(), player->getZ(), board);
 				}
-				//enemyWave[i]->act(player->getX(), player->getZ(), board);
+				render->GeometryPassInit();
+				render->render(renderObjects);
+				render->lightPass();
 			}
 		}
 	}
-
-	render->GeometryPassInit();
-	render->render(renderObjects);
-	render->lightPass();
-	
 }
 
 void GameState::uiUpdate()
@@ -611,9 +612,16 @@ bool GameState::playerCanMove(int x, int z)
 
 void GameState::nextWave()
 {
-
-	delete enemyWave;	//Remove last wave
-	enemyWave = nullptr;
+	//Remove last wave
+	for (int i = 0; i < waveSize; i++)
+	{
+   		delete enemyWave[i];
+		renderObjects.pop_back();
+	}
+	delete[] enemyWave;
+	
+	waveSize = 0;
+  	enemyWave = nullptr;
 
 	if (waveNumber == 6 || waveNumber == 12)
 	{
