@@ -626,6 +626,11 @@ bool GameState::playerCanMove(int x, int z)
 
 void GameState::nextWave()
 {
+	for (int i = 0; i < waveSize; i++)
+	{
+		delete enemyWave[i];
+		renderObjects.pop_back();
+	}
 
 	delete enemyWave;	//Remove last wave
 	enemyWave = nullptr;
@@ -670,7 +675,7 @@ int GameState::screenClickesOn(float mx, float my)
 	}
 	else if (shopUI->getState() == 1)
 	{
-		int tmp = shopUI->mouseClick(mx, my, gold);
+		int tmp = shopUI->mouseClick(mx, my, gold, player);
 		if (tmp == 3)
 			gameUI->addHealth();
 		return tmp;
