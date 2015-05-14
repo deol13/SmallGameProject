@@ -52,6 +52,7 @@ public:
 	void continueInit(int w, int h);
 	void clean();
 	void cleanedOnDefeat();
+	void arenaCleanUp();
 	void startAfterDefeat();
 	void update();
 	void uiUpdate();

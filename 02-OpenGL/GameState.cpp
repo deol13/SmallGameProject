@@ -159,13 +159,25 @@ void GameState::startAfterDefeat()
 	enemiesRemaining = waveSize;
 }
 
+void GameState::arenaCleanUp()
+{
+
+	delete enemyWave;
+	enemyWave = nullptr;
+
+	for (int i = 0; i < nrOfArenaObjects; i++)	//Cleaning up the arena
+	{
+		renderObjects.pop_back();
+	}
+}
+
 void GameState::update()
 {
  	player->update();
 	
 	if (menuUI->state != 3 && shopUI->getState() != 1)
 	{
-		if (player->getHealth() == 0)		//Are we dead?
+		if (player->getHealth() <= 0)		//Are we dead?
 		{
 			if (realTemp == false)
 			{
@@ -180,12 +192,6 @@ void GameState::update()
 			{
 				player->stop(true, true);
 				menuUI->won();
-			}
-			else if (waveNumber == 6 || waveNumber == 12)
-			{
-				currentMap++;
-				loadArena((int)currentMap);
-				nextWave();
 			}
 			else				//Spawn next wave
 			{
@@ -637,6 +643,10 @@ void GameState::nextWave()
 	if (waveNumber == 6 || waveNumber == 12)
 	{
 		gold += 30;	//Grant gold for finished boss
+
+		arenaCleanUp();		//Load the next map
+		currentMap++;
+		loadArena(*currentMap);
 	}
 	else
 	{
