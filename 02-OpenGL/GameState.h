@@ -44,6 +44,7 @@ public:
 	GameState(int w, int h);
 	~GameState();
 	void init(int w, int h);
+	void continueInit(int w, int h);
 	void clean();
 	void update();
 	void uiUpdate();
@@ -59,5 +60,6 @@ public:
 
 	void loadSavedGame();
 	void saveGame();
+	void saveGameOnDefeat();
 };
 #endif

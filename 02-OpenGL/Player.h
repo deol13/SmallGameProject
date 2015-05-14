@@ -3,7 +3,6 @@
 
 #include "BoundingPolygon.h"
 #include "GObject.h"
-#include <ctime>
 
 const int SWORD = 1;
 const int SPEAR = 2;
@@ -20,7 +19,7 @@ private:
 	int spearUpgrade;
 	int swordUpgrade;
 
-	clock_t start;
+	int invulTimer;
 
 	float x, z;
 	glm::vec2 dirVec;		//does not reset when stopping
@@ -52,6 +51,8 @@ public:
 	int getDamageDealt();
 	int getWeapon();
 	int getHealth();
+	int getInvulTimer();
+
 	float getX() const;
 	float getZ() const;
 	glm::vec2 getDirection() const;

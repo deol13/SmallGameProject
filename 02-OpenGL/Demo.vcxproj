@@ -138,6 +138,7 @@
     <None Include="EnemyWaves.dat" />
     <None Include="gui.lua" />
     <None Include="LuaButton.lua" />
+    <None Include="defeatSave.dat" />
     <None Include="savedGame.dat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

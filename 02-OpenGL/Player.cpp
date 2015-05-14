@@ -2,6 +2,7 @@
 
 Player::Player()
 {
+	invulTimer = 0;
 	loadObj = new GObject*[1];		//change to 3
 	loadObj[0] = new GObject();
 	x = 5.0f;
@@ -24,6 +25,7 @@ Player::Player(GLuint texture, float x, float z, int health, int armour)
 	loadObj[0] = new GObject(files, 3, texture);
 	this->x = x;
 	this->z = z;
+	invulTimer = 0;
 	Point colPoints[4] ={{x - 5.0, z - 5.0}, {x - 5.0, z + 5.0}, {x + 5.0, z - 5.0}, {x + 5.0, z + 5.0}};
 	collisionRect = BoundingPolygon(colPoints, 4);
 	moveSpeed = 0.9;
@@ -86,13 +88,12 @@ void Player::stop(bool stopX, bool stopZ)
 
 bool Player::takeDamage(const int dmg)
 {
-	start = clock();
-
-	if (std::clock() - start < 8)
+	if (invulTimer == 0)
 	{
+		invulTimer = 1;
 		health -= dmg;
-		return (health > 0);
 	}
+	return (health > 0);
 }
 
 GObject** Player::getGObjects() const
@@ -121,6 +122,15 @@ void Player::update()
 	x += xMove;
 	z += zMove;
 	collisionRect.move(xMove, zMove);
+
+	if (invulTimer > 0 && invulTimer < 50)
+	{
+		invulTimer++;
+	}
+	else if (invulTimer != 0)
+	{
+		invulTimer = 0;
+	}
 }
 
 void Player::setMaxHealth(const int health)
@@ -182,6 +192,11 @@ int Player::getWeapon()
 int Player::getHealth()
 {
 	return this->health;
+}
+
+int Player::getInvulTimer()
+{
+	return invulTimer;
 }
 
 float Player::getX() const

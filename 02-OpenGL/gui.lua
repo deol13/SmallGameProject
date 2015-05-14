@@ -248,6 +248,22 @@ function saveGame(gold, whichMap)
 	io.close(file)
 end
 
+function onDefeatSave(gold, whichMap, whichWave)
+	local file = io.open("defeatSave.dat", "w+")	-- Opens a file in read
+	io.output(file)							-- sets the default input file as test.lua
+
+	io.write(currentHearts - 3, "\n")
+	io.write(upgradeTo[1] - 1, "\n")
+	io.write(upgradeTo[2] - 5, "\n")
+	io.write(upgradeTo[3] - 9, "\n")
+	io.write(upgradeTo[4] - 13, "\n")
+	io.write(whichMap, "\n")
+	io.write(whichWave, "\n")
+	io.write(gold, "\n")
+
+	io.close(file)
+end
+
 function loadGame(gameUI, shopUI, player) --Add enemy to input and output
 	local counter = 0
 	local tmp = {};
