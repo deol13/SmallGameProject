@@ -48,9 +48,12 @@ public:
 	void clean();
 	void cleanedOnDefeat();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	void freeLoad();
 	void costLoad();
 =======
+=======
+>>>>>>> origin/master
 	void arenaCleanUp();
 	void startAfterDefeat();
 >>>>>>> origin/master

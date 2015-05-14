@@ -3,7 +3,7 @@
 GameState::GameState( int w, int h)
 {
 	currentMap = new int(1);
-	gold = 250;
+	gold = 0;
 	onExitCleanUp = false;
 	//init(w, h);
 	//Set render
@@ -147,6 +147,7 @@ void GameState::freeLoad()
 	enemiesRemaining = waveSize;
 }
 
+<<<<<<< HEAD
 void GameState::costLoad()
 {
 	shopUI = new ShopUI();
@@ -156,6 +157,18 @@ void GameState::costLoad()
 
 	spawnEnemies(waveNumber);
 	enemiesRemaining = waveSize;
+=======
+void GameState::arenaCleanUp()
+{
+
+	delete enemyWave;
+	enemyWave = nullptr;
+
+	for (int i = 0; i < nrOfArenaObjects; i++)	//Cleaning up the arena
+	{
+		renderObjects.pop_back();
+	}
+>>>>>>> origin/master
 }
 
 void GameState::update()
@@ -175,12 +188,6 @@ void GameState::update()
 			{
 				player->stop(true, true);
 				menuUI->won();
-			}
-			else if (waveNumber == 6 || waveNumber == 12)
-			{
-				currentMap++;
-				loadArena((int)currentMap);
-				nextWave();
 			}
 			else				//Spawn next wave
 			{
@@ -209,8 +216,7 @@ void GameState::update()
 				
 					if (player->getInvulTimer() == 0)
 					{
-						gameUI->dmgTaken(damage); //Deals instant damage to the player
-						player->takeDamage(damage);
+						gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
 					}
 				} 
 				else
@@ -633,6 +639,10 @@ void GameState::nextWave()
 	if (waveNumber == 6 || waveNumber == 12)
 	{
 		gold += 30;	//Grant gold for finished boss
+
+		arenaCleanUp();		//Load the next map
+		*currentMap = *currentMap + 1;
+   		loadArena(*currentMap);
 	}
 	else
 	{
