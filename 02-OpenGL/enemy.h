@@ -24,6 +24,7 @@ class Enemy
 		int health;
 		int type;
 		int attackRange;
+		int attackTime;
 		GObject* loadObj;
 		BoundingPolygon collisionRect;
 		float neighbourPos[8];					//index goes NW, N, NE, W, E, SW, S, SE

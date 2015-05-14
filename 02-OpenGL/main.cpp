@@ -146,12 +146,14 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 						case WM_KEYDOWN:
 						{
 							WPARAM param = msg.wParam;
-							if(param = VK_SPACE)
+							if(param == VK_SPACE)
 							{
 								gameState->playerAttack();
+							} else 
+							{
+								char c = MapVirtualKey(param, MAPVK_VK_TO_CHAR);
+								gameState->keyDown(c);
 							}
-							char c = MapVirtualKey(param, MAPVK_VK_TO_CHAR);
-							gameState->keyDown(c);
 							break;
 						}
 
