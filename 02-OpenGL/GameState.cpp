@@ -28,7 +28,7 @@ void GameState::init(int w, int h)
 	{
 		for(int j = 0; j < 256; j++)
 		{
-			arenaMap[i][j] = 0;
+			arenaMap[i][j] = 10;
 		}
 	}
 
@@ -61,7 +61,7 @@ void GameState::continueInit(int w, int h)
 	{
 		for (int j = 0; j < 256; j++)
 		{
-			arenaMap[i][j] = 0;
+			arenaMap[i][j] = 10;
 		}
 	}
 
@@ -183,6 +183,13 @@ void GameState::update()
 			{
 				enemyWave[i]->clearPotential(arenaMap);
 				enemyWave[i]->setPotential(player->getX(), player->getZ(), 50);
+				for(int j = 0; j < waveSize; j++)
+				{
+					if(i != j)
+					{
+						enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -5);
+					}
+				}
 
 				float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) + pow((enemyWave[i]->getZ() - player->getZ()), 2));
 
@@ -198,7 +205,7 @@ void GameState::update()
 				} 
 				else
 				{
-					//enemyWave[i]->move();
+					enemyWave[i]->move();
 				}
 				//enemyWave[i]->act(player->getX(), player->getZ(), board);
 			}
