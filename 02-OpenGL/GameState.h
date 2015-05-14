@@ -39,9 +39,11 @@ private:
 	bool realTemp;	//Just for debugging purposes
 
 	int* currentMap;
-	bool cleanedOnDefeat;
 
 	static int savedGameInfo(lua_State *L);
+
+	int w;
+	int h;
 
 public:
 	GameState(int w, int h);
@@ -49,6 +51,8 @@ public:
 	void init(int w, int h);
 	void continueInit(int w, int h);
 	void clean();
+	void cleanedOnDefeat();
+	void startAfterDefeat();
 	void update();
 	void uiUpdate();
 	void keyDown(char c);

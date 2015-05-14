@@ -2,6 +2,8 @@
 
 GameState::GameState( int w, int h)
 {
+	this->w = w;
+	this->h = h;
 	currentMap = new int(1);
 	gold = 250;
 	onExitCleanUp = false;
@@ -20,6 +22,8 @@ GameState::~GameState()
 
 void GameState::init(int w, int h) 
 {
+	this->w = w;
+	this->h = h;
 	realTemp = false;
 	state = 0;
 	waveNumber = 1;
@@ -48,11 +52,12 @@ void GameState::init(int w, int h)
 	enemiesRemaining = waveSize;
 
 	onExitCleanUp = true;
-	cleanedOnDefeat = false;
 }
 
 void GameState::continueInit(int w, int h)
 {
+	this->w = w;
+	this->h = h;
 	realTemp = false;
 	state = 0;
 	waveNumber = 1;
@@ -98,7 +103,6 @@ void GameState::continueInit(int w, int h)
 	enemiesRemaining = waveSize;
 
 	onExitCleanUp = true;
-	cleanedOnDefeat = false;
 }
 
 void GameState::clean()
@@ -124,25 +128,36 @@ void GameState::clean()
 	}
 }
 
-//void GameState::cleanedOnDefeat()
-//{
-//	delete gameUI;
-//	gameUI = nullptr;
-//	delete shopUI;
-//	shopUI = nullptr;
-//	menuUI->state = 0;
-//	for (int i = 0; i < waveSize; i++)
-//	{
-//		delete enemyWave[i];
-//	}
-//	delete[] enemyWave;
-//	enemyWave = nullptr;
-//
-//	for (size_t i = 0; i < length; i++)
-//	{
-//
-//	}
-//}
+void GameState::cleanedOnDefeat()
+{
+	delete gameUI;
+	gameUI = nullptr;
+	delete shopUI;
+	shopUI = nullptr;
+	menuUI->state = 0;
+	for (int i = 0; i < waveSize; i++)
+	{
+		delete enemyWave[i];
+	}
+	delete[] enemyWave;
+	enemyWave = nullptr;
+
+	for (int i = nrOfArenaObjects + 1; i < renderObjects.size(); i++)
+	{
+		renderObjects[i] = NULL;	
+	}
+}
+
+void GameState::startAfterDefeat()
+{
+	menuUI = new GuiManager(w, h);
+	gameUI = new InGameGui();
+
+	loadSavedGame();
+
+	spawnEnemies(waveNumber);
+	enemiesRemaining = waveSize;
+}
 
 void GameState::update()
 {
@@ -150,7 +165,7 @@ void GameState::update()
 	
 	if (menuUI->state != 3 && shopUI->getState() != 1)
 	{
-		if (player->getHealth() <= 0)		//Are we dead?
+		if (player->getHealth() == 0)		//Are we dead?
 		{
 			if (realTemp == false)
 			{
@@ -277,15 +292,15 @@ void GameState::keyDown(char c)
 			player->setWeapon(SWORD);
 		}
 		break;
-	case 'e': //Temporary
-	case 'E': //Temporary
-		skipSetDir = true; //Temporary
-		gameUI->addHealth(); //Temporary
-		break; //Temporary
+	//case 'e': //Temporary
+	//case 'E': //Temporary
+	//	skipSetDir = true; //Temporary
+	//	gameUI->addHealth(); //Temporary
+	//	break; //Temporary
 	case 'f': //Temporary
 	case 'F': //Temporary
 		skipSetDir = true; //Temporary
-		gameUI->heal(false); //Temporary
+		gameUI->heal(); //Temporary
 		break; //Temporary
 	case 'z': //Temporary
 	case 'Z': //Temporary
@@ -647,14 +662,24 @@ int GameState::getShopState()
 int GameState::screenClickesOn(float mx, float my)
 {
 	if (menuUI->state > 2)
-		return menuUI->mouseClick(mx, my);
+	{
+		int tmp = menuUI->mouseClick(mx, my);
+		if (tmp == 0)
+			maxHeal();
+		return tmp;
+	}
 	else if (shopUI->getState() == 1)
-		return shopUI->mouseClick(mx, my, gold);
+	{
+		int tmp = shopUI->mouseClick(mx, my, gold);
+		if (tmp == 3)
+			gameUI->addHealth();
+		return tmp;
+	}
 }
 
 void GameState::maxHeal()
 {
-	gameUI->heal(true);
+	gameUI->heal();
 }
 
 void GameState::saveGame()

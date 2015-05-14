@@ -196,13 +196,21 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							int tmp = 0;
 							tmp = gameState->screenClickesOn(screenX, screenY);
 
-							if (tmp == 2)
+							if (tmp == 1)
+								gameState->maxHeal();
+							else if (tmp == 2)
 							{
 								playState = MENUSTATE;
 								gameState->clean();
 							}
-							else if (tmp == 1)
-								gameState->maxHeal();
+							else if (tmp == 5) //Cost restart
+							{
+
+							}
+							else if (tmp == 6) //Free restart
+							{
+
+							}
 							break;
 						}
 						}

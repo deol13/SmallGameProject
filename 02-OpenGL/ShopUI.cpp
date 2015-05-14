@@ -106,7 +106,11 @@ int ShopUI::mouseClick(float mx, float my, int &gold)
 	showGold(gold);
 
 	if (newTexture != -1)
+	{
 		guiObjects[whichObject].textureIndex = newTexture;
+		if (whichObject == 3)
+			return 3;
+	}
 	else if (continueOn == 2)
 		state = 0;
 	else if (continueOn == 1) //heal

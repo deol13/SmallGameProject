@@ -41,7 +41,7 @@ class InGameGui
 		void comboLost();
 		void addHealth();
 		int dmgTaken(float dmg);
-		void heal(bool fullHeal);
+		void heal();
 		void changeWeapon();
 
 		void getLuaTable();

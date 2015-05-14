@@ -18,8 +18,8 @@ won = { -0.312, 0.400, 0.312, 0.150, 0, 0, 1, 1, 10, -- Win
 	    -0.312, 0.125, 0.312, -0.125, 0, 0, 1, 1, 9 }  --Quit
 
 defeat = { -0.312, 0.675, 0.312, 0.425, 0, 0, 1, 1, 11,  -- Defeat
-		   -0.312, 0.400, 0.312, 0.150, 0, 0, 1, 1, 12,  -- Restart 5G
-		   -0.312, 0.125, 0.312, -0.125, 0, 0, 1, 1, 13,  -- Free Restart
+		   -0.312, 0.400, 0.312, 0.150, 0, 0, 1, 1, 13,  -- Restart 5G
+		   -0.312, 0.125, 0.312, -0.125, 0, 0, 1, 1, 12,  -- Free Restart
 		   -0.312, -0.150, 0.312, -0.400, 0, 0, 1, 1, 9 } --Quit
 
 
@@ -55,8 +55,8 @@ function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a
 	if state == 1 then  --[[ Start menu ]]
 		if xPos < -0.61 and xPos > -0.95  and yPos < -0.497 and yPos > -0.924 then
 			stateChange(1) --[[ New game ]]
-		--[[ elseif xPos < -0.22 and xPos > -0.56  and yPos < -0.497 and yPos > -0.924 then
-			stateChange(1) ]] --[[ Continue game ]]
+		elseif xPos < -0.22 and xPos > -0.56  and yPos < -0.497 and yPos > -0.924 then
+			stateChange(4) --[[ Continue game ]]
 		elseif xPos < 0.17 and xPos > -0.17 and yPos < -0.497 and yPos > -0.924 then
 			return howToPlayMenu, 2
 		--[[ elseif xPos < 0.56 and xPos > 0.22  and yPos < -0.497 and yPos > -0.924 then
@@ -83,10 +83,14 @@ function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a
 			stateChange(0)
 		end
 	elseif state == 5 then  --Defeat
-		if xPos < 0.312 and xPos > -0.312  and yPos < -0.15 and yPos > -0.40 then --[[Exit to start menu]]
-			stateChange(2)
-		elseif xPos < 0.312 and xPos > -0.312  and yPos < 0.725 and yPos > 0.475 then --[[Resume / Hidden Button]]
+		if xPos < 0.312 and xPos > -0.312  and yPos < 0.400 and yPos > 0.150 then -- Restart 5G
+			stateChange(5)
+		elseif xPos < 0.312 and xPos > -0.312  and yPos < 0.125 and yPos > -0.125 then -- Free Restart
+			stateChange(6)
+		elseif xPos < 0.312 and xPos > -0.312  and yPos < 0.675 and yPos > 0.425 then --[[Resume / Hidden Button]]
 			stateChange(0)
+		elseif xPos < 0.312 and xPos > -0.312  and yPos < -0.15 and yPos > -0.40 then --[[Exit to start menu]]
+			stateChange(2)
 		end
 	else
 		return -1
@@ -94,6 +98,7 @@ function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a
 	
 	return -1
 end
+
 
 
 function pauseGame()

@@ -133,28 +133,11 @@ int InGameGui::dmgTaken(float dmg)
 	return 0;
 }
 
-void InGameGui::heal( bool fullHeal )
+void InGameGui::heal( )
 {
-	if (!fullHeal)
-	{
-		if (currentHealth < maxHealth) //Temporary
-		{ //Increase 4 in [] with 1 for every object before the first heart
-			if (guiObjects[currentHealth + 3].textureIndex == 2)
-				guiObjects[currentHealth + 3].textureIndex = 1;
-			else
-			{
-				guiObjects[currentHealth + 4].textureIndex = 1;
-				currentHealth++;
-			}
-			
-		}
-	}
-	else
-	{
-		for (int i = 0; i < maxHealth; i++) //Heal the player to max health
-			guiObjects[i + 4].textureIndex = 1;
-		currentHealth = maxHealth;
-	}
+	for (int i = 0; i < maxHealth; i++) //Heal the player to max health
+		guiObjects[i + 4].textureIndex = 1;
+	currentHealth = maxHealth;
 }
 
 void InGameGui::changeWeapon() 
