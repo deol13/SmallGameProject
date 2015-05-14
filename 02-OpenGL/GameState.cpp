@@ -49,6 +49,38 @@ void GameState::init(int w, int h)
 	onExitCleanUp = true;
 }
 
+void GameState::continueInit(int w, int h)
+{
+	realTemp = false;
+	state = 0;
+	waveNumber = 1;
+	//initialize the board the AI uses
+	for (int i = 0; i < 256; i++)
+	{
+		for (int j = 0; j < 256; j++)
+		{
+			arenaMap[i][j] = 0;
+		}
+	}
+
+	enemyWave = nullptr;
+	//Load Menu UI
+	menuUI = new GuiManager(w, h);
+	//Load GUI
+	gameUI = new InGameGui();
+	//Load Shop UI
+	shopUI = new ShopUI();
+	//Set player
+	spawnPlayer();
+	//Load arena
+	loadArena("temp");
+	//Spawn first enemy wave
+	spawnEnemies(waveNumber);
+	enemiesRemaining = waveSize;
+
+	onExitCleanUp = true;
+}
+
 void GameState::clean()
 {
 	if (onExitCleanUp)
@@ -564,6 +596,25 @@ void GameState::saveGame()
 	lua_pushnumber(L, 1);
 
 	error = lua_pcall(L, 2, 0, 0);
+	if (error)
+	{
+		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+		lua_pop(L, 1);
+	}
+	lua_pop(L, 1);
+}
+
+void GameState::saveGameOnDefeat()
+{
+	int error = 0;
+	lua_State* L = shopUI->getL();
+
+	lua_getglobal(L, "onDefeatSave");
+	lua_pushnumber(L, gold);
+	lua_pushnumber(L, 1);//Map
+	lua_pushnumber(L, 1);//Wave
+
+	error = lua_pcall(L, 3, 0, 0);
 	if (error)
 	{
 		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
