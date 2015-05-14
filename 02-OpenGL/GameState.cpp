@@ -2,8 +2,6 @@
 
 GameState::GameState( int w, int h)
 {
-	this->w = w;
-	this->h = h;
 	currentMap = new int(1);
 	gold = 250;
 	onExitCleanUp = false;
@@ -22,9 +20,6 @@ GameState::~GameState()
 
 void GameState::init(int w, int h) 
 {
-	this->w = w;
-	this->h = h;
-	realTemp = false;
 	state = 0;
 	waveNumber = 1;
 	//initialize the board the AI uses
@@ -56,9 +51,6 @@ void GameState::init(int w, int h)
 
 void GameState::continueInit(int w, int h)
 {
-	this->w = w;
-	this->h = h;
-	realTemp = false;
 	state = 0;
 	waveNumber = 1;
 	//initialize the board the AI uses
@@ -83,19 +75,19 @@ void GameState::continueInit(int w, int h)
 	loadSavedGame(); //
 
 	//Load arena
-	if (currentMap == (int*)1)
+	if (*currentMap == 1)
 	{
-		loadArena((int)currentMap);
+		loadArena(*currentMap);
 		waveNumber = 1;
 	}
-	else if (currentMap == (int*)2)
+	else if (*currentMap == 2)
 	{
-		loadArena((int)currentMap);
+		loadArena(*currentMap);
 		waveNumber = 7;
 	}
-	else if (currentMap == (int*)3)
+	else if (*currentMap == 3)
 	{
-		loadArena((int)currentMap);
+		loadArena(*currentMap);
 		waveNumber = 13;
 	}
 	//Spawn first enemy wave
@@ -138,22 +130,29 @@ void GameState::cleanedOnDefeat()
 	for (int i = 0; i < waveSize; i++)
 	{
 		delete enemyWave[i];
+		renderObjects.pop_back();
 	}
 	delete[] enemyWave;
 	enemyWave = nullptr;
-
-	for (int i = nrOfArenaObjects + 1; i < renderObjects.size(); i++)
-	{
-		renderObjects[i] = NULL;	
-	}
 }
 
-void GameState::startAfterDefeat()
+void GameState::freeLoad()
 {
-	menuUI = new GuiManager(w, h);
+	shopUI = new ShopUI();
 	gameUI = new InGameGui();
 
 	loadSavedGame();
+
+	spawnEnemies(waveNumber);
+	enemiesRemaining = waveSize;
+}
+
+void GameState::costLoad()
+{
+	shopUI = new ShopUI();
+	gameUI = new InGameGui();
+
+	loadDefeatSavedGame();
 
 	spawnEnemies(waveNumber);
 	enemiesRemaining = waveSize;
@@ -165,18 +164,14 @@ void GameState::update()
 	
 	if (menuUI->state != 3 && shopUI->getState() != 1)
 	{
-		if (player->getHealth() == 0)		//Are we dead?
+		if (player->getHealth() <= 0)		//Are we dead?
 		{
-			if (realTemp == false)
-			{
-				realTemp = true;
-				saveGameOnDefeat();
+ 				saveGameOnDefeat();
 				menuUI->defeat();
-			}
 		}
 		if (enemiesRemaining <= 0)
 		{
-			if (waveNumber == 18) //If we finished the game and / or map
+ 			if (waveNumber == 18) //If we finished the game and / or map
 			{
 				player->stop(true, true);
 				menuUI->won();
@@ -738,6 +733,31 @@ void GameState::loadSavedGame()
 	lua_pushlightuserdata(L, player);
 	lua_pushlightuserdata(L, currentMap);
 
+	error = lua_pcall(L, 4, 0, 0);
+	if (error)
+	{
+		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+		lua_pop(L, 1);
+	}
+	lua_pop(L, 1);
+
+	gold = player->getGold();
+}
+
+void GameState::loadDefeatSavedGame()
+{
+	int error = 0;
+	lua_State* L = shopUI->getL();
+
+	lua_pushcfunction(L, savedGameInfo);
+	lua_setglobal(L, "savedGameInfo");
+
+	lua_getglobal(L, "onDefeatLoad");
+	lua_pushlightuserdata(L, gameUI);
+	lua_pushlightuserdata(L, shopUI);
+	lua_pushlightuserdata(L, player);
+	lua_pushlightuserdata(L, currentMap);
+
 	error = lua_pcall(L, 3, 0, 0);
 	if (error)
 	{
@@ -771,7 +791,7 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 	lua_pop(L, 1);
 	tmpShopUI = static_cast<ShopUI*>(lua_touserdata(L, -1));
 	lua_pop(L, 1);
-
+	
 	tmpInt = static_cast<int*>(lua_touserdata(L, -1));
 	lua_pop(L, 1);
 
@@ -800,15 +820,21 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 
 	tmpInt = &whichMap;
 
-	tmpGUI->getFileLuaTable(L, nrOfHp);
+	tmpPlayer->setMaxHealth(3 + nrOfHp);
+	for (int i = 0; i < nrOfHp; i++)
+		tmpGUI->addHealth();
+	
+	//tmpGUI->getFileLuaTable(L, nrOfHp);
 
 	tmpPlayer->setGold(ggold);
-	tmpPlayer->setHealth(3 + nrOfHp);
+	tmpPlayer->setHealth(6 + nrOfHp*2);
 	tmpPlayer->setArmour(upgradeArmor);
 	tmpPlayer->setWeaponUpgrade(1, upgradeSword);
 	tmpPlayer->setWeaponUpgrade(2, upgradeSpear);
 
 	tmpShopUI->setSavedGameInfo(upgradeSword, upgradeSpear, upgradeHealth, upgradeArmor);
+
+	tmpShopUI->showGold(ggold);
 
 	tmpPlayer = nullptr;
 	tmpGUI = nullptr;

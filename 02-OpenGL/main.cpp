@@ -205,11 +205,13 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							}
 							else if (tmp == 5) //Cost restart
 							{
-
+								gameState->cleanedOnDefeat();
+								gameState->costLoad();
 							}
 							else if (tmp == 6) //Free restart
 							{
-
+								gameState->cleanedOnDefeat();
+								gameState->freeLoad();
 							}
 							break;
 						}

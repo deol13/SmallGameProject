@@ -214,6 +214,7 @@ function healthUpgrade( gold )
 	if upgradeCost[upgradeTo[3]] <= gold then --upgradeCost[upgradeTo[3]] == gold then
 		gold = gold - upgradeCost[upgradeTo[3]]
 		upgradeTo[3] = textures[upgradeTo[3] + 1]
+		currentHearts = currentHearts + 1
 		return textures[upgradeTo[3]], 3, gold
 	end
 	return -1, -1, gold
@@ -269,7 +270,7 @@ function onDefeatSave(gold, whichMap, whichWave)
 	io.close(file)
 end
 
-function onDefeatLoad(gameUI, shopUI, player)
+function onDefeatLoad(gameUI, shopUI, player, wave)
 	local counter = 0
 	local tmp = {};
 	local file = io.open("defeatSave.dat", "r")
@@ -302,7 +303,7 @@ end
 
 function loadGame(gameUI, shopUI, player, wave) --Add enemy to input and output
 	local counter = 0
-	local tmp = {};
+	local tmp = {}
 	local file = io.open("savedGame.dat", "r")
 	io.input(file)
 
@@ -320,15 +321,17 @@ function loadGame(gameUI, shopUI, player, wave) --Add enemy to input and output
 	
 	io.close(file)
 
-	if tonumber(tmp[1]) == 1 then
-		savedGameInfo(heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
-	elseif tonumber(tmp[1]) == 2 then
-		savedGameInfo(heartTwo, heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
-	elseif tonumber(tmp[1]) == 3 then
-		savedGameInfo(heartThree, heartTwo, heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], false, tmp[7], wave, shopUI, gameUI, player)
-	else
-		savedGameInfo(empty, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
-	end
+	savedGameInfo(tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
+
+	--if tonumber(tmp[1]) == 1 then
+	--	savedGameInfo(heartOne, 1, tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
+	--elseif tonumber(tmp[1]) == 2 then
+	--	savedGameInfo(heartTwo, heartOne, 2, tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
+	--elseif tonumber(tmp[1]) == 3 then
+	--	savedGameInfo(heartThree, heartTwo, heartOne, 3, tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false,  wave, shopUI, gameUI, player)
+	--else
+	--	savedGameInfo(empty, 0, tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
+	--end
 
 end
 ---------------------------------------------------------------------------Save/Load END

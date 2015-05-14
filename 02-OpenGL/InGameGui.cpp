@@ -90,7 +90,6 @@ void InGameGui::comboLost()
 	guiObjects[3].textureIndex = 8;
 }
 
-
 void InGameGui::addHealth() 
 {
 	lua_getglobal(L, "addHeart");

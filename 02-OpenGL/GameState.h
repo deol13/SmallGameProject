@@ -36,14 +36,9 @@ private:
 	bool playerCanMove( int x, int z );
 	void nextWave();
 
-	bool realTemp;	//Just for debugging purposes
-
 	int* currentMap;
 
 	static int savedGameInfo(lua_State *L);
-
-	int w;
-	int h;
 
 public:
 	GameState(int w, int h);
@@ -52,7 +47,13 @@ public:
 	void continueInit(int w, int h);
 	void clean();
 	void cleanedOnDefeat();
+<<<<<<< HEAD
+	void freeLoad();
+	void costLoad();
+=======
+	void arenaCleanUp();
 	void startAfterDefeat();
+>>>>>>> origin/master
 	void update();
 	void uiUpdate();
 	void keyDown(char c);
@@ -66,6 +67,7 @@ public:
 	void maxHeal();
 
 	void loadSavedGame();
+	void loadDefeatSavedGame();
 	void saveGame();
 	void saveGameOnDefeat();
 };

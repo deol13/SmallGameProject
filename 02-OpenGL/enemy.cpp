@@ -24,14 +24,14 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile, int 
 	{
 	case MELEE:
 		loadObj = new GObject(objectFile, GL_TRIANGLES, texture);
-		health = 20 + 2 * waveNr;
+		health = 20 + 1 * waveNr;
 		this->type = MELEE;
 		moveSpeed = 1.0f;
 		this->attackRange = MELEERANGE;
 		break;
 	case ANIMAL:
 		loadObj = new GObject(objectFile, GL_TRIANGLES, texture);
-		health = 30 + 3 * waveNr;
+		health = 30 + 2 * waveNr;
 		this->type = ANIMAL;
 		moveSpeed = 2.0f;
 		this->attackRange = ANIMALRANGE;
