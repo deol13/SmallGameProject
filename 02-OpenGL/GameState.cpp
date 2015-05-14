@@ -637,7 +637,7 @@ void GameState::saveGame()
 
 	lua_getglobal(L, "saveGame");
 	lua_pushnumber(L, gold);
-	lua_pushnumber(L, (int)currentMap); //Map
+	lua_pushnumber(L, *currentMap); //Map
 
 	error = lua_pcall(L, 2, 0, 0);
 	if (error)
@@ -655,7 +655,7 @@ void GameState::saveGameOnDefeat()
 
 	lua_getglobal(L, "onDefeatSave");
 	lua_pushnumber(L, gold);
-	lua_pushnumber(L, (int)currentMap); //Map
+	lua_pushnumber(L, *currentMap); //Map
 	lua_pushnumber(L, waveNumber); //Wave
 
 	error = lua_pcall(L, 3, 0, 0);
