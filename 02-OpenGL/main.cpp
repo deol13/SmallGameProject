@@ -66,6 +66,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 		State playState = MENUSTATE;
 		bool initState = false;
+		bool continueState = false;
 
 		GameState* gameState = new GameState(WINDOW_WIDTH, WINDOW_HEIGHT);
 		
@@ -100,7 +101,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 						float screenY = -(newMpos.y * 2.0f / WINDOW_HEIGHT) +1.0f;
 						int tmp = mGUI->mouseClick(screenX, screenY);
 
-						if (tmp == 1)
+						if (tmp == 1) //New game
 						{
 							playState = GAMESTATE;
 							initState = true;
@@ -112,9 +113,15 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							initState = false;
 							mGUI->state = 1;
 						}
-						else if (tmp == 3)
+						else if (tmp == 3) //Exit
 						{
 							isQuitting = true;
+						}
+						else if (tmp == 4) //Continue
+						{
+							playState = GAMESTATE;
+							continueState = true;
+							mGUI->state = 1;
 						}
 					}
 					TranslateMessage(&msg);
@@ -127,6 +134,11 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				{
 					gameState->init(WINDOW_WIDTH, WINDOW_HEIGHT);
 					initState = false;
+				}
+				else if (continueState)
+				{
+					gameState->continueInit(WINDOW_WIDTH, WINDOW_HEIGHT);
+					continueState = false;
 				}
 				if( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) 
 				{

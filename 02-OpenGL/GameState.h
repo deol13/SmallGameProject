@@ -30,13 +30,16 @@ private:
 
 	bool onExitCleanUp;
 
-	void loadArena(std::string fileName);
+	void loadArena(int fileName);
 	void spawnEnemies(int waveNumber);
 	void spawnPlayer();
 	bool playerCanMove( int x, int z );
 	void nextWave();
 
 	bool realTemp;	//Just for debugging purposes
+
+	int* currentMap;
+	bool cleanedOnDefeat;
 
 	static int savedGameInfo(lua_State *L);
 

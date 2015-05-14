@@ -1,0 +1,14 @@
+2
+plane.obj
+0.0
+128.0
+sandteture1.png
+-1
+-1
+ban2/bana2.obj
+128.0
+0.0
+128.0
+ban2/bleh.png
+10
+10

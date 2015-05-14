@@ -264,7 +264,38 @@ function onDefeatSave(gold, whichMap, whichWave)
 	io.close(file)
 end
 
-function loadGame(gameUI, shopUI, player) --Add enemy to input and output
+function onDefeatLoad(gameUI, shopUI, player)
+	local counter = 0
+	local tmp = {};
+	local file = io.open("defeatSave.dat", "r")
+	io.input(file)
+
+	while counter < 9
+	do
+		counter = counter + 1
+		tmp[counter] = io.read("*l")
+	end
+	counter = nil
+
+	upgradeTo[1] = tmp[2] + 1
+	upgradeTo[2] = tmp[3] + 5
+	upgradeTo[3] = tmp[4] + 9
+	upgradeTo[4] = tmp[5] + 13
+	
+	io.close(file)
+
+	if tonumber(tmp[1]) == 1 then
+		savedGameInfo(heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8], true, wave, shopUI, gameUI, player)
+	elseif tonumber(tmp[1]) == 2 then
+		savedGameInfo(heartTwo, heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8], true, wave, shopUI, gameUI, player)
+	elseif tonumber(tmp[1]) == 3 then
+		savedGameInfo(heartThree, heartTwo, heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], true, tmp[8], wave, shopUI, gameUI, player)
+	else
+		savedGameInfo(empty, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8], wave, true, shopUI, gameUI, player)
+	end
+end
+
+function loadGame(gameUI, shopUI, player, wave) --Add enemy to input and output
 	local counter = 0
 	local tmp = {};
 	local file = io.open("savedGame.dat", "r")
@@ -285,13 +316,13 @@ function loadGame(gameUI, shopUI, player) --Add enemy to input and output
 	io.close(file)
 
 	if tonumber(tmp[1]) == 1 then
-		savedGameInfo(heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], shopUI, gameUI, player)
+		savedGameInfo(heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
 	elseif tonumber(tmp[1]) == 2 then
-		savedGameInfo(heartTwo, heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], shopUI, gameUI, player)
+		savedGameInfo(heartTwo, heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
 	elseif tonumber(tmp[1]) == 3 then
-		savedGameInfo(heartThree, heartTwo, heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], shopUI, gameUI, player)
+		savedGameInfo(heartThree, heartTwo, heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], false, tmp[7], wave, shopUI, gameUI, player)
 	else
-		savedGameInfo(empty, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], shopUI, gameUI, player)
+		savedGameInfo(empty, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
 	end
 
 end

@@ -2,6 +2,7 @@
 
 GameState::GameState( int w, int h)
 {
+	currentMap = new int();
 	gold = 250;
 	onExitCleanUp = false;
 	//init(w, h);
@@ -41,12 +42,13 @@ void GameState::init(int w, int h)
 	//Set player
 	spawnPlayer();
 	//Load arena
-	loadArena("temp");
+	loadArena(1);
 	//Spawn first enemy wave
 	spawnEnemies(waveNumber);
 	enemiesRemaining = waveSize;
 
 	onExitCleanUp = true;
+	cleanedOnDefeat = false;
 }
 
 void GameState::continueInit(int w, int h)
@@ -72,13 +74,31 @@ void GameState::continueInit(int w, int h)
 	shopUI = new ShopUI();
 	//Set player
 	spawnPlayer();
+
+	loadSavedGame(); //
+
 	//Load arena
-	loadArena("temp");
+	if (currentMap == (int*)1)
+	{
+		loadArena((int)currentMap);
+		waveNumber = 1;
+	}
+	else if (currentMap == (int*)2)
+	{
+		loadArena((int)currentMap);
+		waveNumber = 7;
+	}
+	else if (currentMap == (int*)3)
+	{
+		loadArena((int)currentMap);
+		waveNumber = 13;
+	}
 	//Spawn first enemy wave
 	spawnEnemies(waveNumber);
 	enemiesRemaining = waveSize;
 
 	onExitCleanUp = true;
+	cleanedOnDefeat = false;
 }
 
 void GameState::clean()
@@ -100,6 +120,7 @@ void GameState::clean()
 		delete player;
 		renderObjects.clear();
 		onExitCleanUp = false;
+		delete currentMap;
 	}
 }
 
@@ -107,21 +128,28 @@ void GameState::update()
 {
  	player->update();
 	
-	if (menuUI->state != 3)
+	if (menuUI->state != 3 && shopUI->getState() != 1)
 	{
 		if (player->getHealth() <= 0)		//Are we dead?
 		{
 			if (realTemp == false)
 			{
 				realTemp = true;
+				saveGameOnDefeat();
 				menuUI->defeat();
 			}
 		}
 		if (enemiesRemaining <= 0)
 		{
-			if (waveNumber == 6) //If we finished the game and / or map
+			if (waveNumber == 18) //If we finished the game and / or map
 			{
 				menuUI->won();
+			}
+			else if (waveNumber == 6 || waveNumber == 12)
+			{
+				currentMap++;
+				loadArena((int)currentMap);
+				nextWave();
 			}
 			else				//Spawn next wave
 			{
@@ -343,7 +371,7 @@ int GameState::getState()const
 	return state;
 }
 
-void GameState::loadArena(std::string fileName)
+void GameState::loadArena(int fileName)
 {
 	//Grab from lua
 	int error = 0;
@@ -364,9 +392,10 @@ void GameState::loadArena(std::string fileName)
 		std::cerr << "Unable to run 1: " << lua_tostring(L, -1) << std::endl;
 		lua_pop(L, 1);
 	}
-	lua_pushinteger(L, waveNr);
-	lua_setglobal(L, "waveNr");
+	lua_pushinteger(L, fileName);
+	lua_setglobal(L, "fileName");
 	lua_getglobal(L, "readFile");
+	
 	error = lua_pcall(L, 0, 2, errhandler);
 
 	if(error)
@@ -569,7 +598,7 @@ void GameState::saveGame()
 
 	lua_getglobal(L, "saveGame");
 	lua_pushnumber(L, gold);
-	lua_pushnumber(L, 1);
+	lua_pushnumber(L, (int)currentMap); //Map
 
 	error = lua_pcall(L, 2, 0, 0);
 	if (error)
@@ -587,8 +616,8 @@ void GameState::saveGameOnDefeat()
 
 	lua_getglobal(L, "onDefeatSave");
 	lua_pushnumber(L, gold);
-	lua_pushnumber(L, 1);//Map
-	lua_pushnumber(L, 1);//Wave
+	lua_pushnumber(L, (int)currentMap); //Map
+	lua_pushnumber(L, waveNumber); //Wave
 
 	error = lua_pcall(L, 3, 0, 0);
 	if (error)
@@ -611,7 +640,7 @@ void GameState::loadSavedGame()
 	lua_pushlightuserdata(L, gameUI);
 	lua_pushlightuserdata(L, shopUI);
 	lua_pushlightuserdata(L, player);
-	//lua_pushlightuserdata(L, enemyWaveController);
+	lua_pushlightuserdata(L, currentMap);
 
 	error = lua_pcall(L, 3, 0, 0);
 	if (error)
@@ -629,10 +658,11 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 	Player* tmpPlayer;
 	InGameGui* tmpGUI;
 	ShopUI* tmpShopUI;
-	//EnemyWaveController*
+	int* tmpInt;
 
 	int ggold = -1;
 	int whichMap = -1;
+	int whichWave = -1;
 	int upgradeSword = -1;
 	int upgradeSpear = -1;
 	int upgradeHealth = -1;
@@ -646,11 +676,18 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 	tmpShopUI = static_cast<ShopUI*>(lua_touserdata(L, -1));
 	lua_pop(L, 1);
 
-	//EnemyWavecontroller = static_cast<EnemyWavecontroller*>(lua_touserdata(L, -1));
-	//lua_pop(L, 1);
+	tmpInt = static_cast<int*>(lua_touserdata(L, -1));
+	lua_pop(L, 1);
 
+	bool defeatn = lua_toboolean(L, -1);
+	lua_pop(L, 1);
 	ggold = lua_tointeger(L, -1);
 	lua_pop(L, 1);
+	if (defeatn)
+	{
+		whichWave = lua_tointeger(L, -1);
+		lua_pop(L, 1);
+	}
 	whichMap = lua_tointeger(L, -1);
 	lua_pop(L, 1);
 
@@ -665,6 +702,8 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 	nrOfHp = lua_tointeger(L, -1);
 	lua_pop(L, 1);
 
+	tmpInt = &whichMap;
+
 	tmpGUI->getFileLuaTable(L, nrOfHp);
 
 	tmpPlayer->setGold(ggold);
@@ -675,7 +714,10 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 
 	tmpShopUI->setSavedGameInfo(upgradeSword, upgradeSpear, upgradeHealth, upgradeArmor);
 
-	//EnemyWavecontroller->setMap(whichMap);
+	tmpPlayer = nullptr;
+	tmpGUI = nullptr;
+	tmpShopUI = nullptr;
+	tmpInt = nullptr;
 
 	return 0;
 }
