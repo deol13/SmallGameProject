@@ -36,7 +36,7 @@ public:
 	~Player();
 	void setMovement(int x, int y);
 	void stop(bool stopX, bool stopZ);
-	bool takeDamage(const int dmg);
+	int takeDamage(int dmg);
 	GObject** getGObjects() const;
 	void update();
 
@@ -53,6 +53,7 @@ public:
 	int getWeaponUpgrade(int weaponChosen);
 	int getMaxHealth();
 	int getHealth();
+	int getArmour();
 	int getInvulTimer();
 
 	float getX() const;

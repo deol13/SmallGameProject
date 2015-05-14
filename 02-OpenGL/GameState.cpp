@@ -5,7 +5,7 @@ GameState::GameState( int w, int h)
 	this->w = w;
 	this->h = h;
 	currentMap = new int(1);
-	gold = 250;
+	gold = 0;
 	onExitCleanUp = false;
 	//init(w, h);
 	//Set render
@@ -214,8 +214,7 @@ void GameState::update()
 				
 					if (player->getInvulTimer() == 0)
 					{
-						gameUI->dmgTaken(damage); //Deals instant damage to the player
-						player->takeDamage(damage);
+						gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
 					}
 				} 
 				else

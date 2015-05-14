@@ -32,8 +32,8 @@ Player::Player(GLuint texture, float x, float z, int health, int armour)
 	this->health = health;
 	this->armour = armour;
 	this->weapon = SWORD;
-	this->spearUpgrade = 1;
-	this->swordUpgrade = 1;
+	this->spearUpgrade = 0;
+	this->swordUpgrade = 0;
 	this->dirVec = glm::vec2(0.0, 1.0);
 	this->moveVec = glm::vec2(0.0, 0.0);
 
@@ -86,14 +86,21 @@ void Player::stop(bool stopX, bool stopZ)
 	}
 }
 
-bool Player::takeDamage(const int dmg)
+int Player::takeDamage(int dmg)
 {
 	if (invulTimer == 0)
 	{
 		invulTimer = 1;
+		
+		dmg -= armour;		//Take away damage equal to the armour
+		
+		if (dmg <= 0)		//Not negating all damage
+		{
+			dmg = 1;
+		}
 		health -= dmg;
 	}
-	return (health > 0);
+	return dmg;
 }
 
 GObject** Player::getGObjects() const
@@ -137,18 +144,22 @@ void Player::setMaxHealth(const int health)
 {
 	this->maxHealth = health;
 }
+
 void Player::setHealth(const int health)
 {
 	this->health = health;
 }
+
 void Player::setArmour(const int armour)
 {
 	this->armour = armour;
 }
+
 void Player::setWeapon(const int weapon)
 {
 	this->weapon = weapon;
 }
+
 void Player::setWeaponUpgrade(const int weapon, const int weaponLevel)
 {
 	if (weapon == SWORD)
@@ -173,12 +184,12 @@ int Player::getDamageDealt()
 
 	if (weapon == SWORD)
 	{
-		damage = 7 + (3 * swordUpgrade);
+		damage = 7 + (5 * swordUpgrade);
 	}
 
 	if (weapon == SPEAR)
 	{
-		damage = 5 + (2 * spearUpgrade);
+		damage = 5 + (4 * spearUpgrade);
 	}
 
 	return damage;
@@ -212,6 +223,11 @@ int Player::getMaxHealth()
 int Player::getHealth()
 {
 	return this->health;
+}
+
+int Player::getArmour()
+{
+	return armour;
 }
 
 int Player::getInvulTimer()
