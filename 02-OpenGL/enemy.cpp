@@ -109,26 +109,18 @@ bool Enemy::takeDamage(const int dmg)
 int Enemy::attack()
 {
 	int damage = 0;
-	if( attackTime == 0 ) {
-		if (type == MELEE)
-		{
-			damage = 1;
-		}
-		else if (type == RANGED)
-		{
-
-		}
-		else
-		{
-			damage = 2;		//Animal damage
-		}
-		attackTime = 30;
-	} else
+	if (type == MELEE)
 	{
-		damage = 0;
-		attackTime--;
+		damage = 1;
 	}
+	else if (type == RANGED)
+	{
 
+	}
+	else
+	{
+		damage = 2;		//Animal damage
+	}
 	return damage;
 }
 

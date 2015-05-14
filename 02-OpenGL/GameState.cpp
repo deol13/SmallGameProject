@@ -2,7 +2,7 @@
 
 GameState::GameState( int w, int h)
 {
-	currentMap = new int();
+	currentMap = new int(1);
 	gold = 250;
 	onExitCleanUp = false;
 	//init(w, h);
@@ -123,6 +123,26 @@ void GameState::clean()
 		delete currentMap;
 	}
 }
+
+//void GameState::cleanedOnDefeat()
+//{
+//	delete gameUI;
+//	gameUI = nullptr;
+//	delete shopUI;
+//	shopUI = nullptr;
+//	menuUI->state = 0;
+//	for (int i = 0; i < waveSize; i++)
+//	{
+//		delete enemyWave[i];
+//	}
+//	delete[] enemyWave;
+//	enemyWave = nullptr;
+//
+//	for (size_t i = 0; i < length; i++)
+//	{
+//
+//	}
+//}
 
 void GameState::update()
 {
