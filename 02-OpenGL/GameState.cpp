@@ -510,7 +510,14 @@ void GameState::loadArena(int fileName)
 			GObject* temp = new GObject(arenaArr[8 * i], GL_TRIANGLES, render->getTexture(texIndex));
 			temp->translate(atoi(arenaArr[8*i+1].c_str()), atoi(arenaArr[8*i+2].c_str()), atoi(arenaArr[8*i+3].c_str()));
 			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
-			//temp->scale(0.05f, 0.05f, 0.05f);
+			if (i > 2 && i < 5)
+			{
+				temp->scale(1.0f, 0.0f, 1.2f);
+			}
+			else if (i > 5)
+			{
+				temp->scale(2.0f, 0.0f, 2.0f);
+			}
 			renderObjects.push_back(temp);
 
 		}

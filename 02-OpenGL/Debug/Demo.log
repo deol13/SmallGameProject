@@ -1,4 +1,4 @@
-﻿Build started 5/15/2015 12:09:25 PM.
+﻿Build started 5/15/2015 1:35:52 PM.
      1>Project "C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameState.cpp
@@ -9,11 +9,11 @@
      1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(219): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
      1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(506): warning C4018: '>=' : signed/unsigned mismatch
      1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(511): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(574): warning C4018: '>=' : signed/unsigned mismatch
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(577): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(603): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(824): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(704): warning C4715: 'GameState::screenClickesOn' : not all control paths return a value
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(581): warning C4018: '>=' : signed/unsigned mismatch
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(584): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(610): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(831): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(711): warning C4715: 'GameState::screenClickesOn' : not all control paths return a value
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
          Debug\BlitQuad.obj
@@ -37,4 +37,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.14
+Time Elapsed 00:00:01.05
