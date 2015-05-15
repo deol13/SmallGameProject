@@ -305,7 +305,7 @@ void GameState::keyDown(char c)
 	case 'f': //Temporary
 	case 'F': //Temporary
 		skipSetDir = true; //Temporary
-		gameUI->heal(); //Temporary
+		maxHeal(); //Temporary
 		break; //Temporary
 	//case 'z': //Temporary
 	//case 'Z': //Temporary
@@ -663,6 +663,7 @@ void GameState::nextWave()
 
 	shopUI->setState();	//Show shop
 	shopUI->showGold(gold);
+	shopUI->setHealingInLua(player);
 
 	waveNumber++;		//Load in next wave
 	spawnEnemies(waveNumber);
@@ -718,7 +719,7 @@ int GameState::screenClickesOn(float mx, float my)
 
 void GameState::maxHeal()
 {
-	gameUI->heal();
+  	gameUI->heal(player);
 }
 
 void GameState::saveGame()

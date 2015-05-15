@@ -132,11 +132,12 @@ int InGameGui::dmgTaken(float dmg)
 	return 0;
 }
 
-void InGameGui::heal( )
+void InGameGui::heal(Player* player)
 {
 	for (int i = 0; i < maxHealth; i++) //Heal the player to max health
 		guiObjects[i + 3].textureIndex = 1;
 	currentHealth = maxHealth;
+	player->setHealth(player->getMaxHealth());
 }
 
 void InGameGui::changeWeapon() 
@@ -215,6 +216,11 @@ void InGameGui::getLuaTable()
 
 			lua_pop(L, 1);
 		}
+	}
+	else
+	{
+		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+		lua_pop(L, 1);
 	}
 
 	GLenum error1 = glGetError();

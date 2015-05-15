@@ -72,6 +72,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		
 		GuiManager* mGUI = new GuiManager(WINDOW_WIDTH, WINDOW_HEIGHT);
 		mGUI->startMenuR();
+		mGUI->checkContinueButton();
 
 		ShowWindow( wndHandle, nCmdShow );
 		//init music
@@ -202,6 +203,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							{
 								playState = MENUSTATE;
 								gameState->clean();
+								mGUI->checkContinueButton();
 							}
 							else if (tmp == 5) //Cost restart
 							{

@@ -10,7 +10,7 @@
 #include <vector>
 #include "MenuButton.h"
 #include "GuiShader.h"
-
+#include "Player.h"
 class InGameGui
 {
 	private:
@@ -41,7 +41,7 @@ class InGameGui
 		void comboLost();
 		void addHealth();
 		int dmgTaken(float dmg);
-		void heal();
+		void heal(Player* player);
 		void changeWeapon();
 
 		void getLuaTable();

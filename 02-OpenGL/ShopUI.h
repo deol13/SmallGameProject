@@ -47,6 +47,7 @@ class ShopUI
 		void createTexture(std::string fileName);
 		void loadTextures();
 
+		void setHealingInLua(Player* player);
 		void setState();
 		int getState();
 		lua_State* getL();

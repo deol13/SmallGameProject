@@ -34,8 +34,9 @@ stadardInGameGui = { -1.0, 1.0, 1.0, 0.848, 0, 0, 1, 1, 0,          --Background
 
 				     -0.950, 0.979, -0.8875, 0.869, 0, 0, 1, 1, 1, --Heart
 				     -0.8795, 0.979, -0.817, 0.869, 0, 0, 1, 1, 1, --Heart
-				     -0.809, 0.979, -0.7465, 0.869, 0, 0, 1, 1, 1 } --Heart 
-
+				     -0.809, 0.979, -0.7465, 0.869, 0, 0, 1, 1, 1 } --Heart
+					 
+noSavedGame = 0 
 
 function init() --[[ When the game starts, lua returns how the start menu should look like ]]
 	return startMenu, 1
@@ -45,7 +46,7 @@ function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a
 	if state == 1 then  --[[ Start menu ]]
 		if xPos < -0.61 and xPos > -0.95  and yPos < -0.497 and yPos > -0.924 then
 			stateChange(1) --[[ New game ]]
-		elseif xPos < -0.22 and xPos > -0.56  and yPos < -0.497 and yPos > -0.924 then
+		elseif xPos < -0.22 and xPos > -0.56  and yPos < -0.497 and yPos > -0.924 and noSavedGame == 1 then
 			stateChange(4) --[[ Continue game ]]
 		elseif xPos < 0.17 and xPos > -0.17 and yPos < -0.497 and yPos > -0.924 then
 			return howToPlayMenu, 2
@@ -148,6 +149,9 @@ shopMenu = { -1.0, 1.0, 1.0, -1.0, 0, 0, 1, 1, 0, --Background
 
 			 -0.200, 1.0, 0.424, 0.750, 0, 0, 1, 1, 26 } --Resume
 
+healingUsedTexture = 28
+healingUsed = false
+
 			 --sw1 sw2 sw3  end   sp1 sp2 sp3  end  h1  h2  h3  end   a1  a2  end
 upgradeCost = { 15, 25, 35, 9999, 15, 25, 35, 9999, 20, 30, 40, 9999, 30, 40, 9999}
 
@@ -171,6 +175,7 @@ function shopClickCheck( xPos, yPos, gold ) --[[Checks if the player clicked on 
 	elseif xPos < -0.483 and xPos > -0.885  and yPos < -0.588 and yPos > -0.93 then --[[Heal]]
 		return healCheck(gold)
 	elseif xPos < 0.424 and xPos > -0.200  and yPos < 1.0 and yPos > 0.750 then     --[[Continue]]
+		healingUsed = false
 		stateChange(2)	
 	end
 	return -1, -1, gold
@@ -178,7 +183,7 @@ end
 
 
 function swordUpgrade( gold )
-	if upgradeCost[upgradeTo[1]] <= gold then --upgradeCost[upgradeTo[1]] == gold then
+	if upgradeCost[upgradeTo[1]] <= gold then
 		gold = gold - upgradeCost[upgradeTo[1]]
 		upgradeTo[1] = textures[upgradeTo[1] + 1]
 		return textures[upgradeTo[1]], 1, gold
@@ -187,7 +192,7 @@ function swordUpgrade( gold )
 end
 
 function spearUpgrade( gold )
-	if upgradeCost[upgradeTo[2]] <= gold then --upgradeCost[upgradeTo[2]] == gold then
+	if upgradeCost[upgradeTo[2]] <= gold then
 		gold = gold - upgradeCost[upgradeTo[2]]
 		upgradeTo[2] = textures[upgradeTo[2] + 1]
 		return textures[upgradeTo[2]], 2, gold
@@ -196,7 +201,7 @@ function spearUpgrade( gold )
 end
 
 function healthUpgrade( gold )
-	if upgradeCost[upgradeTo[3]] <= gold then --upgradeCost[upgradeTo[3]] == gold then
+	if upgradeCost[upgradeTo[3]] <= gold then
 		gold = gold - upgradeCost[upgradeTo[3]]
 		upgradeTo[3] = textures[upgradeTo[3] + 1]
 		currentHearts = currentHearts + 1
@@ -206,7 +211,7 @@ function healthUpgrade( gold )
 end
 
 function armorUpgrade( gold )
-	if upgradeCost[upgradeTo[4]] <= gold then --upgradeCost[upgradeTo[4]] == gold then
+	if upgradeCost[upgradeTo[4]] <= gold then
 		gold = gold - upgradeCost[upgradeTo[4]]
 		upgradeTo[4] = textures[upgradeTo[4] + 1]
 		return textures[upgradeTo[4]], 4, gold
@@ -215,14 +220,20 @@ function armorUpgrade( gold )
 end
 
 function healCheck(gold)
-	if gold >= 5 then
+	if gold >= 5 and healingUsed ~= true then
 		gold = gold - 5
+		healingUsed = true
 	end
-	return -1, 5, gold;
+	return healingUsedTexture, 5, gold;
+end
+
+function setHealingUsed()
+	healingUsed = true
 end
 ---------------------------------------------------------------------------SHOP END
 
 ---------------------------------------------------------------------------Save/Load
+
 function saveGame(gold, whichMap) --[[Saves the game on each new map, doesn't save which wave the player was on]]
 	local file = io.open("savedGame.dat", "w+")	-- Opens a file in read
 	io.output(file)							-- sets the default input file as test.lua
@@ -256,7 +267,7 @@ end
 
 function onDefeatLoad(gameUI, shopUI, player, map, wave) --[[Loads the save that was created upon death]]
 	local counter = 0
-	local tmp = {};
+	local tmp = {}
 	local file = io.open("defeatSave.dat", "r")
 	io.input(file)
 
@@ -300,5 +311,22 @@ function loadGame(gameUI, shopUI, player, map, wave) --[[Loads the save that was
 
 	savedGameInfo(tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, map, shopUI, gameUI, player)
 
+end
+
+function checkSavedGameFile()
+	local file = io.open("savedGameExist.dat", "r")
+	io.input(file)
+
+	noSavedGame = io.read("*l")
+
+	if noSavedGame == "1" then
+		shopMenu[27] = 2
+	elseif noSavedGame == "0" then 
+		shopMenu[27] = 15
+	end
+
+	io.close(file)
+
+	return noSavedGame
 end
 ---------------------------------------------------------------------------Save/Load END
