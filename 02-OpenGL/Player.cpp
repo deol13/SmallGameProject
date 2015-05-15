@@ -11,6 +11,7 @@ Player::Player()
 	BoundingPolygon collisionRect = BoundingPolygon(colPoints, 4);
 	moveSpeed = 1;
 	health = 6;
+	maxHealth = health;
 	armour = 0;
 	this->weapon = SWORD;
 	this->spearUpgrade = 1;
@@ -30,6 +31,7 @@ Player::Player(GLuint texture, float x, float z, int health, int armour)
 	collisionRect = BoundingPolygon(colPoints, 4);
 	moveSpeed = 0.9;
 	this->health = health;
+	maxHealth = health;
 	this->armour = armour;
 	this->weapon = SWORD;
 	this->spearUpgrade = 0;
@@ -88,7 +90,7 @@ void Player::stop(bool stopX, bool stopZ)
 
 int Player::takeDamage(int dmg)
 {
-	if (invulTimer == 0)
+ 	if (invulTimer == 0) 
 	{
 		invulTimer = 1;
 		

@@ -231,10 +231,9 @@ end
 
 function healCheck(gold)
 	if gold >= 10 then
-		stateChange(1)
 		gold = gold - 10
 	end
-	return -1, -1, gold;
+	return -1, 5, gold;
 end
 ---------------------------------------------------------------------------SHOP END
 

@@ -3,12 +3,13 @@
 GameState::GameState( int w, int h)
 {
 	currentMap = new int(1);
-	gold = 0;
+	gold = 250;
 	onExitCleanUp = false;
 	//init(w, h);
 	//Set render
 	render = new Render(GASIZE, w / h);
 	render->init(GASIZE, w, h);
+	dead = false;
 }
 
 GameState::~GameState()
@@ -147,7 +148,6 @@ void GameState::freeLoad()
 	enemiesRemaining = waveSize;
 }
 
-<<<<<<< HEAD
 void GameState::costLoad()
 {
 	shopUI = new ShopUI();
@@ -157,7 +157,7 @@ void GameState::costLoad()
 
 	spawnEnemies(waveNumber);
 	enemiesRemaining = waveSize;
-=======
+}
 void GameState::arenaCleanUp()
 {
 
@@ -168,41 +168,41 @@ void GameState::arenaCleanUp()
 	{
 		renderObjects.pop_back();
 	}
->>>>>>> origin/master
 }
 
 void GameState::update()
 {
  	player->update();
 	
-	if (menuUI->state != 3 && shopUI->getState() != 1)
+	if (player->getHealth() <= 0 && !dead )		//Are we dead?
 	{
-		if (player->getHealth() <= 0)		//Are we dead?
+   		dead = true;
+ 		saveGameOnDefeat();
+		menuUI->defeat();
+	}
+	if (enemiesRemaining <= 0)
+	{
+ 		if (waveNumber == 18) //If we finished the game and / or map
 		{
- 				saveGameOnDefeat();
-				menuUI->defeat();
+			player->stop(true, true);
+			menuUI->won();
 		}
-		if (enemiesRemaining <= 0)
+		else				//Spawn next wave
 		{
- 			if (waveNumber == 18) //If we finished the game and / or map
-			{
-				player->stop(true, true);
-				menuUI->won();
-			}
-			else				//Spawn next wave
-			{
-				nextWave();
-			}
+			nextWave();
 		}
+	}
+	if (menuUI->state != 3 || menuUI->state != 4 || menuUI->state != 5)
+	{
 		for (int i = 0; i < waveSize; i++)
 		{
 			if (enemyWave[i]->getHealth() >= 0)
 			{
 				enemyWave[i]->clearPotential(arenaMap);
 				enemyWave[i]->setPotential(player->getX(), player->getZ(), 50);
-				for(int j = 0; j < waveSize; j++)
+				for (int j = 0; j < waveSize; j++)
 				{
-					if(i != j)
+					if (i != j)
 					{
 						enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -5);
 					}
@@ -210,15 +210,15 @@ void GameState::update()
 
 				float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) + pow((enemyWave[i]->getZ() - player->getZ()), 2));
 
-				if(enemyWave[i]->getRange() > playerDist)
+				if (enemyWave[i]->getRange() > playerDist)
 				{
 					int damage = enemyWave[i]->attack();
-				
+
 					if (player->getInvulTimer() == 0)
 					{
 						gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
 					}
-				} 
+				}
 				else
 				{
 					enemyWave[i]->move();
@@ -650,7 +650,6 @@ void GameState::nextWave()
 	}
 	player->stop(true, true);
 
-	player->stop(true, true);
 	shopUI->setState();	//Show shop
 	shopUI->showGold(gold);
 
@@ -676,6 +675,10 @@ int GameState::screenClickesOn(float mx, float my)
 		int tmp = menuUI->mouseClick(mx, my);
 		if (tmp == 0)
 			maxHeal();
+
+		if (tmp == 5 || tmp == 6)
+			dead = false;
+
 		return tmp;
 	}
 	else if (shopUI->getState() == 1)
@@ -833,8 +836,6 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 	tmpPlayer->setMaxHealth(3 + nrOfHp);
 	for (int i = 0; i < nrOfHp; i++)
 		tmpGUI->addHealth();
-	
-	//tmpGUI->getFileLuaTable(L, nrOfHp);
 
 	tmpPlayer->setGold(ggold);
 	tmpPlayer->setHealth(6 + nrOfHp*2);

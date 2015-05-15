@@ -111,7 +111,7 @@ int ShopUI::mouseClick(float mx, float my, int &gold, Player* player)
 	}
 	else if (whichObject == 3)	//Wants to upgrade health
 	{
-		player->setMaxHealth(player->getMaxHealth() + 1);
+		player->setMaxHealth(player->getMaxHealth() + 2);
 		player->setHealth(player->getMaxHealth());
 	}
 	else if (whichObject == 4)
@@ -129,9 +129,11 @@ int ShopUI::mouseClick(float mx, float my, int &gold, Player* player)
 		if (whichObject == 3)
 			return 3;
 	}
+	else if (whichObject == 5)
+		return 3;
 	else if (continueOn == 2)
 		state = 0;
-	else if (continueOn == 1) //heal
+	else if (continueOn == 1)
 		return 1;
 	return 0;
 }
