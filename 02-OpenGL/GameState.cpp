@@ -158,9 +158,12 @@ void GameState::costLoad()
 	spawnEnemies(waveNumber);
 	enemiesRemaining = waveSize;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 void GameState::arenaCleanUp()
 {
-
 	delete enemyWave;
 	enemyWave = nullptr;
 
@@ -655,6 +658,10 @@ void GameState::nextWave()
 
 	waveNumber++;		//Load in next wave
 	spawnEnemies(waveNumber);
+	if (waveNumber == 6)	//change the boss stats.
+	{
+
+	}
 
 }
 

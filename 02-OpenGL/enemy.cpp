@@ -63,10 +63,22 @@ void Enemy::setEnemy(int type)
 		health = 10;
 		this->type = RANGED;
 	}
-	else
+	else if (type == ANIMAL)
 	{
 		health = 40;
 		this->type = ANIMAL;
+	}
+	else if (type == FIRSTBOSS)
+	{
+		health = 60;
+	}
+	else if (type == SECONDBOSS)
+	{
+		health = 80;
+	}
+	else		//final boss
+	{
+		health = 120;
 	}
 
 }
