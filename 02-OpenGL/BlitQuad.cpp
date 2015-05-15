@@ -5,12 +5,7 @@ BlitQuad::BlitQuad()
 
 }
 
-BlitQuad::~BlitQuad()
-{
-
-}
-
-void BlitQuad::Init(GLuint* shaderProgram, vec2 bl, vec2 tr)
+BlitQuad::BlitQuad(GLuint* shaderProgram, vec2 bl, vec2 tr)
 {
 	TriangleVertex* vex = new TriangleVertex[6];
 	vex[0] = { vec3(bl.x, tr.y, 0), vec2(0, 1) };
@@ -36,6 +31,11 @@ void BlitQuad::Init(GLuint* shaderProgram, vec2 bl, vec2 tr)
 	{GLenum err = glGetError(); if (err)
 		int x = 0; }
 #endif
+}
+
+BlitQuad::~BlitQuad()
+{
+
 }
 
 void BlitQuad::BindVertData()

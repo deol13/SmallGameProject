@@ -11,7 +11,6 @@ GAShader::GAShader(GLuint* gShaderP)
 	ProjectionMatrix = glGetUniformLocation(*gShaderProgram, "ProjectionMatrix");
 	worldMatrix = glGetUniformLocation(*gShaderProgram, "WorldMatrix");
 	attackColor = glGetUniformLocation(*gShaderProgram, "attackColor");
-	//mapSampler = glGetUniformLocation(*gShaderProgram, "heightMapSampler");
 }
 GAShader::~GAShader()
 {
@@ -81,14 +80,12 @@ bool GAShader::compile()
 		layout (location = 0) out vec3 WorldPosOut;   
 		layout (location = 1) out vec3 DiffuseOut;     
 		layout (location = 2) out vec3 NormalOut;     
-		layout (location = 3) out vec3 TexCoordOut;
 
 		void main () 
 		{
 			WorldPosOut = modelViewPos;
 			DiffuseOut = texture(heightMapSampler, texCoordsGeo).xyz;
 			NormalOut = normalWorld;
-			TexCoordOut = vec3(mod(texCoordsGeo.x, 1.0f), mod(texCoordsGeo.y, 1.0f), 0.0f);	
 		}
 	)";
 

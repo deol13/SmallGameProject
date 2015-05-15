@@ -10,7 +10,7 @@ howToPlayMenu = { -1.0, 1.0, 1.0, -1.0, 0, 0, 1, 1, 6,      --How to play text
 				  -0.841, -0.475, -0.441, -0.875, 0, 0, 1, 1, 7 } --Back
 
 				  
-pauseMenu =		{ -0.312, 0.50, 0.312,  0.25 , 0, 0, 1, 1, 14,
+pauseMenu =		{ -0.312, 0.50, 0.312,  0.25 , 0, 0, 1, 1, 14, --Pause
 				  -0.312, 0.25, 0.312,  0.0 , 0, 0, 1, 1, 8,  --Resume
 				  -0.312, 0.0 , 0.312, -0.25, 0, 0, 1, 1, 9 } --Quit
 
@@ -27,24 +27,14 @@ defeat = { -0.312, 0.675, 0.312, 0.425, 0, 0, 1, 1, 11,  -- Defeat
 
 stadardInGameGui = { -1.0, 1.0, 1.0, 0.848, 0, 0, 1, 1, 0,          --Background
 
-					 -0.313, 0.987, 0.0  , 0.861, 0, 0, 1, 1, 5,
-					 -0.0  , 0.987, 0.313, 0.861, 0, 0, 1, 1, 6, --Sword and spear 
+					 -0.313, 0.987, 0.0  , 0.861, 0, 0, 1, 1, 5, --Sword
+					 -0.0  , 0.987, 0.313, 0.861, 0, 0, 1, 1, 6, --Spear 
 
-					 0.825, 0.973, 0.950, 0.751,   0, 0, 1, 1, 8, --Combo
+					-- 0.825, 0.973, 0.950, 0.751,   0, 0, 1, 1, 8, --Combo
 
 				     -0.950, 0.979, -0.8875, 0.869, 0, 0, 1, 1, 1, --Heart
 				     -0.8795, 0.979, -0.817, 0.869, 0, 0, 1, 1, 1, --Heart
 				     -0.809, 0.979, -0.7465, 0.869, 0, 0, 1, 1, 1 } --Heart 
-					 
-					 -- -0.7382, 0.979, -0.6757, 0.869, 0, 0, 1, 1, 1,
-					 -- -0.6674, 0.979, -0.6049, 0.869, 0, 0, 1, 1, 1,
-					 -- -0.5966, 0.979, -0.5341, 0.869, 0, 0, 1, 1, 1 }
-
-					 -- 0.021= 15p  0.014 = 10p   0.11 = 80p  0.0625   0.008
-					 -- 0.027 = 20p  0.222 = 160p    0.125 = 160p
-
-					 -- -0.5258, 0.972, -0.2128 , 0.750, 0, 0, 1, 1, 4,
-					 -- -0.2045, 0.972, 0.1085 , 0.750, 0, 0, 1, 1, 5 } --Sword and spear
 
 
 function init() --[[ When the game starts, lua returns how the start menu should look like ]]
@@ -67,22 +57,22 @@ function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a
 			return -1 --[[ Empty space clicked on ]]
 		end
 	elseif state == 2 then --[[ Getting back to the startMenu from "howToPlayMenu" ]]
-		if xPos < -0.441 and xPos > -0.841 and yPos < -0.475 and yPos > -0.875 then
+		if xPos < -0.441 and xPos > -0.841 and yPos < -0.475 and yPos > -0.875 then --[[Back]]
 			return startMenu, 1
 		end
-	elseif state == 3 then --pause
+	elseif state == 3 then --[[Pause state]]
 		if xPos < 0.312 and xPos > -0.312  and yPos < 0.25 and yPos > 0.0 then          --[[Resume]]
 			stateChange(0)
 		elseif xPos < 0.312 and xPos > -0.312  and yPos < 0.0 and yPos > -0.25 then     --[[Exit to start menu]]
 			stateChange(2)
 		end
-	elseif state == 4 then  --Win
+	elseif state == 4 then  --[[Win state]]
 		if xPos < 0.312 and xPos > -0.312  and yPos < 0.125 and yPos > -0.125 then --[[Exit to start menu]]
 			stateChange(2)
 		elseif xPos < 0.312 and xPos > -0.312  and yPos < 0.450 and yPos > 0.150 then --[[Resume / Hidden Button]]
 			stateChange(0)
 		end
-	elseif state == 5 then  --Defeat
+	elseif state == 5 then  --[[Defeat state]]
 		if xPos < 0.312 and xPos > -0.312  and yPos < 0.400 and yPos > 0.150 then -- Restart 5G
 			stateChange(5)
 		elseif xPos < 0.312 and xPos > -0.312  and yPos < 0.125 and yPos > -0.125 then -- Free Restart
@@ -127,7 +117,7 @@ empty = {}
 maxHearts = 6
 currentHearts = 3
 
-function addHeart()
+function addHeart() --Return one of the extra hearts you can obtain. Up too 3 extra hearts
 	if currentHearts == 3 then
 		currentHearts = currentHearts + 1
 		return heartOne
@@ -150,42 +140,37 @@ shopMenu = { -1.0, 1.0, 1.0, -1.0, 0, 0, 1, 1, 0, --Background
 			 -0.885, 0.533, -0.483, 0.191, 0, 0, 1, 1, 5,   --Spear
 			 -0.885, 0.171, -0.483, -0.171, 0, 0, 1, 1, 9,  --Health
 			 -0.885, -0.191, -0.483, -0.533, 0, 0, 1, 1, 13, --Armor 
-			 -0.885, -0.553, -0.483, -0.895, 0, 0, 1, 1, 27,
+			 -0.885, -0.553, -0.483, -0.895, 0, 0, 1, 1, 27, --Heal
 
-			 0.721, 0.760, 0.745, 0.700, 0, 0, 1, 1, 16, --100
-			 0.752, 0.760, 0.776, 0.700, 0, 0, 1, 1, 16, --10
-			 0.781, 0.760, 0.808, 0.700, 0, 0, 1, 1, 16, --1
+			 0.721, 0.760, 0.745, 0.700, 0, 0, 1, 1, 16, --100 gold
+			 0.752, 0.760, 0.776, 0.700, 0, 0, 1, 1, 16, --10 gold
+			 0.781, 0.760, 0.808, 0.700, 0, 0, 1, 1, 16, --1 gold
 
 			 -0.200, 1.0, 0.424, 0.750, 0, 0, 1, 1, 26 } --Resume
 
-			 
+			 --sw1 sw2 sw3  end   sp1 sp2 sp3  end  h1  h2  h3  end   a1  a2  end
 upgradeCost = { 15, 25, 35, 9999, 15, 25, 35, 9999, 20, 30, 40, 9999, 30, 40, 9999}
 
 textures = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
 
-upgradeTo = {1, 5, 9, 13}
+upgradeTo = {1, 5, 9, 13} --These numbers are the texture index for each upgrades texture
 
-upgrades = {"sword1", "sword2", "sword3", "swordMax",
-			"spear1", "spear2", "spear3", "spearMax",
-			"health1", "health2", "health3", "healthMax",
-			"armor1", "armor2", "armorMax" } 
-
-function shopInit()
+function shopInit() --Launch the shop
 	return shopMenu
 end
 
-function shopClickCheck( xPos, yPos, gold )
-	if xPos < -0.483 and xPos > -0.885  and yPos < 0.853 and yPos > 0.511 then
+function shopClickCheck( xPos, yPos, gold ) --[[Checks if the player clicked on any of the clickable things]]
+	if xPos < -0.483 and xPos > -0.885  and yPos < 0.853 and yPos > 0.511 then  --[[Sword Upgrade]]
 		return swordUpgrade(gold)
-	elseif xPos < -0.483 and xPos > -0.885  and yPos < 0.494 and yPos > 0.153 then
+	elseif xPos < -0.483 and xPos > -0.885  and yPos < 0.494 and yPos > 0.153 then --[[Spear Upgrade]]
 		return spearUpgrade(gold)
-	elseif xPos < -0.483 and xPos > -0.885  and yPos < 0.133 and yPos > -0.211 then
+	elseif xPos < -0.483 and xPos > -0.885  and yPos < 0.133 and yPos > -0.211 then --[[Health Upgrade]]
 		return healthUpgrade(gold)
-	elseif xPos < -0.483 and xPos > -0.885  and yPos < -0.23 and yPos > -0.569 then
+	elseif xPos < -0.483 and xPos > -0.885  and yPos < -0.23 and yPos > -0.569 then --[[Armor Upgrade]]
 		return armorUpgrade(gold)
-	elseif xPos < -0.483 and xPos > -0.885  and yPos < -0.588 and yPos > -0.93 then
+	elseif xPos < -0.483 and xPos > -0.885  and yPos < -0.588 and yPos > -0.93 then --[[Heal]]
 		return healCheck(gold)
-	elseif xPos < 0.424 and xPos > -0.200  and yPos < 1.0 and yPos > 0.750 then     --Continue
+	elseif xPos < 0.424 and xPos > -0.200  and yPos < 1.0 and yPos > 0.750 then     --[[Continue]]
 		stateChange(2)	
 	end
 	return -1, -1, gold
@@ -230,15 +215,15 @@ function armorUpgrade( gold )
 end
 
 function healCheck(gold)
-	if gold >= 10 then
-		gold = gold - 10
+	if gold >= 5 then
+		gold = gold - 5
 	end
 	return -1, 5, gold;
 end
 ---------------------------------------------------------------------------SHOP END
 
 ---------------------------------------------------------------------------Save/Load
-function saveGame(gold, whichMap)
+function saveGame(gold, whichMap) --[[Saves the game on each new map, doesn't save which wave the player was on]]
 	local file = io.open("savedGame.dat", "w+")	-- Opens a file in read
 	io.output(file)							-- sets the default input file as test.lua
 
@@ -253,7 +238,7 @@ function saveGame(gold, whichMap)
 	io.close(file)
 end
 
-function onDefeatSave(gold, whichMap, whichWave)
+function onDefeatSave(gold, whichMap, whichWave) --[[Saves the game when the player dies, saves the which wave the player was on too]]
 	local file = io.open("defeatSave.dat", "w+")	-- Opens a file in read
 	io.output(file)							-- sets the default input file as test.lua
 
@@ -269,7 +254,7 @@ function onDefeatSave(gold, whichMap, whichWave)
 	io.close(file)
 end
 
-function onDefeatLoad(gameUI, shopUI, player, wave)
+function onDefeatLoad(gameUI, shopUI, player, map, wave) --[[Loads the save that was created upon death]]
 	local counter = 0
 	local tmp = {};
 	local file = io.open("defeatSave.dat", "r")
@@ -289,18 +274,11 @@ function onDefeatLoad(gameUI, shopUI, player, wave)
 	
 	io.close(file)
 
-	if tonumber(tmp[1]) == 1 then
-		savedGameInfo(heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8], true, wave, shopUI, gameUI, player)
-	elseif tonumber(tmp[1]) == 2 then
-		savedGameInfo(heartTwo, heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8], true, wave, shopUI, gameUI, player)
-	elseif tonumber(tmp[1]) == 3 then
-		savedGameInfo(heartThree, heartTwo, heartOne, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], true, tmp[8], wave, shopUI, gameUI, player)
-	else
-		savedGameInfo(empty, tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8], wave, true, shopUI, gameUI, player)
-	end
+	savedGameInfo(tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], tmp[8], true, wave, map, shopUI, gameUI, player)
+
 end
 
-function loadGame(gameUI, shopUI, player, wave) --Add enemy to input and output
+function loadGame(gameUI, shopUI, player, map, wave) --[[Loads the save that was created on the last map which]]
 	local counter = 0
 	local tmp = {}
 	local file = io.open("savedGame.dat", "r")
@@ -320,17 +298,7 @@ function loadGame(gameUI, shopUI, player, wave) --Add enemy to input and output
 	
 	io.close(file)
 
-	savedGameInfo(tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
-
-	--if tonumber(tmp[1]) == 1 then
-	--	savedGameInfo(heartOne, 1, tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
-	--elseif tonumber(tmp[1]) == 2 then
-	--	savedGameInfo(heartTwo, heartOne, 2, tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
-	--elseif tonumber(tmp[1]) == 3 then
-	--	savedGameInfo(heartThree, heartTwo, heartOne, 3, tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false,  wave, shopUI, gameUI, player)
-	--else
-	--	savedGameInfo(empty, 0, tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, shopUI, gameUI, player)
-	--end
+	savedGameInfo(tmp[1], tmp[2], tmp[3], tmp[4], tmp[5], tmp[6], tmp[7], false, wave, map, shopUI, gameUI, player)
 
 end
 ---------------------------------------------------------------------------Save/Load END

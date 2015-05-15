@@ -134,7 +134,7 @@ int ShopUI::mouseClick(float mx, float my, int &gold, Player* player)
 			return 3;
 	}
 	else if (whichObject == 5)
-		return 3;
+		return 4;
 	else if (continueOn == 2)
 		state = 0;
 	else if (continueOn == 1)

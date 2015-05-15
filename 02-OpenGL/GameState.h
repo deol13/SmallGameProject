@@ -37,6 +37,7 @@ private:
 	void nextWave();
 
 	int* currentMap;
+	int* whichSavedWave;
 	bool dead;
 
 	static int savedGameInfo(lua_State *L);

@@ -28,7 +28,7 @@ Render::~Render()
 {
 	if (onExitCleanUp)
 	{
-		delete[] blitQuads;
+		delete blitQuads;
 
 		delete[] spotLights;
 		delete gBuffer;
@@ -57,14 +57,8 @@ void Render::init(int GASIZE, unsigned int width, unsigned int height)
 	gBuffer->Init(width, height);
 
 	//Screen Quads
-	blitQuads = new BlitQuad[6];
-	blitQuads[0].Init(&lShader, vec2(-1, -1), vec2(-0.6, -0.6));
-	blitQuads[1].Init(&lShader, vec2(-0.6, -1), vec2(-0.2, -0.6));
-	blitQuads[2].Init(&lShader, vec2(-0.2, -1), vec2(0.2, -0.6));
-	blitQuads[3].Init(&lShader, vec2(0.2, -1), vec2(0.6, -0.6));
-	blitQuads[4].Init(&lShader, vec2(0.6, -1), vec2(1, -0.6));
-	blitQuads[5].Init(&lShader, vec2(-1, -1), vec2(1, 1));
-
+	blitQuads = new BlitQuad(&lShader, vec2(-1, -1), vec2(1, 1));
+	
 	//Light
 	spotLights[0].Color = vec3(1.0f, 1.0f, 1.0f);
 	spotLights[0].Position = vec3(-50, 300.0f, -50);
@@ -164,7 +158,6 @@ void Render::lightPass()
 	glProgramUniform1i(lShader, lShaderObj->Position, 0);
 	glProgramUniform1i(lShader, lShaderObj->Diffuse, 1);
 	glProgramUniform1i(lShader, lShaderObj->Normal, 2);
-	glProgramUniform1i(lShader, lShaderObj->UVcord, 3);
 	glProgramUniform1i(lShader, lShaderObj->Depth, 4);
 
 	//Camera position.
@@ -182,16 +175,8 @@ void Render::lightPass()
 	glBindBufferBase(GL_UNIFORM_BUFFER, lShaderObj->bindingPoint, lShaderObj->lightBuffer);
 	//------
 
-	blitQuads[5].BindVertData();
-	glProgramUniform1i(lShader, lShaderObj->Use, 5);
+	blitQuads->BindVertData();
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-	for(int n = 0; n < 5; n++)
-	{
-		blitQuads[n].BindVertData();
-		glProgramUniform1i(lShader, lShaderObj->Use, n);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	}
 
 	GLenum error = glGetError();
 	if(error != GL_NO_ERROR)

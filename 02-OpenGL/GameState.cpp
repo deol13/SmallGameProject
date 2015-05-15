@@ -3,6 +3,7 @@
 GameState::GameState( int w, int h)
 {
 	currentMap = new int(1);
+	whichSavedWave = new int(1);
 	gold = 250;
 	onExitCleanUp = false;
 	//init(w, h);
@@ -118,6 +119,7 @@ void GameState::clean()
 		renderObjects.clear();
 		onExitCleanUp = false;
 		delete currentMap;
+		delete whichSavedWave;
 	}
 }
 
@@ -135,6 +137,7 @@ void GameState::cleanedOnDefeat()
 	}
 	delete[] enemyWave;
 	enemyWave = nullptr;
+	waveNumber = 1;
 }
 
 void GameState::freeLoad()
@@ -152,10 +155,11 @@ void GameState::costLoad()
 {
 	shopUI = new ShopUI();
 	gameUI = new InGameGui();
+	gold = -5;
 
 	loadDefeatSavedGame();
 
-	spawnEnemies(waveNumber);
+	spawnEnemies(*whichSavedWave);
 	enemiesRemaining = waveSize;
 }
 
@@ -293,21 +297,21 @@ void GameState::keyDown(char c)
 			player->setWeapon(SWORD);
 		}
 		break;
-	//case 'e': //Temporary
-	//case 'E': //Temporary
-	//	skipSetDir = true; //Temporary
-	//	gameUI->addHealth(); //Temporary
-	//	break; //Temporary
+	case 'e': //Temporary
+	case 'E': //Temporary
+		skipSetDir = true; //Temporary
+		gameUI->addHealth(); //Temporary
+		break; //Temporary
 	case 'f': //Temporary
 	case 'F': //Temporary
 		skipSetDir = true; //Temporary
 		gameUI->heal(); //Temporary
 		break; //Temporary
-	case 'z': //Temporary
-	case 'Z': //Temporary
-		skipSetDir = true; //Temporary
-		gameUI->increaseCombo(); //Temporary
-		break; //Temporary
+	//case 'z': //Temporary
+	//case 'Z': //Temporary
+	//	skipSetDir = true; //Temporary
+	//	gameUI->increaseCombo(); //Temporary
+	//	break; //Temporary
 	case 'x': //Temporary
 	case 'X': //Temporary
 		skipSetDir = true; //Temporary
@@ -690,6 +694,8 @@ int GameState::screenClickesOn(float mx, float my)
 		int tmp = shopUI->mouseClick(mx, my, gold, player);
 		if (tmp == 3)
 			gameUI->addHealth();
+		else if (tmp == 4)
+			maxHeal();
 		return tmp;
 	}
 }
@@ -722,6 +728,9 @@ void GameState::saveGameOnDefeat()
 	int error = 0;
 	lua_State* L = shopUI->getL();
 
+	lua_pushcfunction(L, savedGameInfo);
+	lua_setglobal(L, "savedGameInfo");
+
 	lua_getglobal(L, "onDefeatSave");
 	lua_pushnumber(L, gold);
 	lua_pushnumber(L, *currentMap); //Map
@@ -749,8 +758,9 @@ void GameState::loadSavedGame()
 	lua_pushlightuserdata(L, shopUI);
 	lua_pushlightuserdata(L, player);
 	lua_pushlightuserdata(L, currentMap);
+	lua_pushlightuserdata(L, whichSavedWave);
 
-	error = lua_pcall(L, 4, 0, 0);
+	error = lua_pcall(L, 5, 0, 0);
 	if (error)
 	{
 		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
@@ -774,8 +784,9 @@ void GameState::loadDefeatSavedGame()
 	lua_pushlightuserdata(L, shopUI);
 	lua_pushlightuserdata(L, player);
 	lua_pushlightuserdata(L, currentMap);
+	lua_pushlightuserdata(L, whichSavedWave);
 
-	error = lua_pcall(L, 3, 0, 0);
+	error = lua_pcall(L, 5, 0, 0);
 	if (error)
 	{
 		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
@@ -783,7 +794,7 @@ void GameState::loadDefeatSavedGame()
 	}
 	lua_pop(L, 1);
 
-	gold = player->getGold();
+	gold += player->getGold();
 }
 
 int GameState::savedGameInfo(lua_State *L) //Called from lua
@@ -791,7 +802,8 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 	Player* tmpPlayer;
 	InGameGui* tmpGUI;
 	ShopUI* tmpShopUI;
-	int* tmpInt;
+	int* tmpMapInt;
+	int* tmpWaveInt;
 
 	int ggold = -1;
 	int whichMap = -1;
@@ -809,7 +821,9 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 	tmpShopUI = static_cast<ShopUI*>(lua_touserdata(L, -1));
 	lua_pop(L, 1);
 	
-	tmpInt = static_cast<int*>(lua_touserdata(L, -1));
+	tmpMapInt = static_cast<int*>(lua_touserdata(L, -1));
+	lua_pop(L, 1);
+	tmpWaveInt = static_cast<int*>(lua_touserdata(L, -1));
 	lua_pop(L, 1);
 
 	bool defeatn = lua_toboolean(L, -1);
@@ -835,7 +849,9 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 	nrOfHp = lua_tointeger(L, -1);
 	lua_pop(L, 1);
 
-	tmpInt = &whichMap;
+	*tmpMapInt = whichMap;
+	if (defeatn)
+		*tmpWaveInt = whichWave;
 
 	tmpPlayer->setMaxHealth(3 + nrOfHp);
 	for (int i = 0; i < nrOfHp; i++)
@@ -854,7 +870,8 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 	tmpPlayer = nullptr;
 	tmpGUI = nullptr;
 	tmpShopUI = nullptr;
-	tmpInt = nullptr;
+	tmpMapInt = nullptr;
+	tmpWaveInt = nullptr;
 
 	return 0;
 }

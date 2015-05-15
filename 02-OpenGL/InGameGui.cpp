@@ -102,7 +102,7 @@ void InGameGui::addHealth()
 
 		createExtraBuffer();
 		for (int i = 0; i < maxHealth; i++) //Heal the player to max health
-			guiObjects[i + 4].textureIndex = 1;
+			guiObjects[i + 3].textureIndex = 1;
 	}
 }
 
@@ -116,13 +116,13 @@ int InGameGui::dmgTaken(float dmg)
 
 	for (int i = 0; i < dmg; i++)
 	{
-		if (guiObjects[currentHealth + 3].textureIndex == 1)
+		if (guiObjects[currentHealth + 2].textureIndex == 1)
 		{
-			guiObjects[currentHealth + 3].textureIndex = 2;
+			guiObjects[currentHealth + 2].textureIndex = 2;
 		}
-		else if (guiObjects[currentHealth + 3].textureIndex == 2)
+		else if (guiObjects[currentHealth + 2].textureIndex == 2)
 		{
-			guiObjects[currentHealth + 3].textureIndex = 3;
+			guiObjects[currentHealth + 2].textureIndex = 3;
 			currentHealth--;
 		}
 	}
@@ -135,7 +135,7 @@ int InGameGui::dmgTaken(float dmg)
 void InGameGui::heal( )
 {
 	for (int i = 0; i < maxHealth; i++) //Heal the player to max health
-		guiObjects[i + 4].textureIndex = 1;
+		guiObjects[i + 3].textureIndex = 1;
 	currentHealth = maxHealth;
 }
 
