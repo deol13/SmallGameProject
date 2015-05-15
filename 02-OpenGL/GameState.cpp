@@ -216,7 +216,7 @@ void GameState::update()
 
 					if (player->getInvulTimer() == 0)
 					{
-  						gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
+						gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
 					}
 				}
 				else
@@ -657,7 +657,15 @@ void GameState::nextWave()
 	spawnEnemies(waveNumber);
 	if (waveNumber == 6)	//change the boss stats.
 	{
-
+		enemyWave[0]->setEnemy(FIRSTBOSS);
+	}
+	else if (waveNumber == 12)
+	{
+		enemyWave[0]->setEnemy(SECONDBOSS);
+	}
+	else if (waveNumber == 18)
+	{
+		enemyWave[0]->setEnemy(FINALBOSS);
 	}
 
 }

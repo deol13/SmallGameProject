@@ -71,14 +71,17 @@ void Enemy::setEnemy(int type)
 	else if (type == FIRSTBOSS)
 	{
 		health = 60;
+		this->type = type;
 	}
 	else if (type == SECONDBOSS)
 	{
 		health = 80;
+		this->type = type;
 	}
 	else		//final boss
 	{
 		health = 120;
+		this->type = type;
 	}
 
 }
@@ -129,9 +132,21 @@ int Enemy::attack()
 	{
 
 	}
-	else
+	else if (type == ANIMAL)
 	{
-		damage = 2;		//Animal damage
+		damage = 2;
+	}
+	else if (type == FIRSTBOSS)
+	{
+		damage = 3;
+	}
+	else if (type == SECONDBOSS)
+	{
+		damage = 4;
+	}
+	else				//Final boss
+	{
+		damage = 5;
 	}
 	return damage;
 }
