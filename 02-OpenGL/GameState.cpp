@@ -220,7 +220,7 @@ void GameState::update()
 
 					if (player->getInvulTimer() == 0)
 					{
-  						gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
+						gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
 					}
 				}
 				else
@@ -514,7 +514,14 @@ void GameState::loadArena(int fileName)
 			GObject* temp = new GObject(arenaArr[8 * i], GL_TRIANGLES, render->getTexture(texIndex));
 			temp->translate(atoi(arenaArr[8*i+1].c_str()), atoi(arenaArr[8*i+2].c_str()), atoi(arenaArr[8*i+3].c_str()));
 			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
-			//temp->scale(0.05f, 0.05f, 0.05f);
+			if (i > 2 && i < 5)
+			{
+				temp->scale(1.0f, 0.0f, 1.2f);
+			}
+			else if (i > 5)
+			{
+				temp->scale(2.0f, 0.0f, 2.0f);
+			}
 			renderObjects.push_back(temp);
 
 		}
@@ -661,7 +668,16 @@ void GameState::nextWave()
 	spawnEnemies(waveNumber);
 	if (waveNumber == 6)	//change the boss stats.
 	{
-
+		enemyWave[0]->setEnemy(FIRSTBOSS);
+		enemyWave[0]->getGObject()->scale(2.0f, 1.0f, 3.0f);
+	}
+	else if (waveNumber == 12)
+	{
+		enemyWave[0]->setEnemy(SECONDBOSS);
+	}
+	else if (waveNumber == 18)
+	{
+		enemyWave[0]->setEnemy(FINALBOSS);
 	}
 
 }
