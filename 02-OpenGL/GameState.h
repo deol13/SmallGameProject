@@ -47,16 +47,13 @@ public:
 	void continueInit(int w, int h);
 	void clean();
 	void cleanedOnDefeat();
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 	void freeLoad();
 	void costLoad();
-=======
-=======
->>>>>>> origin/master
+
 	void arenaCleanUp();
 	void startAfterDefeat();
->>>>>>> origin/master
+
 	void update();
 	void uiUpdate();
 	void keyDown(char c);

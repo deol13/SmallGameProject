@@ -7,6 +7,9 @@
 const int MELEE = 1;
 const int RANGED = 2;
 const int ANIMAL = 3;
+const int FIRSTBOSS = 4;
+const int SECONDBOSS = 5;
+const int FINALBOSS = 6;
 
 const int MELEERANGE = 8;
 const int RANGEDRANGE = 16;

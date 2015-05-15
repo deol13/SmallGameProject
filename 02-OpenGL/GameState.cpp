@@ -147,7 +147,6 @@ void GameState::freeLoad()
 	enemiesRemaining = waveSize;
 }
 
-<<<<<<< HEAD
 void GameState::costLoad()
 {
 	shopUI = new ShopUI();
@@ -157,10 +156,10 @@ void GameState::costLoad()
 
 	spawnEnemies(waveNumber);
 	enemiesRemaining = waveSize;
-=======
+}
+
 void GameState::arenaCleanUp()
 {
-
 	delete enemyWave;
 	enemyWave = nullptr;
 
@@ -168,7 +167,6 @@ void GameState::arenaCleanUp()
 	{
 		renderObjects.pop_back();
 	}
->>>>>>> origin/master
 }
 
 void GameState::update()
@@ -656,6 +654,10 @@ void GameState::nextWave()
 
 	waveNumber++;		//Load in next wave
 	spawnEnemies(waveNumber);
+	if (waveNumber == 6)	//change the boss stats.
+	{
+
+	}
 
 }
 

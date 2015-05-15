@@ -118,6 +118,10 @@ int ShopUI::mouseClick(float mx, float my, int &gold, Player* player)
 	{
 		player->setArmour(player->getArmour() + 1);
 	}
+	else if (whichObject == 5)
+	{
+		player->setHealth(player->getMaxHealth());
+	}
 
 	gold = newGold;
 
