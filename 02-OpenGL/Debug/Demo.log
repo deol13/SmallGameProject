@@ -1,4 +1,4 @@
-﻿Build started 5/15/2015 11:12:15 AM.
+﻿Build started 5/15/2015 11:23:47 AM.
      1>Project "C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glew-1.11.0" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameState.cpp
@@ -12,8 +12,8 @@
      1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(574): warning C4018: '>=' : signed/unsigned mismatch
      1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(577): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
      1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(603): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(811): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(691): warning C4715: 'GameState::screenClickesOn' : not all control paths return a value
+     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(815): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(695): warning C4715: 'GameState::screenClickesOn' : not all control paths return a value
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
          Debug\BlitQuad.obj
@@ -37,4 +37,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.04
+Time Elapsed 00:00:00.98
