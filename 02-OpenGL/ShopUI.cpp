@@ -133,12 +133,12 @@ int ShopUI::mouseClick(float mx, float my, int &gold, Player* player)
 		if (whichObject == 3)
 			return 3;
 	}
-	else if (whichObject == 5)
+	if (whichObject == 5)
 	{
 		guiObjects[whichObject].textureIndex = newTexture;
 		return 4;
 	}
-	else if (continueOn == 2)
+	if (continueOn == 2)
 	{
 		state = 0;
 	}
