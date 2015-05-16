@@ -114,11 +114,13 @@ void Enemy::setEnemy(int type)
 	{
 		health = 80;
 		this->type = type;
+		loadObj->scale(0.75f, 0.5f, 0.75f);
 	}
 	else		//final boss
 	{
 		health = 120;
 		this->type = type;
+		loadObj->scale(0.85f, 1.0f, 0.85f);
 	}
 
 }

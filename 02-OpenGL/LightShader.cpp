@@ -158,10 +158,10 @@ const char* fragment_shader = R"(
 			
 			//for(int n = 0; n < NumSpotLights; n++)
 			//{
-			//	fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
+				//fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
 			//}
 			
-			fragment_color = Diffuse0;  
+			fragment_color = Diffuse0;	//fragment_color *  
 		}
 	)";
 

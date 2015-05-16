@@ -46,7 +46,7 @@ function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a
 	if state == 1 then  --[[ Start menu ]]
 		if xPos < -0.61 and xPos > -0.95  and yPos < -0.497 and yPos > -0.924 then
 			stateChange(1) --[[ New game ]]
-		elseif xPos < -0.22 and xPos > -0.56  and yPos < -0.497 and yPos > -0.924 and noSavedGame == 1 then
+		elseif xPos < -0.22 and xPos > -0.56  and yPos < -0.497 and yPos > -0.924 and tonumber(noSavedGame) == 1 then
 			stateChange(4) --[[ Continue game ]]
 		elseif xPos < 0.17 and xPos > -0.17 and yPos < -0.497 and yPos > -0.924 then
 			return howToPlayMenu, 2
@@ -318,12 +318,6 @@ function checkSavedGameFile()
 	io.input(file)
 
 	noSavedGame = io.read("*l")
-
-	if noSavedGame == "1" then
-		shopMenu[27] = 2
-	elseif noSavedGame == "0" then 
-		shopMenu[27] = 15
-	end
 
 	io.close(file)
 

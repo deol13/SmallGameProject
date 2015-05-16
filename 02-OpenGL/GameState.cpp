@@ -196,7 +196,7 @@ void GameState::update()
 			nextWave();
 		}
 	}
-	if (menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1)
+	if (menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1) //
 	{
 		for (int i = 0; i < waveSize; i++)
 		{
@@ -518,38 +518,35 @@ void GameState::loadArena(int fileName)
 			GObject* temp = new GObject(arenaArr[8 * i], GL_TRIANGLES, render->getTexture(texIndex));
 			temp->translate(atoi(arenaArr[8*i+1].c_str()), atoi(arenaArr[8*i+2].c_str()), atoi(arenaArr[8*i+3].c_str()));
 			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
-
-			if (i == 3)		//left
-			{
-				temp->scale(1.0f, 0.0f, 1.2f);
+			if (fileName == 1)
+			{					//Scalings for map 1
+				if (i == 3 || i == 4)		//left / right
+				{
+					temp->scale(1.0f, 0.0f, 1.2f);
+				}
+				else if (i == 5 || i == 6)	//down / up
+				{
+					temp->scale(1.2f, 0.0f, 1.0f);
+				}
+				else if (i == 7 || i == 8)	//wall left / right
+				{
+					temp->scale(1.2f, 0.0f, 1.4f);
+				}
+				else if (i == 10 || i == 9)	//wall down / up
+				{
+					temp->scale(1.7f, 0.0f, 1.0f);
+				}
 			}
-			else if (i == 4)	//right
+			if (fileName == 2)		//scalings for map 2
 			{
-				temp->scale(1.0f, 0.0f, 1.2f);
-			}
-			else if (i == 5)	//down
-			{
-				temp->scale(1.2f, 0.0f, 1.0f);
-			}
-			else if (i == 6)	//up
-			{
-				temp->scale(1.2f, 0.0f, 1.0f);
-			}
-			else if (i == 7)	//wall left
-			{
-				temp->scale(1.2f, 0.0f, 1.4f);
-			}
-			else if (i == 8)	//wall right
-			{
-				temp->scale(1.2f, 0.0f, 1.4f);
-			}
-			else if (i == 9)	//upp
-			{
-				temp->scale(1.7f, 0.0f, 1.0f);
-			}
-			else if (i == 10)	//wall down
-			{
-				temp->scale(1.7f, 0.0f, 1.0f);
+				if (i == 6 || i == 7)	// down / up
+				{
+					temp->scale(1.85f, 0.0f, 1.2f);
+				}
+				if (i == 5 || i == 8)		//right / left
+				{
+					temp->scale(1.0f, 0.0f, 1.4f);
+				}
 			}
 			renderObjects.push_back(temp);
 
