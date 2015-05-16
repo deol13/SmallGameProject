@@ -88,7 +88,7 @@ int ShopUI::stateChange(lua_State *L)
 	return 0;
 }
 
-int ShopUI::mouseClick(float mx, float my, int &gold)
+int ShopUI::mouseClick(float mx, float my, int &gold, Player* player)
 {
 	continueOn = 0;
 	newTexture = -1;
@@ -101,15 +101,48 @@ int ShopUI::mouseClick(float mx, float my, int &gold)
 
 	getNewTexture();
 
+	if (whichObject == 1)	//Wants to upgrade sword
+	{
+		player->setWeaponUpgrade(SWORD, player->getWeaponUpgrade(SWORD) + 1);
+	}
+	else if (whichObject == 2)	//Wants to upgrade spear
+	{
+		player->setWeaponUpgrade(SPEAR, player->getWeaponUpgrade(SPEAR) + 1);
+	}
+	else if (whichObject == 3)	//Wants to upgrade health
+	{
+		player->setMaxHealth(player->getMaxHealth() + 2);
+		player->setHealth(player->getMaxHealth());
+	}
+	else if (whichObject == 4)
+	{
+		player->setArmour(player->getArmour() + 1);
+	}
+	else if (whichObject == 5)
+	{
+		player->setHealth(player->getMaxHealth());
+	}
+
 	gold = newGold;
 
 	showGold(gold);
 
 	if (newTexture != -1)
+	{
 		guiObjects[whichObject].textureIndex = newTexture;
-	else if (continueOn == 2)
+		if (whichObject == 3)
+			return 3;
+	}
+	if (whichObject == 5)
+	{
+		guiObjects[whichObject].textureIndex = newTexture;
+		return 4;
+	}
+	if (continueOn == 2)
+	{
 		state = 0;
-	else if (continueOn == 1) //heal
+	}
+	else if (continueOn == 1)
 		return 1;
 	return 0;
 }
@@ -125,7 +158,11 @@ void ShopUI::getNewTexture()
 		lua_pop(L, 1);
 		newTexture = lua_tonumber(L, -1);
 		lua_pop(L, 1);
-		
+	}
+	else
+	{
+		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+		lua_pop(L, 1);
 	}
 }
 
@@ -189,6 +226,11 @@ void ShopUI::getLuaTable()
 
 			lua_pop(L, 1);
 		}
+	}
+	else
+	{
+		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+		lua_pop(L, 1);
 	}
 
 	GLenum error1 = glGetError();
@@ -281,8 +323,34 @@ void ShopUI::loadTextures()
 	createTexture("moregui/continue.png"); //26
 
 	createTexture("shopgui/medicin/medicin.png"); //27
+	createTexture("shopgui/medicin/medicingray.png"); //28
 }
 
+void ShopUI::setHealingInLua(Player* player)
+{
+	bool tmp = false;
+	if (player->getHealth() == player->getMaxHealth())
+	{
+		lua_getglobal(L, "setHealingUsed");
+		error = lua_pcall(L, 0, 1, 0);
+		if (error)
+		{
+			std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+			lua_pop(L, 1);
+		}
+		else
+		{
+			tmp = lua_toboolean(L, -1);
+			lua_pop(L, 1);
+			guiObjects[5].textureIndex = 28;
+		}
+
+	}
+	else
+	{
+		guiObjects[5].textureIndex = 27;
+	}
+}
 void ShopUI::setState()
 {
 	state = 1;

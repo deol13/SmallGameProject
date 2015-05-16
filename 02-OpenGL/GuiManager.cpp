@@ -129,6 +129,28 @@ int GuiManager::mouseClick(float mx, float my)
 	return -1;
 }
 
+void GuiManager::checkContinueButton()
+{
+	lua_getglobal(L, "checkSavedGameFile");
+	error = lua_pcall(L, 0, 1, 0);
+	if (!error)
+	{
+		int tmp = lua_tonumber(L, -1);
+		lua_pop(L, 1);
+
+		if (tmp == 0) //No save found
+			guiButtons[2].textureIndex = 15;
+		else //Save found
+			guiButtons[2].textureIndex = 2;
+	}
+	else
+	{
+		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+		lua_pop(L, 1);
+	}
+
+}
+
 void GuiManager::pauseGame()
 {
 	lua_getglobal(L, "pauseGame");
@@ -247,6 +269,11 @@ void GuiManager::getLuaTable(int nrOfParameters)
 		}
 
 	}
+	else
+	{
+		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+		lua_pop(L, 1);
+	}
 
 	GLenum error1 = glGetError();
 	if (error1 != GL_NO_ERROR)
@@ -337,6 +364,8 @@ void GuiManager::loadTextures()
 	createTexture("moregui/restartfree.png");     //12
 	createTexture("moregui/restart5g.png");       //13
 	createTexture("moregui/pause.png");           //14
+
+	createTexture("MenuTextures/contgrey.png"); //15
 
 	
 }

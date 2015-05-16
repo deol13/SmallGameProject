@@ -24,17 +24,19 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile, int 
 	{
 	case MELEE:
 		loadObj = new GObject(objectFile, GL_TRIANGLES, texture);
-		health = 20 + 2 * waveNr;
+		health = 20 + 1 * waveNr;
 		this->type = MELEE;
 		moveSpeed = 1.0f;
 		this->attackRange = MELEERANGE;
+		this->loadObj->scale(2.0f, 1.0f, 1.5f);
 		break;
 	case ANIMAL:
 		loadObj = new GObject(objectFile, GL_TRIANGLES, texture);
-		health = 30 + 3 * waveNr;
+		health = 30 + 2 * waveNr;
 		this->type = ANIMAL;
 		moveSpeed = 2.0f;
 		this->attackRange = ANIMALRANGE;
+		this->loadObj->scale(1.5f, 1.0f, 2.0f);
 		break;
 	default:
 		break;
@@ -63,10 +65,26 @@ void Enemy::setEnemy(int type)
 		health = 10;
 		this->type = RANGED;
 	}
-	else
+	else if (type == ANIMAL)
 	{
 		health = 40;
 		this->type = ANIMAL;
+	}
+	else if (type == FIRSTBOSS)
+	{
+		health = 60;
+		this->type = type;
+		loadObj->scale(2.0f, 1.0f, 3.0f);
+	}
+	else if (type == SECONDBOSS)
+	{
+		health = 80;
+		this->type = type;
+	}
+	else		//final boss
+	{
+		health = 120;
+		this->type = type;
 	}
 
 }
@@ -117,9 +135,21 @@ int Enemy::attack()
 	{
 
 	}
-	else
+	else if (type == ANIMAL)
 	{
-		damage = 2;		//Animal damage
+		damage = 2;
+	}
+	else if (type == FIRSTBOSS)
+	{
+		damage = 3;
+	}
+	else if (type == SECONDBOSS)
+	{
+		damage = 4;
+	}
+	else				//Final boss
+	{
+		damage = 5;
 	}
 	return damage;
 }

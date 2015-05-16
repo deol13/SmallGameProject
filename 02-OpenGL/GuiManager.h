@@ -41,6 +41,8 @@ class GuiManager
 		void createVertexBuffer();
 		void createTexture(std::string fileName);
 
+		void checkContinueButton();
+
 		void pauseGame();
 		void won();
 		void defeat();

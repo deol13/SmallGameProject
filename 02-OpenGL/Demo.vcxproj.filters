@@ -155,6 +155,12 @@
     <None Include="debugWave.dat">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="defeatSave.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="savedGameExist.dat">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GUI">

@@ -72,6 +72,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		
 		GuiManager* mGUI = new GuiManager(WINDOW_WIDTH, WINDOW_HEIGHT);
 		mGUI->startMenuR();
+		mGUI->checkContinueButton();
 
 		ShowWindow( wndHandle, nCmdShow );
 		//init music
@@ -196,13 +197,24 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							int tmp = 0;
 							tmp = gameState->screenClickesOn(screenX, screenY);
 
-							if (tmp == 2)
+							if (tmp == 1)
+								gameState->maxHeal();
+							else if (tmp == 2)
 							{
 								playState = MENUSTATE;
 								gameState->clean();
+								mGUI->checkContinueButton();
 							}
-							else if (tmp == 1)
-								gameState->maxHeal();
+							else if (tmp == 5) //Cost restart
+							{
+								gameState->cleanedOnDefeat();
+								gameState->costLoad();
+							}
+							else if (tmp == 6) //Free restart
+							{
+								gameState->cleanedOnDefeat();
+								gameState->freeLoad();
+							}
 							break;
 						}
 						}

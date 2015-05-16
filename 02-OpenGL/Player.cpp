@@ -11,6 +11,7 @@ Player::Player()
 	BoundingPolygon collisionRect = BoundingPolygon(colPoints, 4);
 	moveSpeed = 1;
 	health = 6;
+	maxHealth = health;
 	armour = 0;
 	this->weapon = SWORD;
 	this->spearUpgrade = 1;
@@ -46,10 +47,11 @@ Player::Player(GLuint textures[3], float x, float z, int health, int armour)
 	collisionRect = BoundingPolygon(colPoints, 4);
 	moveSpeed = 0.9;
 	this->health = health;
+	maxHealth = health;
 	this->armour = armour;
 	this->weapon = SWORD;
-	this->spearUpgrade = 1;
-	this->swordUpgrade = 1;
+	this->spearUpgrade = 0;
+	this->swordUpgrade = 0;
 	this->dirVec = glm::vec2(0.0, 1.0);
 	this->moveVec = glm::vec2(0.0, 0.0);
 	this->attackState = 0;
@@ -103,14 +105,21 @@ void Player::stop(bool stopX, bool stopZ)
 	}
 }
 
-bool Player::takeDamage(const int dmg)
+int Player::takeDamage(int dmg)
 {
-	if (invulTimer == 0)
+ 	if (invulTimer == 0) 
 	{
 		invulTimer = 1;
+		
+		dmg -= armour;		//Take away damage equal to the armour
+		
+		if (dmg <= 0)		//Not negating all damage
+		{
+			dmg = 1;
+		}
 		health -= dmg;
 	}
-	return (health > 0);
+	return dmg;
 }
 
 GObject* Player::getGObject(int index) const
@@ -183,18 +192,22 @@ void Player::setMaxHealth(const int health)
 {
 	this->maxHealth = health;
 }
+
 void Player::setHealth(const int health)
 {
 	this->health = health;
 }
+
 void Player::setArmour(const int armour)
 {
 	this->armour = armour;
 }
+
 void Player::setWeapon(const int weapon)
 {
 	this->weapon = weapon;
 }
+
 void Player::setWeaponUpgrade(const int weapon, const int weaponLevel)
 {
 	if (weapon == SWORD)
@@ -219,12 +232,12 @@ int Player::getDamageDealt()
 
 	if (weapon == SWORD)
 	{
-		damage = 7 + (3 * swordUpgrade);
+		damage = 7 + (5 * swordUpgrade);
 	}
 
 	if (weapon == SPEAR)
 	{
-		damage = 5 + (2 * spearUpgrade);
+		damage = 5 + (4 * spearUpgrade);
 	}
 
 	return damage;
@@ -235,9 +248,34 @@ int Player::getWeapon()
 	return this->weapon;
 }
 
+int Player::getWeaponUpgrade(int weaponChosen)
+{
+	int upgrade = 0;
+
+	if (weaponChosen == SWORD)
+	{
+		upgrade = swordUpgrade;
+	}
+	else
+	{
+		upgrade = spearUpgrade;
+	}
+	return upgrade;
+}
+
+int Player::getMaxHealth()
+{
+	return maxHealth;
+}
+
 int Player::getHealth()
 {
 	return this->health;
+}
+
+int Player::getArmour()
+{
+	return armour;
 }
 
 int Player::getInvulTimer()

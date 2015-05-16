@@ -90,7 +90,6 @@ void InGameGui::comboLost()
 	guiObjects[3].textureIndex = 8;
 }
 
-
 void InGameGui::addHealth() 
 {
 	lua_getglobal(L, "addHeart");
@@ -103,7 +102,7 @@ void InGameGui::addHealth()
 
 		createExtraBuffer();
 		for (int i = 0; i < maxHealth; i++) //Heal the player to max health
-			guiObjects[i + 4].textureIndex = 1;
+			guiObjects[i + 3].textureIndex = 1;
 	}
 }
 
@@ -117,13 +116,13 @@ int InGameGui::dmgTaken(float dmg)
 
 	for (int i = 0; i < dmg; i++)
 	{
-		if (guiObjects[currentHealth + 3].textureIndex == 1)
+		if (guiObjects[currentHealth + 2].textureIndex == 1)
 		{
-			guiObjects[currentHealth + 3].textureIndex = 2;
+			guiObjects[currentHealth + 2].textureIndex = 2;
 		}
-		else if (guiObjects[currentHealth + 3].textureIndex == 2)
+		else if (guiObjects[currentHealth + 2].textureIndex == 2)
 		{
-			guiObjects[currentHealth + 3].textureIndex = 3;
+			guiObjects[currentHealth + 2].textureIndex = 3;
 			currentHealth--;
 		}
 	}
@@ -133,28 +132,12 @@ int InGameGui::dmgTaken(float dmg)
 	return 0;
 }
 
-void InGameGui::heal( bool fullHeal )
+void InGameGui::heal(Player* player)
 {
-	if (!fullHeal)
-	{
-		if (currentHealth < maxHealth) //Temporary
-		{ //Increase 4 in [] with 1 for every object before the first heart
-			if (guiObjects[currentHealth + 3].textureIndex == 2)
-				guiObjects[currentHealth + 3].textureIndex = 1;
-			else
-			{
-				guiObjects[currentHealth + 4].textureIndex = 1;
-				currentHealth++;
-			}
-			
-		}
-	}
-	else
-	{
-		for (int i = 0; i < maxHealth; i++) //Heal the player to max health
-			guiObjects[i + 4].textureIndex = 1;
-		currentHealth = maxHealth;
-	}
+	for (int i = 0; i < maxHealth; i++) //Heal the player to max health
+		guiObjects[i + 3].textureIndex = 1;
+	currentHealth = maxHealth;
+	player->setHealth(player->getMaxHealth());
 }
 
 void InGameGui::changeWeapon() 
@@ -233,6 +216,11 @@ void InGameGui::getLuaTable()
 
 			lua_pop(L, 1);
 		}
+	}
+	else
+	{
+		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
+		lua_pop(L, 1);
 	}
 
 	GLenum error1 = glGetError();

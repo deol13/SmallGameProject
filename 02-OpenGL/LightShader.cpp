@@ -11,12 +11,9 @@ LightShader::LightShader(GLuint* gShaderP)
 	gShaderProgram = gShaderP;
 	compile();
 
-	Use = glGetUniformLocation(*gShaderProgram, "Use");
-
 	Position = glGetUniformLocation(*gShaderProgram, "Position");
 	Diffuse = glGetUniformLocation(*gShaderProgram, "Diffuse");
 	Normal = glGetUniformLocation(*gShaderProgram, "Normal");
-	UVcord = glGetUniformLocation(*gShaderProgram, "UVcord");
 	Depth = glGetUniformLocation(*gShaderProgram, "Depth");
 
 	NumSpotLights = glGetUniformLocation(*gShaderProgram, "NumSpotLights");
@@ -61,12 +58,9 @@ const char* fragment_shader = R"(
 		#version 410
 		layout (location = 0) in vec2 UV;
 
-		uniform int Use;
-
 		uniform sampler2D Position;
 		uniform sampler2D Diffuse;
 		uniform sampler2D Normal;
-		uniform sampler2D UVcord;	
 		uniform sampler2D Depth;
 
 		vec4 Position0;
@@ -155,44 +149,19 @@ const char* fragment_shader = R"(
 
 		void main()
 		{   
-			if(Use == 0)
-			{
-				fragment_color = texture(Position, UV) * 0.1;
-			}
-			else if(Use == 1)	 
-				fragment_color = texture(Diffuse, vec2(UV.x, UV.y));
-			else if(Use == 2)	 
-				fragment_color = texture(Normal, vec2(UV.x, UV.y));
-			else if(Use == 3)
-			{
-				fragment_color = texture(UVcord, vec2(UV.x, UV.y));
-			}
-			else if(Use == 4)
-			{
-				float Depth = texture(Depth, vec2(UV.x, UV.y)).x;
-				Depth = 1.0 - (1.0 - Depth) * 25.0; 
-				fragment_color = vec4(Depth);
-			}
-			else if(Use == 5)
-			{
-				fragment_color = vec4(0,0,0,0);
+			fragment_color = vec4(0,0,0,0);
 			
-				Diffuse0 = texture(Diffuse, vec2(UV.x, UV.y));
-				Position0 = texture(Position, vec2(UV.x, UV.y));
-				Normal0 = texture(Normal, vec2(UV.x, UV.y));
-				Depth0 = texture(Depth, vec2(UV.x, UV.y));
+			Diffuse0 = texture(Diffuse, vec2(UV.x, UV.y));
+			Position0 = texture(Position, vec2(UV.x, UV.y));
+			Normal0 = texture(Normal, vec2(UV.x, UV.y));
+			Depth0 = texture(Depth, vec2(UV.x, UV.y));
 			
-				for(int n = 0; n < NumSpotLights; n++)
-				{
-					fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
-				}
-				
-				fragment_color = fragment_color * Diffuse0;  
-			}
-			else
-			{
-				fragment_color = vec4(0,1,1,1);		
-			}
+			//for(int n = 0; n < NumSpotLights; n++)
+			//{
+			//	fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
+			//}
+			
+			fragment_color = Diffuse0;  
 		}
 	)";
 

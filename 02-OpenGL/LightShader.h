@@ -18,11 +18,9 @@ public:
 	~LightShader();
 
 	//GBUFFER TEXTURES
-	GLint Use;
 	GLint Position;
 	GLint Diffuse;
 	GLint Normal;
-	GLint UVcord;
 	GLint Depth;
 
 	//Number of ...

@@ -140,6 +140,7 @@
     <None Include="LuaButton.lua" />
     <None Include="defeatSave.dat" />
     <None Include="savedGame.dat" />
+    <None Include="savedGameExist.dat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

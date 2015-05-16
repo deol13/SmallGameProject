@@ -10,6 +10,7 @@
 #include <vector>
 #include "MenuButton.h"
 #include "GuiShader.h"
+#include "Player.h"
 
 class ShopUI
 {
@@ -38,7 +39,7 @@ class ShopUI
 		static int stateChange(lua_State *L);
 		static int continueOn;
 
-		int mouseClick(float mx, float my, int &gold);
+		int mouseClick(float mx, float my, int &gold, Player* player);
 
 		void getNewTexture();
 		void getLuaTable();
@@ -46,6 +47,7 @@ class ShopUI
 		void createTexture(std::string fileName);
 		void loadTextures();
 
+		void setHealingInLua(Player* player);
 		void setState();
 		int getState();
 		lua_State* getL();
