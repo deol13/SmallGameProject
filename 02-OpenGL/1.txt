@@ -22,7 +22,7 @@ bana1/eldpelare/eldtexture.png
 10
 bana1/arenasittplats/trappafront.obj
 160.0
-0.0
+1.0
 155.0
 bana1/arenasittplats/trapp.png
 10

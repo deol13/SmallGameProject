@@ -1,21 +1,15 @@
-﻿Build started 5/16/2015 11:59:43 AM.
-     1>Project "C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
+﻿Build started 5/16/2015 2:39:17 PM.
+     1>Project "C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glew-1.11.0" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameState.cpp
-         GameState.cpp
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(11): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(206): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(211): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(223): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(510): warning C4018: '>=' : signed/unsigned mismatch
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(515): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(610): warning C4018: '>=' : signed/unsigned mismatch
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(613): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(639): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(871): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(743): warning C4715: 'GameState::screenClickesOn' : not all control paths return a value
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Enemy.cpp
+         Enemy.cpp
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(11): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(21): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(175): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(176): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(214): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
          Debug\BlitQuad.obj
          Debug\BoundingPolygon.obj
          Debug\Enemy.obj
@@ -32,9 +26,9 @@
          Debug\Render.obj
          Debug\ShopUI.obj
          Debug\stb_image.obj
-         Demo.vcxproj -> C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.exe
-     1>Done Building Project "C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)).
+         Demo.vcxproj -> C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Debug\Demo.exe
+     1>Done Building Project "C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.01
+Time Elapsed 00:00:00.93
