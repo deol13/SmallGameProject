@@ -84,8 +84,8 @@ void Player::setMovement(int x, int y)
 	
 	if(abs(moveVec.x) + abs(moveVec.y) > 1.9)			// Should be 2. The decimal's just a float precaution
 	{
-		moveVec.x *= sqrt(2.0) / 2.0;
-		moveVec.y *= sqrt(2.0) / 2.0;
+		moveVec.x = (moveVec.x / abs(moveVec.x)) * sqrt(2.0) / 2.0;
+		moveVec.y = (moveVec.y / abs(moveVec.y)) * sqrt(2.0) / 2.0;
 	}
 	if(abs(moveVec.x) + abs(moveVec.y) > 0.0)
 	{
@@ -129,7 +129,10 @@ GObject* Player::getGObject(int index) const
 
 void Player::update()
 {
-
+	if(abs(moveVec.x) + abs(moveVec.y) > 0.0)
+	{
+		dirVec = moveVec;
+	}
 	float xMove = moveSpeed * moveVec.x;
 	float zMove = moveSpeed * moveVec.y;
 
@@ -153,7 +156,8 @@ void Player::update()
 	{
 		loadObj[i]->translate(xMove, 0, zMove);
 		/* rotation default is facing up. Turning goes counter clockwise*/
-		loadObj[i]->setRotation(0, atan(dirVec.x/-dirVec.y), 0);
+		float angle = atan(dirVec.y / dirVec.x) + 3.1415/2.0;
+		loadObj[i]->setRotation(0, angle, 0);
 	}
 	x += xMove;
 	z += zMove;
