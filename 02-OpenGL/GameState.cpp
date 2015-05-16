@@ -514,38 +514,40 @@ void GameState::loadArena(int fileName)
 			GObject* temp = new GObject(arenaArr[8 * i], GL_TRIANGLES, render->getTexture(texIndex));
 			temp->translate(atoi(arenaArr[8*i+1].c_str()), atoi(arenaArr[8*i+2].c_str()), atoi(arenaArr[8*i+3].c_str()));
 			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
-
-			if (i == 3)		//left
-			{
-				temp->scale(1.0f, 0.0f, 1.2f);
-			}
-			else if (i == 4)	//right
-			{
-				temp->scale(1.0f, 0.0f, 1.2f);
-			}
-			else if (i == 5)	//down
-			{
-				temp->scale(1.2f, 0.0f, 1.0f);
-			}
-			else if (i == 6)	//up
-			{
-				temp->scale(1.2f, 0.0f, 1.0f);
-			}
-			else if (i == 7)	//wall left
-			{
-				temp->scale(1.2f, 0.0f, 1.4f);
-			}
-			else if (i == 8)	//wall right
-			{
-				temp->scale(1.2f, 0.0f, 1.4f);
-			}
-			else if (i == 9)	//upp
-			{
-				temp->scale(1.7f, 0.0f, 1.0f);
-			}
-			else if (i == 10)	//wall down
-			{
-				temp->scale(1.7f, 0.0f, 1.0f);
+			if (fileName == 1)
+			{					//Scalings for map 1
+				if (i == 3)		//left
+				{
+					temp->scale(1.0f, 0.0f, 1.2f);
+				}
+				else if (i == 4)	//right
+				{
+					temp->scale(1.0f, 0.0f, 1.2f);
+				}
+				else if (i == 5)	//down
+				{
+					temp->scale(1.2f, 0.0f, 1.0f);
+				}
+				else if (i == 6)	//up
+				{
+					temp->scale(1.2f, 0.0f, 1.0f);
+				}
+				else if (i == 7)	//wall left
+				{
+					temp->scale(1.2f, 0.0f, 1.4f);
+				}
+				else if (i == 8)	//wall right
+				{
+					temp->scale(1.2f, 0.0f, 1.4f);
+				}
+				else if (i == 9)	//upp
+				{
+					temp->scale(1.7f, 0.0f, 1.0f);
+				}
+				else if (i == 10)	//wall down
+				{
+					temp->scale(1.7f, 0.0f, 1.0f);
+				}
 			}
 			renderObjects.push_back(temp);
 
@@ -672,7 +674,7 @@ void GameState::nextWave()
 	delete enemyWave;	//Remove last wave
 	enemyWave = nullptr;
 
-	if (waveNumber == 6 || waveNumber == 12)
+	if (waveNumber == 2 || waveNumber == 12)
 	{
 		gold += 30;	//Grant gold for finished boss
 
