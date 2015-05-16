@@ -35,7 +35,7 @@ class Render
 
 		//Textures
 		void loadTextures();
-		int createTexture( std::string fileName );
+		GLuint createTexture( std::string fileName );
 
 		GLuint getTexture(int index) const;
 		GLuint getTextureSize() const;

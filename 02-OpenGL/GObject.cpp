@@ -88,6 +88,25 @@ void GObject::rotate(float x, float y, float z) //set rotation matrix
 		0.0f, 0.0f, 0.0f, 1.0f);
 	rotationMatrix = ( xMatrix * yMatrix * zMatrix) * rotationMatrix;
 }
+void GObject::setRotation(float x, float y, float z)
+{
+	glm::mat4 xMatrix = glm::mat4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, cos(x), -sin(x), 0.0f,
+		0.0f, cos(x), cos(x), 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	glm::mat4 yMatrix = glm::mat4(
+		cos(y), 0.0f, -sin(y), 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		sin(y), 0.0f, cos(y), 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	glm::mat4 zMatrix = glm::mat4(
+		cos(z), -sin(z), 0.0f, 0.0f,
+		sin(z), cos(z), 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	rotationMatrix = (xMatrix * yMatrix * zMatrix);
+}
 void GObject::translate(float x, float y, float z) //set translation matrix
 {
 	translationMatrix[3][0] += x;
@@ -246,7 +265,6 @@ void GObject::bindBuffers()
 
 }
 
-
 void GObject::render(GLint uniLocation, GLuint shaderProgram)
 {
 	glm::mat4 worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
@@ -307,21 +325,22 @@ void GObject::setAnimationState(float state)
 	animationState = state;
 }
 
-void GObject::animate()
+void GObject::animate(int stopState)
 {
-	if(animationState > vert.size() - 1)
-	{
-		animationState = 0.0f;
-	}
 	int floorFrame = (int) animationState;
-	int ceilFrame = floorFrame + 1;
+	int naiveFrame = floorFrame + 1;						//ceilFrame, not counting for looping back
+	int ceilFrame = naiveFrame%(stopState  + 1);
 	//Change vertices. Needs optimization
 	for(int i = 0; i < currentVert.size(); i++)
 	{
-		currentVert[i].x = vert[floorFrame][i].x * (ceilFrame - animationState) + vert[ceilFrame][i].x * (animationState - floorFrame);
-		currentVert[i].y = vert[floorFrame][i].y * (ceilFrame - animationState) + vert[ceilFrame][i].y * (animationState - floorFrame);
-		currentVert[i].z = vert[floorFrame][i].z * (ceilFrame - animationState) + vert[ceilFrame][i].z * (animationState - floorFrame);
+		currentVert[i].x = vert[floorFrame][i].x * (naiveFrame - animationState) + vert[ceilFrame][i].x * (animationState - floorFrame);
+		currentVert[i].y = vert[floorFrame][i].y * (naiveFrame - animationState) + vert[ceilFrame][i].y * (animationState - floorFrame);
+		currentVert[i].z = vert[floorFrame][i].z * (naiveFrame - animationState) + vert[ceilFrame][i].z * (animationState - floorFrame);
 	}
 	animationState += 0.1;
+	if(animationState > stopState + 1)
+	{
+		animationState = 0.0f;
+	}
 }
 

@@ -241,6 +241,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 					initState = true;
 					playState = MENUSTATE;
 				}*/
+				while( std::clock() - currentFrame < CLOCKS_PER_SEC / FPSLOCK ) {}			//comment out for unlimited frames
 				break;
 			default:
 
@@ -258,7 +259,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				LPCWSTR sw = stemp.c_str();
 				SetWindowText( wndHandle, sw );
 			}
-			while( std::clock() - currentFrame < CLOCKS_PER_SEC / FPSLOCK ) {}			//comment out for unlimited frames
+			
 		}
 
 		delete mGUI;
