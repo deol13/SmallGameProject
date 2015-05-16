@@ -93,7 +93,7 @@ void Render::loadTextures()
 	createTexture("eldpelare/eld.png");
 }
 
-int Render::createTexture( std::string fileName ) 
+GLuint Render::createTexture( std::string fileName ) 
 {
 	GLuint texture;
 	int x, y, n;
@@ -109,7 +109,7 @@ int Render::createTexture( std::string fileName )
 	glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData );
 	textures.push_back( texture );
 	stbi_image_free( textureData );
-	return textures.size() - 1;
+	return texture;
 }
 
 void Render::GeometryPassInit() //Bind gBuffer for object and ground shader.

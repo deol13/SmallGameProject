@@ -1,5 +1,6 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
+#include <windows.h>
 #include "Render.h"
 #include <string>
 #include "Player.h"
@@ -27,6 +28,7 @@ private:
 	int enemiesRemaining;
 	int nrOfArenaObjects;
 	int firstEnemyIndex;		//Start of enemies in renderObjects. Useful for enemy deaths etc.
+	int weaponRender;			//index in renderObjects for the player weapon
 
 	bool onExitCleanUp;
 

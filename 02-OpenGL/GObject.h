@@ -50,7 +50,9 @@ class GObject
 
 		void scale(float x, float y, float z); //set scale matrix
 		void rotate(float x, float y, float z); //set rotation matrix
+		void setRotation(float x, float y, float z);
 		void translate(float x, float y, float z); //set translation matrix
+		
 
 		void loadObjectFile(std::string fileName, int keyFrame = 0);
 		void bindBuffers();
@@ -59,7 +61,7 @@ class GObject
 
 		void init();
 
-		void animate();
+		void animate(int stopState);
 
 		void setAnimationState(float state);
 		void setTexture(GLuint gTexture);

@@ -1,10 +1,34 @@
-﻿Build started 5/14/2015 1:18:22 PM.
+﻿Build started 5/16/2015 11:32:24 AM.
      1>Project "C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Demo (Konfliktkopia för laptop 2015-05-12).vcxproj, Demo (Konfliktkopia för laptop 2015-05-14).vcxproj).  This can lead to incorrect clean and rebuild behavior.
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GObject.cpp
+         GObject.cpp
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gobject.cpp(37): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gobject.cpp(298): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gobject.cpp(334): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gobject.cpp(340): warning C4305: '+=' : truncation from 'double' to 'float'
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
+         Debug\BlitQuad.obj
+         Debug\BoundingPolygon.obj
+         Debug\Enemy.obj
+         Debug\GameState.obj
+         Debug\GAShader.obj
+         Debug\gbuffer.obj
+         Debug\GObject.obj
+         Debug\GuiManager.obj
+         Debug\GuiShader.obj
+         Debug\InGameGui.obj
+         Debug\LightShader.obj
+         Debug\main.obj
+         Debug\Player.obj
+         Debug\Render.obj
+         Debug\ShopUI.obj
+         Debug\stb_image.obj
          Demo.vcxproj -> C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.exe
      1>Done Building Project "C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.09
+Time Elapsed 00:00:01.30

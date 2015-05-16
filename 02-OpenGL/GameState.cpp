@@ -251,10 +251,12 @@ void GameState::keyDown(char c)
 		if (player->getWeapon() == SWORD)
 		{
 			player->setWeapon(SPEAR);
+			renderObjects[weaponRender] = player->getGObject(SPEAR);
 		}
 		else		//Using spear so change to sword
 		{
 			player->setWeapon(SWORD);
+			renderObjects[weaponRender] = player->getGObject(SWORD);
 		}
 		break;
 	case 'e': //Temporary
@@ -395,6 +397,7 @@ void GameState::playerAttack()
 		points[1] = {player->getX() + dirVec.x, player->getZ() + dirVec.y};
 		hitbox = BoundingPolygon(points, 2);
 	}
+	player->attack();
 	for(int i = 0; i < waveSize; i++)
 	{
 		BoundingPolygon test = enemyWave[i]->getBounds();
@@ -490,7 +493,6 @@ void GameState::spawnEnemies(int waveNumber)
 	int waveNr = waveNumber;
 	lua_State *L = luaL_newstate();
 	luaL_openlibs(L);
-
 	if(error)
 	{
 		std::cerr << "Unable to compile errorhandler " << lua_tostring(L, -1) << std::endl;
@@ -538,6 +540,20 @@ void GameState::spawnEnemies(int waveNumber)
 			if( texIndex >= render->getTextureSize()  ) {
 				render->createTexture(enemyArgs[6*i + 2]);
 			}
+			
+			/////*checks folder for obj-files*/
+			////std::string* objArr = new std::string[16];
+			////WIN32_FIND_DATA FindFileData;
+			////HANDLE hFind = FindFirstFile(TEXT("*.obj"), &FindFileData);
+			////int c = 0;
+			////if(hFind != INVALID_HANDLE_VALUE) {
+			////	do {
+			////		wstring ws(FindFileData.cFileName);
+			////		objArr[c++] = (ws.begin(), ws.end);
+			////	} while(FindNextFile(hFind, &FindFileData));
+			////		FindClose(hFind);
+			////}
+
 			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), enemyArgs[(6 * i) + 1].c_str(), waveNumber);
 			enemyWave[i] = tempEnemy;
 			renderObjects.push_back(tempEnemy->getGObject());
@@ -550,14 +566,15 @@ void GameState::spawnEnemies(int waveNumber)
 
 void GameState::spawnPlayer()
 {
-	//Hardcoded for now. Might be worth using lua later
-	render->createTexture("TestAnimation/testtexture.png");
-	player = new Player(render->getTexture(0), 100, 100, 6, 0);
-	GObject** tempGraphic = player->getGObjects();
-	for(int i = 0; i < 1; i++)					//change to 3
-	{
-		renderObjects.push_back(tempGraphic[i]);
-	}
+	GLuint textures[3];
+	textures[0] = render->createTexture("TestAnimation/testtexture.png");
+	textures[1] = render->createTexture("animations/spear/upperbodyspear.png");
+	textures[2] = render->createTexture("animations/sword/testtexture.png");
+	player = new Player(textures, 100, 100, 6, 0);
+	
+	renderObjects.push_back(player->getGObject(0));
+	renderObjects.push_back(player->getGObject(1));
+	weaponRender = renderObjects.size() -1;
 
 }
 
