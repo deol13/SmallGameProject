@@ -249,16 +249,18 @@ function saveGame(gold, whichMap) --[[Saves the game on each new map, doesn't sa
 	io.close(file)
 end
 
-function onDefeatSave(gold, whichMap, whichWave) --[[Saves the game when the player dies, saves the which wave the player was on too]]
+function onDefeatSave(gold, whichMap, whichWave, nrOfExtraHealth) --[[Saves the game when the player dies, saves the which wave the player was on too]]
 	local file = io.open("defeatSave.dat", "w+")	-- Opens a file in read
 	io.output(file)							-- sets the default input file as test.lua
 
-	io.write(currentHearts - 3, "\n")
+	io.write(nrOfExtraHealth - 3, "\n")
 	io.write(upgradeTo[1] - 1, "\n")
 	io.write(upgradeTo[2] - 5, "\n")
 	io.write(upgradeTo[3] - 9, "\n")
 	io.write(upgradeTo[4] - 13, "\n")
 	io.write(whichMap, "\n")
+
+
 	io.write(whichWave, "\n")
 	io.write(gold, "\n")
 

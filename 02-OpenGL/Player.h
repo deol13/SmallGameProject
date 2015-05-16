@@ -49,6 +49,7 @@ public:
 	void setWeapon(const int weapon);
 	void setWeaponUpgrade(const int weapon, const int weaponLevel);
 	void setGold(const int gold);
+	void setDefault();
 
 	int getDamageDealt();
 	int getWeapon();

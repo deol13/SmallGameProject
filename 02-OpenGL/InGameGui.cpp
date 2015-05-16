@@ -58,6 +58,10 @@ void InGameGui::init()
 
 	getLuaTable();
 	createVertexBuffer();
+
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
 }
 
 void InGameGui::update() 
@@ -386,4 +390,7 @@ void InGameGui::getFileLuaTable(lua_State *L, int nrOfHp)
 		lua_pop(L, 1);
 	}
 
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
 }
