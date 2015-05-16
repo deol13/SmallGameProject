@@ -55,7 +55,7 @@ bana2/wallright.obj
 bana2/bana2textur.png
 10.0
 10.0
-bana2/wallup.obj
+bana2/wallupp.obj
 10.0
 0.0
 208.0
