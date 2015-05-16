@@ -28,6 +28,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile, int 
 		this->type = MELEE;
 		moveSpeed = 1.0f;
 		this->attackRange = MELEERANGE;
+		this->loadObj->scale(2.0f, 1.0f, 1.5f);
 		break;
 	case ANIMAL:
 		loadObj = new GObject(objectFile, GL_TRIANGLES, texture);
@@ -35,6 +36,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile, int 
 		this->type = ANIMAL;
 		moveSpeed = 2.0f;
 		this->attackRange = ANIMALRANGE;
+		this->loadObj->scale(1.5f, 1.0f, 2.0f);
 		break;
 	default:
 		break;
@@ -72,6 +74,7 @@ void Enemy::setEnemy(int type)
 	{
 		health = 60;
 		this->type = type;
+		loadObj->scale(2.0f, 1.0f, 3.0f);
 	}
 	else if (type == SECONDBOSS)
 	{

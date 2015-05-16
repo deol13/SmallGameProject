@@ -4,7 +4,7 @@ GameState::GameState( int w, int h)
 {
 	currentMap = new int(1);
 	whichSavedWave = new int(1);
-	gold = 250;
+	gold = 0;
 	onExitCleanUp = false;
 	//init(w, h);
 	//Set render
@@ -695,7 +695,6 @@ void GameState::nextWave()
 	if (waveNumber == 6)	//change the boss stats.
 	{
 		enemyWave[0]->setEnemy(FIRSTBOSS);
-		enemyWave[0]->getGObject()->scale(2.0f, 1.0f, 3.0f);
 	}
 	else if (waveNumber == 12)
 	{
