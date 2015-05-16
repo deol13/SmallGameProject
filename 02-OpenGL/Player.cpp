@@ -18,12 +18,28 @@ Player::Player()
 	this->swordUpgrade = 1;
 	this->dirVec = glm::vec2(0.0, 1.0);
 	this->moveVec = glm::vec2(0.0, 0.0);
+	this->attackState = 0;
 }
-Player::Player(GLuint texture, float x, float z, int health, int armour)
+Player::Player(GLuint textures[3], float x, float z, int health, int armour)
 {
-	std::string files[] = {"TestAnimation/StartFrame.obj", "TestAnimation/Frame10.obj", "TestAnimation/Frame20.obj"};
-	loadObj = new GObject*[1];
-	loadObj[0] = new GObject(files, 3, texture);
+	std::string folder = "animations/feet/";
+	std::string legFiles[] = {folder + "footup.obj", folder + "rightup.obj", folder + "stop.obj"};
+	
+	folder = "animations/sword/";
+	std::string swordFiles[] =
+	{folder + "swordrun1.obj", folder + "swordrun2.obj", folder + "swordstop.obj",
+	folder + "swordstrike1.obj", folder + "swordstrike2.obj"};
+
+	folder = "animations/spear/";
+	std::string spearFiles[] = 
+		{folder + "spearrun1.obj", folder + "spearrun2.obj", folder + "spearstop.obj",
+		folder + "spear1.obj"};
+
+	loadObj = new GObject*[3];
+	loadObj[0] = new GObject(legFiles, 3, textures[0]);
+	loadObj[1] = new GObject(swordFiles, 5, textures[1]);
+	loadObj[2] = new GObject(spearFiles, 4, textures[2]);
+
 	this->x = x;
 	this->z = z;
 	invulTimer = 0;
@@ -38,8 +54,9 @@ Player::Player(GLuint texture, float x, float z, int health, int armour)
 	this->swordUpgrade = 0;
 	this->dirVec = glm::vec2(0.0, 1.0);
 	this->moveVec = glm::vec2(0.0, 0.0);
+	this->attackState = 0;
 
-	for(int i = 0; i < 1; i++)		//again, change to 3
+	for(int i = 0; i < 3; i++)		//again, change to 3
 	{
 		loadObj[i]->translate(x, 17, z);
 	}
@@ -105,9 +122,9 @@ int Player::takeDamage(int dmg)
 	return dmg;
 }
 
-GObject** Player::getGObjects() const
+GObject* Player::getGObject(int index) const
 {
-	return loadObj;
+	return loadObj[index];
 }
 
 void Player::update()
@@ -118,15 +135,25 @@ void Player::update()
 
 	if(abs(xMove)< 0.001 && abs(zMove)< 0.001)
 	{	
-		for(int i = 0; i < 1; i++)
+		loadObj[0]->setAnimationState(2.0);
+		if(attackState == 0)
 		{
-			loadObj[i]->setAnimationState(0.0);
+			loadObj[weapon]->setAnimationState(2.0);
 		}
 	}
-	for(int i = 0; i < 1; i++)
+	loadObj[0]->animate(2);
+	if(attackState == 0)
+	{
+		loadObj[weapon]->animate(2);
+	} else
+	{
+		loadObj[weapon]->animate(5 - weapon);
+	}
+	for(int i = 0; i < 3; i++)
 	{
 		loadObj[i]->translate(xMove, 0, zMove);
-		loadObj[i]->animate();
+		/* rotation default is facing up. Turning goes counter clockwise*/
+		loadObj[i]->setRotation(0, atan(dirVec.x/-dirVec.y), 0);
 	}
 	x += xMove;
 	z += zMove;
@@ -139,6 +166,25 @@ void Player::update()
 	else if (invulTimer != 0)
 	{
 		invulTimer = 0;
+	}
+	if( attackState > 0 ) {
+		attackState--;
+	}
+}
+
+void Player::attack()
+{
+	if(weapon == SWORD)
+	{
+		//loadObj[2]->animate(5);
+		loadObj[1]->setAnimationState(2);
+		loadObj[1]->animate(4);
+		attackState = 30;
+	} else
+	{
+		loadObj[1]->setAnimationState(2);
+		loadObj[1]->animate(3);
+		attackState = 20;
 	}
 }
 

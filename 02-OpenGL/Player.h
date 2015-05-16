@@ -20,6 +20,7 @@ private:
 	int swordUpgrade;
 
 	int invulTimer;
+	int attackState;
 
 	float x, z;
 	glm::vec2 dirVec;		//does not reset when stopping
@@ -32,13 +33,14 @@ private:
 public:
 	//enum Direction { UP, DOWN, LEFT, RIGHT, STILL };
 	Player();
-	Player(GLuint texture, float x, float y, int health, int armour);
+	Player(GLuint textures[3], float x, float y, int health, int armour);
 	~Player();
 	void setMovement(int x, int y);
 	void stop(bool stopX, bool stopZ);
 	int takeDamage(int dmg);
-	GObject** getGObjects() const;
+	GObject* getGObject(int index) const;
 	void update();
+	void attack();
 
 	void setMaxHealth(const int health);
 	void setHealth(const int health);
