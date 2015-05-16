@@ -196,7 +196,7 @@ void GameState::update()
 			nextWave();
 		}
 	}
-	if (menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1)
+	if (menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1) //
 	{
 		for (int i = 0; i < waveSize; i++)
 		{

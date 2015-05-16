@@ -14,6 +14,7 @@
 class GuiManager
 {
 	private:
+		bool grayContButton;
 		int texCounter;
 		int windowWidth;
 		int windowHeight;

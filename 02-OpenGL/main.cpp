@@ -89,8 +89,6 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 				Audio::getAudio().playMusic(0);
 				Audio::getAudio().update(1);
 
-				glDisable(GL_DEPTH_TEST);
-
 				if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 				{
 					if (msg.message == WM_LBUTTONDOWN)
@@ -141,6 +139,9 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 					gameState->continueInit(WINDOW_WIDTH, WINDOW_HEIGHT);
 					continueState = false;
 				}
+
+				glEnable(GL_DEPTH_TEST);
+
 				if( PeekMessage( &msg, nullptr, 0, 0, PM_REMOVE ) ) 
 				{
 					if (gameState->guiState() < 3 && gameState->getShopState() == 0)
@@ -221,6 +222,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 						glDisable(GL_DEPTH_TEST);
 						if (playState != MENUSTATE)
 							gameState->uiUpdate();
+						glEnable(GL_DEPTH_TEST);
 					}
 					TranslateMessage( &msg );
 					DispatchMessage( &msg );

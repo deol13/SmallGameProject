@@ -6,6 +6,7 @@ int GuiManager::nonTableAction = 0;
 
 GuiManager::GuiManager(int w, int h)
 {
+	grayContButton = false;
 	windowWidth = w;
 	windowHeight = h;
 	nrOfbuttons = 0;
@@ -124,7 +125,16 @@ int GuiManager::mouseClick(float mx, float my)
 		return nonTableAction;
 	}
 	else
+	{
 		createVertexBuffer();
+	}
+	if (state == 1)
+	{
+		if (grayContButton)
+			guiButtons[2].textureIndex = 15;
+		else
+			guiButtons[2].textureIndex = 2;
+	}
 
 	return -1;
 }
@@ -139,9 +149,15 @@ void GuiManager::checkContinueButton()
 		lua_pop(L, 1);
 
 		if (tmp == 0) //No save found
+		{
 			guiButtons[2].textureIndex = 15;
+			grayContButton = true;
+		}
 		else //Save found
+		{
 			guiButtons[2].textureIndex = 2;
+			grayContButton = false;
+		}
 	}
 	else
 	{
@@ -154,13 +170,13 @@ void GuiManager::checkContinueButton()
 void GuiManager::pauseGame()
 {
 	lua_getglobal(L, "pauseGame");
-
+	
 	GLenum error1 = glGetError();
 	if (error1 != GL_NO_ERROR)
 		printf("Error");
-
+	
 	getLuaTable(0);
-
+	
 	createVertexBuffer();
 }
 
