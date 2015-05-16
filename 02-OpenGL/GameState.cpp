@@ -226,7 +226,8 @@ void GameState::update()
 					}
 				}
 
-				float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) + pow((enemyWave[i]->getZ() - player->getZ()), 2));
+				float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) + 
+					pow((enemyWave[i]->getZ() - player->getZ()), 2));
 
 				if (enemyWave[i]->getRange() > playerDist)
 				{
@@ -509,7 +510,7 @@ void GameState::loadArena(int fileName)
 	{
 		nrOfArenaObjects = lua_tointeger(L, -1);
 		lua_pop(L, 1);
-		std::string* arenaArr = new std::string[8 * nrOfArenaObjects];					//0: obj, 1-3: x,y,z, 4: tex-name, 5: tex-index
+		std::string* arenaArr = new std::string[8 * nrOfArenaObjects];		//0: obj, 1-3: x,y,z, 4: tex-name, 5: tex-index
 		int texOffset = render->getTextureSize()-1;
 		
 		int c = 0;
@@ -533,37 +534,32 @@ void GameState::loadArena(int fileName)
 			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
 			if (fileName == 1)
 			{					//Scalings for map 1
-				if (i == 3)		//left
+				if (i == 3 || i == 4)		//left / right
 				{
 					temp->scale(1.0f, 0.0f, 1.2f);
 				}
-				else if (i == 4)	//right
-				{
-					temp->scale(1.0f, 0.0f, 1.2f);
-				}
-				else if (i == 5)	//down
+				else if (i == 5 || i == 6)	//down / up
 				{
 					temp->scale(1.2f, 0.0f, 1.0f);
 				}
-				else if (i == 6)	//up
-				{
-					temp->scale(1.2f, 0.0f, 1.0f);
-				}
-				else if (i == 7)	//wall left
+				else if (i == 7 || i == 8)	//wall left / right
 				{
 					temp->scale(1.2f, 0.0f, 1.4f);
 				}
-				else if (i == 8)	//wall right
-				{
-					temp->scale(1.2f, 0.0f, 1.4f);
-				}
-				else if (i == 9)	//upp
+				else if (i == 10 || i == 9)	//wall down / up
 				{
 					temp->scale(1.7f, 0.0f, 1.0f);
 				}
-				else if (i == 10)	//wall down
+			}
+			if (fileName == 2)		//scalings for map 2
+			{
+				if (i == 6 || i == 7)	// down / up
 				{
-					temp->scale(1.7f, 0.0f, 1.0f);
+					temp->scale(1.85f, 0.0f, 1.2f);
+				}
+				if (i == 5 || i == 8)		//right / left
+				{
+					temp->scale(1.0f, 0.0f, 1.4f);
 				}
 			}
 			renderObjects.push_back(temp);
@@ -622,6 +618,12 @@ void GameState::spawnEnemies(int waveNumber)
 		enemiesRemaining = waveSize;
 		enemyWave = new Enemy*[waveSize];
 		firstEnemyIndex = renderObjects.size();			//Note: There could possibly be an offset.
+
+		TCHAR NPath[MAX_PATH];
+		GetCurrentDirectory(MAX_PATH, NPath);
+		std::wstring wstr(&NPath[0]);
+		std::string basePath(wstr.begin(), wstr.end());
+
 		for(int i = 0; i < waveSize; i++)
 		{
 			int texIndex = atoi(enemyArgs[6*i+3].c_str()) + texOffset;
@@ -629,20 +631,24 @@ void GameState::spawnEnemies(int waveNumber)
 				render->createTexture(enemyArgs[6*i + 2]);
 			}
 			
-			/////*checks folder for obj-files*/
-			////std::string* objArr = new std::string[16];
-			////WIN32_FIND_DATA FindFileData;
-			////HANDLE hFind = FindFirstFile(TEXT("*.obj"), &FindFileData);
-			////int c = 0;
-			////if(hFind != INVALID_HANDLE_VALUE) {
-			////	do {
-			////		wstring ws(FindFileData.cFileName);
-			////		objArr[c++] = (ws.begin(), ws.end);
-			////	} while(FindNextFile(hFind, &FindFileData));
-			////		FindClose(hFind);
-			////}
+			/*checks folder for obj-files*/
+			std::string* objArr = new std::string[16];
+			WIN32_FIND_DATAA FindFileData;
+			HANDLE hFind = INVALID_HANDLE_VALUE;
+			std::string str = basePath + "/resource" + enemyArgs[(6 * i) + 1]+ "*.obj";
+			hFind = FindFirstFileA(str.c_str(), &FindFileData);
+			int c = 0;
+			if(hFind != INVALID_HANDLE_VALUE) {
+				do {
+					objArr[c] = FindFileData.cFileName;
+					objArr[c] = enemyArgs[(6 * i) + 1].c_str() + objArr[c];
+					c++;
+				} while(FindNextFileA(hFind, &FindFileData));
+					FindClose(hFind);
+			}
 
-			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), enemyArgs[(6 * i) + 1].c_str(), waveNumber);
+			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), 
+										atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), objArr, c, waveNumber);
 			enemyWave[i] = tempEnemy;
 			renderObjects.push_back(tempEnemy->getGObject());
 		}
@@ -705,7 +711,7 @@ void GameState::nextWave()
 	delete enemyWave;	//Remove last wave
 	enemyWave = nullptr;
 
-	if (waveNumber == 2 || waveNumber == 12)
+	if (waveNumber == 6 || waveNumber == 12)
 	{
 		gold += 30;	//Grant gold for finished boss
 

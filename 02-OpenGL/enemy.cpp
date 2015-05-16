@@ -48,6 +48,40 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile, int 
 	}
 }
 
+Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, int nrOfKeyFrames, int waveNr)
+{
+	this->x = x;
+	this->z = z;
+	loadObj = nullptr;
+	Point* colPoints = new Point[4]{{x - 5.0, z - 5.0}, {x - 5.0, z + 5.0}, {x + 5.0, z - 5.0}, {x + 5.0, z + 5.0}};
+	collisionRect = BoundingPolygon(colPoints, 4);
+	loadObj = new GObject(objectFiles, nrOfKeyFrames, texture);
+	switch(type)
+	{
+	case MELEE:
+		health = 20 + 1 * waveNr;
+		this->type = MELEE;
+		moveSpeed = 1.0f;
+		this->attackRange = MELEERANGE;
+		this->loadObj->scale(2.0f, 1.0f, 1.5f);
+		break;
+	case ANIMAL:
+		health = 30 + 2 * waveNr;
+		this->type = ANIMAL;
+		moveSpeed = 2.0f;
+		this->attackRange = ANIMALRANGE;
+		this->loadObj->scale(1.5f, 1.0f, 2.0f);
+		break;
+	default:
+		break;
+	}
+	loadObj->translate(x, 17, z);
+	for(int i = 0; i < 8; i++)
+	{
+		neighbourPos[i] = 0;
+	}
+}
+
 Enemy::~Enemy()
 {
 	delete loadObj;
@@ -80,11 +114,13 @@ void Enemy::setEnemy(int type)
 	{
 		health = 80;
 		this->type = type;
+		loadObj->scale(0.75f, 0.5f, 0.75f);
 	}
 	else		//final boss
 	{
 		health = 120;
 		this->type = type;
+		loadObj->scale(0.85f, 1.0f, 0.85f);
 	}
 
 }
