@@ -104,17 +104,16 @@ void Enemy::setEnemy(int type)
 		health = 40;
 		this->type = ANIMAL;
 	}
-	else if (type == FIRSTBOSS)
+	else if (type == FIRSTBOSS)		//Lion
 	{
 		health = 60;
 		this->type = type;
 		loadObj->scale(2.0f, 1.0f, 3.0f);
 	}
-	else if (type == SECONDBOSS)
+	else if (type == SECONDBOSS)	//Elephant
 	{
 		health = 80;
 		this->type = type;
-		loadObj->scale(0.75f, 0.5f, 0.75f);
 	}
 	else		//final boss
 	{

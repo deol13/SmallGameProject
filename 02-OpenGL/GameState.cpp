@@ -550,32 +550,48 @@ void GameState::loadArena(int fileName)
 			{					//Scalings for map 1
 				if (i == 3 || i == 4)		//left / right
 				{
-					temp->scale(1.0f, 0.0f, 1.2f);
+					temp->scale(1.0f, 1.0f, 1.2f);
 				}
 				else if (i == 5 || i == 6)	//down / up
 				{
-					temp->scale(1.2f, 0.0f, 1.0f);
+					temp->scale(1.2f, 1.0f, 1.0f);
 				}
 				else if (i == 7 || i == 8)	//wall left / right
 				{
-					temp->scale(1.2f, 0.0f, 1.4f);
+					temp->scale(1.2f, 1.0f, 1.4f);
 				}
 				else if (i == 10 || i == 9)	//wall down / up
 				{
-					temp->scale(1.7f, 0.0f, 1.0f);
+					temp->scale(1.7f, 1.0f, 1.0f);
 				}
 			}
-			if (fileName == 2)		//scalings for map 2
+			else if (fileName == 2)		//scalings for map 2
 			{
-				if (i == 6 || i == 7)	// down / up
+				if (i == 6 || i == 7)	// down / up	6 7
 				{
-					temp->scale(1.85f, 0.0f, 1.2f);
+					temp->scale(1.7f, 1.0f, 1.0f);
 				}
-				if (i == 5 || i == 8)		//right / left
+				else if (i == 5 || i == 8)		//right / left
 				{
-					temp->scale(1.0f, 0.0f, 1.4f);
+					temp->scale(1.0f, 1.0f, 1.0f);
 				}
 			}
+			else if (fileName == 3)
+			{
+				if (i < 5 && i != 0)		//Corners
+				{
+					temp->scale(0.4, 0.4, 0.6);
+				}
+				else if (i == 5 || i == 6)	//Walls up & down
+				{
+					temp->scale(0.2, 1.0, 0.9);
+				}
+				else if (i == 7 || i == 8)	//Walls left & right
+				{
+					temp->scale(0.9, 1.0, 0.3);
+				}
+			}
+
 			renderObjects.push_back(temp);
 
 		}
@@ -725,12 +741,12 @@ void GameState::nextWave()
 	delete enemyWave;	//Remove last wave
 	enemyWave = nullptr;
 
-	if (waveNumber == 6 || waveNumber == 12)
+	if (waveNumber == 2 || waveNumber == 3)	//6 12
 	{
 		gold += 30;	//Grant gold for finished boss
 
 		arenaCleanUp();		//Load the next map
-		*currentMap = *currentMap + 1;
+ 		*currentMap = *currentMap + 1;
    		loadArena(*currentMap);
 	}
 	else
