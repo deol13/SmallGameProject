@@ -156,7 +156,14 @@ void Player::update()
 	{
 		loadObj[i]->translate(xMove, 0, zMove);
 		/* rotation default is facing up. Turning goes counter clockwise*/
-		float angle = atan(dirVec.y / dirVec.x) + 3.1415/2.0;
+		float angle = 0;
+		if(dirVec.y < 0.1)
+		{
+			//angle = 3.14159;
+		} else
+		{
+			//angle = dirVec.x * (dirVec.y +2) * 3.14159 / 4.0;
+		}
 		loadObj[i]->setRotation(0, angle, 0);
 	}
 	x += xMove;

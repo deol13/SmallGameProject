@@ -518,6 +518,20 @@ void GameState::loadArena(int fileName)
 			GObject* temp = new GObject(arenaArr[8 * i], GL_TRIANGLES, render->getTexture(texIndex));
 			temp->translate(atoi(arenaArr[8*i+1].c_str()), atoi(arenaArr[8*i+2].c_str()), atoi(arenaArr[8*i+3].c_str()));
 			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
+			int width = atoi(arenaArr[8 * i + 6].c_str());
+			int length = atoi(arenaArr[8 * i + 7].c_str());
+			for(int i = 0; i < width; i++)
+			{
+				for(int j = 0; j < length; j++)
+				{
+					int posX = atoi(arenaArr[8 * i + 1].c_str()) + i - width / 2;
+					int posZ = atoi(arenaArr[8 * i + 3].c_str()) + j - length / 2;
+					if(posX > 0 && posZ > 0)
+					{
+						arenaMap[posX][posZ] = -100;
+					}
+				}
+			}
 			if (fileName == 1)
 			{					//Scalings for map 1
 				if (i == 3 || i == 4)		//left / right
