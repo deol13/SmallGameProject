@@ -237,6 +237,13 @@ void Player::setGold(const int gold)
 	this->gold = gold;
 }
 
+void Player::setDefault()
+{
+	x = 128.0;
+	z = 128.0;
+	stop(true, true);
+}
+
 int Player::getDamageDealt()
 {
 	int damage = 0;

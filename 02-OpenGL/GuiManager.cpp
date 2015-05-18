@@ -23,8 +23,8 @@ GuiManager::~GuiManager()
 	clean();
 	delete gShader;
 	glDeleteShader(gGuiShader);
-	if (L != nullptr)
-		lua_close(L);
+	//if (L != nullptr)
+	//	lua_close(L);
 }
 
 void GuiManager::clean()
@@ -78,6 +78,10 @@ void GuiManager::startMenuR()
 	getLuaTable(0);
 
 	createVertexBuffer();
+
+	error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
 }
 
 void GuiManager::update()
@@ -100,11 +104,11 @@ void GuiManager::update()
 		glBindTexture(GL_TEXTURE_2D, textures[guiButtons[i].textureIndex]);
 		
 		glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
-	}
 
-	GLenum error1 = glGetError();
-	if (error1 != GL_NO_ERROR)
-		printf("Error");
+		GLenum error1 = glGetError();
+		if (error1 != GL_NO_ERROR)
+			printf("Error");
+	}
 }
 
 int GuiManager::mouseClick(float mx, float my)
@@ -136,6 +140,10 @@ int GuiManager::mouseClick(float mx, float my)
 			guiButtons[2].textureIndex = 2;
 	}
 
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
+
 	return -1;
 }
 
@@ -165,6 +173,10 @@ void GuiManager::checkContinueButton()
 		lua_pop(L, 1);
 	}
 
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
+
 }
 
 void GuiManager::pauseGame()
@@ -191,6 +203,10 @@ void GuiManager::won()
 	getLuaTable(0);
 
 	createVertexBuffer();
+
+	error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
 }
 
 void GuiManager::defeat()
@@ -204,6 +220,10 @@ void GuiManager::defeat()
 	getLuaTable(0);
 
 	createVertexBuffer();
+
+	error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
 }
 
 void GuiManager::getLuaTable(int nrOfParameters)
@@ -382,6 +402,4 @@ void GuiManager::loadTextures()
 	createTexture("moregui/pause.png");           //14
 
 	createTexture("MenuTextures/contgrey.png"); //15
-
-	
 }

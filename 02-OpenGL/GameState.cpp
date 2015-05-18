@@ -120,6 +120,8 @@ void GameState::clean()
 		onExitCleanUp = false;
 		delete currentMap;
 		delete whichSavedWave;
+
+		dead = false;
 	}
 }
 
@@ -142,17 +144,28 @@ void GameState::cleanedOnDefeat()
 
 void GameState::freeLoad()
 {
+	dead = false;
 	shopUI = new ShopUI();
 	gameUI = new InGameGui();
 
 	loadSavedGame();
 
+	if (*currentMap == 1)
+		waveNumber = 1;
+	else if (*currentMap == 2)
+		waveNumber = 7;
+	else if (*currentMap == 3)
+		waveNumber = 13;
+
+
 	spawnEnemies(waveNumber);
 	enemiesRemaining = waveSize;
+	player->setDefault();
 }
 
 void GameState::costLoad()
 {
+	dead = false;
 	shopUI = new ShopUI();
 	gameUI = new InGameGui();
 	gold = -5;
@@ -161,6 +174,7 @@ void GameState::costLoad()
 
 	spawnEnemies(*whichSavedWave);
 	enemiesRemaining = waveSize;
+	player->setDefault();
 }
 
 void GameState::arenaCleanUp()
@@ -815,8 +829,9 @@ void GameState::saveGameOnDefeat()
 	lua_pushnumber(L, gold);
 	lua_pushnumber(L, *currentMap); //Map
 	lua_pushnumber(L, waveNumber); //Wave
+	lua_pushnumber(L, player->getMaxHealth()/2); //Wave
 
-	error = lua_pcall(L, 3, 0, 0);
+	error = lua_pcall(L, 4, 0, 0);
 	if (error)
 	{
 		std::cerr << "Unable to run: " << lua_tostring(L, -1) << std::endl;
@@ -938,7 +953,8 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 		tmpGUI->addHealth();
 
 	tmpPlayer->setGold(ggold);
-	tmpPlayer->setHealth(6 + nrOfHp*2);
+	tmpPlayer->setMaxHealth(6 + nrOfHp*2);
+	tmpPlayer->setHealth(tmpPlayer->getMaxHealth());
 	tmpPlayer->setArmour(upgradeArmor);
 	tmpPlayer->setWeaponUpgrade(1, upgradeSword);
 	tmpPlayer->setWeaponUpgrade(2, upgradeSpear);

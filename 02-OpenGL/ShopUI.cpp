@@ -33,8 +33,8 @@ ShopUI::~ShopUI()
 
 	delete gShader;
 	glDeleteShader(gGuiShader);
-	if (L != nullptr)
-		lua_close(L);
+	//if (L != nullptr)
+	//	lua_close(L);
 }
 
 void ShopUI::init()
@@ -59,6 +59,10 @@ void ShopUI::init()
 
 	getLuaTable();
 	createVertexBuffer();
+
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
 }
 void ShopUI::update()
 {
@@ -100,6 +104,10 @@ int ShopUI::mouseClick(float mx, float my, int &gold, Player* player)
 	lua_pushinteger(L, gold);
 
 	getNewTexture();
+
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
 
 	if (whichObject == 1)	//Wants to upgrade sword
 	{

@@ -126,7 +126,9 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 					TranslateMessage(&msg);
 					DispatchMessage(&msg);
 				}
+				glDisable(GL_DEPTH_TEST);
 				mGUI->update();
+
 				break;
 			case GAMESTATE:
 				if(initState)
