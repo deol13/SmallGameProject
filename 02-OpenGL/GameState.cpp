@@ -691,9 +691,9 @@ void GameState::spawnEnemies(int waveNumber)
 void GameState::spawnPlayer()
 {
 	GLuint textures[3];
-	textures[0] = render->createTexture("TestAnimation/testtexture.png");
-	textures[1] = render->createTexture("animations/spear/upperbodyspear.png");
-	textures[2] = render->createTexture("animations/sword/testtexture.png");
+	textures[0] = render->createTexture("animations/feet/testtexture.png");
+	textures[1] = render->createTexture("animations/spear/mainchartexturespear.png");
+	textures[2] = render->createTexture("animations/sword/mainchartexture.png");
 	player = new Player(textures, 100, 100, 6, 0);
 	
 	renderObjects.push_back(player->getGObject(0));

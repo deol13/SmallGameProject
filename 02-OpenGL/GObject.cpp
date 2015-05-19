@@ -74,7 +74,7 @@ void GObject::rotate(float x, float y, float z) //set rotation matrix
 	glm::mat4 xMatrix = glm::mat4(
 		1.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, cos(x), -sin(x), 0.0f,
-		0.0f, cos(x), cos(x), 0.0f,
+		0.0f, sin(x), cos(x), 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f);
 	glm::mat4 yMatrix = glm::mat4(
 		cos(y), 0.0f, -sin(y), 0.0f,
@@ -93,7 +93,7 @@ void GObject::setRotation(float x, float y, float z)
 	glm::mat4 xMatrix = glm::mat4(
 		1.0f, 0.0f, 0.0f, 0.0f,
 		0.0f, cos(x), -sin(x), 0.0f,
-		0.0f, cos(x), cos(x), 0.0f,
+		0.0f, sin(x), cos(x), 0.0f,
 		0.0f, 0.0f, 0.0f, 1.0f);
 	glm::mat4 yMatrix = glm::mat4(
 		cos(y), 0.0f, -sin(y), 0.0f,

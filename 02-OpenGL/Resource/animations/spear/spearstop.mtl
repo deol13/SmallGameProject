@@ -5,13 +5,34 @@ Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd testtexture.png
 Ni 1.00
-newmtl lambert4SG
+newmtl lambert8SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd upperbodyspear.png
+map_Kd mainchartexture.png
 Ni 1.00
+newmtl lambert11SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd mainchartexturespear.png
+Ni 1.00
+newmtl upperbody:pSphere2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl upperbody:pSphere2SG1
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+Ns 4.31
 newmtl upperbodyspear:head:Group33555SG6
 illum 4
 Kd 0.00 0.00 0.00
