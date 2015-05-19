@@ -396,7 +396,7 @@ void GameState::leftMouseClick(float x, float z)
 	if (player->getWeapon() == SWORD)
 	{
 		float weaponRange = 5.0f;	//multiplier for the direction vector
-		glm::vec2 dirVec = glm::normalize(glm::vec2(x - player->getX(), y - player->getZ()));
+		glm::vec2 dirVec = glm::normalize(glm::vec2(x - player->getX(), z - player->getZ()));
 
 		dirVec.x *= weaponRange;
 		dirVec.y *= weaponRange;
@@ -574,22 +574,23 @@ void GameState::loadArena(int fileName)
 			//	}
 			//}
 			if (fileName == 1)
-			{					//Scalings for map 1
-				if (i == 3 || i == 4)		//left / right
+			{
+				if (i == 1)//Scalings for map 1
 				{
-					temp->scale(1.0f, 1.0f, 1.2f);
+					temp->scale(1.3f, 1.0f, 1.5f);
 				}
-				else if (i == 5 || i == 6)	//down / up
-				{
-					temp->scale(1.2f, 1.0f, 1.0f);
-				}
-				else if (i == 7 || i == 8)	//wall left / right
+				else if (i == 3 || i == 4)	//wall left / right
 				{
 					temp->scale(1.2f, 1.0f, 1.4f);
 				}
-				else if (i == 10 || i == 9)	//wall down / up
+				else if (i == 5 || i == 6)	//wall down / up
 				{
 					temp->scale(1.7f, 1.0f, 1.0f);
+				}
+				else if (i == 10)
+				{
+					temp->rotate(0.0f, -3.14159f / -2.0f, 0.0f);
+					temp->scale(1.2f, 1.0f, 1.0f);
 				}
 			}
 			else if (fileName == 2)		//scalings for map 2

@@ -70,7 +70,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, in
 		this->type = ANIMAL;
 		moveSpeed = 0.6f;
 		this->attackRange = ANIMALRANGE;
-		this->loadObj->scale(1.5f, 1.0f, 2.0f);
+		this->loadObj->scale(1.5f, 1.0f, 1.5f);
 		break;
 	default:
 		break;
@@ -113,14 +113,16 @@ void Enemy::setEnemy(int type)
 	else if (type == SECONDBOSS)	//Elephant
 	{
 		health = 80;
+		moveSpeed = 0.2;
 		this->type = type;
-		loadObj->scale(3.0f, 3.0f, 3.0f);
+		loadObj->scale(0.5f, 0.5f, 0.5f);
 	}
 	else		//final boss
 	{
 		health = 120;
+		moveSpeed = 0.3;
 		this->type = type;
-		loadObj->scale(4.0f, 2.0f, 3.0f);
+		loadObj->scale(0.75f, 1.0f, 0.75f);
 	}
 
 }

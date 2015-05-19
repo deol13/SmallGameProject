@@ -219,7 +219,7 @@ enemyobj/wolflowpoly.png
 x12
 1
 animal
-/enemyobj/boss1/
+/enemyobj/boss2/
 enemyobj/ele_text.png
 220.0
 123.0
@@ -321,7 +321,7 @@ enemyobj/wolflowpoly.png
 x18
 1
 melee
-/enemyobj/boss1/
+/enemyobj/boss3/
 enemyobj/test.png
 220.0
 123.0
