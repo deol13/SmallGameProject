@@ -25,16 +25,9 @@ void GameState::init(int w, int h)
 	state = 0;
 	waveNumber = 1;
 	//initialize the board the AI uses
-	for(int i = 0; i < 256; i++)
+	for (int i = 0; i < 256; i++)
 	{
-		arenaMap[i][0] = -10;
-		arenaMap[i][255] = -10;
-		arenaMap[0][i] = -10;
-		arenaMap[255][i] = -10;
-	}
-	for (int i = 1; i < 255; i++)
-	{
-		for(int j = 1; j < 255; j++)
+		for(int j = 0; j < 256; j++)
 		{
 			arenaMap[i][j] = 10;
 		}
@@ -63,16 +56,9 @@ void GameState::continueInit(int w, int h)
 	state = 0;
 	waveNumber = 1;
 	//initialize the board the AI uses
-	for(int i = 0; i < 256; i++)
+	for (int i = 0; i < 256; i++)
 	{
-		arenaMap[i][0] = -10;
-		arenaMap[i][255] = -10;
-		arenaMap[0][i] = -10;
-		arenaMap[255][i] = -10;
-	}
-	for(int i = 1; i < 255; i++)
-	{
-		for(int j = 1; j < 255; j++)
+		for (int j = 0; j < 256; j++)
 		{
 			arenaMap[i][j] = 10;
 		}
@@ -473,14 +459,11 @@ void GameState::playerAttack()
 		bool hit = test.collides(hitbox);
 		if(hit)
 		{
-			if(enemyWave[i]->isAlive())
+			int damage = player->getDamageDealt();
+			if(!enemyWave[i]->takeDamage(damage))			//Checks if the enemy is killed by the damage
 			{
-				int damage = player->getDamageDealt();
-				if(!enemyWave[i]->takeDamage(damage))			//Checks if the enemy is killed by the damage
-				{
-					enemiesRemaining--;
-					state = 1;									// ?
-				}
+				enemiesRemaining--;
+				state = 1;									// ?
 			}
 		}
 	}
@@ -557,7 +540,7 @@ void GameState::loadArena(int fileName)
 				{
 					int posX = atoi(arenaArr[8 * i + 1].c_str()) + i - width / 2;
 					int posZ = atoi(arenaArr[8 * i + 3].c_str()) + j - length / 2;
-					if(posX >= 0 && posZ >= 0 && posX < GASIZE && posZ < GASIZE)
+					if(posX > 0 && posZ > 0)
 					{
 						arenaMap[posX][posZ] = -100;
 					}
@@ -723,7 +706,6 @@ bool GameState::playerCanMove(int x, int z)
 {
 	BoundingPolygon playerBounds = player->getBounds();
 	playerBounds.move(x, z);
-
 	if(playerBounds.findMax({0.0f, 1.0f}) >= GASIZE)
 	{
 		return false;
@@ -734,10 +716,6 @@ bool GameState::playerCanMove(int x, int z)
 	{
 		return false;
 	} else if(playerBounds.findMin({0.0f, 1.0f}) <= 0)
-	{
-		return false;
-	}
-	if(arenaMap[(int)player->getZ() + z][(int)player->getX() + x] < 0)
 	{
 		return false;
 	}

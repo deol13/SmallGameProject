@@ -114,13 +114,12 @@ void Enemy::setEnemy(int type)
 	{
 		health = 80;
 		this->type = type;
-		loadObj->scale(3.0f, 3.0f, 3.0f);
 	}
 	else		//final boss
 	{
 		health = 120;
 		this->type = type;
-		loadObj->scale(4.0f, 2.0f, 3.0f);
+		loadObj->scale(0.85f, 1.0f, 0.85f);
 	}
 
 }
@@ -156,12 +155,7 @@ BoundingPolygon Enemy::getBounds() const
 
 bool Enemy::takeDamage(const int dmg)
 {
-		health -= dmg;
-		return (health > 0);
-}
-
-bool Enemy::isAlive()const
-{
+	health -= dmg;
 	return (health > 0);
 }
 
