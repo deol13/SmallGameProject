@@ -104,23 +104,23 @@ void Enemy::setEnemy(int type)
 		health = 40;
 		this->type = ANIMAL;
 	}
-	else if (type == FIRSTBOSS)
+	else if (type == FIRSTBOSS)		//Lion
 	{
 		health = 60;
 		this->type = type;
 		loadObj->scale(2.0f, 1.0f, 3.0f);
 	}
-	else if (type == SECONDBOSS)
+	else if (type == SECONDBOSS)	//Elephant
 	{
 		health = 80;
 		this->type = type;
-		loadObj->scale(0.75f, 0.5f, 0.75f);
+		loadObj->scale(3.0f, 3.0f, 3.0f);
 	}
 	else		//final boss
 	{
 		health = 120;
 		this->type = type;
-		loadObj->scale(0.85f, 1.0f, 0.85f);
+		loadObj->scale(4.0f, 2.0f, 3.0f);
 	}
 
 }
@@ -156,7 +156,12 @@ BoundingPolygon Enemy::getBounds() const
 
 bool Enemy::takeDamage(const int dmg)
 {
-	health -= dmg;
+		health -= dmg;
+		return (health > 0);
+}
+
+bool Enemy::isAlive()const
+{
 	return (health > 0);
 }
 

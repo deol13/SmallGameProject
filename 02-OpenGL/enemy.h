@@ -47,6 +47,7 @@ class Enemy
 		int getRange()const;
 		BoundingPolygon getBounds() const;
 		bool takeDamage(const int dmg);					//returns true if still alive
+		bool isAlive()const;
 
 		int attack();
 		void move();
