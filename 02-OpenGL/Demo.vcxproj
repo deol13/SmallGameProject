@@ -98,6 +98,8 @@
     <ClCompile Include="InGameGui.cpp" />
     <ClCompile Include="LightShader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapEditor.cpp" />
+    <ClCompile Include="MapEditShader.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="ShopUI.cpp" />
@@ -121,6 +123,9 @@
     <ClInclude Include="lua.hpp" />
     <ClInclude Include="luaconf.h" />
     <ClInclude Include="lualib.h" />
+    <ClInclude Include="MapEditObj.h" />
+    <ClInclude Include="MapEditor.h" />
+    <ClInclude Include="MapEditShader.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="BoundingRect.h" />
@@ -139,6 +144,7 @@
     <None Include="gui.lua" />
     <None Include="LuaButton.lua" />
     <None Include="defeatSave.dat" />
+    <None Include="MapEditorLua.dat" />
     <None Include="savedGame.dat" />
     <None Include="savedGameExist.dat" />
   </ItemGroup>

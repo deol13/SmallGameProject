@@ -52,6 +52,12 @@
     <ClCompile Include="BoundingPolygon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MapEditor.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="MapEditShader.cpp">
+      <Filter>Graphics\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlitQuad.h">
@@ -129,6 +135,15 @@
     <ClInclude Include="BoundingRect.h">
       <Filter>Header Files\Structs</Filter>
     </ClInclude>
+    <ClInclude Include="MapEditor.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="MapEditObj.h">
+      <Filter>Header Files\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="MapEditShader.h">
+      <Filter>Graphics\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Arena.dat">
@@ -159,6 +174,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="savedGameExist.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="MapEditorLua.dat">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

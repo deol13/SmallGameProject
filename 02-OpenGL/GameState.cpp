@@ -372,7 +372,7 @@ void GameState::keyUp(char c)
 	}
 }
 
-void GameState::leftMouseClick(float x, float y)
+void GameState::leftMouseClick(float x, float z)
 {
 	//glm::vec2 vecFromPlayer = glm::vec2(x - player->getX(), y - player->getZ());
 	//float angle = atan(vecFromPlayer.y / vecFromPlayer.x);

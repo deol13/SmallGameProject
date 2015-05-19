@@ -77,11 +77,11 @@ void InGameGui::update()
 		glBindTexture(GL_TEXTURE_2D, textures[guiObjects[i].textureIndex]);
 
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-		GLenum error1 = glGetError();
-		if (error1 != GL_NO_ERROR)
-			printf("Error");
 	}
+
+	GLenum error1 = glGetError();
+	if (error1 != GL_NO_ERROR)
+		printf("Error");
 }
 
 void InGameGui::increaseCombo() 
