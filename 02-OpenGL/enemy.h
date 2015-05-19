@@ -11,9 +11,9 @@ const int FIRSTBOSS = 4;
 const int SECONDBOSS = 5;
 const int FINALBOSS = 6;
 
-const int MELEERANGE = 5;
+const int MELEERANGE = 8;
 const int RANGEDRANGE = 16;
-const int ANIMALRANGE = 5;
+const int ANIMALRANGE = 12;
 
 const int potentialRange = 8;
 
@@ -47,6 +47,7 @@ class Enemy
 		int getRange()const;
 		BoundingPolygon getBounds() const;
 		bool takeDamage(const int dmg);					//returns true if still alive
+		bool isAlive()const;
 
 		int attack();
 		void move();
