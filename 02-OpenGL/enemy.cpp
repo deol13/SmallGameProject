@@ -5,7 +5,7 @@ Enemy::Enemy()
 	loadObj = new GObject();
 	health = 20;
 	type = MELEE;
-	moveSpeed = 2.0f;
+	moveSpeed = 0.5f;
 	this->x = 100.0f;
 	this->z = 100.0f;
 	Point colPoints [4] = {{x - 5.0, z - 5.0}, {x - 5.0, z + 5.0}, {x + 5.0, z - 5.0}, {x + 5.0, z + 5.0}};
@@ -26,7 +26,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile, int 
 		loadObj = new GObject(objectFile, GL_TRIANGLES, texture);
 		health = 20 + 1 * waveNr;
 		this->type = MELEE;
-		moveSpeed = 1.0f;
+		moveSpeed = 0.5f;
 		this->attackRange = MELEERANGE;
 		this->loadObj->scale(2.0f, 1.0f, 1.5f);
 		break;
@@ -34,7 +34,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile, int 
 		loadObj = new GObject(objectFile, GL_TRIANGLES, texture);
 		health = 30 + 2 * waveNr;
 		this->type = ANIMAL;
-		moveSpeed = 2.0f;
+		moveSpeed = 0.6f;
 		this->attackRange = ANIMALRANGE;
 		this->loadObj->scale(1.5f, 1.0f, 2.0f);
 		break;
@@ -61,14 +61,14 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, in
 	case MELEE:
 		health = 20 + 1 * waveNr;
 		this->type = MELEE;
-		moveSpeed = 1.0f;
+		moveSpeed = 0.5f;
 		this->attackRange = MELEERANGE;
 		this->loadObj->scale(2.0f, 1.0f, 1.5f);
 		break;
 	case ANIMAL:
 		health = 30 + 2 * waveNr;
 		this->type = ANIMAL;
-		moveSpeed = 2.0f;
+		moveSpeed = 0.6f;
 		this->attackRange = ANIMALRANGE;
 		this->loadObj->scale(1.5f, 1.0f, 2.0f);
 		break;
@@ -207,12 +207,13 @@ void Enemy::move()
 	}
 	if(neighbourPos[highIndex] > 0)
 	{
-		int xMove = (highIndex + highIndex / 4) % 3 - 1;
-		int zMove = (highIndex + highIndex / 4) / 3 - 1;
+		float xMove = ((highIndex + highIndex / 4) % 3 - 1) * moveSpeed;
+		float zMove = ((highIndex + highIndex / 4) / 3 - 1) * moveSpeed;
 		this->x += xMove;
 		this->z += zMove;
 		loadObj->translate(xMove, 0.0, zMove);
 		collisionRect.move(xMove, zMove);
+		loadObj->animate(1);
 		if(highIndex > 4)
 		{
 			loadObj->setRotation(0.0, (highIndex - 2)*3.14159 / 4, 0.0);

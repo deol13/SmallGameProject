@@ -207,5 +207,8 @@
     <Text Include="2.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

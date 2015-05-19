@@ -65,10 +65,10 @@ void GameState::continueInit(int w, int h)
 	//initialize the board the AI uses
 	for(int i = 0; i < 256; i++)
 	{
-		arenaMap[i][0] = -10;
-		arenaMap[i][255] = -10;
-		arenaMap[0][i] = -10;
-		arenaMap[255][i] = -10;
+		arenaMap[i][0] = 10;
+		arenaMap[i][255] = 10;
+		arenaMap[0][i] = 10;
+		arenaMap[255][i] = 10;
 	}
 	for(int i = 1; i < 255; i++)
 	{
@@ -434,6 +434,7 @@ void GameState::leftMouseClick(float x, float y)
 			{	
 				enemiesRemaining--;
 				state = 1;									// ?
+				enemyWave[i]->getGObject()->setAnimationState(2);
 			}
 				
 		}
@@ -480,6 +481,8 @@ void GameState::playerAttack()
 				{
 					enemiesRemaining--;
 					state = 1;									// ?
+					enemyWave[i]->getGObject()->setAnimationState(2);
+					enemyWave[i]->getGObject()->animate(2);
 				}
 			}
 		}
@@ -551,18 +554,25 @@ void GameState::loadArena(int fileName)
 			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
 			int width = atoi(arenaArr[8 * i + 6].c_str());
 			int length = atoi(arenaArr[8 * i + 7].c_str());
-			for(int i = 0; i < width; i++)
-			{
-				for(int j = 0; j < length; j++)
-				{
-					int posX = atoi(arenaArr[8 * i + 1].c_str()) + i - width / 2;
-					int posZ = atoi(arenaArr[8 * i + 3].c_str()) + j - length / 2;
-					if(posX >= 0 && posZ >= 0 && posX < GASIZE && posZ < GASIZE)
-					{
-						arenaMap[posX][posZ] = -100;
-					}
-				}
-			}
+			//for(int k = 0; k < width * 2; k++)
+			//{
+			//	for(int j = 0; j < length * 2; j++)
+			//	{
+			//		int posX = atoi(arenaArr[8 * i + 1].c_str()) + k - width;
+			//		int posZ = atoi(arenaArr[8 * i + 3].c_str()) + j - length;
+			//		if(posX >= 0 && posZ >= 0 && posX < GASIZE && posZ < GASIZE)
+			//		{
+			//			float dist = std::sqrt(pow((float)(k - width), 2) + pow((float)(j - length), 2));
+			//			if(k < 3 * width/2 && k > width/2 && j < 3 * length/2 && j > length / 2 )
+			//			{
+			//				arenaMap[posX][posZ] = -100;
+			//			} else
+			//			{
+			//				arenaMap[posX][posZ] -= (int)(-10.0 / dist);
+			//			}
+			//		}
+			//	}
+			//}
 			if (fileName == 1)
 			{					//Scalings for map 1
 				if (i == 3 || i == 4)		//left / right
