@@ -23,7 +23,7 @@ Player::Player()
 Player::Player(GLuint textures[3], float x, float z, int health, int armour)
 {
 	std::string folder = "animations/feet/";
-	std::string legFiles[] = {folder + "footup.obj", folder + "rightup.obj", folder + "stop.obj"};
+	std::string legFiles[] = {folder + "benleft.obj", folder + "benright.obj", folder + "benstop.obj"};
 	
 	folder = "animations/sword/";
 	std::string swordFiles[] =
@@ -33,7 +33,7 @@ Player::Player(GLuint textures[3], float x, float z, int health, int armour)
 	folder = "animations/spear/";
 	std::string spearFiles[] = 
 		{folder + "spearrun1.obj", folder + "spearrun2.obj", folder + "spearstop.obj",
-		folder + "spear1.obj"};
+		folder + "spearstrike1.obj"};
 
 	loadObj = new GObject*[3];
 	loadObj[0] = new GObject(legFiles, 3, textures[0]);
@@ -87,9 +87,32 @@ void Player::setMovement(int x, int y)
 		moveVec.x = (moveVec.x / abs(moveVec.x)) * sqrt(2.0) / 2.0;
 		moveVec.y = (moveVec.y / abs(moveVec.y)) * sqrt(2.0) / 2.0;
 	}
-	if(abs(moveVec.x) + abs(moveVec.y) > 0.0)
+	if(abs(moveVec.x) + abs(moveVec.y) > 0.01)
 	{
 		dirVec = moveVec;
+	}
+
+	for(int i = 0; i < 3; i++)
+	{
+		int roundX = floor(dirVec.x + 0.3);
+		int roundY = floor(dirVec.y + 0.3);
+		if(roundX == 0)
+		{
+			loadObj[i]->setRotation(0.0, 3.14159 / 2.0 - roundY * 3.14159 / 2.0, 0.0);
+		} else if(roundX == 1)
+		{
+			loadObj[i]->setRotation(0.0, 3.14159 / 2.0 - (roundY * 3.14159 / 4.0), 0.0);
+		} else
+		{
+			loadObj[i]->setRotation(0.0, -3.14159 / 2.0 + (roundY * 3.14159 / 4.0), 0.0);
+		}
+		/*if(roundX == 1 && roundY == 1)
+		{
+			loadObj[i]->setRotation(0.0, (3.14159 / 4.0) + (roundY * 3.14159 / 4.0), 0.0);
+		} else if(roundX == -1 && roundY == -1)
+		{
+			loadObj[i]->setRotation(0.0, -3 * (3.14159 / 4.0) + (roundY * 3.14159 / 4.0), 0.0);
+		}*/
 	}
 }
 
@@ -155,16 +178,6 @@ void Player::update()
 	for(int i = 0; i < 3; i++)
 	{
 		loadObj[i]->translate(xMove, 0, zMove);
-		/* rotation default is facing up. Turning goes counter clockwise*/
-		float angle = 0;
-		if(dirVec.y < 0.1)
-		{
-			//angle = 3.14159;
-		} else
-		{
-			//angle = dirVec.x * (dirVec.y +2) * 3.14159 / 4.0;
-		}
-		loadObj[i]->setRotation(0, angle, 0);
 	}
 	x += xMove;
 	z += zMove;

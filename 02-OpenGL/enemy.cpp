@@ -208,7 +208,19 @@ void Enemy::move()
 		this->z += zMove;
 		loadObj->translate(xMove, 0.0, zMove);
 		collisionRect.move(xMove, zMove);
+		if(highIndex > 4)
+		{
+			loadObj->setRotation(0.0, (highIndex - 2)*3.14159 / 4, 0.0);
+		} else if(highIndex < 3)
+		{
+			loadObj->setRotation(0.0, (1 - highIndex)*3.14159 / 4, 0.0);
+		} else
+		{
+			loadObj->setRotation(0.0, (-2 * highIndex + 7)* 3.14159 / 2, 0.0);
+		}
 	}
+
+	//loadObj->animate(1);
 }
 
 void Enemy::setPotential(int origX, int origZ, int basePower)

@@ -1,69 +1,14 @@
-newmtl swag:lambert3SG
+newmtl swordstrike1:lambert7SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd testtexture.png
+map_Kd mainchartexture.png
 Ni 1.00
-newmtl upperbody:head:Group33555SG6
+newmtl swordstrike1:lambert8SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd testtexture.png
+map_Kd mainchartexture.png
 Ni 1.00
-Ks 0.50 0.50 0.50
-Ns 18.00
-newmtl upperbody:head:Group33555SG7
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd testtexture.png
-Ni 1.00
-Ks 0.50 0.50 0.50
-Ns 18.00
-newmtl upperbody:head:Group33555SG8
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd testtexture.png
-Ni 1.00
-Ks 0.50 0.50 0.50
-Ns 18.00
-newmtl upperbody:head:Group33555SG9
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd testtexture.png
-Ni 1.00
-newmtl upperbody:head:Group33555SG10
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd testtexture.png
-Ni 1.00
-newmtl upperbody:head:Group33555SG11
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd testtexture.png
-Ni 1.00
-newmtl upperbody:pSphere2SG
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-Ni 1.00
-newmtl upperbody:pSphere2SG1
-illum 4
-Kd 0.50 0.50 0.50
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-Ni 1.00
-Ks 0.50 0.50 0.50
-Ns 4.31

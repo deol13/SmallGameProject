@@ -1,15 +1,38 @@
-﻿Build started 5/18/2015 1:11:02 PM.
+﻿Build started 5/19/2015 10:36:40 AM.
      1>Project "C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Demo (Konfliktkopia för laptop 2015-05-12).vcxproj, Demo (Konfliktkopia för laptop 2015-05-14).vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Player.cpp
-         Player.cpp
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(46): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(48): warning C4305: '=' : truncation from 'double' to 'float'
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(78): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(82): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(87): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(88): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameState.cpp
+         GameState.cpp
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(11): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(220): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(225): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(238): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(528): warning C4018: '>=' : signed/unsigned mismatch
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(533): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(551): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(537) : definition of 'i' ignored
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(525) : definition of 'i' used
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(555): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(537) : definition of 'i' ignored
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(525) : definition of 'i' used
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(559): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(537) : definition of 'i' ignored
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(525) : definition of 'i' used
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(563): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(537) : definition of 'i' ignored
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(525) : definition of 'i' used
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(570): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(537) : definition of 'i' ignored
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(525) : definition of 'i' used
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(574): warning C4258: 'i' : definition from the for loop is ignored; the definition from the enclosing scope is used
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(537) : definition of 'i' ignored
+                 c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(525) : definition of 'i' used
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(644): warning C4018: '>=' : signed/unsigned mismatch
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(665): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(692): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(924): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(795): warning C4715: 'GameState::screenClickesOn' : not all control paths return a value
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
          Debug\BlitQuad.obj
@@ -33,4 +56,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.91
+Time Elapsed 00:00:02.68
