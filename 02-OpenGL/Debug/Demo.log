@@ -1,117 +1,195 @@
-﻿Build started 5/18/2015 11:42:08 AM.
-     1>Project "C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
+﻿Build started 5/19/2015 5:18:19 PM.
+     1>Project "C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\\glew-1.11.0" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Enemy.cpp GameState.cpp InGameGui.cpp main.cpp MapEditor.cpp ShopUI.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Audio.cpp BlitQuad.cpp BoundingPolygon.cpp Enemy.cpp GameState.cpp GAShader.cpp gbuffer.cpp GObject.cpp GuiManager.cpp GuiShader.cpp InGameGui.cpp LightShader.cpp main.cpp MapEditor.cpp MapEditShader.cpp Player.cpp Render.cpp ShopUI.cpp
          ShopUI.cpp
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(89): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(163): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(165): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(167): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(193): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(197): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(201): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(205): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(209): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(213): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(217): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(221): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(225): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\shopui.cpp(351): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(89): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(163): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(165): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(167): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(193): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(197): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(201): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(205): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(209): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(213): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(217): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(221): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(225): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\shopui.cpp(351): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+         Render.cpp
+         GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+         Player.cpp
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\player.cpp(46): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\player.cpp(48): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\player.cpp(78): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\player.cpp(82): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\player.cpp(87): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\player.cpp(88): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\player.cpp(97): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\player.cpp(98): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\player.cpp(101): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\player.cpp(104): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\player.cpp(107): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+         MapEditShader.cpp
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(102): error C3861: 'printf': identifier not found
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(116): error C2039: 'vector' : is not a member of 'std'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(116): error C2065: 'vector' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(116): error C2275: 'GLchar' : illegal use of this type as an expression
+                 c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\glew-1.11.0\include\gl\glew.h(307) : see declaration of 'GLchar'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(116): error C3861: 'errorLog': identifier not found
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(117): error C2065: 'errorLog' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(117): error C2198: 'PFNGLGETPROGRAMINFOLOGPROC' : too few arguments for call
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(119): error C2039: 'fstream' : is not a member of 'std'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(119): error C2065: 'fstream' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(119): error C2146: syntax error : missing ';' before identifier 'myfile'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(119): error C2065: 'myfile' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(120): error C2065: 'myfile' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(120): error C2228: left of '.open' must have class/struct/union
+                 type is 'unknown-type'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(120): error C3083: 'fstream': the symbol to the left of a '::' must be a type
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(120): error C2039: 'out' : is not a member of 'std'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(120): error C2065: 'out' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(123): error C2065: 'myfile' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(123): error C2065: 'errorLog' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(125): error C2065: 'myfile' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(125): error C2228: left of '.close' must have class/struct/union
+                 type is 'unknown-type'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(143): error C2039: 'vector' : is not a member of 'std'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(143): error C2065: 'vector' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(143): error C2275: 'GLchar' : illegal use of this type as an expression
+                 c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\glew-1.11.0\include\gl\glew.h(307) : see declaration of 'GLchar'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(143): error C3861: 'errorLog': identifier not found
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(144): error C2065: 'errorLog' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(144): error C2198: 'PFNGLGETSHADERINFOLOGPROC' : too few arguments for call
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(146): error C2039: 'fstream' : is not a member of 'std'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(146): error C2065: 'fstream' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(146): error C2146: syntax error : missing ';' before identifier 'myfile'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(146): error C2065: 'myfile' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(147): error C2065: 'myfile' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(147): error C2228: left of '.open' must have class/struct/union
+                 type is 'unknown-type'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(147): error C3083: 'fstream': the symbol to the left of a '::' must be a type
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(147): error C2039: 'out' : is not a member of 'std'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(147): error C2065: 'out' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(150): error C2065: 'myfile' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(150): error C2065: 'errorLog' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(152): error C2065: 'myfile' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditshader.cpp(152): error C2228: left of '.close' must have class/struct/union
+                 type is 'unknown-type'
          MapEditor.cpp
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.h(28): error C2086: 'int MapEditor::nrOfUIObjs' : redefinition
+                 c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.h(23) : see declaration of 'MapEditor::nrOfUIObjs'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(38): error C2065: 'gShader2Obj' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(38): error C2541: 'delete' : cannot delete objects that are not pointers
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(39): error C2065: 'gOBJShader' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(42): error C2065: 'renderObjects' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(42): error C2228: left of '.size' must have class/struct/union
+                 type is 'unknown-type'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(43): error C2065: 'renderObjects' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(43): error C2228: left of '.pop_back' must have class/struct/union
+                 type is 'unknown-type'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(44): error C2065: 'renderObjects' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(44): error C2228: left of '.clear' must have class/struct/union
+                 type is 'unknown-type'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(120): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(168): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(172): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(176): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(180): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(184): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(188): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(192): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(196): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(200): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(208): error C3867: 'MapEditor::createExtraBuffer': function call missing argument list; use '&MapEditor::createExtraBuffer' to create a pointer to member
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\mapeditor.cpp(243): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
          main.cpp
+         LightShader.cpp
          InGameGui.cpp
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(179): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(183): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(187): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(191): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(195): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(199): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(203): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(207): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(211): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(347): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(351): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(355): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(359): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(363): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(367): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(371): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(375): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\ingamegui.cpp(379): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(179): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(183): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(187): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(191): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(195): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(199): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(203): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(207): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(211): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(347): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(351): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(355): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(359): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(363): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(367): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(371): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(375): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\ingamegui.cpp(379): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+         GuiShader.cpp
+         GuiManager.cpp
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\guimanager.cpp(156): warning C4244: 'initializing' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\guimanager.cpp(243): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\guimanager.cpp(256): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\guimanager.cpp(260): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\guimanager.cpp(264): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\guimanager.cpp(268): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\guimanager.cpp(272): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\guimanager.cpp(276): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\guimanager.cpp(280): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\guimanager.cpp(284): warning C4244: '=' : conversion from 'lua_Number' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\guimanager.cpp(288): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\guimanager.cpp(351): warning C4244: '=' : conversion from 'lua_Number' to 'int', possible loss of data
+         GObject.cpp
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gobject.cpp(37): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gobject.cpp(298): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gobject.cpp(334): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gobject.cpp(340): warning C4305: '+=' : truncation from 'double' to 'float'
+         gbuffer.cpp
+         GAShader.cpp
          GameState.cpp
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(11): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(220): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(225): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(238): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(528): warning C4018: '>=' : signed/unsigned mismatch
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(533): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(630): warning C4018: '>=' : signed/unsigned mismatch
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(651): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(678): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(910): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(11): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(234): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(239): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(252): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(413): error C2065: 'y' : undeclared identifier
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(548): warning C4018: '>=' : signed/unsigned mismatch
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(553): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(611): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(615): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(619): warning C4305: 'argument' : truncation from 'double' to 'float'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(688): warning C4018: '>=' : signed/unsigned mismatch
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(709): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(736): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\gamestate.cpp(973): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
          Enemy.cpp
-     1>c:\users\martin\documents\smallgameproject\02-opengl\enemy.cpp(11): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\enemy.cpp(21): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\enemy.cpp(56): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\enemy.cpp(209): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\enemy.cpp(210): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\martin\documents\smallgameproject\02-opengl\enemy.cpp(248): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(11): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(21): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(56): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(219): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(222): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(225): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\enemy.cpp(266): warning C4244: '=' : conversion from 'const int' to 'float', possible loss of data
+         BoundingPolygon.cpp
+         BlitQuad.cpp
+         Audio.cpp
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(32): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(35): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(98): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(211) : see declaration of 'fopen'
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(99): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(107): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(113): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(118): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(133): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(161): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(165): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(144): warning C4101: 'state' : unreferenced local variable
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(178): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(192): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\den\documents\visual studio 2013\projects\smallgameproject\02-opengl\audio.cpp(305): warning C4244: 'argument' : conversion from 'float' to 'ALint', possible loss of data
          Generating Code...
-     1>c:\users\martin\documents\smallgameproject\02-opengl\gamestate.cpp(781): warning C4715: 'GameState::screenClickesOn' : not all control paths return a value
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win32" LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
-         Debug\BlitQuad.obj
-         Debug\BoundingPolygon.obj
-         Debug\Enemy.obj
-         Debug\GameState.obj
-         Debug\GAShader.obj
-         Debug\gbuffer.obj
-         Debug\GObject.obj
-         Debug\GuiManager.obj
-         Debug\GuiShader.obj
-         Debug\InGameGui.obj
-         Debug\LightShader.obj
-         Debug\main.obj
-         Debug\MapEditor.obj
-         Debug\Player.obj
-         Debug\Render.obj
-         Debug\ShopUI.obj
-         Debug\stb_image.obj
-     1>LuaLib.lib(lapi.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lauxlib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lbaselib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lbitlib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lcode.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lcorolib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lctype.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldblib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldebug.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldo.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ldump.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lfunc.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lgc.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(linit.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(liolib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(llex.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lmathlib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lmem.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(loadlib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lobject.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lopcodes.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(loslib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lparser.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lstate.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lstring.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lstrlib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ltable.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ltablib.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(ltm.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lundump.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lvm.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-     1>LuaLib.lib(lzio.obj) : warning LNK4204: 'C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\vc120.pdb' is missing debugging information for referencing module; linking object as if no debug info
-         Demo.vcxproj -> C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Debug\Demo.exe
-     1>Done Building Project "C:\Users\martin\Documents\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Users\den\Documents\Visual Studio 2013\Projects\SmallGameProject\02-OpenGL\Demo.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:15.82
+Time Elapsed 00:00:09.35

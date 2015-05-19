@@ -70,7 +70,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, in
 		this->type = ANIMAL;
 		moveSpeed = 0.6f;
 		this->attackRange = ANIMALRANGE;
-		this->loadObj->scale(1.5f, 1.0f, 2.0f);
+		this->loadObj->scale(1.5f, 1.0f, 1.5f);
 		break;
 	default:
 		break;
@@ -114,13 +114,13 @@ void Enemy::setEnemy(int type)
 	{
 		health = 80;
 		this->type = type;
-		loadObj->scale(3.0f, 3.0f, 3.0f);
+		loadObj->scale(0.5f, 0.5f, 0.5f);
 	}
 	else		//final boss
 	{
 		health = 120;
 		this->type = type;
-		loadObj->scale(4.0f, 2.0f, 3.0f);
+		loadObj->scale(0.75f, 1.0f, 0.75f);
 	}
 
 }
