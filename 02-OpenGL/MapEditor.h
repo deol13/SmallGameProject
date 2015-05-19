@@ -13,14 +13,12 @@
 #include "MenuButton.h"
 #include "MapEditObj.h"
 #include "GObject.h"
-#include "MapEditShader.h"
 
 class MapEditor
 {
 	private:
 		int choice; //0 = nothing selected
 		std::vector<int> objects;
-		int nrOfUIObjs;
 
 		std::vector<MenuButton> guiObjects;
 		std::vector<MenuButton> regularObjects;

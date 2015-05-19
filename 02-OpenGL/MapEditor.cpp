@@ -35,13 +35,8 @@ MapEditor::~MapEditor()
 
 	delete gShader;
 	glDeleteShader(gUIShader);
-	delete gShader2Obj;
-	glDeleteShader(gOBJShader);
 	if (L != nullptr)
 		lua_close(L);
-	for (int i = 0; i < renderObjects.size(); i++)
-		renderObjects.pop_back();
-	renderObjects.clear();
 }
 
 void MapEditor::init()
@@ -49,11 +44,24 @@ void MapEditor::init()
 	gShader = new GuiShader(&gUIShader);
 	loadTextures();
 
-	nrOfUIObjs = 4;
 	objects.push_back(1);
 	objects.push_back(2);
 	objects.push_back(3);
 	objects.push_back(4);
+	objects.push_back(5);
+	objects.push_back(6);
+	objects.push_back(7);
+	objects.push_back(8);
+	objects.push_back(9);
+	objects.push_back(65);
+	objects.push_back(71);
+	objects.push_back(53);
+	objects.push_back(66);
+	objects.push_back(68);
+	objects.push_back(73);
+	objects.push_back(69);
+	objects.push_back(57);
+	objects.push_back(63);
 	//...
 
 	rObjectAttribute = new GLuint[30];
@@ -205,7 +213,7 @@ void MapEditor::getUIFromLua(bool addRObjects)
 				if (addRObjects)
 				{
 					regularObjects.push_back(tempButton);
-					createExtraBuffer;
+					createExtraBuffer();
 					nrOfRObj++;
 				}
 				else
@@ -346,7 +354,28 @@ void MapEditor::createTexture(const std::string fileName)
 
 void MapEditor::loadTextures()
 {
+	createTexture("andrabanansand.png"); //0
 
+	createTexture("1.png"); //1
+	createTexture("2.png"); //2
+	createTexture("3.png"); //3
+	createTexture("4.png"); //4
+	createTexture("5.png"); //5
+	createTexture("6.png"); //6
+	createTexture("7.png"); //7
+	createTexture("8.png"); //8
+	createTexture("9.png"); //9
+	createTexture("Q.png"); //10(Q)
+	createTexture("W.png"); //11(W)
+	createTexture("E.png"); //12(E)
+	createTexture("R.png"); //13(R)
+	createTexture("T.png"); //14(T)
+	createTexture("Y.png"); //15(Y)
+	createTexture("U.png"); //16(U)
+	createTexture("I.png"); //17(I)
+	createTexture("O.png"); //18(O)
+	createTexture("Load.png"); //19 Load
+	createTexture("Save.png"); //20 SAve
 
 	//createTexture("TestAnimation/testtexture.png");
 	//createTexture("blocks.png");

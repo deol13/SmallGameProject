@@ -22,15 +22,15 @@ uiObjects = { -1.0, 1.0, 1.0, -1.0, 0, 0, 1, 1, 0,
 			  0.060, -0.944, 0.036, -0.986, 0.0, 0, 0, 1, 1, 17,
 			  0.092, -0.944, 0.068, -0.986, 0.0, 0, 0, 1, 1, 18,
 
-			  -0.108, -0.832, -0.258, -0.986, 0.0, 0, 0, 1, 1, 1,
-			  0.108, -0.832, 0.258, -0.986, 0.0, 0, 0, 1, 1, 1,
+			  -0.108, -0.832, -0.258, -0.986, 0.0, 0, 0, 1, 1, 19,
+			  0.108, -0.832, 0.258, -0.986, 0.0, 0, 0, 1, 1, 20,
 			  
 }
-width = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, }
-length = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, }
+width = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10}
+length = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10}
    --Save information
-locationList = {"bana1/eldpelare/eld.obj", "bana1/Hus/testhus.obj", "bana1/wall/wallrot1.obj", "bana1/wall/wallrot2.obj", "bana1/arenasittplats/trappafront.obj", "bana1/arenasittplats/trappaback.obj", "bana1/arenasittplats/trappaleft.obj", "bana1/arenasittplats/trapparight.obj", "bana2/wc.obj", "bana2/wallupp.obj", "bana2/wallright.obj", "bana2/wallleft.obj", "bana2/walldown.obj"}
-textureList = {"bana1/eldpelare/eldtexture.png", "bana1/Hus/hustextur1.png", "bana1/wall/wall.png", "bana1/wall/wall.png", "bana1/arenasittplats/trapp.png", "bana1/arenasittplats/trapp.png", "bana1/arenasittplats/trapp.png", "bana1/arenasittplats/trapp.png", "bana2/wc.png", "bana2/bana2textur.png", "bana2/bana2textur.png", "bana2/bana2textur.png", "bana2/bana2textur.png"}
+locationList = {"bana1/eldpelare/eld.obj", "bana1/Hus/testhus.obj", "bana1/wall/wallrot1.obj", "bana1/wall/wallrot2.obj", "bana1/arenasittplats/trappafront.obj", "bana1/arenasittplats/trappaback.obj", "bana1/arenasittplats/trappaleft.obj", "bana1/arenasittplats/trapparight.obj", "bana2/wc.obj", "bana2/wallupp.obj", "bana2/wallright.obj", "bana2/wallleft.obj", "bana2/walldown.obj", "bana3/corner3.obj", "bana3/wallup3.obj", "bana3/wallright3.obj", "bana3/wallleft3.obj", "bana3/walldown3.obj"}
+textureList = {"bana1/eldpelare/eldtexture.png", "bana1/Hus/hustextur1.png", "bana1/wall/wall.png", "bana1/wall/wall.png", "bana1/arenasittplats/trapp.png", "bana1/arenasittplats/trapp.png", "bana1/arenasittplats/trapp.png", "bana1/arenasittplats/trapp.png", "bana2/wc.png", "bana2/bana2textur.png", "bana2/bana2textur.png", "bana2/bana2textur.png", "bana2/bana2textur.png", "bana3/uvarena.png", "bana3/uvarena.png", "bana3/uvarena.png", "bana3/uvarena.png", "bana3/uvarena.png"}
 
 --Dynamic
 rPosStructured = {} --Only x, z, x2, z2
@@ -110,7 +110,7 @@ function calcOutPut(mx, mz, choice)
 
 	nrOfrIndices = nrOfrIndices + 1
 	texIndex = choice + uiObjects
-	regularObjects[nrOfrIndices] = choice + uiObjects
+	regularObjects[nrOfrIndices] = choice + 21
 
 	return texIndex, v2, u2, v, u, z2, x2, z, x
 end
