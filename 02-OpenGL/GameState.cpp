@@ -246,69 +246,69 @@ void GameState::update()
 	}
 	else
 	{
-		if (menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1) //
+		if(menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1) //
 		{
-		for(int i = 0; i < waveSize; i++)
+			for(int i = 0; i < waveSize; i++)
 			{
-			if(enemyWave[i]->isIdle())
-			{
-				enemyWave[i]->changeIdle();
-			} else
-			{
-				float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) +
-					pow((enemyWave[i]->getZ() - player->getZ()), 2));
-
-				if(enemyWave[i]->getHealth() >= 0)
+				if(enemyWave[i]->isIdle())
 				{
-					enemyWave[i]->clearPotential(arenaMap);
+					enemyWave[i]->changeIdle();
+				} else
+				{
+					float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) +
+						pow((enemyWave[i]->getZ() - player->getZ()), 2));
 
-					switch(enemyWave[i]->getType())
+					if(enemyWave[i]->getHealth() >= 0)
 					{
-					case FIRSTBOSS:
-						if(enemyWave[i]->isCharging())
+						enemyWave[i]->clearPotential(arenaMap);
+
+						switch(enemyWave[i]->getType())
 						{
+						case FIRSTBOSS:
+							if(enemyWave[i]->isCharging())
+							{
+								enemyWave[i]->setPotential(player->getX(), player->getZ(), 80);
+							} else
+							{
+								enemyWave[i]->setPotential(player->getX() - 2 * (player->getZ() - enemyWave[i]->getZ()),
+									player->getZ() + 2 * (player->getX() - enemyWave[i]->getX()), 80);
+							}
+							enemyWave[i]->updateCharge();
+							break;
+						default:
 							enemyWave[i]->setPotential(player->getX(), player->getZ(), 80);
+							break;
+						}
+
+						for(int j = 0; j < waveSize; j++)
+						{
+							if(i != j && !enemyWave[j]->isIdle())
+							{
+								enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -5);
+							}
+						}
+
+						if(enemyWave[i]->getRange() > playerDist)
+						{
+							int damage = enemyWave[i]->attack();
+
+							if(player->getInvulTimer() == 0)
+							{
+								gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
+							}
 						} else
 						{
-							enemyWave[i]->setPotential(player->getX() - 2 * (player->getZ() - enemyWave[i]->getZ()),
-								player->getZ() + 2 * (player->getX() - enemyWave[i]->getX()), 80);
+							enemyWave[i]->move();
 						}
-						enemyWave[i]->updateCharge();
-						break;
-					default:
-						enemyWave[i]->setPotential(player->getX(), player->getZ(), 80);
-						break;
+						//enemyWave[i]->act(player->getX(), player->getZ(), board);
 					}
-
-					for(int j = 0; j < waveSize; j++)
-					{
-						if(i != j && !enemyWave[j]->isIdle())
-						{
-							enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -5);
-						}
-					}
-
-					if(enemyWave[i]->getRange() > playerDist)
-					{
-						int damage = enemyWave[i]->attack();
-
-						if(player->getInvulTimer() == 0)
-						{
-							gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
-						}
-					} else
-					{
-						enemyWave[i]->move();
-					}
-					//enemyWave[i]->act(player->getX(), player->getZ(), board);
 				}
 			}
 		}
+		render->GeometryPassInit();
+		render->render(renderObjects);
+		render->lightPass();
 	}
-	render->GeometryPassInit();
-	render->render(renderObjects);
-	render->lightPass();
-	
 }
 
 void GameState::uiUpdate()
