@@ -29,7 +29,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile, int 
 		this->type = MELEE;
 		moveSpeed = 0.5f;
 		this->attackRange = MELEERANGE;
-		this->loadObj->scale(2.0f, 1.0f, 1.5f);
+		this->loadObj->scale(2.0f, 2.0f, 1.5f);
 		break;
 	case ANIMAL:
 		loadObj = new GObject(objectFile, GL_TRIANGLES, texture);
@@ -67,14 +67,14 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, in
 		this->type = MELEE;
 		moveSpeed = 0.5f;
 		this->attackRange = MELEERANGE;
-		this->loadObj->scale(2.0f, 1.0f, 1.5f);
+		this->loadObj->scale(3.0f, 3.0f, 2.5f);
 		break;
 	case ANIMAL:
 		health = 30 + 2 * waveNr;
 		this->type = ANIMAL;
 		moveSpeed = 0.6f;
 		this->attackRange = ANIMALRANGE;
-		this->loadObj->scale(1.5f, 1.0f, 1.5f);
+		this->loadObj->scale(2.5f, 1.0f, 1.8f);
 		break;
 	case FIRSTBOSS:
 		health = 60;
@@ -120,7 +120,7 @@ void Enemy::setEnemy(int type)
 	{
 		health = 60;
 		this->type = type;
-		loadObj->scale(2.0f, 1.0f, 3.0f);
+		loadObj->scale(4.5f, 2.0f, 4.0f);
 	}
 	else if (type == SECONDBOSS)	//Elephant
 	{

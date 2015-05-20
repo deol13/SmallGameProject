@@ -23,6 +23,7 @@ GameState::~GameState()
 void GameState::init(int w, int h) 
 {
 	state = 0;
+	timer = 0;
 	waveNumber = 1;
 	//initialize the board the AI uses
 	for(int i = 0; i < 256; i++)
@@ -216,6 +217,11 @@ void GameState::update()
 {
  	player->update();
 	
+	if (timer == 80)
+	{
+		nextWave();
+		timer = 0;
+	}
 	if (player->getHealth() <= 0 && !dead )		//Are we dead?
 	{
    		dead = true;
@@ -229,15 +235,21 @@ void GameState::update()
 			player->stop(true, true);
 			menuUI->won();
 		}
-		else				//Spawn next wave
+		else if( timer == 0)				//Spawn next wave
 		{
-			nextWave();
+			timer = 1;
 		}
 	}
-	if (menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1) //
+	if (timer != 0)		//All enemies dead so start the timer
 	{
-		for(int i = 0; i < waveSize; i++)
+		timer++;
+	}
+	else
+	{
+		if (menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1) //
 		{
+		for(int i = 0; i < waveSize; i++)
+			{
 			if(enemyWave[i]->isIdle())
 			{
 				enemyWave[i]->changeIdle();
@@ -548,11 +560,16 @@ void GameState::loadArena(int fileName)
 			//		}
 			//	}
 			//}
+			if (i == 0)		//scale the plane
+			{
+				temp->scale(1.78, 1.0, 1.0);
+			}
+
 			if (fileName == 1)
 			{
 				if (i == 1)//Scalings for map 1
 				{
-					temp->scale(1.3f, 1.0f, 1.5f);
+					temp->scale(1.5f, 1.0f, 1.0f);		//left house
 				}
 				else if (i == 3 || i == 4)	//wall left / right
 				{
@@ -564,19 +581,31 @@ void GameState::loadArena(int fileName)
 				}
 				else if (i == 10)
 				{
-					temp->rotate(0.0f, -3.14159f / -2.0f, 0.0f);
+					temp->rotate(0.0f, -3.14159f / -2.0f, 0.0f);	//bottom house
 					temp->scale(1.2f, 1.0f, 1.0f);
+				}
+				else if (i == 11)
+				{
+					temp->rotate(0.0f, -3.14159f / 1.0f, 0.0f);	//Right house
+				}
+				else if (i == 12)
+				{
+					temp->rotate(0.0f, -3.14159f / 2.0f, 0.0f);	//Top house
 				}
 			}
 			else if (fileName == 2)		//scalings for map 2
 			{
-				if (i == 6 || i == 7)	// down / up	6 7
+				if (i < 5 && i != 0)
 				{
-					temp->scale(1.7f, 1.0f, 1.0f);
+					temp->scale(0.6f, 0.4f, 0.6f);
 				}
-				else if (i == 5 || i == 8)		//right / left
+				else if (i == 5 || i == 8)	// down / up
 				{
-					temp->scale(1.0f, 1.0f, 1.0f);
+					temp->scale(0.7f, 0.4f, 0.5f);
+				}
+				else if (i == 6 || i == 7)		//right / left
+				{
+					temp->scale(0.7f, 0.4f, 0.45f);
 				}
 			}
 			else if (fileName == 3)
