@@ -15,6 +15,7 @@ private:
 	int arenaMap[256][256];	//shows areas covered by buildings
 	int waveNumber;
 	int gold;
+	int timer;
 	Render* render;
 	GuiManager* menuUI;
 	InGameGui* gameUI;

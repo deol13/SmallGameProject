@@ -1,35 +1,7 @@
-newmtl corner:lambert6SG
+newmtl wall:lambert1SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd wc.png
-Ni 1.00
-newmtl walldown:initialShadingGroup
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd bana2textur.png
-Ni 1.00
-newmtl wallleft1:initialShadingGroup
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd bana2textur.png
-Ni 1.00
-newmtl wallright:initialShadingGroup
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd bana2textur.png
-Ni 1.00
-newmtl wallup:initialShadingGroup
-illum 4
-Kd 0.00 0.00 0.00
-Ka 0.00 0.00 0.00
-Tf 1.00 1.00 1.00
-map_Kd bana2textur.png
+map_Kd walltest.png
 Ni 1.00
