@@ -10,6 +10,7 @@ Enemy::Enemy()
 	this->z = 100.0f;
 	Point colPoints [4] = {{x - 5.0, z - 5.0}, {x - 5.0, z + 5.0}, {x + 5.0, z - 5.0}, {x + 5.0, z + 5.0}};
 	collisionRect = BoundingPolygon(colPoints, 4);
+	idleTimer = 0;
 
 }
 
@@ -48,10 +49,13 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile, int 
 	}
 }
 
-Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, int nrOfKeyFrames, int waveNr)
+Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, int nrOfKeyFrames, int waveNr, int idle)
 {
 	this->x = x;
 	this->z = z;
+	charging = false;
+	chargeTimer = 0;
+	idleTimer = idle;
 	loadObj = nullptr;
 	Point* colPoints = new Point[4]{{x - 5.0, z - 5.0}, {x - 5.0, z + 5.0}, {x + 5.0, z - 5.0}, {x + 5.0, z + 5.0}};
 	collisionRect = BoundingPolygon(colPoints, 4);
@@ -70,6 +74,14 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, in
 		this->type = ANIMAL;
 		moveSpeed = 0.6f;
 		this->attackRange = ANIMALRANGE;
+		this->loadObj->scale(1.5f, 1.0f, 1.5f);
+		break;
+	case FIRSTBOSS:
+		health = 60;
+		this->type = FIRSTBOSS;
+		moveSpeed = 0.5f;
+		chargeTimer = 360;
+		this->attackRange = 7;
 		this->loadObj->scale(1.5f, 1.0f, 1.5f);
 		break;
 	default:
@@ -151,6 +163,11 @@ int Enemy::getRange() const
 	return this->attackRange;
 }
 
+int Enemy::getType()const
+{
+	return this->type;
+}
+
 BoundingPolygon Enemy::getBounds() const
 {
 	return collisionRect;
@@ -165,6 +182,46 @@ bool Enemy::takeDamage(const int dmg)
 bool Enemy::isAlive()const
 {
 	return (health > 0);
+}
+
+bool Enemy::isCharging()const
+{
+	return charging;
+}
+
+bool Enemy::isIdle()const
+{
+	return idleTimer > 0;
+}
+
+void Enemy::changeIdle()
+{
+	idleTimer--;
+}
+
+void Enemy::updateCharge()
+{
+	chargeTimer--;
+	if(chargeTimer == 0)
+	{
+		charging = !charging;
+		switch(type)
+		{
+		case FIRSTBOSS:
+			if(charging)
+			{
+				chargeTimer = 180;
+				moveSpeed *= 2;
+			} else
+			{
+				chargeTimer = 360;
+				moveSpeed *= 0.5;
+			}
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 int Enemy::attack()
@@ -209,8 +266,10 @@ void Enemy::move()
 	}
 	if(neighbourPos[highIndex] > 0)
 	{
-		float xMove = ((highIndex + highIndex / 4) % 3 - 1) * moveSpeed;
-		float zMove = ((highIndex + highIndex / 4) / 3 - 1) * moveSpeed;
+		float xMove;
+		float zMove;
+		xMove = ((highIndex + highIndex / 4) % 3 - 1) * moveSpeed;
+		zMove = ((highIndex + highIndex / 4) / 3 - 1) * moveSpeed;
 		this->x += xMove;
 		this->z += zMove;
 		loadObj->translate(xMove, 0.0, zMove);
@@ -234,6 +293,20 @@ void Enemy::move()
 void Enemy::setPotential(int origX, int origZ, int basePower)
 {
 	//float radii[9];
+	if(origX > 455)
+	{
+		origX = 455;
+	} else if(origX < 0)
+	{
+		origX = 0;
+	}
+	if(origZ > 256)
+	{
+		origZ = 256;
+	} else if(origX < 0)
+	{
+		origZ = 0;
+	}
 	for(int i = -1; i < 2; i++)
 	{
 		for(int j = -1; j < 2; j++)

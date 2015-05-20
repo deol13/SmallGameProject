@@ -39,6 +39,18 @@ function readFile()
 				then
 					enemyArr[i] = 3
 				end
+				if enemyType == "boss1"
+				then
+					enemyArr[i] = 4
+				end
+				if enemyType == "boss2"
+				then
+					enemyArr[i] = 5
+				end
+				if enemyType == "boss3"
+				then
+					enemyArr[i] = 6
+				end
 				i = i + 1
 			elseif i % 6 == 3							-- decide texture index, while avoiding repeats
 			then

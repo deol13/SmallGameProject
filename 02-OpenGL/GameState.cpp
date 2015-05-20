@@ -30,9 +30,14 @@ void GameState::init(int w, int h)
 		arenaMap[i][0] = -10;
 		arenaMap[i][255] = -10;
 		arenaMap[0][i] = -10;
-		arenaMap[255][i] = -10;
+		arenaMap[454][i] = -10;
 	}
-	for (int i = 1; i < 255; i++)
+	for(int i = 256; i < 455; i++)
+	{
+		arenaMap[i][0] = -10;
+		arenaMap[i][255] = -10;
+	}
+	for (int i = 1; i < 454; i++)
 	{
 		for(int j = 1; j < 255; j++)
 		{
@@ -65,12 +70,17 @@ void GameState::continueInit(int w, int h)
 	//initialize the board the AI uses
 	for(int i = 0; i < 256; i++)
 	{
-		arenaMap[i][0] = 10;
-		arenaMap[i][255] = 10;
-		arenaMap[0][i] = 10;
-		arenaMap[255][i] = 10;
+		arenaMap[i][0] = -10;
+		arenaMap[i][255] = -10;
+		arenaMap[0][i] = -10;
+		arenaMap[454][i] = -10;
 	}
-	for(int i = 1; i < 255; i++)
+	for(int i = 256; i < 455; i++)
+	{
+		arenaMap[i][0] = -10;
+		arenaMap[i][255] = -10;
+	}
+	for(int i = 1; i < 454; i++)
 	{
 		for(int j = 1; j < 255; j++)
 		{
@@ -226,41 +236,63 @@ void GameState::update()
 	}
 	if (menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1) //
 	{
-		for (int i = 0; i < waveSize; i++)
+		for(int i = 0; i < waveSize; i++)
 		{
-			if (enemyWave[i]->getHealth() >= 0)
+			if(enemyWave[i]->isIdle())
 			{
-				enemyWave[i]->clearPotential(arenaMap);
-				enemyWave[i]->setPotential(player->getX(), player->getZ(), 50);
-				for (int j = 0; j < waveSize; j++)
-				{
-					if (i != j)
-					{
-						enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -5);
-					}
-				}
-
-				float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) + 
+				enemyWave[i]->changeIdle();
+			} else
+			{
+				float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) +
 					pow((enemyWave[i]->getZ() - player->getZ()), 2));
 
-				if (enemyWave[i]->getRange() > playerDist)
+				if(enemyWave[i]->getHealth() >= 0)
 				{
-					int damage = enemyWave[i]->attack();
+					enemyWave[i]->clearPotential(arenaMap);
 
-					if (player->getInvulTimer() == 0)
+					switch(enemyWave[i]->getType())
 					{
-						gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
+					case FIRSTBOSS:
+						if(enemyWave[i]->isCharging())
+						{
+							enemyWave[i]->setPotential(player->getX(), player->getZ(), 80);
+						} else
+						{
+							enemyWave[i]->setPotential(player->getX() - 2 * (player->getZ() - enemyWave[i]->getZ()),
+								player->getZ() + 2 * (player->getX() - enemyWave[i]->getX()), 80);
+						}
+						enemyWave[i]->updateCharge();
+						break;
+					default:
+						enemyWave[i]->setPotential(player->getX(), player->getZ(), 80);
+						break;
 					}
+
+					for(int j = 0; j < waveSize; j++)
+					{
+						if(i != j && !enemyWave[j]->isIdle())
+						{
+							enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -5);
+						}
+					}
+
+					if(enemyWave[i]->getRange() > playerDist)
+					{
+						int damage = enemyWave[i]->attack();
+
+						if(player->getInvulTimer() == 0)
+						{
+							gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
+						}
+					} else
+					{
+						enemyWave[i]->move();
+					}
+					//enemyWave[i]->act(player->getX(), player->getZ(), board);
 				}
-				else
-				{
-					enemyWave[i]->move();
-				}
-				//enemyWave[i]->act(player->getX(), player->getZ(), board);
 			}
 		}
 	}
-
 	render->GeometryPassInit();
 	render->render(renderObjects);
 	render->lightPass();
@@ -338,11 +370,6 @@ void GameState::keyDown(char c)
 		skipSetDir = true; //Temporary
 		maxHeal(); //Temporary
 		break; //Temporary
-	//case 'z': //Temporary
-	//case 'Z': //Temporary
-	//	skipSetDir = true; //Temporary
-	//	gameUI->increaseCombo(); //Temporary
-	//	break; //Temporary
 	case 'x': //Temporary
 	case 'X': //Temporary
 		skipSetDir = true; //Temporary
@@ -387,59 +414,7 @@ void GameState::keyUp(char c)
 }
 
 void GameState::leftMouseClick(float x, float z)
-{
-	//glm::vec2 vecFromPlayer = glm::vec2(x - player->getX(), y - player->getZ());
-	//float angle = atan(vecFromPlayer.y / vecFromPlayer.x);
-	//glm::vec2 dirVec =  glm::normalize(glm::vec2(x - player->getX(), y - player->getZ()));
-	BoundingPolygon hitbox;
-
-	if (player->getWeapon() == SWORD)
-	{
-		float weaponRange = 5.0f;	//multiplier for the direction vector
-		glm::vec2 dirVec = glm::normalize(glm::vec2(x - player->getX(), z - player->getZ()));
-
-		dirVec.x *= weaponRange;
-		dirVec.y *= weaponRange;
-
-		Point points[3];
-		points[0] = { player->getX(), player->getZ() };
-		points[1] = { player->getX() + dirVec.x - dirVec.y, player->getZ() + dirVec.y + dirVec.x };
-		points[2] = { player->getX() + dirVec.x + dirVec.y, player->getZ() + dirVec.y - dirVec.x };
-		hitbox = BoundingPolygon(points, 3);
-	}
-	else		//Using spear
-	{
-		float weaponRange = 9.0f;
-		glm::vec2 dirVec = glm::normalize(glm::vec2(x - player->getX(), y - player->getZ()));
-
-		dirVec.x *= weaponRange;
-		dirVec.y *= weaponRange;
-
-		Point point[2];
-
-		point[0] = { player->getX(), player->getZ() };
-		point[1] = { player->getX() + dirVec.x, player->getZ() + dirVec.y };
-		hitbox = BoundingPolygon(point, 2);
-	}
-
-	for(int i = 0; i < waveSize; i++)
-	{
-		BoundingPolygon test = enemyWave[i]->getBounds();
-		bool hit = test.collides(hitbox);
-		if(hit)
-		{
-			int damage = player->getDamageDealt();
-			
-			if(!enemyWave[i]->takeDamage(damage))			//Checks if the enemy is killed by the damage
-			{	
-				enemiesRemaining--;
-				state = 1;									// ?
-				enemyWave[i]->getGObject()->setAnimationState(2);
-			}
-				
-		}
-	}
-}
+{}
 
 void GameState::playerAttack()
 {
@@ -467,7 +442,6 @@ void GameState::playerAttack()
 		points[1] = {player->getX() + dirVec.x, player->getZ() + dirVec.y};
 		hitbox = BoundingPolygon(points, 2);
 	}
-	player->attack();
 	for(int i = 0; i < waveSize; i++)
 	{
 		BoundingPolygon test = enemyWave[i]->getBounds();
@@ -487,6 +461,7 @@ void GameState::playerAttack()
 			}
 		}
 	}
+	player->attack();
 }
 
 int GameState::getState()const
@@ -706,7 +681,7 @@ void GameState::spawnEnemies(int waveNumber)
 			}
 
 			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), 
-										atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), objArr, c, waveNumber);
+										atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), objArr, c, waveNumber, i * 120);
 			enemyWave[i] = tempEnemy;
 			renderObjects.push_back(tempEnemy->getGObject());
 		}

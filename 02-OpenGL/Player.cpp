@@ -157,7 +157,7 @@ void Player::update()
 		dirVec = moveVec;
 	}
 	float xMove = moveSpeed * moveVec.x;
-	float zMove = moveSpeed * moveVec.y;
+	float zMove = moveSpeed * moveVec.y * 1.77777;
 
 	if(abs(xMove)< 0.001 && abs(zMove)< 0.001)
 	{	
@@ -259,6 +259,10 @@ void Player::setDefault()
 
 int Player::getDamageDealt()
 {
+	if(attackState > 0)
+	{
+		return 0;
+	}
 	int damage = 0;
 
 	if (weapon == SWORD)

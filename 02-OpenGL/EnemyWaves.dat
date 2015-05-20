@@ -56,7 +56,7 @@ enemyobj/ginger/gingerdead.png
 40.0
 x6
 1
-animal
+boss1
 /enemyobj/boss1/
 enemyobj/lion.png
 220.0
@@ -218,7 +218,7 @@ enemyobj/wolflowpoly.png
 158.0
 x12
 1
-animal
+boss2
 /enemyobj/boss2/
 enemyobj/ele_text.png
 220.0
@@ -320,7 +320,7 @@ enemyobj/wolflowpoly.png
 123.0
 x18
 1
-melee
+boss3
 /enemyobj/boss3/
 enemyobj/test.png
 220.0

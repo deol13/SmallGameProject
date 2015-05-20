@@ -31,11 +31,14 @@ class Enemy
 		GObject* loadObj;
 		BoundingPolygon collisionRect;
 		float neighbourPos[8];					//index goes NW, N, NE, W, E, SW, S, SE
+		bool charging;
+		int chargeTimer;
+		int idleTimer;
 
 	public:
 		Enemy();
 		Enemy(int type, float x, float z, GLuint texture, string objectFile, int waveNr);
-		Enemy(int type, float x, float z, GLuint texture, string* objectFiles, int nrOfKeyFrames, int waveNr);
+		Enemy(int type, float x, float z, GLuint texture, string* objectFiles, int nrOfKeyFrames, int waveNr, int idle);
 		~Enemy();
 
 		void setEnemy(int type);
@@ -45,9 +48,14 @@ class Enemy
 		float getZ()const;
 		int getHealth()const;
 		int getRange()const;
+		int getType()const;
 		BoundingPolygon getBounds() const;
 		bool takeDamage(const int dmg);					//returns true if still alive
 		bool isAlive()const;
+		bool isCharging()const;
+		bool isIdle()const;
+		void changeIdle();
+		void updateCharge();
 
 		int attack();
 		void move();
