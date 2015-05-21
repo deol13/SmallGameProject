@@ -45,7 +45,7 @@ Player::Player(GLuint textures[3], float x, float z, int health, int armour)
 	invulTimer = 0;
 	Point colPoints[4] ={{x - 5.0, z - 5.0}, {x - 5.0, z + 5.0}, {x + 5.0, z - 5.0}, {x + 5.0, z + 5.0}};
 	collisionRect = BoundingPolygon(colPoints, 4);
-	moveSpeed = 0.9;
+	moveSpeed = 1.0;
 	this->health = health;
 	maxHealth = health;
 	this->armour = armour;
@@ -150,14 +150,14 @@ GObject* Player::getGObject(int index) const
 	return loadObj[index];
 }
 
-void Player::update()
+void Player::update(const int board[455][256])
 {
 	if(abs(moveVec.x) + abs(moveVec.y) > 0.0)
 	{
 		dirVec = moveVec;
 	}
 	float xMove = moveSpeed * moveVec.x;
-	float zMove = moveSpeed * moveVec.y * 1.77777;
+	float zMove = moveSpeed * moveVec.y;
 
 	if(abs(xMove)< 0.001 && abs(zMove)< 0.001)
 	{	
@@ -175,6 +175,30 @@ void Player::update()
 	{
 		loadObj[weapon]->animate(5 - weapon);
 	}
+
+	/*Check that movement isn't blocked*/
+	int canMove = 1;
+	for(int i = collisionRect.findMin({1.0f, 0.0f}) + xMove; i < collisionRect.findMax({1.0f, 0.0f}) + xMove; i++)
+	{
+		if(board[i][(int)(collisionRect.findMax({0.0f, 1.0f}) + 0.5 + zMove)] < 0 ||
+			board[i][(int)(collisionRect.findMin({0.0f, 1.0f}) + 0.5 + zMove)] < 0)
+		{
+			canMove = -1;
+			break;
+		}
+	}
+	for(int i = collisionRect.findMin({0.0f, 1.0f}) + zMove; i < collisionRect.findMax({0.0f, 1.0f}) + zMove; i++)
+	{
+		if(board[(int)(collisionRect.findMax({0.0f, 1.0f}) + 0.5 + xMove)][i] < 0 ||
+			board[(int)(collisionRect.findMin({0.0f, 1.0f}) + 0.5 + xMove)][i] < 0)
+		{
+			canMove = -1;
+			break;
+		}
+	}
+
+	xMove *= canMove;
+	zMove *= canMove;
 	for(int i = 0; i < 3; i++)
 	{
 		loadObj[i]->translate(xMove, 0, zMove);
