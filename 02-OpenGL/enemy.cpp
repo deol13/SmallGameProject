@@ -92,6 +92,16 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, in
 	{
 		neighbourPos[i] = 0;
 	}
+	if(z < 70)
+	{
+		loadObj->rotate(0, 3.14159, 0);
+	} else if(x < 100)
+	{
+		loadObj->rotate(0, -3.14159/2, 0);
+	} else if(x > 350)
+	{
+		loadObj->rotate(0, 3.14159 / 2, 0);
+	}
 }
 
 Enemy::~Enemy()
