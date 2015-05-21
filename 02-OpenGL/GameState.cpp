@@ -605,20 +605,20 @@ void GameState::loadArena(int fileName)
 				{
 					temp->scale(0.6f, 0.4f, 0.6f);
 				}
-				else if (i == 5 || i == 8)	// down / up
-				{
-					temp->scale(0.7f, 0.4f, 0.5f);
-				}
-				else if (i == 6 || i == 7)		//right / left
+				else if (i == 5 || i == 8)	// right / left
 				{
 					temp->scale(0.7f, 0.4f, 0.45f);
+				}
+				else if (i == 6 || i == 7)		//up / down
+				{
+					temp->scale(0.72f, 0.4f, 0.45f);
 				}
 			}
 			else if (fileName == 3)
 			{
 				if (i < 5 && i != 0)		//Corners
 				{
-					temp->scale(0.0, 0.0, 0.0);
+					temp->scale(0.8, 0.7, 0.7);
 				}
 				else if (i == 5 || i == 6)	//Walls up & down
 				{
@@ -626,7 +626,7 @@ void GameState::loadArena(int fileName)
 				}
 				else if (i == 7 || i == 8)	//Walls left & right
 				{
-					temp->scale(0.9, 1.0, 0.5);
+					temp->scale(0.9, 1.0, 0.4);
 				}
 			}
 
@@ -786,7 +786,7 @@ void GameState::nextWave()
 		delete enemyWave;	//Remove last wave
 		enemyWave = nullptr;
 
-		if (waveNumber == 1 || waveNumber == 2)
+		if (waveNumber == 6 || waveNumber == 12)
 		{
 			gold += 30;	//Grant gold for finished boss
 
