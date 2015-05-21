@@ -298,7 +298,15 @@ void GameState::update()
 			}
 		}
 		render->GeometryPassInit();
+		if(player->getInvulTimer() > 0 && (player->getInvulTimer() % 25 < 10))
+		{
+			std::vector<GObject*> tempRender(renderObjects.begin() + weaponRender + 1, renderObjects.end());
+			render->render(tempRender);
+		}
+		else
+		{
 		render->render(renderObjects);
+		}
 		render->lightPass();
 	}
 }
@@ -455,7 +463,7 @@ void GameState::playerAttack()
 			if(enemyWave[i]->isAlive())
 			{
 				int damage = player->getDamageDealt();
-				if(!enemyWave[i]->takeDamage(damage))			//Checks if the enemy is killed by the damage
+				if(!enemyWave[i]->takeDamage(damage, player->getX(), player->getZ()))			//Checks if the enemy is killed by the damage
 				{
 					enemiesRemaining--;
 					state = 1;									// ?
