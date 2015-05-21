@@ -173,10 +173,21 @@ BoundingPolygon Enemy::getBounds() const
 	return collisionRect;
 }
 
-bool Enemy::takeDamage(const int dmg)
+bool Enemy::takeDamage(const int dmg, const float playerX, const float playerZ)
 {
+	if(dmg > 0)
+	{
+		float dist = sqrt(pow(playerX - x, 2) + pow(playerZ - z, 2));
+		float xMove = 15.0f * (x - playerX) / dist;
+		float zMove = 15.0f * (z - playerZ) / dist;
+		this->x += xMove;
+		this->z += zMove;
+		loadObj->translate(xMove, 0.0, zMove);
+		collisionRect.move(xMove, zMove);
+
 		health -= dmg;
-		return (health > 0);
+	}
+	return (health > 0);
 }
 
 bool Enemy::isAlive()const

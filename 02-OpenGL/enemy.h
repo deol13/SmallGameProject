@@ -50,7 +50,7 @@ class Enemy
 		int getRange()const;
 		int getType()const;
 		BoundingPolygon getBounds() const;
-		bool takeDamage(const int dmg);					//returns true if still alive
+		bool takeDamage(const int dmg, const float playerX, const float playerZ);					//returns true if still alive
 		bool isAlive()const;
 		bool isCharging()const;
 		bool isIdle()const;

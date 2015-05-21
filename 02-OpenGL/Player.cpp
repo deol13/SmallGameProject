@@ -132,7 +132,7 @@ int Player::takeDamage(int dmg)
 {
  	if (invulTimer == 0) 
 	{
-		invulTimer = 1;
+		invulTimer = 50;
 		
 		dmg -= armour;		//Take away damage equal to the armour
 		
@@ -183,9 +183,9 @@ void Player::update()
 	z += zMove;
 	collisionRect.move(xMove, zMove);
 
-	if (invulTimer > 0 && invulTimer < 50)
+	if (invulTimer > 0)
 	{
-		invulTimer++;
+		invulTimer--;
 	}
 	else if (invulTimer != 0)
 	{
@@ -267,7 +267,7 @@ int Player::getDamageDealt()
 
 	if (weapon == SWORD)
 	{
-		damage = 7 + (5 * swordUpgrade) + 9999;
+		damage = 7 + (5 * swordUpgrade) /*+ 9999*/;
 	}
 
 	if (weapon == SPEAR)

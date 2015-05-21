@@ -244,71 +244,76 @@ void GameState::update()
 	{
 		timer++;
 	}
-	else
+	if(menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1) //
 	{
-		if(menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1) //
+		for(int i = 0; i < waveSize; i++)
 		{
-			for(int i = 0; i < waveSize; i++)
+			if(enemyWave[i]->isIdle())
 			{
-				if(enemyWave[i]->isIdle())
-				{
-					enemyWave[i]->changeIdle();
-				} else
-				{
-					float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) +
-						pow((enemyWave[i]->getZ() - player->getZ()), 2));
+				enemyWave[i]->changeIdle();
+			} else
+			{
+				float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) +
+					pow((enemyWave[i]->getZ() - player->getZ()), 2));
 
-					if(enemyWave[i]->getHealth() >= 0)
+				if(enemyWave[i]->getHealth() >= 0)
+				{
+					enemyWave[i]->clearPotential(arenaMap);
+
+					switch(enemyWave[i]->getType())
 					{
-						enemyWave[i]->clearPotential(arenaMap);
-
-						switch(enemyWave[i]->getType())
+					case FIRSTBOSS:
+						if(enemyWave[i]->isCharging())
 						{
-						case FIRSTBOSS:
-							if(enemyWave[i]->isCharging())
-							{
-								enemyWave[i]->setPotential(player->getX(), player->getZ(), 80);
-							} else
-							{
-								enemyWave[i]->setPotential(player->getX() - 2 * (player->getZ() - enemyWave[i]->getZ()),
-									player->getZ() + 2 * (player->getX() - enemyWave[i]->getX()), 80);
-							}
-							enemyWave[i]->updateCharge();
-							break;
-						default:
 							enemyWave[i]->setPotential(player->getX(), player->getZ(), 80);
-							break;
-						}
-
-						for(int j = 0; j < waveSize; j++)
-						{
-							if(i != j && !enemyWave[j]->isIdle())
-							{
-								enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -5);
-							}
-						}
-
-						if(enemyWave[i]->getRange() > playerDist)
-						{
-							int damage = enemyWave[i]->attack();
-
-							if(player->getInvulTimer() == 0)
-							{
-								gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
-							}
 						} else
 						{
-							enemyWave[i]->move();
+							enemyWave[i]->setPotential(player->getX() - 2 * (player->getZ() - enemyWave[i]->getZ()),
+								player->getZ() + 2 * (player->getX() - enemyWave[i]->getX()), 80);
 						}
-						//enemyWave[i]->act(player->getX(), player->getZ(), board);
+						enemyWave[i]->updateCharge();
+						break;
+					default:
+						enemyWave[i]->setPotential(player->getX(), player->getZ(), 80);
+						break;
 					}
+
+					for(int j = 0; j < waveSize; j++)
+					{
+						if(i != j && !enemyWave[j]->isIdle())
+						{
+							enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -5);
+						}
+					}
+
+					if(enemyWave[i]->getRange() > playerDist)
+					{
+						int damage = enemyWave[i]->attack();
+
+						if(player->getInvulTimer() == 0)
+						{
+							gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
+						}
+					} else
+					{
+						enemyWave[i]->move();
+					}
+					//enemyWave[i]->act(player->getX(), player->getZ(), board);
 				}
 			}
 		}
-		render->GeometryPassInit();
-		render->render(renderObjects);
-		render->lightPass();
 	}
+	render->GeometryPassInit();
+	if(player->getInvulTimer() > 0 && (player->getInvulTimer() % 25 < 10))
+	{
+		std::vector<GObject*> tempRender(renderObjects.begin() + weaponRender + 1, renderObjects.end());
+		render->render(tempRender);
+	}
+	else
+	{
+		render->render(renderObjects);
+	}
+	render->lightPass();
 }
 
 void GameState::uiUpdate()
@@ -434,7 +439,7 @@ void GameState::playerAttack()
 	glm::vec2 dirVec = player->getDirection();
 	if(player->getWeapon() == SWORD)
 	{
-		float weaponRange = 5.0f;	//multiplier for the direction vector
+		float weaponRange = 15.0f;	//multiplier for the direction vector
 		dirVec.x *= weaponRange;
 		dirVec.y *= weaponRange;
 
@@ -445,7 +450,7 @@ void GameState::playerAttack()
 		hitbox = BoundingPolygon(points, 3);
 	} else													//Using spear
 	{
-		float weaponRange = 9.0f;
+		float weaponRange = 25.0f;
 		dirVec.x *= weaponRange;
 		dirVec.y *= weaponRange;
 
@@ -463,7 +468,7 @@ void GameState::playerAttack()
 			if(enemyWave[i]->isAlive())
 			{
 				int damage = player->getDamageDealt();
-				if(!enemyWave[i]->takeDamage(damage))			//Checks if the enemy is killed by the damage
+				if(!enemyWave[i]->takeDamage(damage, player->getX(), player->getZ()))			//Checks if the enemy is killed by the damage
 				{
 					enemiesRemaining--;
 					state = 1;									// ?
