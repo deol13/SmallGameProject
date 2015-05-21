@@ -541,25 +541,29 @@ void GameState::loadArena(int fileName)
 			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
 			int width = atoi(arenaArr[8 * i + 6].c_str());
 			int length = atoi(arenaArr[8 * i + 7].c_str());
-			//for(int k = 0; k < width * 2; k++)
-			//{
-			//	for(int j = 0; j < length * 2; j++)
-			//	{
-			//		int posX = atoi(arenaArr[8 * i + 1].c_str()) + k - width;
-			//		int posZ = atoi(arenaArr[8 * i + 3].c_str()) + j - length;
-			//		if(posX >= 0 && posZ >= 0 && posX < GASIZE && posZ < GASIZE)
-			//		{
-			//			float dist = std::sqrt(pow((float)(k - width), 2) + pow((float)(j - length), 2));
-			//			if(k < 3 * width/2 && k > width/2 && j < 3 * length/2 && j > length / 2 )
-			//			{
-			//				arenaMap[posX][posZ] = -100;
-			//			} else
-			//			{
-			//				arenaMap[posX][posZ] -= (int)(-10.0 / dist);
-			//			}
-			//		}
-			//	}
-			//}
+
+			if(width > 0 && length > 0)
+			{
+				for(int k = 0; k < width * 2; k++)
+				{
+					for(int j = 0; j < length * 2; j++)
+					{
+						int posX = atoi(arenaArr[8 * i + 1].c_str()) + k - width;
+						int posZ = atoi(arenaArr[8 * i + 3].c_str()) + j - length;
+						if(posX >= 0 && posZ >= 0 && posX < GASIZE && posZ < GASIZE)
+						{
+							float dist = std::sqrt(pow((float)(k - width), 2) + pow((float)(j - length), 2));
+							if(k < 3 * width / 2 && k > width / 2 && j < 3 * length / 2 && j > length / 2)
+							{
+								arenaMap[posX][posZ] = -100;
+							} else
+							{
+								arenaMap[posX][posZ] -= (int)(-10.0 / dist);
+							}
+						}
+					}
+				}
+			}
 			if (i == 0)		//scale the plane
 			{
 				temp->scale(1.78, 1.0, 1.0);
