@@ -215,7 +215,7 @@ void GameState::arenaCleanUp()
 
 void GameState::update()
 {
- 	player->update();
+ 	player->update(arenaMap);
 	
 	if (timer == 80)
 	{
@@ -743,12 +743,33 @@ void GameState::spawnPlayer()
 bool GameState::playerCanMove(int x, int z)
 {
 	BoundingPolygon playerBounds = player->getBounds();
-	playerBounds.move(x, z);
 
-	if(playerBounds.findMax({0.0f, 1.0f}) >= GASIZE)
+	for(int i = playerBounds.findMin({1.0f, 0.0f}) + x; i < playerBounds.findMax({1.0f, 0.0f}) + x; i++)
+	{
+		if(arenaMap[i][(int)(playerBounds.findMax({0.0f, 1.0f})+ 0.5) + z] < 0)
+		{
+			return false;
+		} else if(arenaMap[i][(int)(playerBounds.findMin({0.0f, 1.0f}) + 0.5) + z] < 0)
+		{
+			return false;
+		}
+	}
+	for(int i = playerBounds.findMin({0.0f, 1.0f}) + x; i < playerBounds.findMax({0.0f, 1.0f}) + x; i++)
+	{
+		if(arenaMap[(int)(playerBounds.findMax({1.0f, 0.0f}) + 0.5) + x][i] < 0)
+		{
+			return false;
+		} else if(arenaMap[(int)(playerBounds.findMin({1.0f, 0.0f}) + 0.5) + x][i] < 0)
+		{
+			return false;
+		}
+	}
+
+	playerBounds.move(x, z);
+	if(playerBounds.findMax({1.0f, 0.0f}) >= 455)
 	{
 		return false;
-	} else if(playerBounds.findMin({0.0f, 1.0f}) <= 0)
+	} else if(playerBounds.findMin({1.0f, 0.0f}) <= 0)
 	{
 		return false;
 	} else if(playerBounds.findMax({0.0f, 1.0f}) >= GASIZE)

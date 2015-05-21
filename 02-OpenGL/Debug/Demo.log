@@ -1,26 +1,21 @@
-﻿Build started 5/21/2015 1:17:58 PM.
+﻿Build started 5/21/2015 2:49:20 PM.
      1>Project "C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Demo.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Demo (Konfliktkopia för laptop 2015-05-12).vcxproj, Demo (Konfliktkopia för laptop 2015-05-14).vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameState.cpp
-         GameState.cpp
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(11): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(263): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(267): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(272): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(280): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(290): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(535): warning C4018: '>=' : signed/unsigned mismatch
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(540): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(569): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(621): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(625): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(629): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(698): warning C4018: '>=' : signed/unsigned mismatch
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(719): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(746): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(991): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\victor\dropbox\smallgameproject\02-opengl\gamestate.cpp(862): warning C4715: 'GameState::screenClickesOn' : not all control paths return a value
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glm" /I"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\\glew-1.11.0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Player.cpp
+         Player.cpp
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(46): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(78): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(82): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(87): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(88): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(97): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(98): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(101): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(104): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(107): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(181): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\victor\dropbox\smallgameproject\02-opengl\player.cpp(190): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.exe" /INCREMENTAL /NOLOGO LuaLib.lib GLU32.lib OpenAL32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Victor\Dropbox\SmallGameProject\02-OpenGL\Debug\Demo.lib" /MACHINE:X86 Debug\Audio.obj
          Debug\BlitQuad.obj
@@ -45,4 +40,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.39
+Time Elapsed 00:00:01.29

@@ -347,7 +347,7 @@ void Enemy::setPotential(int origX, int origZ, int basePower)
 	}
 }
 
-void Enemy::clearPotential(const int staticBoard[256][256])
+void Enemy::clearPotential(const int staticBoard[455][256])
 {
 	//float radii[9];
 	for(int i = -1; i < 2; i++)

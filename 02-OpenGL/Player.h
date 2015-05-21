@@ -39,7 +39,7 @@ public:
 	void stop(bool stopX, bool stopZ);
 	int takeDamage(int dmg);
 	GObject* getGObject(int index) const;
-	void update();
+	void update(const int board[455][256]);
 	void attack();
 
 	void setMaxHealth(const int health);
