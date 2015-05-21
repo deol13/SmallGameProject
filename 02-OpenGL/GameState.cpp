@@ -426,7 +426,7 @@ void GameState::playerAttack()
 	glm::vec2 dirVec = player->getDirection();
 	if(player->getWeapon() == SWORD)
 	{
-		float weaponRange = 5.0f;	//multiplier for the direction vector
+		float weaponRange = 9.0f;	//multiplier for the direction vector
 		dirVec.x *= weaponRange;
 		dirVec.y *= weaponRange;
 
@@ -561,7 +561,7 @@ void GameState::loadArena(int fileName)
 			{
 				if (i == 1)//Scalings for map 1
 				{
-					temp->scale(1.5f, 1.0f, 1.0f);		//left house
+					temp->scale(1.5f, 1.5f, 1.5f);		//left house
 				}
 				else if (i == 3 || i == 4)	//wall left / right
 				{
@@ -574,15 +574,17 @@ void GameState::loadArena(int fileName)
 				else if (i == 10)
 				{
 					temp->rotate(0.0f, -3.14159f / -2.0f, 0.0f);	//bottom house
-					temp->scale(1.2f, 1.0f, 1.0f);
+					temp->scale(1.5f, 1.5f, 1.5f);
 				}
 				else if (i == 11)
 				{
 					temp->rotate(0.0f, -3.14159f / 1.0f, 0.0f);	//Right house
+					temp->scale(1.5f, 1.5f, 1.5f);
 				}
 				else if (i == 12)
 				{
 					temp->rotate(0.0f, -3.14159f / 2.0f, 0.0f);	//Top house
+					temp->scale(1.5f, 1.5f, 1.5f);
 				}
 			}
 			else if (fileName == 2)		//scalings for map 2

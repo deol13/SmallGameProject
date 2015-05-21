@@ -42,7 +42,7 @@ bana3/uvarena3.png
 50.0
 20.0
 bana3/walldown.obj
-25.0
+75.0
 0.0
 128.0
 bana3/uvarena3.png
@@ -56,9 +56,9 @@ bana3/uvarena3.png
 20.0
 50.0
 bana3/wallright.obj
-128.0
+80.0
 0.0
-12.0
+128.0
 bana3/uvarena3.png
 20.0
 50.0

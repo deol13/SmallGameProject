@@ -120,7 +120,7 @@ void Enemy::setEnemy(int type)
 	{
 		health = 60;
 		this->type = type;
-		loadObj->scale(4.5f, 2.0f, 4.0f);
+		loadObj->scale(4.0f, 2.0f, 4.0f);
 	}
 	else if (type == SECONDBOSS)	//Elephant
 	{
