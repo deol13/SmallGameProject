@@ -230,12 +230,7 @@ void GameState::update()
 	}
 	if (enemiesRemaining <= 0)
 	{
- 		if (waveNumber == 18) //If we finished the game and / or map
-		{
-			player->stop(true, true);
-			menuUI->won();
-		}
-		else if( timer == 0)				//Spawn next wave
+		if( timer == 0)				//Starts the timer
 		{
 			timer = 1;
 		}
@@ -256,7 +251,7 @@ void GameState::update()
 				float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) +
 					pow((enemyWave[i]->getZ() - player->getZ()), 2));
 
-				if(enemyWave[i]->getHealth() >= 0)
+				if(enemyWave[i]->isAlive())
 				{
 					enemyWave[i]->clearPotential(arenaMap);
 
@@ -774,46 +769,54 @@ bool GameState::playerCanMove(int x, int z)
 
 void GameState::nextWave()
 {
-	for (int i = 0; i < waveSize; i++)
+	if (waveNumber != 18)
 	{
-		delete enemyWave[i];
-		renderObjects.pop_back();
-	}
+		for (int i = 0; i < waveSize; i++)
+		{
+			delete enemyWave[i];
+			renderObjects.pop_back();
+		}
 
-	delete enemyWave;	//Remove last wave
-	enemyWave = nullptr;
+		delete enemyWave;	//Remove last wave
+		enemyWave = nullptr;
 
-	if (waveNumber == 6 || waveNumber == 12)
-	{
-		gold += 30;	//Grant gold for finished boss
+		if (waveNumber == 6 || waveNumber == 12)
+		{
+			gold += 30;	//Grant gold for finished boss
 
-		arenaCleanUp();		//Load the next map
- 		*currentMap = *currentMap + 1;
-   		loadArena(*currentMap);
-	}
-	else
-	{
-		gold += 10;		//Grant gold for finished wave
-	}
-	player->stop(true, true);
+			arenaCleanUp();		//Load the next map
+			*currentMap = *currentMap + 1;
+			loadArena(*currentMap);
+		}
+		else
+		{
+			gold += 10;		//Grant gold for finished wave
+		}
+		player->stop(true, true);
 
-	shopUI->setState();	//Show shop
-	shopUI->showGold(gold);
-	shopUI->setHealingInLua(player);
+		shopUI->setState();	//Show shop
+		shopUI->showGold(gold);
+		shopUI->setHealingInLua(player);
 
-	waveNumber++;		//Load in next wave
-	spawnEnemies(waveNumber);
-	if (waveNumber == 6)	//change the boss stats.
-	{
-		enemyWave[0]->setEnemy(FIRSTBOSS);
+		waveNumber++;		//Load in next wave
+		spawnEnemies(waveNumber);
+		if (waveNumber == 6)	//change the boss stats.
+		{
+			enemyWave[0]->setEnemy(FIRSTBOSS);
+		}
+		else if (waveNumber == 12)
+		{
+			enemyWave[0]->setEnemy(SECONDBOSS);
+		}
+		else if (waveNumber == 18)
+		{
+			enemyWave[0]->setEnemy(FINALBOSS);
+		}
 	}
-	else if (waveNumber == 12)
+	else  //finished the game
 	{
-		enemyWave[0]->setEnemy(SECONDBOSS);
-	}
-	else if (waveNumber == 18)
-	{
-		enemyWave[0]->setEnemy(FINALBOSS);
+		player->stop(true, true);
+		menuUI->won();
 	}
 
 }
