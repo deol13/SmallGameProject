@@ -3,7 +3,7 @@ plane.obj
 227.5
 0.0
 128.0
-bana3floor.png
+bana3tex.png
 -1.0
 -1.0
 bana3/corner.obj
@@ -42,7 +42,7 @@ bana3/uvarena3.png
 50.0
 20.0
 bana3/walldown.obj
-75.0
+175.0
 0.0
 128.0
 bana3/uvarena3.png
