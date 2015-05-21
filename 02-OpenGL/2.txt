@@ -34,7 +34,7 @@ bana2/corner.obj
 bana2/wc.png
 35.4
 46.8
-bana2/wallupp.obj
+bana2/wallup.obj
 230.5
 0.0
 227.0
