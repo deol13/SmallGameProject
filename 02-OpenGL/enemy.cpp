@@ -55,6 +55,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, in
 	this->z = z;
 	charging = false;
 	chargeTimer = 0;
+	attackTime = 0;
 	idleTimer = idle;
 	loadObj = nullptr;
 	Point* colPoints = new Point[4]{{x - 5.0, z - 5.0}, {x - 5.0, z + 5.0}, {x + 5.0, z - 5.0}, {x + 5.0, z + 5.0}};
@@ -270,67 +271,76 @@ void Enemy::updateCharge()
 int Enemy::attack()
 {
 	int damage = 0;
-	if (type == MELEE)
+	if(attackTime <= 0)
 	{
-		damage = 1;
-	}
-	else if (type == RANGED)
-	{
+		//loadObj->setAnimationState(1);
+		attackTime = 10;
+		if(type == MELEE)
+		{
+			damage = 1;
+		} else if(type == RANGED)
+		{
 
-	}
-	else if (type == ANIMAL)
+		} else if(type == ANIMAL)
+		{
+			damage = 2;
+		} else if(type == FIRSTBOSS)
+		{
+			damage = 3;
+		} else if(type == SECONDBOSS)
+		{
+			damage = 4;
+		} else				//Final boss
+		{
+			damage = 5;
+		}
+	} else
 	{
-		damage = 2;
-	}
-	else if (type == FIRSTBOSS)
-	{
-		damage = 3;
-	}
-	else if (type == SECONDBOSS)
-	{
-		damage = 4;
-	}
-	else				//Final boss
-	{
-		damage = 5;
+		attackTime--;
+		loadObj->animate(2);
 	}
 	return damage;
 }
 
 void Enemy::move()
 {
-	int highIndex = 0;
-	for(int i = 1; i < 8; i++)
+	if(attackTime <= 0)
 	{
-		if(neighbourPos[i] > neighbourPos[highIndex])
+		int highIndex = 0;
+		for(int i = 1; i < 8; i++)
 		{
-			highIndex = i;
+			if(neighbourPos[i] > neighbourPos[highIndex])
+			{
+				highIndex = i;
+			}
 		}
-	}
-	if(neighbourPos[highIndex] > 0)
+		if(neighbourPos[highIndex] > 0)
+		{
+			float xMove;
+			float zMove;
+			xMove = ((highIndex + highIndex / 4) % 3 - 1) * moveSpeed;
+			zMove = ((highIndex + highIndex / 4) / 3 - 1) * moveSpeed;
+			this->x += xMove;
+			this->z += zMove;
+			loadObj->translate(xMove, 0.0, zMove);
+			collisionRect.move(xMove, zMove);
+			loadObj->animate(1);
+			if(highIndex > 4)
+			{
+				loadObj->setRotation(0.0, (highIndex - 2)*3.14159 / 4, 0.0);
+			} else if(highIndex < 3)
+			{
+				loadObj->setRotation(0.0, (1 - highIndex)*3.14159 / 4, 0.0);
+			} else
+			{
+				loadObj->setRotation(0.0, (-2 * highIndex + 7)* 3.14159 / 2, 0.0);
+			}
+		}
+	} else
 	{
-		float xMove;
-		float zMove;
-		xMove = ((highIndex + highIndex / 4) % 3 - 1) * moveSpeed;
-		zMove = ((highIndex + highIndex / 4) / 3 - 1) * moveSpeed;
-		this->x += xMove;
-		this->z += zMove;
-		loadObj->translate(xMove, 0.0, zMove);
-		collisionRect.move(xMove, zMove);
-		loadObj->animate(1);
-		if(highIndex > 4)
-		{
-			loadObj->setRotation(0.0, (highIndex - 2)*3.14159 / 4, 0.0);
-		} else if(highIndex < 3)
-		{
-			loadObj->setRotation(0.0, (1 - highIndex)*3.14159 / 4, 0.0);
-		} else
-		{
-			loadObj->setRotation(0.0, (-2 * highIndex + 7)* 3.14159 / 2, 0.0);
-		}
+		attack();
 	}
 
-	//loadObj->animate(1);
 }
 
 void Enemy::setPotential(int origX, int origZ, int basePower)
