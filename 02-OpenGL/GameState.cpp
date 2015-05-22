@@ -653,17 +653,13 @@ void GameState::loadArena(int fileName)
 			}
 			else if (fileName == 3)
 			{
-				if (i < 5 && i != 0)		//Corners
+				if (i == 1 || i == 2)	//Walls up & down
 				{
-					temp->scale(0.8, 0.7, 0.7);
+					temp->scale(0.85, 1.0, 1.0);
 				}
-				else if (i == 5 || i == 6)	//Walls up & down
+				else if (i == 3 || i == 4)	//Walls left & right
 				{
-					temp->scale(0.5, 1.0, 0.9);
-				}
-				else if (i == 7 || i == 8)	//Walls left & right
-				{
-					temp->scale(0.9, 1.0, 0.4);
+					temp->scale(1.0, 1.0, 0.4);
 				}
 			}
 

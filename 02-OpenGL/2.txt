@@ -14,9 +14,9 @@ bana2/wc.png
 35.4
 46.8
 bana2/corner.obj
-80.0
+75.0
 0.0
-23.0
+20.0
 bana2/wc.png
 35.4
 46.8
