@@ -77,7 +77,7 @@ animal
 /enemyobj/wolf/
 enemyobj/wolflowpoly.png
 190.0
-90.0
+35.0
 melee
 /enemyobj/ginger/
 enemyobj/ginger/gingerdead.png
