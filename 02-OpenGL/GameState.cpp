@@ -840,7 +840,7 @@ void GameState::nextWave()
 		delete enemyWave;	//Remove last wave
 		enemyWave = nullptr;
 
-		if (waveNumber == 6 || waveNumber == 12)
+		if (waveNumber == 1 || waveNumber == 2)
 		{
 			gold += 30;	//Grant gold for finished boss
 
