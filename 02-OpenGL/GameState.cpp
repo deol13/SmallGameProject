@@ -239,13 +239,19 @@ void GameState::update()
 	{
 		timer++;
 	}
-	if(menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1) //
+	if(menuUI->state != 3 && menuUI->state != 4 && menuUI->state != 5 && shopUI->getState() != 1) 
 	{
 		for(int i = 0; i < waveSize; i++)
 		{
-			if(enemyWave[i]->isIdle())
+			if(!enemyWave[i]->isTangible())
 			{
 				enemyWave[i]->changeIdle();
+				if(!enemyWave[i]->isIdle())
+				{
+					enemyWave[i]->clearPotential();
+					enemyWave[i]->setPotential(228, 128, 80);
+					enemyWave[i]->move();
+				}
 			} else
 			{
 				float playerDist = std::sqrt(pow((enemyWave[i]->getX() - player->getX()), 2) +
@@ -272,10 +278,9 @@ void GameState::update()
 						enemyWave[i]->setPotential(player->getX(), player->getZ(), 80);
 						break;
 					}
-
 					for(int j = 0; j < waveSize; j++)
 					{
-						if(i != j && !enemyWave[j]->isIdle())
+						if(i != j)
 						{
 							enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -5);
 						}
@@ -716,7 +721,7 @@ void GameState::spawnEnemies(int waveNumber)
 			}
 
 			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), 
-										atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), objArr, c, waveNumber, i * 120);
+										atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), objArr, c, waveNumber, 30 + i * 120);
 			enemyWave[i] = tempEnemy;
 			renderObjects.push_back(tempEnemy->getGObject());
 		}

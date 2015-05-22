@@ -212,12 +212,20 @@ bool Enemy::isCharging()const
 
 bool Enemy::isIdle()const
 {
-	return idleTimer > 0;
+	return idleTimer > 100;
+}
+
+bool Enemy::isTangible()const
+{
+	return idleTimer <= 0;
 }
 
 void Enemy::changeIdle()
 {
-	idleTimer--;
+	if(idleTimer > 0)
+	{
+		idleTimer--;
+	}
 }
 
 void Enemy::updateCharge()
@@ -361,5 +369,13 @@ void Enemy::clearPotential(const int staticBoard[455][256])
 
 			neighbourPos[3 * (i + 1) + (j + 1) - (3 * (i + 1) + (j + 1)) / 5] = staticBoard[boardPosX][boardPosZ];
 		}
+	}
+}
+
+void Enemy::clearPotential()
+{
+	for(int i = 0; i < 8; i++)
+	{
+		neighbourPos[i] = 0;
 	}
 }

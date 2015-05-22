@@ -54,6 +54,7 @@ class Enemy
 		bool isAlive()const;
 		bool isCharging()const;
 		bool isIdle()const;
+		bool isTangible()const;
 		void changeIdle();
 		void updateCharge();
 
@@ -63,6 +64,7 @@ class Enemy
 		/*adds base power at distance 1 from origin and degrades with radius*/
 		void setPotential(int origX, int origZ, int basePower);
 		void clearPotential(const int staticBoard[455][256]);
+		void clearPotential();
 
 };
 #endif
