@@ -595,7 +595,7 @@ void GameState::loadArena(int fileName)
 								arenaMap[posX][posZ] = -100;
 							} else
 							{
-								arenaMap[posX][posZ] -= (int)(-10.0 / dist);
+								arenaMap[posX][posZ] -= (-10.0 / dist);
 							}
 						}
 					}
@@ -796,25 +796,6 @@ bool GameState::playerCanMove(int x, int z)
 		{
 			return false;
 		}
-	}
-
-	playerBounds.move(x, z);
-	if(playerBounds.findMax({1.0f, 0.0f}) >= 455)
-	{
-		return false;
-	} else if(playerBounds.findMin({1.0f, 0.0f}) <= 0)
-	{
-		return false;
-	} else if(playerBounds.findMax({0.0f, 1.0f}) >= GASIZE)
-	{
-		return false;
-	} else if(playerBounds.findMin({0.0f, 1.0f}) <= 0)
-	{
-		return false;
-	}
-	if(arenaMap[(int)player->getZ() + z][(int)player->getX() + x] < 0)
-	{
-		return false;
 	}
 
 	//for(int i = 0; i < waveSize; i++)		//only checks with enemies right now. Need to add environment check
