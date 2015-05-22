@@ -211,6 +211,25 @@ void GameState::arenaCleanUp()
 	{
 		renderObjects.pop_back();
 	}
+	for(int i = 0; i < 256; i++)
+	{
+		arenaMap[i][0] = -10;
+		arenaMap[i][255] = -10;
+		arenaMap[0][i] = -10;
+		arenaMap[454][i] = -10;
+	}
+	for(int i = 256; i < 455; i++)
+	{
+		arenaMap[i][0] = -10;
+		arenaMap[i][255] = -10;
+	}
+	for(int i = 1; i < 454; i++)
+	{
+		for(int j = 1; j < 255; j++)
+		{
+			arenaMap[i][j] = 10;
+		}
+	}
 }
 
 void GameState::update()
@@ -259,11 +278,10 @@ void GameState::update()
 
 				if(enemyWave[i]->isAlive())
 				{
-					enemyWave[i]->clearPotential(arenaMap);
-
 					switch(enemyWave[i]->getType())
 					{
 					case FIRSTBOSS:
+						enemyWave[i]->clearPotential(arenaMap);
 						if(enemyWave[i]->isCharging())
 						{
 							enemyWave[i]->setPotential(player->getX(), player->getZ(), 80);
@@ -274,10 +292,24 @@ void GameState::update()
 						}
 						enemyWave[i]->updateCharge();
 						break;
+					case SECONDBOSS:
+						if(enemyWave[i]->isCharging())
+						{
+							enemyWave[i]->setPotential(player->getX() * 2, player->getZ(), 80);
+						} else
+						{
+							enemyWave[i]->clearPotential(arenaMap);
+							enemyWave[i]->setPotential(player->getX() - 2 * (player->getZ() - enemyWave[i]->getZ()),
+								player->getZ() + 2 * (player->getX() - enemyWave[i]->getX()), 80);
+						}
+						enemyWave[i]->updateCharge();
+						break;
 					default:
+						enemyWave[i]->clearPotential(arenaMap);
 						enemyWave[i]->setPotential(player->getX(), player->getZ(), 80);
 						break;
 					}
+
 					for(int j = 0; j < waveSize; j++)
 					{
 						if(i != j)
@@ -472,8 +504,8 @@ void GameState::playerAttack()
 				{
 					enemiesRemaining--;
 					state = 1;									// ?
-					enemyWave[i]->getGObject()->setAnimationState(2);
-					enemyWave[i]->getGObject()->animate(2);
+					enemyWave[i]->getGObject()->setAnimationState(3);
+					enemyWave[i]->getGObject()->animate(3);
 				}
 			}
 		}
@@ -721,7 +753,7 @@ void GameState::spawnEnemies(int waveNumber)
 			}
 
 			Enemy* tempEnemy = new Enemy(atoi(enemyArgs[6 * i].c_str()), atof(enemyArgs[(6 * i) + 4].c_str()), 
-										atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), objArr, c, waveNumber, 30 + i * 120);
+										atof(enemyArgs[(6 * i) + 5].c_str()), render->getTexture(texIndex), objArr, c, waveNumber, 60 + i * 120);
 			enemyWave[i] = tempEnemy;
 			renderObjects.push_back(tempEnemy->getGObject());
 		}

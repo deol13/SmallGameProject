@@ -53,6 +53,7 @@ class Enemy
 		bool takeDamage(const int dmg, const float playerX, const float playerZ);					//returns true if still alive
 		bool isAlive()const;
 		bool isCharging()const;
+		int getChargeTimer()const;
 		bool isIdle()const;
 		bool isTangible()const;
 		void changeIdle();

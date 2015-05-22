@@ -205,14 +205,9 @@ bool Enemy::isAlive()const
 	return (health > 0);
 }
 
-bool Enemy::isCharging()const
-{
-	return charging;
-}
-
 bool Enemy::isIdle()const
 {
-	return idleTimer > 100;
+	return idleTimer > 60;
 }
 
 bool Enemy::isTangible()const
@@ -226,6 +221,16 @@ void Enemy::changeIdle()
 	{
 		idleTimer--;
 	}
+}
+
+bool Enemy::isCharging()const
+{
+	return charging;
+}
+
+int Enemy::getChargeTimer()const
+{
+	return chargeTimer;
 }
 
 void Enemy::updateCharge()
@@ -245,6 +250,15 @@ void Enemy::updateCharge()
 			{
 				chargeTimer = 360;
 				moveSpeed *= 0.5;
+			}
+			break;
+		case SECONDBOSS:
+			if(charging)
+			{
+				chargeTimer = 180;
+			} else
+			{
+				chargeTimer = 300;
 			}
 			break;
 		default:
