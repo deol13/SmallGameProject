@@ -249,6 +249,7 @@ void GameState::update()
 	}
 	if (enemiesRemaining <= 0)
 	{
+		gameUI->setVictor(true); //Sets so the "You are the victor" text pops up
 		if( timer == 0)				//Starts the timer
 		{
 			timer = 1;
@@ -859,7 +860,6 @@ void GameState::nextWave()
 		player->stop(true, true);
 		menuUI->won();
 	}
-
 }
 
 int GameState::guiState()
@@ -892,6 +892,8 @@ int GameState::screenClickesOn(float mx, float my)
 			gameUI->addHealth();
 		else if (tmp == 4)
 			maxHeal();
+		else if (tmp == 5) //remove "you are the victor" text
+			gameUI->setVictor(false);
 		return tmp;
 	}
 }

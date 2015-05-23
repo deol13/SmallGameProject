@@ -146,9 +146,10 @@ int ShopUI::mouseClick(float mx, float my, int &gold, Player* player)
 		guiObjects[whichObject].textureIndex = newTexture;
 		return 4;
 	}
-	if (continueOn == 2)
+	if (continueOn == 2) //Continue
 	{
 		state = 0;
+		return 5; //Returns 5 so that the "You are victor" text removes
 	}
 	else if (continueOn == 1)
 		return 1;

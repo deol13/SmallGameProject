@@ -8,6 +8,7 @@ InGameGui::InGameGui()
 	guiBuffer = nullptr;
 	texCounter = 0;
 	nrOfObjects = 0;
+	showVictorTex = false;
 
 	init();
 }
@@ -69,7 +70,18 @@ void InGameGui::update()
 	glUseProgram(gGuiShader);
 
 	glActiveTexture(GL_TEXTURE0);
-	for (int i = 0; i < nrOfObjects; i++)
+
+	if (showVictorTex) //Show Victor before shop
+	{
+		glBindVertexArray(guiAttribute[0]);
+		glBindBuffer(GL_ARRAY_BUFFER, guiBuffer[0]);
+
+		glBindTexture(GL_TEXTURE_2D, textures[guiObjects[0].textureIndex]);
+
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	}
+
+	for (int i = 1; i < nrOfObjects; i++)
 	{
 		glBindVertexArray(guiAttribute[i]);
 		glBindBuffer(GL_ARRAY_BUFFER, guiBuffer[i]);
@@ -78,6 +90,8 @@ void InGameGui::update()
 
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	}
+
+
 
 	GLenum error1 = glGetError();
 	if (error1 != GL_NO_ERROR)
@@ -106,7 +120,7 @@ void InGameGui::addHealth()
 
 		createExtraBuffer();
 		for (int i = 0; i < maxHealth; i++) //Heal the player to max health
-			guiObjects[i + 3].textureIndex = 1;
+			guiObjects[i + 4].textureIndex = 1;
 	}
 }
 
@@ -120,13 +134,13 @@ int InGameGui::dmgTaken(float dmg)
 
 	for (int i = 0; i < dmg; i++)
 	{
-		if (guiObjects[currentHealth + 2].textureIndex == 1)
+		if (guiObjects[currentHealth + 3].textureIndex == 1)
 		{
-			guiObjects[currentHealth + 2].textureIndex = 2;
+			guiObjects[currentHealth + 3].textureIndex = 2;
 		}
-		else if (guiObjects[currentHealth + 2].textureIndex == 2)
+		else if (guiObjects[currentHealth + 3].textureIndex == 2)
 		{
-			guiObjects[currentHealth + 2].textureIndex = 3;
+			guiObjects[currentHealth + 3].textureIndex = 3;
 			currentHealth--;
 		}
 	}
@@ -139,7 +153,7 @@ int InGameGui::dmgTaken(float dmg)
 void InGameGui::heal(Player* player)
 {
 	for (int i = 0; i < maxHealth; i++) //Heal the player to max health
-		guiObjects[i + 3].textureIndex = 1;
+		guiObjects[i + 4].textureIndex = 1;
 	currentHealth = maxHealth;
 	player->setHealth(player->getMaxHealth());
 }
@@ -327,6 +341,7 @@ void InGameGui::loadTextures()
 	createTexture("tmp/Combo9.png"); //17
 	createTexture("tmp/Combo10.png"); //18
 
+	createTexture("victor.png"); //19
 }
 
 void InGameGui::getFileLuaTable(lua_State *L, int nrOfHp)
@@ -393,4 +408,9 @@ void InGameGui::getFileLuaTable(lua_State *L, int nrOfHp)
 	GLenum error1 = glGetError();
 	if (error1 != GL_NO_ERROR)
 		printf("Error");
+}
+
+void InGameGui::setVictor(bool value)
+{
+	showVictorTex = value;
 }

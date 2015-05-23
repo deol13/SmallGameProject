@@ -31,6 +31,8 @@ class InGameGui
 		int error;
 		lua_State* L;
 
+		bool showVictorTex;
+
 	public:
 		InGameGui();
 		~InGameGui();
@@ -51,6 +53,8 @@ class InGameGui
 		void loadTextures();
 
 		void getFileLuaTable(lua_State *L, int nrOfHp);
+
+		void setVictor(bool value);
 
 		GLuint* guiAttribute;
 		GLuint* guiBuffer;
