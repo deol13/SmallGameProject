@@ -142,7 +142,9 @@
     <None Include="gui.lua" />
     <None Include="LuaButton.lua" />
     <None Include="defeatSave.dat" />
-    <None Include="MapEditorLua.dat" />
+    <None Include="MapEditorLua.lua" />
+    <None Include="MapEditorSaveGF.dat" />
+    <None Include="MapEditorSaveMEF.dat" />
     <None Include="savedGame.dat" />
     <None Include="savedGameExist.dat" />
   </ItemGroup>

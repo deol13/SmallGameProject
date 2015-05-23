@@ -12,6 +12,7 @@
 #include <cstdio>
 #include <sstream>
 #include "GameState.h"
+#include "MapEditor.h"
 //#include <vld.h> 
 #define GLM_FORCE_RADIANS
 #include <glm\glm.hpp>
@@ -35,13 +36,14 @@ GLuint bth_tex = 0;
 
 bool isQuitting = false;
 bool mDepthTest = false;
+bool mapEditInit = false;
 
 const double FPSLOCK = 60.0;
 int FPScount = 0;
 clock_t start = clock();
 clock_t currentFrame;
 
-enum State { GAMESTATE, MENUSTATE, SHOPSTATE };
+enum State { GAMESTATE, MENUSTATE, MAPEDITSTATE };
 
 void SetViewport() {
 	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -69,7 +71,8 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		bool continueState = false;
 
 		GameState* gameState = new GameState(WINDOW_WIDTH, WINDOW_HEIGHT);
-		
+		MapEditor* mapEdit = new MapEditor();
+
 		GuiManager* mGUI = new GuiManager(WINDOW_WIDTH, WINDOW_HEIGHT);
 		mGUI->startMenuR();
 		mGUI->checkContinueButton();
@@ -108,7 +111,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 						}
 						else if (tmp == 2) //Map creation
 						{
-							playState = GAMESTATE;
+							playState = MAPEDITSTATE;
 							initState = false;
 							mGUI->state = 1;
 						}
@@ -246,6 +249,57 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 					playState = MENUSTATE;
 				}*/
 				while( std::clock() - currentFrame < CLOCKS_PER_SEC / FPSLOCK ) {}			//comment out for unlimited frames
+				break;
+			case MAPEDITSTATE:
+				if (!mapEditInit)
+				{
+					mapEdit->loadStart();
+					mapEditInit = true;
+				}
+				if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+				{
+					switch (msg.message) {
+					case WM_LBUTTONDOWN:
+					{
+						POINT newMpos;
+						GetCursorPos(&newMpos);
+						ScreenToClient(wndHandle, &newMpos);
+
+						int tmp = mapEdit->mouseClick(newMpos.x, newMpos.y);
+						if (tmp == 2) //Back
+						{
+							playState = MENUSTATE;
+							mapEdit->clean(true);
+						}
+						break;
+					}
+					case WM_RBUTTONDOWN:
+					{
+						POINT newMpos;
+						GetCursorPos(&newMpos);
+						ScreenToClient(wndHandle, &newMpos);
+
+						mapEdit->removeAnObject(newMpos.x, newMpos.y);
+						break;
+					}
+					case WM_KEYDOWN:
+					{
+						WPARAM param = msg.wParam;
+						char c = MapVirtualKey(param, MAPVK_VK_TO_CHAR);
+
+						mapEdit->selectObject(c);
+						break;
+					}
+					}
+
+					if (mapEditInit)
+						mapEdit->update();
+				}
+				else
+					mapEdit->update();
+
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
 				break;
 			default:
 

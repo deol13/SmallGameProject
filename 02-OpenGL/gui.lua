@@ -50,8 +50,8 @@ function clicked( xPos, yPos, state ) --[[ When the player clicks somewhere in a
 			stateChange(4) --[[ Continue game ]]
 		elseif xPos < 0.17 and xPos > -0.17 and yPos < -0.497 and yPos > -0.924 then
 			return howToPlayMenu, 2
-		--[[ elseif xPos < 0.56 and xPos > 0.22  and yPos < -0.497 and yPos > -0.924 then
-			stateChange(2) ]] --[[ Map Creation ]]
+		 elseif xPos < 0.56 and xPos > 0.22  and yPos < -0.497 and yPos > -0.924 then
+			stateChange(2) --[[ Map Creation ]]
 		elseif xPos < 0.95 and xPos > 0.61 and yPos < -0.497 and yPos > -0.924 then
 			stateChange(3) --[[ Exit game ]]
 		else
