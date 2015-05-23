@@ -11,56 +11,54 @@
 #include <string>
 #include "GuiShader.h"
 #include "MenuButton.h"
-#include "MapEditObj.h"
 #include "GObject.h"
 
 class MapEditor
 {
-	private:
-		int choice; //0 = nothing selected
-		std::vector<int> objects;
+private:
+	int choice; //0 = nothing selected
+	std::vector<int> objects;
 
-		std::vector<MenuButton> guiObjects;
-		std::vector<MenuButton> regularObjects;
-		std::vector<GLuint> textures;
-		int nrOfUIObjs;
-		int nrOfRObj;
-		int texCounter;
+	std::vector<MenuButton> guiObjects;
+	std::vector<MenuButton> regularObjects;
+	std::vector<GLuint> textures;
+	int nrOfUIObjs;
+	int nrOfRObj;
+	int texCounter;
 
-		GuiShader* gShader;
-		GLuint gUIShader;
+	GuiShader* gShader;
+	GLuint gUIShader;
 
-		int error;
-		lua_State* L;
+	int error;
+	lua_State* L;
 
-	public:
-		MapEditor();
-		~MapEditor();
+	GLuint* uiAttribute;
+	GLuint* uiBuffer;
 
-		void init();
-		void update();
+	GLuint* rObjectAttribute;
+	GLuint* rObjectBuffer;
 
-		void load();
-		void save();
+public:
+	MapEditor();
+	~MapEditor();
 
-		void selectObject(const char key);
+	void clean(bool luaCleans);
+	void init();
+	void loadStart();
+	void update();
 
-		void getUIFromLua(bool regularObjects);
-		void placeObject(float x, float z);
-		void removeAnObject();
+	int mouseClick(float x, float y);
 
-		void createVertexBuffer();
-		void createExtraBuffer();
-		void createTexture(const std::string fileName);
-		void loadTextures();
+	void selectObject(const char key);
 
-		GLuint* uiAttribute;
-		GLuint* uiBuffer;
+	void getUIFromLua(bool regularObjects);
+	void placeObject(float x, float y);
+	void removeAnObject(float x, float y);
 
-		GLuint* rObjectAttribute;
-		GLuint* rObjectBuffer;
-
-
+	void createVertexBuffer();
+	void createExtraBuffer();
+	void createTexture(const std::string fileName);
+	void loadTextures();
 };
 
 #endif

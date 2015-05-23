@@ -170,7 +170,13 @@
     <None Include="savedGameExist.dat">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="MapEditorLua.dat">
+    <None Include="MapEditorLua.lua">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="MapEditorSaveGF.dat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="MapEditorSaveMEF.dat">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
