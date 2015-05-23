@@ -150,7 +150,7 @@ GObject* Player::getGObject(int index) const
 	return loadObj[index];
 }
 
-void Player::update(const int board[455][256])
+void Player::update(const float board[455][256])
 {
 	if(abs(moveVec.x) + abs(moveVec.y) > 0.0)
 	{
@@ -177,28 +177,30 @@ void Player::update(const int board[455][256])
 	}
 
 	/*Check that movement isn't blocked*/
-	int canMove = 1;
+	int canMoveX = 1;
+	int canMoveZ = 1;
 	for(int i = collisionRect.findMin({1.0f, 0.0f}) + xMove; i < collisionRect.findMax({1.0f, 0.0f}) + xMove; i++)
 	{
 		if(board[i][(int)(collisionRect.findMax({0.0f, 1.0f}) + 0.5 + zMove)] < 0 ||
-			board[i][(int)(collisionRect.findMin({0.0f, 1.0f}) + 0.5 + zMove)] < 0)
+			board[i][(int)(collisionRect.findMin({0.0f, 1.0f}) - 0.5 + zMove)] < 0)
 		{
-			canMove = -1;
+			canMoveX = -1;
 			break;
 		}
 	}
 	for(int i = collisionRect.findMin({0.0f, 1.0f}) + zMove; i < collisionRect.findMax({0.0f, 1.0f}) + zMove; i++)
 	{
-		if(board[(int)(collisionRect.findMax({0.0f, 1.0f}) + 0.5 + xMove)][i] < 0 ||
-			board[(int)(collisionRect.findMin({0.0f, 1.0f}) + 0.5 + xMove)][i] < 0)
+		int temp1 = (int)(collisionRect.findMax({1.0f, 0.0f}) + 0.5 + xMove);
+		int temp2 = (int)(collisionRect.findMin({1.0f, 0.0f}) - 0.5 + xMove);
+		if(board[temp1][i] < 0 || board[temp2][i] < 0)
 		{
-			canMove = -1;
+			canMoveZ = -1;
 			break;
 		}
 	}
 
-	xMove *= canMove;
-	zMove *= canMove;
+	xMove *= canMoveX;
+	zMove *= canMoveZ;
 	for(int i = 0; i < 3; i++)
 	{
 		loadObj[i]->translate(xMove, 0, zMove);

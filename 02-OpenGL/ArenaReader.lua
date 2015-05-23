@@ -13,7 +13,7 @@ function readFile()
 	nrOfObjects = tonumber(nrOfObjects)
 	if nrOfObjects ~= nil or nrOfObjects ~= 0 --Is there any meaning to doing the rest?
 	then
-		c = nrOfObjects * 8	
+		c = nrOfObjects * 8	+ 1
 		i = 1
 		while i < c
 		do

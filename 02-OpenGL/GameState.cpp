@@ -573,9 +573,12 @@ void GameState::loadArena(int fileName)
 			if( texIndex >= render->getTextureSize()  ) {
 				render->createTexture(arenaArr[8*i + 4]);
 			}
-			//float x = atoi(arenaArr[6*i+2].c_str());
+
+			int xOrigo = atoi(arenaArr[8 * i + 1].c_str());
+			int zOrigo = atoi(arenaArr[8 * i + 3].c_str());
+
 			GObject* temp = new GObject(arenaArr[8 * i], GL_TRIANGLES, render->getTexture(texIndex));
-			temp->translate(atoi(arenaArr[8*i+1].c_str()), atoi(arenaArr[8*i+2].c_str()), atoi(arenaArr[8*i+3].c_str()));
+			temp->translate(xOrigo, atoi(arenaArr[8 * i + 2].c_str()), zOrigo);
 			//temp->rotate(0.0f, -3.14159f / 2.0f, -3.14159f / 2.0f);
 			int width = atoi(arenaArr[8 * i + 6].c_str());
 			int length = atoi(arenaArr[8 * i + 7].c_str());
@@ -586,17 +589,17 @@ void GameState::loadArena(int fileName)
 				{
 					for(int j = 0; j < length * 2; j++)
 					{
-						int posX = atoi(arenaArr[8 * i + 1].c_str()) + k - width;
-						int posZ = atoi(arenaArr[8 * i + 3].c_str()) + j - length;
-						if(posX >= 0 && posZ >= 0 && posX < GASIZE && posZ < GASIZE)
+						int posX = xOrigo + k - width;
+						int posZ = zOrigo + j - length;
+						if(posX >= 0 && posZ >= 0 && posX < 455 && posZ < GASIZE)
 						{
 							float dist = std::sqrt(pow((float)(k - width), 2) + pow((float)(j - length), 2));
-							if(k < 3 * width / 2 && k > width / 2 && j < 3 * length / 2 && j > length / 2)
+							if(k <= 3 * width / 2 && k >= width / 2 && j <= 3 * length / 2 && j >= length / 2)
 							{
 								arenaMap[posX][posZ] = -100;
 							} else
 							{
-								arenaMap[posX][posZ] -= (-10.0 / dist);
+								arenaMap[posX][posZ] -= (10.0 / dist);
 							}
 						}
 					}
