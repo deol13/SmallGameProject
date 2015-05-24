@@ -199,7 +199,7 @@ void GameState::costLoad()
 
 	spawnEnemies(*whichSavedWave);
 	enemiesRemaining = waveSize;
-	player->setDefault();
+	player->stop(true, true);
 }
 
 void GameState::arenaCleanUp()
@@ -825,7 +825,7 @@ void GameState::nextWave()
 		delete enemyWave;	//Remove last wave
 		enemyWave = nullptr;
 
-		if (waveNumber == 1 || waveNumber == 2)
+		if (waveNumber == 6 || waveNumber == 12)
 		{
 			gold += 30;	//Grant gold for finished boss
 
