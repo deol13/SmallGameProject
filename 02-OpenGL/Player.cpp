@@ -278,8 +278,6 @@ void Player::setGold(const int gold)
 
 void Player::setDefault()
 {
-	x = 128.0;
-	z = 128.0;
 	stop(true, true);
 }
 

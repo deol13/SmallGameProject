@@ -794,7 +794,7 @@ bool GameState::playerCanMove(int x, int z)
 	{
 		if(arenaMap[(int)(playerBounds.findMax({1.0f, 0.0f}) + 0.5) + x][i] < 0)
 		{
-			return false;
+			return false;		
 		} else if(arenaMap[(int)(playerBounds.findMin({1.0f, 0.0f}) + 0.5) + x][i] < 0)
 		{
 			return false;
@@ -896,6 +896,7 @@ int GameState::screenClickesOn(float mx, float my)
 			maxHeal();
 		else if (tmp == 5) //remove "you are the victor" text
 			gameUI->setVictor(false);
+			tmp = 7;
 		return tmp;
 	}
 }
