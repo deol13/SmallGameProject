@@ -483,7 +483,7 @@ void GameState::playerAttack()
 		hitbox = BoundingPolygon(points, 3);
 	} else													//Using spear
 	{
-		float weaponRange = 9.0f;
+		float weaponRange = 14.0f;
 		dirVec.x *= weaponRange;
 		dirVec.y *= weaponRange;
 

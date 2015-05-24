@@ -78,6 +78,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		mGUI->checkContinueButton();
 
 		ShowWindow( wndHandle, nCmdShow );
+		SetWindowText(wndHandle, (LPCWSTR)"Munera");
 		//init music
 		Audio::getAudio().init(1.0f, 1.0f, 1.0f, true, true, true);
 		Audio::getAudio().playMusic(0);
@@ -309,14 +310,14 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			SwapBuffers( hDC ); //10. Växla front- och back-buffer
 			FPScount++;
 			
-			if( ( std::clock() - start ) / ( double )CLOCKS_PER_SEC > 1 ) {
+			/*if( ( std::clock() - start ) / ( double )CLOCKS_PER_SEC > 1 ) {
 				start = std::clock();
 				std::string s = std::to_string( FPScount );
 				FPScount = 0;
 				std::wstring stemp = std::wstring( s.begin(), s.end() );
 				LPCWSTR sw = stemp.c_str();
 				SetWindowText( wndHandle, sw );
-			}
+			}*/
 			
 		}
 

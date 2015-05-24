@@ -291,12 +291,12 @@ int Player::getDamageDealt()
 
 	if (weapon == SWORD)
 	{
-		damage = 7 + (5 * swordUpgrade) + 9999;
+		damage = 10 + (5 * swordUpgrade);
 	}
 
 	if (weapon == SPEAR)
 	{
-		damage = 5 + (4 * spearUpgrade);
+		damage = 10 + (4 * spearUpgrade);
 	}
 
 	return damage;
