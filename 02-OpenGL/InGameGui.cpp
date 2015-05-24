@@ -162,14 +162,14 @@ void InGameGui::changeWeapon()
 {
 	if (whichWeapon == 1) //Sword selected
 	{
-		guiObjects[1].textureIndex = 4;
-		guiObjects[2].textureIndex = 7;
+		guiObjects[2].textureIndex = 4;
+		guiObjects[3].textureIndex = 7;
 		whichWeapon = 2;
 	}
 	else //Spear selected
 	{
-		guiObjects[1].textureIndex = 5;
-		guiObjects[2].textureIndex = 6;
+		guiObjects[2].textureIndex = 5;
+		guiObjects[3].textureIndex = 6;
 		whichWeapon = 1;
 	}
 }

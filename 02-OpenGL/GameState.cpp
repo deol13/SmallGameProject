@@ -782,8 +782,7 @@ bool GameState::playerCanMove(int x, int z)
 	BoundingPolygon playerBounds = player->getBounds();
 
 	for(int i = playerBounds.findMin({1.0f, 0.0f}) + x; i < playerBounds.findMax({1.0f, 0.0f}) + x; i++)
-	{
-		if(arenaMap[i][(int)(playerBounds.findMax({0.0f, 1.0f})+ 0.5) + z] < 0)
+	{		if(arenaMap[i][(int)(playerBounds.findMax({0.0f, 1.0f})+ 0.5) + z] < 0)
 		{
 			return false;
 		} else if(arenaMap[i][(int)(playerBounds.findMin({0.0f, 1.0f}) + 0.5) + z] < 0)
