@@ -442,22 +442,21 @@ void MapEditor::loadTextures()
 	createTexture("MapEditor/O.png"); //18(O)
 	createTexture("MapEditor/Load.png"); //19 Load
 	createTexture("MapEditor/Save.png"); //20 Save
-	//createTexture("MapEditor/Back.png"); //20 SAve
 
-	createTexture("MapEditor/Eld.png"); //21 Fire
-	createTexture("MapEditor/Hus.png"); //22 House
+	createTexture("MapEditor/Fire.png"); //21 Fire
+	createTexture("MapEditor/House.png"); //22 House
 	createTexture("MapEditor/Wall1Horiz.png"); //23 Wall 1 horiz
 	createTexture("MapEditor/Wall1Verti.png"); //24 wall 1 verti
-	createTexture("MapEditor/TrappaFront.png"); //25 Stair front
-	createTexture("MapEditor/TrappaBack.png"); //26 Stair back
-	createTexture("MapEditor/TrappaLeft.png"); //27 Stair left
-	createTexture("MapEditor/TrappaRight.png"); //28 Stair right
-	createTexture("MapEditor/Bana2Corner.png"); //29 Corner 1
+	createTexture("MapEditor/StairsFront.png"); //25 Stair front
+	createTexture("MapEditor/StairsBack.png"); //26 Stair back
+	createTexture("MapEditor/StairsLeft.png"); //27 Stair left
+	createTexture("MapEditor/StairsRight.png"); //28 Stair right
+	createTexture("MapEditor/Map2Corner.png"); //29 Corner 1
 	createTexture("MapEditor/Wall2Up.png"); //30 Wall 2 up
 	createTexture("MapEditor/Wall2Right.png"); //31 Wall 2 right
 	createTexture("MapEditor/Wall2Left.png"); //32 Wall 2 left
 	createTexture("MapEditor/Wall2Down.png"); //33 Wall 2 down
-	createTexture("MapEditor/Bana3Corner.png"); //34 Corner 2
+	createTexture("MapEditor/Map3Corner.png"); //34 Corner 2
 	createTexture("MapEditor/Wall3Up.png"); //35 Wall 3 up
 	createTexture("MapEditor/Wall3Right.png"); //36 Wall 3 right
 	createTexture("MapEditor/Wall3Left.png"); //37 Wall 3 left
