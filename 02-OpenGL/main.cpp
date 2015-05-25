@@ -272,6 +272,10 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							playState = MENUSTATE;
 							mapEdit->clean(true);
 						}
+						if (tmp == 4) //Back
+						{
+							//mapEdit->clean(true);
+						}
 						break;
 					}
 					case WM_RBUTTONDOWN:

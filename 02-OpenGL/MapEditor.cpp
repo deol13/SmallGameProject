@@ -463,5 +463,5 @@ void MapEditor::loadTextures()
 	createTexture("MapEditor/Wall3Down.png"); //38 Wall 3 down
 
 	createTexture("MapEditor/Back.png"); //39 Back
-	//createTexture("MapEditor/Play.png"); //40 Play
+	createTexture("MapEditor/Play.png"); //40 Play
 }
