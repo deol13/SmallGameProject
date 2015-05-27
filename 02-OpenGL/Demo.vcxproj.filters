@@ -55,6 +55,12 @@
     <ClCompile Include="MapEditor.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderSMap.cpp">
+      <Filter>Graphics\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowMapFBO.cpp">
+      <Filter>Graphics\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlitQuad.h">
@@ -137,6 +143,12 @@
     </ClInclude>
     <ClInclude Include="MapEditObj.h">
       <Filter>Header Files\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowMapFBO.h">
+      <Filter>Graphics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderSMap.h">
+      <Filter>Graphics\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

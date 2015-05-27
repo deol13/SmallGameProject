@@ -147,6 +147,22 @@ const char* fragment_shader = R"(
 			}     
 		}  		               
 
+		float CalcShadowFactor() //Calc if the pixel is in shadow or not
+		{
+			vec4 LightSpacePos = Position0; //pixel world pos
+			LightSpacePos = ProjectionMatrixSM * ViewMatrixSM * LightSpacePos;
+			vec3 ProjCoords = LightSpacePos.xyz / LightSpacePos.w; //Normalized device coordinates
+			vec2 UVCoords;
+			UVCoords.x = 0.5 * ProjCoords.x + 0.5;
+			UVCoords.y = 0.5 * ProjCoords.y + 0.5;
+			float z = 0.5 * ProjCoords.z + 0.5;
+			float Depth = texture(ShadowMaps, UVCoords).x;
+			if (Depth < (z + 0.0000001))
+				return 0.01f;
+			else 
+				return 1.0f;
+		}    
+
 		void main()
 		{   
 			fragment_color = vec4(0,0,0,0);
@@ -156,6 +172,15 @@ const char* fragment_shader = R"(
 			Normal0 = texture(Normal, vec2(UV.x, UV.y));
 			Depth0 = texture(Depth, vec2(UV.x, UV.y));
 			
+			//for(int n = 0; n < NumSpotLights; n++)
+			//{
+			//	if(n < NumSpotLightsShadow)
+			//	{
+			//		fragment_color += CalcSpotLight(lights[n], Normal0.xyz) * CalcShadowFactor();
+			//	}
+			//	else
+			//		fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
+			//}
 			for(int n = 0; n < NumSpotLights; n++)
 			{
 				fragment_color += CalcSpotLight(lights[n], Normal0.xyz);

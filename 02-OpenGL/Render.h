@@ -17,6 +17,8 @@
 #include "LightShader.h"
 #include "gbuffer.h"
 #include "BlitQuad.h"
+#include "ShaderSMap.h"
+#include "ShadowMapFBO.h"
 
 class Render
 {
@@ -27,6 +29,8 @@ class Render
 
 		void GeometryPassInit();
 		void render(std::vector<GObject*> renderObjects);
+		void shadowMapPassInit();
+		void shadowMapPass();
 		void lightPass();
 		void init(int GASIZE, unsigned int width, unsigned int height);
 
@@ -55,10 +59,14 @@ class Render
 		LightShader* lShaderObj;
 		GLuint lShader = 0;
 
-		//GameArea* ga;
+		GLuint gShaderProgramSMap = 0;
+		ShaderSMap* shaderSMap;
 
 		int nrSpotLights = 1;
 		SpotLight* spotLights;
+
+		ShadowMapFBO* shadowMap;
+		int nrSpotLightsShadow;
 
 		//Deferred
 		GBuffer* gBuffer;

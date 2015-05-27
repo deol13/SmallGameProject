@@ -101,6 +101,8 @@
     <ClCompile Include="MapEditor.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Render.cpp" />
+    <ClCompile Include="ShaderSMap.cpp" />
+    <ClCompile Include="ShadowMapFBO.cpp" />
     <ClCompile Include="ShopUI.cpp" />
     <ClCompile Include="stb_image.c" />
   </ItemGroup>
@@ -128,6 +130,8 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="BoundingRect.h" />
     <ClInclude Include="Render.h" />
+    <ClInclude Include="ShaderSMap.h" />
+    <ClInclude Include="ShadowMapFBO.h" />
     <ClInclude Include="ShopUI.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="stb_image.h" />
