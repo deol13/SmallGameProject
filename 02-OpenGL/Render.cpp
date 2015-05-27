@@ -61,17 +61,17 @@ void Render::init(int GASIZE, unsigned int width, unsigned int height)
 	
 	//Light
 	spotLights[0].Color = vec3(1.0f, 1.0f, 1.0f);
-	spotLights[0].Position = vec3(25.0f, 50.0f, 15.0f);
-	spotLights[0].Direction = normalize(vec3(200.0f, 10.0f, 200.0f));// -vec3(-50, 300.0f, -50));
-	spotLights[0].DiffuseIntensity = 1.0f;
-	spotLights[0].AmbientIntensity = 0.0f;
+	spotLights[0].Position = vec3(48.0f, 60.0f, 48.0f);
+	spotLights[0].Direction = normalize(vec3(0.0f, -1.0f, 0.0f));
+	spotLights[0].DiffuseIntensity = 0.0f;
+	spotLights[0].AmbientIntensity = 0.8f;
 	spotLights[0].Cutoff = 0.01f;
 
 	spotLights[1].Color = vec3(1.0f, 1.0f, 1.0f);
-	spotLights[1].Position = vec3(25.0f, 10.0f, 15.0f); // vec3(30.5f, 10.0f, 15.0f);
-	spotLights[1].Direction = normalize(vec3(200.0f, 10.0f, 200.0f));// vec3(30.5f, 10.0f, 35.0f)
-	spotLights[1].DiffuseIntensity = 0.40f;
-	spotLights[1].AmbientIntensity = 0.40f;
+	spotLights[1].Position = vec3(0.0f, 100.0f, 128.0f);
+	spotLights[1].Direction = normalize(vec3(200.0f, 20.0f, 50.0f));
+	spotLights[1].DiffuseIntensity = 1.0f;
+	spotLights[1].AmbientIntensity = 0.60f;
 	spotLights[1].Cutoff = 0.01f;
 
 	onExitCleanUp = true;
