@@ -156,12 +156,12 @@ const char* fragment_shader = R"(
 			Normal0 = texture(Normal, vec2(UV.x, UV.y));
 			Depth0 = texture(Depth, vec2(UV.x, UV.y));
 			
-			//for(int n = 0; n < NumSpotLights; n++)
-			//{
-				//fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
-			//}
+			for(int n = 0; n < NumSpotLights; n++)
+			{
+				fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
+			}
 			
-			fragment_color = Diffuse0;	//fragment_color *  
+			fragment_color = fragment_color * Diffuse0;	//fragment_color *  
 		}
 	)";
 
