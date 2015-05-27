@@ -105,13 +105,13 @@ function placeObject(mx, my, choice)
 		rObjectsSaveForm[nrOfIndices] = locationList[choice]
 		
 		nrOfIndices = nrOfIndices + 1
-		rObjectsSaveForm[nrOfIndices] = mx * 0.3
+		rObjectsSaveForm[nrOfIndices] = 456 - (mx * 0.3)
 		
 		nrOfIndices = nrOfIndices + 1
 		rObjectsSaveForm[nrOfIndices] = 0.0
 		
 		nrOfIndices = nrOfIndices + 1
-		rObjectsSaveForm[nrOfIndices] = my * 0.3
+		rObjectsSaveForm[nrOfIndices] = 256 - (my * 0.3)
 		
 		nrOfIndices = nrOfIndices + 1
 		rObjectsSaveForm[nrOfIndices] = textureList[choice]
