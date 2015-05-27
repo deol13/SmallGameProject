@@ -37,6 +37,7 @@ GLuint bth_tex = 0;
 bool isQuitting = false;
 bool mDepthTest = false;
 bool mapEditInit = false;
+bool playMapEditor = false;
 
 const double FPSLOCK = 60.0;
 int FPScount = 0;
@@ -137,8 +138,12 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			case GAMESTATE:
 				if(initState)
 				{
-					gameState->init(WINDOW_WIDTH, WINDOW_HEIGHT);
+					gameState->init(WINDOW_WIDTH, WINDOW_HEIGHT, playMapEditor);
 					initState = false;
+					if (playMapEditor)
+					{
+						gameState->setMapEditorMap();
+					}
 				}
 				else if (continueState)
 				{
@@ -271,6 +276,11 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 						{
 							playState = MENUSTATE;
 							mapEdit->clean(true);
+						}
+						if (tmp == 4) //Back
+						{
+							playMapEditor = true;
+							playState = GAMESTATE;
 						}
 						break;
 					}

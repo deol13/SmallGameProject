@@ -48,7 +48,7 @@ private:
 public:
 	GameState(int w, int h);
 	~GameState();
-	void init(int w, int h);
+	void init(int w, int h, bool mapEditor);
 	void continueInit(int w, int h);
 	void clean();
 	void cleanedOnDefeat();
@@ -72,5 +72,7 @@ public:
 	void loadDefeatSavedGame();
 	void saveGame();
 	void saveGameOnDefeat();
+
+	void setMapEditorMap();
 };
 #endif
