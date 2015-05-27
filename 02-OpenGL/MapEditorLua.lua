@@ -217,7 +217,7 @@ function saveMap()
 	local GSFCounter = 0
 
 	--regularObjects Map Editors file format
-	local file = io.open("-1.txt", "w+")	 --MEF = MAP EDITOR FORMAT
+	local file = io.open("MapEditorSaveMEF.dat", "w+")	 --MEF = MAP EDITOR FORMAT
 	io.output(file)	
 
 	io.write(nrOfrIndices, "\n");
@@ -232,10 +232,11 @@ function saveMap()
 	counter = 0
 
 	--rObjectsSaveForm Games Map format
-	local file = io.open("MapEditorSaveGF.dat", "w+") --GF = GAME FORMAT
+	local file = io.open("-1.txt", "w+") --GF = GAME FORMAT
 	io.output(file)
 
-	io.write(nrOfGSF, "\n");
+
+	io.write(nrOfGSF + 1, "\n");
 	--Hardcoded ground
 	io.write("plane.obj", "\n");
 	io.write(227.5, "\n");
@@ -270,7 +271,7 @@ function loadMap()
 	clean()
 
 	--regularObjects Map Editors file format
-	local file = io.open("-1.txt", "r")
+	local file = io.open("MapEditorSaveMEF.dat", "r")
 	io.input(file)
 	
 	nrOfrIndices = tonumber(io.read("*l"))
@@ -285,7 +286,7 @@ function loadMap()
 	counter = 0
 
 
-	local file = io.open("MapEditorSaveGF.dat", "r")
+	local file = io.open("-1.txt", "r")
 	io.input(file)
 	nrOfGSF = tonumber(io.read("*l"))
 	GFCounter = nrOfGSF * 5

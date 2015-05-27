@@ -61,8 +61,8 @@ void GameState::init(int w, int h, bool mapEditor)
 		loadArena(1);
 		//Spawn first enemy wave
 		spawnEnemies(waveNumber);
+		enemiesRemaining = waveSize;
 	}
-	enemiesRemaining = waveSize;
 
 	onExitCleanUp = true;
 }
@@ -816,7 +816,14 @@ bool GameState::playerCanMove(int x, int z)
 
 void GameState::nextWave()
 {
-	if (waveNumber != 17 || waveNumber != -1)
+	bool mapEdit = false;
+	if (waveNumber == -1)		//if we are playing in the map editor this is where we win
+	{
+		mapEdit = true;
+		menuUI->won();
+	}
+	
+	if (waveNumber != 17 && mapEdit == false)
 	{
 		for (int i = 0; i < waveSize; i++)
 		{
@@ -851,7 +858,7 @@ void GameState::nextWave()
 
 		waveNumber++;		//Load in next wave
 		spawnEnemies(waveNumber);
-		if (waveNumber == 6)	//change the boss stats.
+		if (waveNumber == 6 ||waveNumber == -1)	//change the boss stats.
 		{
 			enemyWave[0]->setEnemy(FIRSTBOSS);
 		}
@@ -1093,4 +1100,5 @@ void GameState::setMapEditorMap()
 	loadArena(-1);
 	//Spawn first enemy wave
 	spawnEnemies(waveNumber);
+	enemiesRemaining = waveSize;
 }

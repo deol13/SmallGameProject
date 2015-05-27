@@ -281,6 +281,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 						{
 							playMapEditor = true;
 							playState = GAMESTATE;
+							initState = true;
 						}
 						break;
 					}
