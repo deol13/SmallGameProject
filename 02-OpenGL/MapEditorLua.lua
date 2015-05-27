@@ -105,13 +105,13 @@ function placeObject(mx, my, choice)
 		rObjectsSaveForm[nrOfIndices] = locationList[choice]
 		
 		nrOfIndices = nrOfIndices + 1
-		rObjectsSaveForm[nrOfIndices] = mx
+		rObjectsSaveForm[nrOfIndices] = mx * 0.3
 		
 		nrOfIndices = nrOfIndices + 1
 		rObjectsSaveForm[nrOfIndices] = 0.0
 		
 		nrOfIndices = nrOfIndices + 1
-		rObjectsSaveForm[nrOfIndices] = my
+		rObjectsSaveForm[nrOfIndices] = my * 0.3
 		
 		nrOfIndices = nrOfIndices + 1
 		rObjectsSaveForm[nrOfIndices] = textureList[choice]
@@ -249,12 +249,13 @@ function saveMap()
 	while counter < nrOfIndices
 	do
 		counter = counter + 1
+
 		io.write(rObjectsSaveForm[counter], "\n")
 
 		if math.fmod(counter, 5) == 0 then
 			GSFCounter = GSFCounter + 1
-			io.write(width[GSFCounter], "\n")
-			io.write(length[GSFCounter], "\n")
+			io.write(width[GSFChoices[GSFCounter]], "\n")
+			io.write(length[GSFChoices[GSFCounter]], "\n")
 		end
 	end
 	io.close(file)
