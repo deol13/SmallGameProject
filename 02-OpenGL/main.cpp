@@ -37,6 +37,7 @@ GLuint bth_tex = 0;
 bool isQuitting = false;
 bool mDepthTest = false;
 bool mapEditInit = false;
+bool playMapEditor = false;
 
 const double FPSLOCK = 60.0;
 int FPScount = 0;
@@ -78,7 +79,6 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		mGUI->checkContinueButton();
 
 		ShowWindow( wndHandle, nCmdShow );
-		SetWindowText(wndHandle, (LPCWSTR)"Munera");
 		//init music
 		Audio::getAudio().init(1.0f, 1.0f, 1.0f, true, true, true);
 		Audio::getAudio().playMusic(0);
@@ -137,8 +137,12 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			case GAMESTATE:
 				if(initState)
 				{
-					gameState->init(WINDOW_WIDTH, WINDOW_HEIGHT);
+					gameState->init(WINDOW_WIDTH, WINDOW_HEIGHT, playMapEditor);
 					initState = false;
+					if (playMapEditor)
+					{
+						gameState->setMapEditorMap();
+					}
 				}
 				else if (continueState)
 				{
@@ -274,7 +278,9 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 						}
 						if (tmp == 4) //Back
 						{
-							//mapEdit->clean(true);
+							playMapEditor = true;
+							playState = GAMESTATE;
+							initState = true;
 						}
 						break;
 					}
@@ -314,14 +320,14 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			SwapBuffers( hDC ); //10. Växla front- och back-buffer
 			FPScount++;
 			
-			/*if( ( std::clock() - start ) / ( double )CLOCKS_PER_SEC > 1 ) {
+			if( ( std::clock() - start ) / ( double )CLOCKS_PER_SEC > 1 ) {
 				start = std::clock();
 				std::string s = std::to_string( FPScount );
 				FPScount = 0;
 				std::wstring stemp = std::wstring( s.begin(), s.end() );
 				LPCWSTR sw = stemp.c_str();
 				SetWindowText( wndHandle, sw );
-			}*/
+			}
 			
 		}
 

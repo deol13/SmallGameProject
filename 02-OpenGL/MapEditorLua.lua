@@ -105,13 +105,13 @@ function placeObject(mx, my, choice)
 		rObjectsSaveForm[nrOfIndices] = locationList[choice]
 		
 		nrOfIndices = nrOfIndices + 1
-		rObjectsSaveForm[nrOfIndices] = mx
+		rObjectsSaveForm[nrOfIndices] = mx * 0.3
 		
 		nrOfIndices = nrOfIndices + 1
 		rObjectsSaveForm[nrOfIndices] = 0.0
 		
 		nrOfIndices = nrOfIndices + 1
-		rObjectsSaveForm[nrOfIndices] = my
+		rObjectsSaveForm[nrOfIndices] = my * 0.3
 		
 		nrOfIndices = nrOfIndices + 1
 		rObjectsSaveForm[nrOfIndices] = textureList[choice]
@@ -232,10 +232,11 @@ function saveMap()
 	counter = 0
 
 	--rObjectsSaveForm Games Map format
-	local file = io.open("MapEditorSaveGF.dat", "w+") --GF = GAME FORMAT
+	local file = io.open("-1.txt", "w+") --GF = GAME FORMAT
 	io.output(file)
 
-	io.write(nrOfGSF, "\n");
+
+	io.write(nrOfGSF + 1, "\n");
 	--Hardcoded ground
 	io.write("plane.obj", "\n");
 	io.write(227.5, "\n");
@@ -248,12 +249,13 @@ function saveMap()
 	while counter < nrOfIndices
 	do
 		counter = counter + 1
+
 		io.write(rObjectsSaveForm[counter], "\n")
 
 		if math.fmod(counter, 5) == 0 then
 			GSFCounter = GSFCounter + 1
-			io.write(width[GSFCounter], "\n")
-			io.write(length[GSFCounter], "\n")
+			io.write(width[GSFChoices[GSFCounter]], "\n")
+			io.write(length[GSFChoices[GSFCounter]], "\n")
 		end
 	end
 	io.close(file)
@@ -285,7 +287,7 @@ function loadMap()
 	counter = 0
 
 
-	local file = io.open("MapEditorSaveGF.dat", "r")
+	local file = io.open("-1.txt", "r")
 	io.input(file)
 	nrOfGSF = tonumber(io.read("*l"))
 	GFCounter = nrOfGSF * 5

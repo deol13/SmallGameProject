@@ -20,7 +20,7 @@ GameState::~GameState()
 	clean();
 }
 
-void GameState::init(int w, int h) 
+void GameState::init(int w, int h, bool mapEditor)
 {
 	state = 0;
 	timer = 0;
@@ -55,11 +55,14 @@ void GameState::init(int w, int h)
 	shopUI = new ShopUI();
 	//Set player
 	spawnPlayer();
-	//Load arena
-	loadArena(1);
-	//Spawn first enemy wave
-	spawnEnemies(waveNumber);
-	enemiesRemaining = waveSize;
+	if (!mapEditor)
+	{
+		//Load arena
+		loadArena(1);
+		//Spawn first enemy wave
+		spawnEnemies(waveNumber);
+		enemiesRemaining = waveSize;
+	}
 
 	onExitCleanUp = true;
 }
@@ -813,7 +816,14 @@ bool GameState::playerCanMove(int x, int z)
 
 void GameState::nextWave()
 {
-	if (waveNumber != 18)
+	bool mapEdit = false;
+	if (waveNumber == -1)		//if we are playing in the map editor this is where we win
+	{
+		mapEdit = true;
+		menuUI->won();
+	}
+	
+	if (waveNumber != 17 && mapEdit == false)
 	{
 		for (int i = 0; i < waveSize; i++)
 		{
@@ -824,13 +834,17 @@ void GameState::nextWave()
 		delete enemyWave;	//Remove last wave
 		enemyWave = nullptr;
 
-		if (waveNumber == 6 || waveNumber == 12)
+		if (waveNumber == 6 || waveNumber == 11)
 		{
 			gold += 30;	//Grant gold for finished boss
 
 			arenaCleanUp();		//Load the next map
 			*currentMap = *currentMap + 1;
 			loadArena(*currentMap);
+			if (waveNumber == 11)
+			{
+				waveNumber++;
+			}
 		}
 		else
 		{
@@ -844,7 +858,7 @@ void GameState::nextWave()
 
 		waveNumber++;		//Load in next wave
 		spawnEnemies(waveNumber);
-		if (waveNumber == 6)	//change the boss stats.
+		if (waveNumber == 6 ||waveNumber == -1)	//change the boss stats.
 		{
 			enemyWave[0]->setEnemy(FIRSTBOSS);
 		}
@@ -1077,4 +1091,14 @@ int GameState::savedGameInfo(lua_State *L) //Called from lua
 	tmpWaveInt = nullptr;
 
 	return 0;
+}
+
+void GameState::setMapEditorMap()
+{
+	waveNumber = -5;
+	//Load arena
+	loadArena(-1);
+	//Spawn first enemy wave
+	spawnEnemies(waveNumber);
+	enemiesRemaining = waveSize;
 }
