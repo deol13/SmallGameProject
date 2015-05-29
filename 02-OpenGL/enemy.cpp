@@ -53,6 +53,8 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, in
 {
 	this->x = x;
 	this->z = z;
+	dirTimer = 0;
+	dirIndex = 0;
 	charging = false;
 	chargeTimer = 0;
 	attackTime = 0;
@@ -306,34 +308,50 @@ void Enemy::move()
 {
 	if(attackTime <= 0)
 	{
-		int highIndex = 0;
-		for(int i = 1; i < 8; i++)
+		if( dirTimer > 8 || neighbourPos[dirIndex] < 0 ) 
 		{
-			if(neighbourPos[i] > neighbourPos[highIndex])
+			dirTimer = 0;
+			dirIndex = 0;
+			for(int i = 1; i < 8; i++)
 			{
-				highIndex = i;
+				if(neighbourPos[i] > neighbourPos[dirIndex])
+				{
+					dirIndex = i;
+				}
 			}
+		} else
+		{
+			dirTimer++;
 		}
-		if(neighbourPos[highIndex] > 0)
+		/*if(neighbourPos[highIndex] - neighbourPos[dirIndex] > 1.0 /(dirTimer + 1)) 
+		{
+			dirIndex = highIndex;
+			dirTimer = 0;
+		} else
+		{
+			dirTimer++;
+		}*/
+
+		if(neighbourPos[dirIndex] > 0)
 		{
 			float xMove;
 			float zMove;
-			xMove = ((highIndex + highIndex / 4) % 3 - 1) * moveSpeed;
-			zMove = ((highIndex + highIndex / 4) / 3 - 1) * moveSpeed;
+			xMove = ((dirIndex + dirIndex / 4) % 3 - 1) * moveSpeed;
+			zMove = ((dirIndex + dirIndex / 4) / 3 - 1) * moveSpeed;
 			this->x += xMove;
 			this->z += zMove;
 			loadObj->translate(xMove, 0.0, zMove);
 			collisionRect.move(xMove, zMove);
 			loadObj->animate(1);
-			if(highIndex > 4)
+			if(dirIndex > 4)
 			{
-				loadObj->setRotation(0.0, (highIndex - 2)*3.14159 / 4, 0.0);
-			} else if(highIndex < 3)
+				loadObj->setRotation(0.0, (dirIndex - 2)*3.14159 / 4, 0.0);
+			} else if(dirIndex < 3)
 			{
-				loadObj->setRotation(0.0, (1 - highIndex)*3.14159 / 4, 0.0);
+				loadObj->setRotation(0.0, (1 - dirIndex)*3.14159 / 4, 0.0);
 			} else
 			{
-				loadObj->setRotation(0.0, (-2 * highIndex + 7)* 3.14159 / 2, 0.0);
+				loadObj->setRotation(0.0, (-2 * dirIndex + 7)* 3.14159 / 2, 0.0);
 			}
 		}
 	} else
@@ -360,20 +378,22 @@ void Enemy::setPotential(int origX, int origZ, int basePower)
 	{
 		origZ = 0;
 	}
+
+	float baseRadius = sqrt(pow(x - (float)origX, 2) + pow(z - (float)origZ, 2));
 	for(int i = -1; i < 2; i++)
 	{
 		for(int j = -1; j < 2; j++)
 		{
 			if(i == 0 && j == 0){ continue;	}		//Skip the middle position
 
-			float radius = sqrt(pow((x + (j * moveSpeed) - (float)origX), 2) + pow((z + (i * moveSpeed) - (float)origZ), 2));
+			float radius = sqrt(pow((x + (j * moveSpeed / sqrt(abs(i) + abs(j))) - (float)origX), 2) + pow((z + (i * moveSpeed / sqrt(abs(i) + abs(j))) - (float)origZ), 2));
 			int index = 3 * (i + 1) + (j + 1) - (3 * (i + 1) + (j + 1)) / 5;		//translates to 0-7 index
 			if(radius < 1 )
 			{
 				neighbourPos[index] = -100;
 			} else
 			{
-				neighbourPos[index] += basePower / radius;
+				neighbourPos[index] += basePower / ( radius - baseRadius + 2);
 			}
 		}
 	}

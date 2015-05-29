@@ -318,7 +318,7 @@ void GameState::update()
 					{
 						if(i != j)
 						{
-							enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -5);
+							enemyWave[i]->setPotential(enemyWave[j]->getX(), enemyWave[j]->getZ(), -25);
 						}
 					}
 
