@@ -37,7 +37,6 @@ LightShader::~LightShader()
 {
 	glDeleteBuffers(1, &lightBuffer);
 }
-
 bool LightShader::compile()
 {
 	const char* vertex_shader = R"(
@@ -62,6 +61,7 @@ const char* fragment_shader = R"(
 		uniform sampler2D Diffuse;
 		uniform sampler2D Normal;
 		uniform sampler2D Depth;
+		uniform sampler2D ShadowMaps;
 
 		vec4 Position0;
 		vec4 Diffuse0;
@@ -91,7 +91,6 @@ const char* fragment_shader = R"(
 		uniform int NumSpotLightsShadow; //<---
 		uniform vec3 eyepos;
 
-		uniform sampler2D ShadowMaps; //<----
 		uniform mat4 ProjectionMatrixSM; 
 		uniform mat4 ViewMatrixSM;
 
@@ -158,7 +157,7 @@ const char* fragment_shader = R"(
 			float z = 0.5 * ProjCoords.z + 0.5;
 			float Depth = texture(ShadowMaps, UVCoords).x;
 			if (Depth < (z + 0.0000001))
-				return 0.01f;
+				return 0.5f;
 			else 
 				return 1.0f;
 		}    
@@ -172,21 +171,17 @@ const char* fragment_shader = R"(
 			Normal0 = texture(Normal, vec2(UV.x, UV.y));
 			Depth0 = texture(Depth, vec2(UV.x, UV.y));
 			
-			//for(int n = 0; n < NumSpotLights; n++)
-			//{
-			//	if(n < NumSpotLightsShadow)
-			//	{
-			//		fragment_color += CalcSpotLight(lights[n], Normal0.xyz) * CalcShadowFactor();
-			//	}
-			//	else
-			//		fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
-			//}
 			for(int n = 0; n < NumSpotLights; n++)
 			{
-				fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
+				if(n == 0)
+				{
+					fragment_color += CalcSpotLight(lights[n], Normal0.xyz) * CalcShadowFactor();
+				}
+				else
+					fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
 			}
-			
-			fragment_color = fragment_color * Diffuse0;	//fragment_color *  
+
+			fragment_color = fragment_color * Diffuse0;	// * Diffuse0
 		}
 	)";
 
@@ -217,8 +212,6 @@ const char* fragment_shader = R"(
 
 	return true;
 }
-
-
 void LightShader::CompileErrorPrint(GLuint* shader)
 {
 	GLint success = 0;

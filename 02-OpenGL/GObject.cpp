@@ -344,3 +344,12 @@ void GObject::animate(int stopState)
 	}
 }
 
+int GObject::getNrOfVertices()
+{
+	return nrOfVertices;
+}
+
+GLfloat* GObject::returnWorldPosMat()
+{
+	return &translationMatrix[0][0];
+}

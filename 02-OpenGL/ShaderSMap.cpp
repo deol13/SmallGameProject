@@ -50,7 +50,7 @@ bool ShaderSMap::compile()
 		vec3 normal = cross(v1, v2);
 
 		//front face culling
-		if( dot(gl_in[0].gl_Position.xyz, normal) < 0.0f )
+		if( dot(gl_in[0].gl_Position.xyz, normal) > 0.0f )
 		{
 			for(int n = 0; n < 3; n++)
 			{

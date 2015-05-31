@@ -68,6 +68,9 @@ class GObject
 		GLuint getTexture();
 		void setVertices(std::vector<Vertex> vertices);
 		std::vector<Vertex> getVertices();
+		
+		int getNrOfVertices();
+		GLfloat* returnWorldPosMat();
 };
 
 #endif

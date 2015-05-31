@@ -4,11 +4,11 @@
 
 #define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
-//glm::mat4 worldMatrixMap = glm::mat4(
-//	1.0f, 0.0f, 0.0f, 0.0f,
-//	0.0f, 1.0f, 0.0f, 0.0f,
-//	0.0f, 0.0f, 1.0f, 0.0f,
-//	0.0f, 0.0f, 0.0f, 1.0f);
+glm::mat4 worldMatrixMap = glm::mat4(
+	1.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 1.0f, 0.0f,
+	0.0f, 0.0f, 0.0f, 1.0f);
 
 Render::Render()
 {
@@ -36,13 +36,13 @@ Render::~Render()
 		delete gaShader;
 		delete lShaderObj;
 
-		//delete shaderSMap;
-		//delete shadowMap;
+		delete shaderSMap;
+		delete shadowMap;
 
 		glDeleteShader(gShaderGA);
 		glDeleteShader(lShader);
 
-		//glDeleteShader(gShaderProgramSMap);
+		glDeleteShader(gShaderProgramSMap);
 
 		onExitCleanUp = false;
 	}
@@ -51,12 +51,12 @@ Render::~Render()
 void Render::init(int GASIZE, unsigned int width, unsigned int height)
 {
 	gaShader = new GAShader(&gShaderGA);
-	//shaderSMap = new ShaderSMap(&gShaderProgramSMap);
+	shaderSMap = new ShaderSMap(&gShaderProgramSMap);
 
-	//shadowMap = new ShadowMapFBO();
-	//shadowMap->Init(WINDOW_WITH, WINDOW_HEIGHT);
+	shadowMap = new ShadowMapFBO();
+	shadowMap->Init(width, height);
 
-	nrSpotLights = 2;
+	nrSpotLights = 1;
 	nrSpotLightsShadow = 1;
 	lShaderObj = new LightShader(&lShader);
 	spotLights = new SpotLight[nrSpotLights];
@@ -70,18 +70,11 @@ void Render::init(int GASIZE, unsigned int width, unsigned int height)
 	
 	//Light
 	spotLights[0].Color = vec3(1.0f, 1.0f, 1.0f);
-	spotLights[0].Position = vec3(48.0f, 60.0f, 48.0f);
-	spotLights[0].Direction = normalize(vec3(0.0f, -1.0f, 0.0f));
-	spotLights[0].DiffuseIntensity = 0.0f;
-	spotLights[0].AmbientIntensity = 0.8f;
+	spotLights[0].Position = vec3(0.0f, 50.0f, 58.0f);
+	spotLights[0].Direction = normalize(vec3(200.0f, 20.0f, 50.0f));
+	spotLights[0].DiffuseIntensity = 2.0f;
+	spotLights[0].AmbientIntensity = 0.80f;
 	spotLights[0].Cutoff = 0.01f;
-
-	spotLights[1].Color = vec3(1.0f, 1.0f, 1.0f);
-	spotLights[1].Position = vec3(0.0f, 100.0f, 128.0f);
-	spotLights[1].Direction = normalize(vec3(200.0f, 20.0f, 50.0f));
-	spotLights[1].DiffuseIntensity = 1.0f;
-	spotLights[1].AmbientIntensity = 0.60f;
-	spotLights[1].Cutoff = 0.01f;
 
 	onExitCleanUp = true;
 }
@@ -159,27 +152,25 @@ void Render::shadowMapPassInit()
 {
 	glUseProgram(gShaderProgramSMap);
 	shadowMap->BindForWriting(); //clears
-	glViewport(0, 0, 640 * 10, 480 * 10);
+	glViewport(0, 0, 1280, 720);
 }
 
-void Render::shadowMapPass(/*Obj* object*/)
+void Render::shadowMapPass(std::vector<GObject*> renderObjects)
 {
-	//object->Bind();
-	for (int n = 0; n < nrSpotLightsShadow; n++)
+	for (int i = 0; i < renderObjects.capacity(); i++)
 	{
-	//	glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->model, 1, false, &(object->worldMatrix[0][0]));
-		viewMatrix = glm::lookAt(spotLights[n].Position, spotLights[n].Position + spotLights[n].Direction, vec3(0, 1, 0));
+		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->model, 1, false, renderObjects[i]->returnWorldPosMat()); //Sista siffran ska ändras
+		viewMatrix = glm::lookAt(spotLights[0].Position, spotLights[0].Position + spotLights[0].Direction, vec3(0, 1, 0));
 		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->view, 1, false, &viewMatrix[0][0]);
-		glm::mat4 projMatrix2 = glm::perspective(3.14f*0.45f, 640.f / 480.0f, 0.1f, 1000.0f);
+		glm::mat4 projMatrix2 = glm::perspective(3.14f*0.45f, 1280.0f / 720.0f, 0.1f, 1000.0f);
 		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->proj, 1, false, &projMatrix2[0][0]);
-//		glDrawElements(GL_TRIANGLES, object->faceCount * 3, GL_UNSIGNED_SHORT, 0);
+		glDrawElements(GL_TRIANGLES, renderObjects[i]->getNrOfVertices(), GL_UNSIGNED_SHORT, 0);	//getVertices fel
 	}
 }
 
 void Render::lightPass()
 {
 	glUseProgram(lShader);
-	//glViewport(0, 0, 640, 480);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -190,21 +181,21 @@ void Render::lightPass()
 	glProgramUniform1i(lShader, lShaderObj->Diffuse, 1);
 	glProgramUniform1i(lShader, lShaderObj->Normal, 2);
 	glProgramUniform1i(lShader, lShaderObj->Depth, 4);
+	glProgramUniform1i(lShader, lShaderObj->ShadowMaps, 5);
 
 	//Camera position.
 	glProgramUniform3fv(lShader, lShaderObj->eyepos, 1, &(glm::vec3(256 / 2, 200.0f, 30))[0]);
 	glProgramUniform1i(lShader, lShaderObj->NumSpotLights, nrSpotLights);
-	//glProgramUniform1i(gShaderProgramBlit, shaderBlit->NumSpotLightsShadow, nrSpotLightsShadow);
+	glProgramUniform1i(lShader, lShaderObj->NumSpotLightsShadow, nrSpotLightsShadow);
 
-	//if (nrSpotLightsShadow > 0)
-	//{
-		//shadowMap->BindForReading(5);
-		//glProgramUniform1i(gShaderProgramBlit, shaderBlit->ShadowMaps, 5);
+	if (nrSpotLightsShadow > 0)
+	{
+		shadowMap->BindForReading(5);
 		//Create and send in shadow maps view and project matrix 
 		mat4 cameraview = glm::lookAt(spotLights[0].Position, spotLights[0].Position + spotLights[0].Direction, vec3(0, 1, 0));
-		glProgramUniformMatrix4fv(lShader, lShaderObj->ProjectionMatrixSM, 1, false, &cameraview[0][0]); //
+		glProgramUniformMatrix4fv(lShader, lShaderObj->ProjectionMatrixSM, 1, false, &cameraview[0][0]); 
 		glProgramUniformMatrix4fv(lShader, lShaderObj->ViewMatrixSM, 1, false, &projMatrix[0][0]);
-	//}
+	}
 
 	//Bind lights uniform buffer.
 	glBindBuffer(GL_UNIFORM_BUFFER, lShaderObj->lightBuffer);

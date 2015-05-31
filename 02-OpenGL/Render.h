@@ -30,7 +30,7 @@ class Render
 		void GeometryPassInit();
 		void render(std::vector<GObject*> renderObjects);
 		void shadowMapPassInit();
-		void shadowMapPass();
+		void shadowMapPass(std::vector<GObject*> renderObjects);
 		void lightPass();
 		void init(int GASIZE, unsigned int width, unsigned int height);
 
