@@ -55,7 +55,7 @@ bool GAShader::compile()
 		{
 			vec3 v1 = gl_in[1].gl_Position.xyz - gl_in[0].gl_Position.xyz;
 			vec3 v2 = gl_in[2].gl_Position.xyz - gl_in[0].gl_Position.xyz;
-
+			
 			for ( int i = 0; i < gl_in.length(); i++ )
 			{
 				modelViewPos = gl_in[i].gl_Position.xyz;

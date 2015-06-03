@@ -1,0 +1,2 @@
+0(128) : error C7011: implicit cast from "float" to "vec2"
+0(128) : error C7011: implicit cast from "vec4" to "vec2"

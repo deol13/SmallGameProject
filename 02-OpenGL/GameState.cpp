@@ -346,7 +346,7 @@ void GameState::update()
 		}
 		else
 		{
-		render->render(renderObjects);
+			render->render(renderObjects);
 		}
 		render->lightPass();
 	}

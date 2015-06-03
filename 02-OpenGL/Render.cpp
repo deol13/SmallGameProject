@@ -73,8 +73,8 @@ void Render::init(int GASIZE, unsigned int width, unsigned int height)
 	spotLights[0].Position = vec3(0.0f, 50.0f, 58.0f);
 	spotLights[0].Direction = normalize(vec3(200.0f, 20.0f, 50.0f));
 	spotLights[0].DiffuseIntensity = 2.0f;
-	spotLights[0].AmbientIntensity = 0.80f;
-	spotLights[0].Cutoff = 0.01f;
+	spotLights[0].AmbientIntensity = 0.4f;
+	spotLights[0].Cutoff = 0.001f;
 
 	onExitCleanUp = true;
 }
@@ -155,16 +155,17 @@ void Render::shadowMapPassInit()
 	glViewport(0, 0, 1280, 720);
 }
 
-void Render::shadowMapPass(std::vector<GObject*> renderObjects)
+void Render::shadowMapPass(std::vector<GObject*> renderObjects)		//antagligen här felet är!
 {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	for (int i = 0; i < renderObjects.capacity(); i++)
 	{
-		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->model, 1, false, renderObjects[i]->returnWorldPosMat()); //Sista siffran ska ändras
+		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->model, 1, false, renderObjects[i]->returnWorldPosMat());	//sista kan vara fel
 		viewMatrix = glm::lookAt(spotLights[0].Position, spotLights[0].Position + spotLights[0].Direction, vec3(0, 1, 0));
 		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->view, 1, false, &viewMatrix[0][0]);
 		glm::mat4 projMatrix2 = glm::perspective(3.14f*0.45f, 1280.0f / 720.0f, 0.1f, 1000.0f);
 		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->proj, 1, false, &projMatrix2[0][0]);
-		glDrawElements(GL_TRIANGLES, renderObjects[i]->getNrOfVertices(), GL_UNSIGNED_SHORT, 0);	//getVertices fel
+		glDrawElements(GL_TRIANGLES, renderObjects[i]->getVertices().size(), GL_UNSIGNED_SHORT, 0);							//getNrOfVertices kan vara fel
 	}
 }
 
