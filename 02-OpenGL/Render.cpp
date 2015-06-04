@@ -140,6 +140,9 @@ void Render::render(std::vector<GObject*> renderObjects)
 		renderObjects[i]->render(gaShader->worldMatrix, *gaShader->gShaderProgram);
 	}
 
+	shadowMapPassInit();
+	shadowMapPass(renderObjects);
+
 
 	GLenum error = glGetError();
 	if(error != GL_NO_ERROR)
@@ -155,18 +158,19 @@ void Render::shadowMapPassInit()
 	glViewport(0, 0, 1280, 720);
 }
 
-void Render::shadowMapPass(std::vector<GObject*> renderObjects)		//antagligen här felet är!
+void Render::shadowMapPass(std::vector<GObject*> renderObjects)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	for (int i = 0; i < renderObjects.capacity(); i++)
 	{
-		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->model, 1, false, renderObjects[i]->returnWorldPosMat());	//sista kan vara fel
+		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->model, 1, false, renderObjects[i]->returnWorldPosMat());
 		viewMatrix = glm::lookAt(spotLights[0].Position, spotLights[0].Position + spotLights[0].Direction, vec3(0, 1, 0));
 		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->view, 1, false, &viewMatrix[0][0]);
 		glm::mat4 projMatrix2 = glm::perspective(3.14f*0.45f, 1280.0f / 720.0f, 0.1f, 1000.0f);
 		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->proj, 1, false, &projMatrix2[0][0]);
-		glDrawElements(GL_TRIANGLES, renderObjects[i]->getVertices().size(), GL_UNSIGNED_SHORT, 0);							//getNrOfVertices kan vara fel
+		glDrawElements(GL_TRIANGLES, renderObjects[i]->getVertices().size(), GL_UNSIGNED_SHORT, 0);
 	}
+	viewMatrix = glm::lookAt(glm::vec3(455.0 / 2, 256 / 2, 256 / 2), glm::vec3(455.0 / 2, 0, 256 / 2), glm::vec3(0, 0, 1));	//Return camera to its pos
 }
 
 void Render::lightPass()

@@ -180,8 +180,9 @@ const char* fragment_shader = R"(
 				else
 					fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
 			}
-
-			fragment_color = fragment_color * Diffuse0;	// * Diffuse0
+			
+			float value = texture(ShadowMaps, UV).x;
+			fragment_color = vec4(value, value, value, 1.0);	// * Diffuse0
 		}
 	)";
 
