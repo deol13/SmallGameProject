@@ -143,7 +143,6 @@ void Render::render(std::vector<GObject*> renderObjects)
 	shadowMapPassInit();
 	shadowMapPass(renderObjects);
 
-
 	GLenum error = glGetError();
 	if(error != GL_NO_ERROR)
 	{
@@ -155,21 +154,22 @@ void Render::shadowMapPassInit()
 {
 	glUseProgram(gShaderProgramSMap);
 	shadowMap->BindForWriting(); //clears
-	glViewport(0, 0, 1280, 720);
 }
 
 void Render::shadowMapPass(std::vector<GObject*> renderObjects)
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	for (int i = 0; i < renderObjects.capacity(); i++)
+	viewMatrix = glm::lookAt(spotLights[0].Position, spotLights[0].Position + spotLights[0].Direction, vec3(0, 1, 0));
+	glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->view, 1, false, &viewMatrix[0][0]);
+
+	glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->proj, 1, false, &projMatrix[0][0]);
+	
+	for (int i = 0; i < renderObjects.size(); i++)
 	{
 		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->model, 1, false, renderObjects[i]->returnWorldPosMat());
-		viewMatrix = glm::lookAt(spotLights[0].Position, spotLights[0].Position + spotLights[0].Direction, vec3(0, 1, 0));
-		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->view, 1, false, &viewMatrix[0][0]);
-		glm::mat4 projMatrix2 = glm::perspective(3.14f*0.45f, 1280.0f / 720.0f, 0.1f, 1000.0f);
-		glProgramUniformMatrix4fv(gShaderProgramSMap, shaderSMap->proj, 1, false, &projMatrix2[0][0]);
-		glDrawElements(GL_TRIANGLES, renderObjects[i]->getVertices().size(), GL_UNSIGNED_SHORT, 0);
+		renderObjects[i]->render(gaShader->worldMatrix, gShaderProgramSMap);
 	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	viewMatrix = glm::lookAt(glm::vec3(455.0 / 2, 256 / 2, 256 / 2), glm::vec3(455.0 / 2, 0, 256 / 2), glm::vec3(0, 0, 1));	//Return camera to its pos
 }
 
@@ -190,17 +190,15 @@ void Render::lightPass()
 
 	//Camera position.
 	glProgramUniform3fv(lShader, lShaderObj->eyepos, 1, &(glm::vec3(256 / 2, 200.0f, 30))[0]);
-	glProgramUniform1i(lShader, lShaderObj->NumSpotLights, nrSpotLights);
-	glProgramUniform1i(lShader, lShaderObj->NumSpotLightsShadow, nrSpotLightsShadow);
+	glProgramUniform1i(lShader, lShaderObj->NumSpotLights, 1);
+	glProgramUniform1i(lShader, lShaderObj->NumSpotLightsShadow, 1);
+	
+	shadowMap->BindForReading(5);
+	//Create and send in shadow maps view and project matrix 
+	mat4 cameraview = glm::lookAt(spotLights[0].Position, spotLights[0].Position + spotLights[0].Direction, vec3(0, 1, 0));
+	glProgramUniformMatrix4fv(lShader, lShaderObj->ProjectionMatrixSM, 1, false, &cameraview[0][0]); 
+	glProgramUniformMatrix4fv(lShader, lShaderObj->ViewMatrixSM, 1, false, &projMatrix[0][0]);
 
-	if (nrSpotLightsShadow > 0)
-	{
-		shadowMap->BindForReading(5);
-		//Create and send in shadow maps view and project matrix 
-		mat4 cameraview = glm::lookAt(spotLights[0].Position, spotLights[0].Position + spotLights[0].Direction, vec3(0, 1, 0));
-		glProgramUniformMatrix4fv(lShader, lShaderObj->ProjectionMatrixSM, 1, false, &cameraview[0][0]); 
-		glProgramUniformMatrix4fv(lShader, lShaderObj->ViewMatrixSM, 1, false, &projMatrix[0][0]);
-	}
 
 	//Bind lights uniform buffer.
 	glBindBuffer(GL_UNIFORM_BUFFER, lShaderObj->lightBuffer);

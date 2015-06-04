@@ -274,7 +274,6 @@ void GObject::render(GLint uniLocation, GLuint shaderProgram)
 	glBindBuffer(GL_ARRAY_BUFFER, gBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBufferId);	
 	glBufferData(GL_ARRAY_BUFFER, sizeof(currentVert[0])* currentVert.size(), &currentVert[0], GL_STATIC_DRAW);
-	glCullFace(GL_BACK);
 	glDrawElements(drawMode, nrOfVertices * 3, GL_UNSIGNED_SHORT, 0);
 }
 

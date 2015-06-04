@@ -53,7 +53,7 @@ bool LightShader::compile()
 		}
 	)";
 
-const char* fragment_shader = R"(
+	const char* fragment_shader = R"(
 		#version 410
 		layout (location = 0) in vec2 UV;
 
@@ -139,7 +139,7 @@ const char* fragment_shader = R"(
                                                                                             
 			if (SpotFactor > l.Cutoff) {                                                            
 				vec4 Color = CalcPointLight(l, Normal);                             
-				return Color * (1.0 - (1.0 - SpotFactor) * 1.0/(1.0 - l.Cutoff));                   
+				return Color * (1.0f - (1.0f - SpotFactor) * 1.0f/(1.0f - l.Cutoff));                   
 			}                                                                                       
 			else {                                                                                  
 				return vec4(0,0,0,0);                                                               
@@ -152,11 +152,11 @@ const char* fragment_shader = R"(
 			LightSpacePos = ProjectionMatrixSM * ViewMatrixSM * LightSpacePos;
 			vec3 ProjCoords = LightSpacePos.xyz / LightSpacePos.w; //Normalized device coordinates
 			vec2 UVCoords;
-			UVCoords.x = 0.5 * ProjCoords.x + 0.5;
-			UVCoords.y = 0.5 * ProjCoords.y + 0.5;
-			float z = 0.5 * ProjCoords.z + 0.5;
-			float Depth = texture(ShadowMaps, UVCoords).x;
-			if (Depth < (z + 0.0000001))
+			UVCoords.x = 0.5f * ProjCoords.x + 0.5f;
+			UVCoords.y = 0.5f * ProjCoords.y + 0.5f;
+			float z = 0.5f * ProjCoords.z + 0.5f;
+			float DepthZ = texture(ShadowMaps, UVCoords).x;
+			if (DepthZ < (z + 0.0001f))
 				return 0.5f;
 			else 
 				return 1.0f;
@@ -171,18 +171,11 @@ const char* fragment_shader = R"(
 			Normal0 = texture(Normal, vec2(UV.x, UV.y));
 			Depth0 = texture(Depth, vec2(UV.x, UV.y));
 			
-			for(int n = 0; n < NumSpotLights; n++)
-			{
-				if(n == 0)
-				{
-					fragment_color += CalcSpotLight(lights[n], Normal0.xyz) * CalcShadowFactor();
-				}
-				else
-					fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
-			}
+			fragment_color = CalcSpotLight(lights[0], Normal0.xyz) * CalcShadowFactor();
 			
-			float value = texture(ShadowMaps, UV).x;
-			fragment_color = vec4(value, value, value, 1.0);	// * Diffuse0
+			vec4 value = texture(ShadowMaps, UV);
+			value = 1.0f - (1.0f - value) * 25.0f;
+			fragment_color = fragment_color * Diffuse0;	// * Diffuse0
 		}
 	)";
 
