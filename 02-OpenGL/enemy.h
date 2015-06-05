@@ -21,7 +21,6 @@ class Enemy
 {
 	private:
 		float x;
-	//	float posY = 1;
 		float z;
 		float moveSpeed;
 		int health;

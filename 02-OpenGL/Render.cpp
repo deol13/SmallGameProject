@@ -17,9 +17,7 @@ Render::Render()
 }
 Render::Render(int GASIZE, float aspectRatio)
 {
-	//viewMatrix = glm::lookAt( glm::vec3( -20, 20.0f, -20 ), glm::vec3( 0, 0, 0 ), glm::vec3( 0, 1, 0 ) ); //Test
 	viewMatrix = glm::lookAt(glm::vec3(455.0 / 2, GASIZE / 2, GASIZE / 2), glm::vec3(455.0 / 2, 0, GASIZE / 2), glm::vec3(0, 0, 1));
-	//viewMatrix = glm::lookAt(glm::vec3(0, 0, -2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));  //Original
 	projMatrix = glm::perspective(90.0f, 1.777778f, 0.5f, 1000.0f);
 	gShaderGA = 0;
 	onExitCleanUp = false;
@@ -70,9 +68,9 @@ void Render::init(int GASIZE, unsigned int width, unsigned int height)
 	
 	//Light
 	spotLights[0].Color = vec3(1.0f, 1.0f, 1.0f);
-	spotLights[0].Position = vec3(0.0f, 50.0f, 58.0f);
+	spotLights[0].Position = vec3(-90.0f, 150.0f, 58.0f);
 	spotLights[0].Direction = normalize(vec3(200.0f, 20.0f, 50.0f));
-	spotLights[0].DiffuseIntensity = 2.0f;
+	spotLights[0].DiffuseIntensity = 1.0f;
 	spotLights[0].AmbientIntensity = 0.4f;
 	spotLights[0].Cutoff = 0.001f;
 
@@ -154,6 +152,7 @@ void Render::shadowMapPassInit()
 {
 	glUseProgram(gShaderProgramSMap);
 	shadowMap->BindForWriting(); //clears
+	glViewport(0, 0, 1280 * 10, 720 * 10);
 }
 
 void Render::shadowMapPass(std::vector<GObject*> renderObjects)
@@ -175,6 +174,7 @@ void Render::shadowMapPass(std::vector<GObject*> renderObjects)
 
 void Render::lightPass()
 {
+	glViewport(0, 0, 1280, 720);
 	glUseProgram(lShader);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 

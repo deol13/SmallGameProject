@@ -42,7 +42,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile, int 
 	default:
 		break;
 	}
-	loadObj->translate(x, 17, z);
+	loadObj->translate(x, 9, z);
 	for(int i = 0; i < 8; i++)
 	{
 		neighbourPos[i] = 0;
@@ -90,7 +90,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, in
 	default:
 		break;
 	}
-	loadObj->translate(x, 17, z);
+	loadObj->translate(x, 9, z);
 	for(int i = 0; i < 8; i++)
 	{
 		neighbourPos[i] = 0;

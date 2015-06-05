@@ -22,7 +22,7 @@ bool ShadowMapFBO::Init(unsigned int WindowWidth, unsigned int WindowHeight)
 	// Create the depth buffer
 	glGenTextures(1, &m_shadowMap);
 	glBindTexture(GL_TEXTURE_2D, m_shadowMap);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,  1280, 720 , 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,  1280 * 10, 720 * 10 , 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
