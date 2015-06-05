@@ -91,8 +91,8 @@ bool LightShader::compile()
 		uniform int NumSpotLightsShadow; //<---
 		uniform vec3 eyepos;
 
-		uniform mat4 ProjectionMatrixSM; //Lights projectoin
-		uniform mat4 ViewMatrixSM;		//Lights view
+		uniform mat4 ProjectionMatrixSM; 
+		uniform mat4 ViewMatrixSM;
 
 		float gSpecularPower = 20;
 		float gMatSpecularIntensity = 0.4f;
@@ -149,14 +149,14 @@ bool LightShader::compile()
 		float CalcShadowFactor() //Calc if the pixel is in shadow or not
 		{
 			vec4 LightSpacePos = Position0; //pixel world pos
-			LightSpacePos = ViewMatrixSM * ProjectionMatrixSM * LightSpacePos;
+			LightSpacePos = ProjectionMatrixSM * ViewMatrixSM * LightSpacePos;
 			vec3 ProjCoords = LightSpacePos.xyz / LightSpacePos.w; //Normalized device coordinates
 			vec2 UVCoords;
 			UVCoords.x = 0.5f * ProjCoords.x + 0.5f;
 			UVCoords.y = 0.5f * ProjCoords.y + 0.5f;
 			float z = 0.5f * ProjCoords.z + 0.5f;
 			float DepthZ = texture(ShadowMaps, UVCoords).x;
-			if (DepthZ < (z + 0.0000001f))
+			if (DepthZ < (z + 0.0001f))
 				return 0.5f;
 			else 
 				return 1.0f;

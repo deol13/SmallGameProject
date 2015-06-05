@@ -58,7 +58,7 @@ Player::Player(GLuint textures[3], float x, float z, int health, int armour)
 
 	for(int i = 0; i < 3; i++)		//again, change to 3
 	{
-		loadObj[i]->translate(x, 9, z);
+		loadObj[i]->translate(x, 17, z);
 	}
 }
 
