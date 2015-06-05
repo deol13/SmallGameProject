@@ -42,7 +42,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string objectFile, int 
 	default:
 		break;
 	}
-	loadObj->translate(x, 17, z);
+	loadObj->translate(x, 9, z);
 	for(int i = 0; i < 8; i++)
 	{
 		neighbourPos[i] = 0;
@@ -71,6 +71,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, in
 		moveSpeed = 0.5f;
 		this->attackRange = MELEERANGE;
 		this->loadObj->scale(3.0f, 3.0f, 2.5f);
+		loadObj->translate(x, 9, z);
 		break;
 	case ANIMAL:
 		health = 30 + 2 * waveNr;
@@ -78,6 +79,7 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, in
 		moveSpeed = 0.6f;
 		this->attackRange = ANIMALRANGE;
 		this->loadObj->scale(2.5f, 1.0f, 1.8f);
+		loadObj->translate(x, 5, z);
 		break;
 	case FIRSTBOSS:
 		health = 60;
@@ -86,11 +88,11 @@ Enemy::Enemy(int type, float x, float z, GLuint texture, string* objectFiles, in
 		chargeTimer = 360;
 		this->attackRange = 7;
 		this->loadObj->scale(1.5f, 1.0f, 1.5f);
+		loadObj->translate(x, 9, z);
 		break;
 	default:
 		break;
 	}
-	loadObj->translate(x, 17, z);
 	for(int i = 0; i < 8; i++)
 	{
 		neighbourPos[i] = 0;
