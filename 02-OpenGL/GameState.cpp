@@ -334,7 +334,6 @@ void GameState::update()
 					{
 						enemyWave[i]->move();
 					}
-					//enemyWave[i]->act(player->getX(), player->getZ(), board);
 				}
 			}
 		}
@@ -510,6 +509,12 @@ void GameState::playerAttack()
 					state = 1;									// ?
 					enemyWave[i]->getGObject()->setAnimationState(3);
 					enemyWave[i]->getGObject()->animate(3);
+					if (enemyWave[i]->getType() == ANIMAL)
+					{
+						enemyWave[i]->getGObject()->translate(0.0f, -4.0f, 0.0f);
+					}
+					else
+						enemyWave[i]->getGObject()->translate(0.0f, -7.0f, 0.0f);
 				}
 			}
 		}

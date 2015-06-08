@@ -1,14 +1,13 @@
-newmtl lambert7SG
+newmtl lambert17SG
 illum 4
-Kd 0.00 0.00 0.00
+Kd 0.50 0.50 0.50
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd mainchartexture.png
 Ni 1.00
-newmtl lambert8SG
+newmtl lambert18SG
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd mainchartexture.png
+map_Kd upperbodysword.png
 Ni 1.00
