@@ -243,7 +243,7 @@ void GuiManager::getLuaTable(int nrOfParameters)
 		noAction = lua_tonumber(L, -1);
 		lua_pop(L, 1);
 		if (noAction > 0)
-		{ 
+		{
 			clean();
 
 			state = noAction;

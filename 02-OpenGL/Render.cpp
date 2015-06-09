@@ -10,18 +10,6 @@
 //	0.0f, 0.0f, 1.0f, 0.0f,
 //	0.0f, 0.0f, 0.0f, 1.0f);
 
-void Render::createBlood(float pX, float pZ)
-{
-	particles->createPaticleData(pX, pZ);
-	nrOfBlood++;
-}
-void Render::removeBlood(int index)
-{
-	particles->removeParticleData();
-	nrOfBlood--;
-}
-
-
 Render::Render()
 {
 	gShaderGA = 0;
@@ -48,25 +36,15 @@ Render::~Render()
 		delete gaShader;
 		delete lShaderObj;
 
-		delete shaderParticle;
-		delete shaderCompute;
-
 		//delete shaderSMap;
 		//delete shadowMap;
-
-		delete particles;
 
 		glDeleteShader(gShaderGA);
 		glDeleteShader(lShader);
 
-		glDeleteShader(gShaderProgramParticle);
-		glDeleteShader(gShaderProgramCompute);
-
 		//glDeleteShader(gShaderProgramSMap);
 
 		onExitCleanUp = false;
-
-		
 	}
 }
 
@@ -87,14 +65,8 @@ void Render::init(int GASIZE, unsigned int width, unsigned int height)
 	gBuffer = new GBuffer();
 	gBuffer->Init(width, height);
 
-	shaderParticle = new ShaderParticle(&gShaderProgramParticle);
-	shaderCompute = new ShaderCompute(&gShaderProgramCompute);
-
 	//Screen Quads
 	blitQuads = new BlitQuad(&lShader, vec2(-1, -1), vec2(1, 1));
-
-	particles = new Particles();
-	//particles->createPaticleData(456 / 2, 256 / 2);
 	
 	//Light
 	spotLights[0].Color = vec3(1.0f, 1.0f, 1.0f);
@@ -112,9 +84,6 @@ void Render::init(int GASIZE, unsigned int width, unsigned int height)
 	spotLights[1].Cutoff = 0.01f;
 
 	onExitCleanUp = true;
-
-	nrOfBlood = 0;
-	//in = new UserInput(&viewMatrix, glm::vec3(0, 0, -4), glm::vec3(0, 0, 3), glm::vec3(0, 1, 0));
 }
 
 void Render::loadTextures() 
@@ -125,7 +94,6 @@ void Render::loadTextures()
 	createTexture("blacktest.png");
 	createTexture("hus/husimitten.png");
 	createTexture("eldpelare/eld.png");
-	createTexture("testblod.png");
 }
 
 GLuint Render::createTexture( std::string fileName ) 
@@ -154,84 +122,31 @@ void Render::GeometryPassInit() //Bind gBuffer for object and ground shader.
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Render::renderGround(std::vector<GObject*> renderObjects)
-{
-	glClearColor(1.0, 1.0, 1.0, 1.0);
-	glUseProgram(gShaderGA);
-	glProgramUniformMatrix4fv(gShaderGA, gaShader->ViewMatrix, 1, false, &viewMatrix[0][0]);
-	glProgramUniformMatrix4fv(gShaderGA, gaShader->ProjectionMatrix, 1, false, &projMatrix[0][0]);
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glActiveTexture(GL_TEXTURE0);
-
-	GLuint currentTexture = renderObjects[0]->getTexture();
-	glBindTexture(GL_TEXTURE_2D, renderObjects[0]->getTexture());
-	glProgramUniform1i(gShaderGA, gaShader->mapSampler, currentTexture);
-
-	renderObjects[0]->render(gaShader->worldMatrix, *gaShader->gShaderProgram);
-
-	GLenum error = glGetError();
-	if (error != GL_NO_ERROR)
-	{
-		printf("Error");
-	}
-}
-
-void Render::particlePass()
-{
-	//compute shader
-	glUseProgram(gShaderProgramCompute);
-
-	glBindBuffer(GL_SHADER_STORAGE_BUFFER, particles->paticleVBO);
-	glDispatchCompute(nrOfBlood, 1, 1);
-	
-	GLenum error = glGetError();
-	if (error != GL_NO_ERROR)
-		printf("Error");
-
-	//Shaders for the particle system
-	glUseProgram(gShaderProgramParticle);
-
-	glProgramUniformMatrix4fv(gShaderProgramParticle, shaderParticle->ViewMatrix, 1, false, &viewMatrix[0][0]);
-	glProgramUniformMatrix4fv(gShaderProgramParticle, shaderParticle->ProjectionMatrix, 1, false, &projMatrix[0][0]);
-
-	glBindBuffer(GL_SHADER_STORAGE_BUFFER, particles->paticleVBO);
-
-	glDrawArrays(GL_POINTS, 0, particles->sizeOfPA);
-	glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-
-	for (int i = 0; i < nrOfBlood; i++)
-	{
-		particles->particlesLife[i] -= 1;
-
-		if (particles->particlesLife[i] <= 0)
- 			removeBlood(i);
-	}
-
-	error = glGetError();
-	if (error != GL_NO_ERROR)
-		printf("Error");
-}
-
 void Render::render(std::vector<GObject*> renderObjects)
 {
+	glClearColor(1.0, 1.0, 1.0, 1.0);
+
 	glUseProgram(gShaderGA);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ViewMatrix, 1, false, &viewMatrix[0][0]);
 	glProgramUniformMatrix4fv(gShaderGA, gaShader->ProjectionMatrix, 1, false, &projMatrix[0][0]);
 	//glProgramUniformMatrix4fv(gShaderGA, gaShader->worldMatrix, 1, false, &worldMatrixMap[0][0]);
 	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+	glActiveTexture(GL_TEXTURE0);
+
 	//Draw Player
 	GLuint currentTexture = renderObjects[0]->getTexture();
 	glBindTexture(GL_TEXTURE_2D, renderObjects[0]->getTexture());
 	glProgramUniform1i(gShaderGA, gaShader->mapSampler, currentTexture);
 
-	for( int i = 1; i < (int)renderObjects.size(); i++ ) {
+	for( int i = 0; i < (int)renderObjects.size(); i++ ) {
 		if( currentTexture != renderObjects[i]->getTexture() ) {
 			glBindTexture(GL_TEXTURE_2D, renderObjects[i]->getTexture());
 			 currentTexture = renderObjects[i]->getTexture();
 		}
 		renderObjects[i]->render(gaShader->worldMatrix, *gaShader->gShaderProgram);
 	}
+
 
 	GLenum error = glGetError();
 	if(error != GL_NO_ERROR)

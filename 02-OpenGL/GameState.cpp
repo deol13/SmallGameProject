@@ -237,7 +237,6 @@ void GameState::arenaCleanUp()
 
 void GameState::update()
 {
-	//render->in->Act();
  	player->update(arenaMap);
 	
 	if (timer == 80)
@@ -329,7 +328,6 @@ void GameState::update()
 
 						if(player->getInvulTimer() == 0)
 						{
-							render->createBlood(player->getX(), player->getZ());
 							gameUI->dmgTaken(player->takeDamage(damage)); //Deals instant damage to the player and updates the GUI
 						}
 					} else
@@ -344,27 +342,12 @@ void GameState::update()
 		if(player->getInvulTimer() > 0 && (player->getInvulTimer() % 25 < 10))
 		{
 			std::vector<GObject*> tempRender(renderObjects.begin() + weaponRender + 1, renderObjects.end());
-			render->renderGround(tempRender);
-
-			render->particlePass();
-
 			render->render(tempRender);
 		}
 		else
 		{
-			render->renderGround(renderObjects);
-
-			render->particlePass();
-
-			render->render(renderObjects);
+		render->render(renderObjects);
 		}
-
-		//if (render->nrSpotLightsShadow > 0)
-		//{
-		//	render->shadowMapPassInit();
-		//	render->shadowMapPass(); //renderObjects
-		//}
-
 		render->lightPass();
 	}
 }
@@ -433,7 +416,27 @@ void GameState::keyDown(char c)
 	case 'e': //Temporary
 	case 'E': //Temporary
 		skipSetDir = true; //Temporary
-		render->createBlood(player->getX(), player->getZ());
+		gameUI->addHealth(); //Temporary
+		break; //Temporary
+	case 'f': //Temporary
+	case 'F': //Temporary
+		skipSetDir = true; //Temporary
+		maxHeal(); //Temporary
+		break; //Temporary
+	case 'x': //Temporary
+	case 'X': //Temporary
+		skipSetDir = true; //Temporary
+		gameUI->comboLost(); //Temporary
+		break; //Temporary
+	case 'm': //Temporary
+	case 'M': //Temporary
+		skipSetDir = true; //Temporary
+		saveGame(); //Temporary
+		break; //Temporary
+	case 'n': //Temporary
+	case 'N': //Temporary
+		skipSetDir = true; //Temporary
+		loadSavedGame(); //Temporary
 		break; //Temporary
 	default: 
 		break;
@@ -498,7 +501,6 @@ void GameState::playerAttack()
 		bool hit = test.collides(hitbox);
 		if(hit)
 		{
-			render->createBlood(enemyWave[i]->getX(), enemyWave[i]->getZ());
 			if(enemyWave[i]->isAlive())
 			{
 				int damage = player->getDamageDealt();
@@ -619,11 +621,11 @@ void GameState::loadArena(int fileName)
 				}
 				else if (i == 3 || i == 4)	//wall left / right
 				{
-					temp->scale(1.2f, 1.0f, 1.2f);
+					temp->scale(1.2f, 1.0f, 1.4f);
 				}
 				else if (i == 5 || i == 6)	//wall down / up
 				{
-					temp->scale(1.2f, 1.0f, 1.0f);
+					temp->scale(1.7f, 1.0f, 1.0f);
 				}
 				else if (i == 10)
 				{

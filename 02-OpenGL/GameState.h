@@ -16,7 +16,7 @@ private:
 	int waveNumber;
 	int gold;
 	int timer;
-	//Render* render;
+	Render* render;
 	GuiManager* menuUI;
 	InGameGui* gameUI;
 	ShopUI* shopUI;
@@ -74,8 +74,5 @@ public:
 	void saveGameOnDefeat();
 
 	void setMapEditorMap();
-
-
-	Render* render;
 };
 #endif

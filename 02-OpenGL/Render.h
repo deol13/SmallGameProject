@@ -4,25 +4,21 @@
 #include "Vertex.h"
 #include <vector>
 //#include "GameArea.h"
+#include "GAShader.h"
 #include <gl/glew.h>
 #include <gl/GL.h>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 #include "stb_image.h"
-
 #include "GObject.h"
+
 #include "GuiManager.h"
-#include "GAShader.h"
+
 #include "LightShader.h"
 #include "gbuffer.h"
 #include "BlitQuad.h"
 #include "ShaderSMap.h"
 #include "ShadowMapFBO.h"
-#include "Particles.h"
-#include "ShaderCompute.h"
-#include "ShaderParticle.h"
-
-#include "UserInput.h"
 
 class Render
 {
@@ -32,8 +28,6 @@ class Render
 		~Render();
 
 		void GeometryPassInit();
-		void renderGround(std::vector<GObject*> renderObjects);
-		void particlePass();
 		void render(std::vector<GObject*> renderObjects);
 		void shadowMapPassInit();
 		void shadowMapPass(std::vector<GObject*> renderObjects);
@@ -56,15 +50,6 @@ class Render
 		glm::mat4 getProjectionMatrix() const;
 
 		bool onExitCleanUp;
-		int nrSpotLightsShadow;
-
-		//user input
-		UserInput* in;
-
-		//Particles
-		void createBlood(float pX, float pZ);
-		void removeBlood(int index);
-		int nrOfBlood;
 
 	private:
 		GAShader* gaShader;
@@ -80,18 +65,12 @@ class Render
 		int nrSpotLights = 1;
 		SpotLight* spotLights;
 
-		ShadowMapFBO* shadowMap;	
+		ShadowMapFBO* shadowMap;
+		int nrSpotLightsShadow;
 
 		//Deferred
 		GBuffer* gBuffer;
 		BlitQuad* blitQuads;
-
-		GLuint gShaderProgramParticle = 0;
-		ShaderParticle* shaderParticle;
-
-		//compute shader for particle program
-		GLuint gShaderProgramCompute = 0;
-		ShaderCompute* shaderCompute;
 
 		GLint ViewMatrix;
 		GLint ProjectionMatrix;
@@ -101,8 +80,6 @@ class Render
 
 		GObject testObj;
 		std::vector<GLuint> textures;
-
-		Particles* particles;
 };
 
 #endif
