@@ -44,6 +44,8 @@ int FPScount = 0;
 clock_t start = clock();
 clock_t currentFrame;
 
+POINT oldMpos;
+
 enum State { GAMESTATE, MENUSTATE, MAPEDITSTATE };
 
 void SetViewport() {
@@ -84,6 +86,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		Audio::getAudio().playMusic(0);
 
 		start = std::clock();
+		GetCursorPos(&oldMpos);
 
 		while (WM_QUIT != msg.message && !isQuitting) {
 			currentFrame = std::clock();
@@ -157,6 +160,15 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 					if (gameState->guiState() < 3 && gameState->getShopState() == 0)
 					{
 						switch (msg.message) {
+						//case WM_MOUSEMOVE:
+						//if (gameState->render->in->getShift())
+						//{
+						//	POINT newMpos;
+						//	GetCursorPos(&newMpos);
+						//	gameState->render->in->Mouse(newMpos.x - oldMpos.x, newMpos.y - oldMpos.y);
+						//}
+						//GetCursorPos(&oldMpos);
+						//break;
 						case  WM_LBUTTONDOWN:
 						{
 							POINT newMpos;
@@ -170,15 +182,25 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 						case WM_KEYDOWN:
 						{
 							WPARAM param = msg.wParam;
-							if(param == VK_SPACE)
+							char c = MapVirtualKey(param, MAPVK_VK_TO_CHAR);
+							if (param == VK_SPACE)
 							{
 								gameState->playerAttack();
-							} else 
+							}
+							else
 							{
 								char c = MapVirtualKey(param, MAPVK_VK_TO_CHAR);
 								gameState->keyDown(c);
 							}
 							break;
+							//gameState->render->in->KeyDown(c);
+							//if (param == 16)
+							//	gameState->render->in->Shift(true);
+							//if (param == 32)
+							//	gameState->render->in->Space(true);
+							//if (param == 17)
+							//	gameState->render->in->Ctrl(true);
+							//break;
 						}
 
 						case WM_KEYUP:
@@ -187,6 +209,14 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 							char c = MapVirtualKey(param, MAPVK_VK_TO_CHAR);
 							gameState->keyUp(c);
 							break;
+							//gameState->render->in->KeyUp(c);
+							//if (param == 16)
+							//	gameState->render->in->Shift(false);
+							//if (param == 32)
+							//	gameState->render->in->Space(false);
+							//if (param == 17)
+							//	gameState->render->in->Ctrl(false);
+							//break;
 						}
 						}
 						//glEnable(GL_DEPTH_TEST);
