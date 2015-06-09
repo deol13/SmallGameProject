@@ -70,6 +70,7 @@ class GObject
 		std::vector<Vertex> getVertices();
 		
 		int getNrOfVertices();
+		int getNrOfKeyFrames();
 		GLfloat* returnWorldPosMat();
 };
 

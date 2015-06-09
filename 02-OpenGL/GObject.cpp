@@ -349,6 +349,11 @@ int GObject::getNrOfVertices()
 	return nrOfVertices;
 }
 
+int GObject::getNrOfKeyFrames()
+{
+	return vert.size();
+}
+
 GLfloat* GObject::returnWorldPosMat()
 {
 	return &translationMatrix[0][0];
