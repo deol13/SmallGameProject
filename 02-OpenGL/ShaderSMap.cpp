@@ -23,7 +23,7 @@ ShaderSMap::~ShaderSMap()
 bool ShaderSMap::compile()
 {
 	const char* vertex_shader = R"(
-	#version 410
+	#version 430
 	layout (location = 0) in vec3 Position; 
 	layout (location = 1) in vec2 UV;                                             
 
@@ -33,7 +33,7 @@ bool ShaderSMap::compile()
 
 	void main()
 	{      
-		gl_Position = vec4(Position, 1.0) * World;
+		gl_Position = World * vec4(Position, 1.0);
 		gl_Position = Projection * View * gl_Position;
 	}
 )";

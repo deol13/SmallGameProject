@@ -34,6 +34,8 @@ class Enemy
 		bool charging;
 		int chargeTimer;
 		int idleTimer;
+		int dirIndex;
+		int dirTimer;
 
 	public:
 		Enemy();

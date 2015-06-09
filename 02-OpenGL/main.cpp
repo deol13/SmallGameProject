@@ -63,7 +63,6 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 		glewInit(); //3. Initiera The OpenGL Extension Wrangler Library (GLEW)
 
-		//glEnable(GL_CULL_FACE);
 		glDepthMask( GL_TRUE );
 		glDepthFunc( GL_LEQUAL );
 

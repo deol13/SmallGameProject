@@ -37,7 +37,6 @@ LightShader::~LightShader()
 {
 	glDeleteBuffers(1, &lightBuffer);
 }
-
 bool LightShader::compile()
 {
 	const char* vertex_shader = R"(
@@ -54,7 +53,7 @@ bool LightShader::compile()
 		}
 	)";
 
-const char* fragment_shader = R"(
+	const char* fragment_shader = R"(
 		#version 410
 		layout (location = 0) in vec2 UV;
 
@@ -62,6 +61,7 @@ const char* fragment_shader = R"(
 		uniform sampler2D Diffuse;
 		uniform sampler2D Normal;
 		uniform sampler2D Depth;
+		uniform sampler2D ShadowMaps;
 
 		vec4 Position0;
 		vec4 Diffuse0;
@@ -91,7 +91,6 @@ const char* fragment_shader = R"(
 		uniform int NumSpotLightsShadow; //<---
 		uniform vec3 eyepos;
 
-		uniform sampler2D ShadowMaps; //<----
 		uniform mat4 ProjectionMatrixSM; 
 		uniform mat4 ViewMatrixSM;
 
@@ -140,7 +139,7 @@ const char* fragment_shader = R"(
                                                                                             
 			if (SpotFactor > l.Cutoff) {                                                            
 				vec4 Color = CalcPointLight(l, Normal);                             
-				return Color * (1.0 - (1.0 - SpotFactor) * 1.0/(1.0 - l.Cutoff));                   
+				return Color * (1.0f - (1.0f - SpotFactor) * 1.0f/(1.0f - l.Cutoff));                   
 			}                                                                                       
 			else {                                                                                  
 				return vec4(0,0,0,0);                                                               
@@ -150,15 +149,15 @@ const char* fragment_shader = R"(
 		float CalcShadowFactor() //Calc if the pixel is in shadow or not
 		{
 			vec4 LightSpacePos = Position0; //pixel world pos
-			LightSpacePos = ProjectionMatrixSM * ViewMatrixSM * LightSpacePos;
+			LightSpacePos = ViewMatrixSM * ProjectionMatrixSM * LightSpacePos;
 			vec3 ProjCoords = LightSpacePos.xyz / LightSpacePos.w; //Normalized device coordinates
 			vec2 UVCoords;
-			UVCoords.x = 0.5 * ProjCoords.x + 0.5;
-			UVCoords.y = 0.5 * ProjCoords.y + 0.5;
-			float z = 0.5 * ProjCoords.z + 0.5;
-			float Depth = texture(ShadowMaps, UVCoords).x;
-			if (Depth < (z + 0.0000001))
-				return 0.01f;
+			UVCoords.x = 0.5f * ProjCoords.x + 0.5f;
+			UVCoords.y = 0.5f * ProjCoords.y + 0.5f;
+			float z = 0.5f * ProjCoords.z + 0.5f;
+			float DepthZ = texture(ShadowMaps, UVCoords).x;
+			if (DepthZ < (z + 0.000001f))
+				return 0.5f;
 			else 
 				return 1.0f;
 		}    
@@ -172,21 +171,11 @@ const char* fragment_shader = R"(
 			Normal0 = texture(Normal, vec2(UV.x, UV.y));
 			Depth0 = texture(Depth, vec2(UV.x, UV.y));
 			
-			//for(int n = 0; n < NumSpotLights; n++)
-			//{
-			//	if(n < NumSpotLightsShadow)
-			//	{
-			//		fragment_color += CalcSpotLight(lights[n], Normal0.xyz) * CalcShadowFactor();
-			//	}
-			//	else
-			//		fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
-			//}
-			for(int n = 0; n < NumSpotLights; n++)
-			{
-				fragment_color += CalcSpotLight(lights[n], Normal0.xyz);
-			}
+			fragment_color = CalcSpotLight(lights[0], Normal0.xyz) * CalcShadowFactor();
 			
-			fragment_color = fragment_color * Diffuse0;	//fragment_color *  
+			vec4 value = texture(ShadowMaps, UV);
+			value = 1.0f - (1.0f - value) * 25.0f;
+			fragment_color = fragment_color * Diffuse0;	// * Diffuse0
 		}
 	)";
 
@@ -217,8 +206,6 @@ const char* fragment_shader = R"(
 
 	return true;
 }
-
-
 void LightShader::CompileErrorPrint(GLuint* shader)
 {
 	GLint success = 0;
