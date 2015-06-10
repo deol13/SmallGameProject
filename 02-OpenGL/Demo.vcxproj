@@ -99,8 +99,11 @@
     <ClCompile Include="LightShader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapEditor.cpp" />
+    <ClCompile Include="Particles.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Render.cpp" />
+    <ClCompile Include="ShaderCompute.cpp" />
+    <ClCompile Include="ShaderParticle.cpp" />
     <ClCompile Include="ShaderSMap.cpp" />
     <ClCompile Include="ShadowMapFBO.cpp" />
     <ClCompile Include="ShopUI.cpp" />
@@ -127,9 +130,12 @@
     <ClInclude Include="MapEditObj.h" />
     <ClInclude Include="MapEditor.h" />
     <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="Particles.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="BoundingRect.h" />
     <ClInclude Include="Render.h" />
+    <ClInclude Include="ShaderCompute.h" />
+    <ClInclude Include="ShaderParticle.h" />
     <ClInclude Include="ShaderSMap.h" />
     <ClInclude Include="ShadowMapFBO.h" />
     <ClInclude Include="ShopUI.h" />

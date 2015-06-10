@@ -61,6 +61,15 @@
     <ClCompile Include="ShadowMapFBO.cpp">
       <Filter>Graphics\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderParticle.cpp">
+      <Filter>Graphics\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderCompute.cpp">
+      <Filter>Graphics\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Particles.cpp">
+      <Filter>Graphics\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlitQuad.h">
@@ -148,6 +157,15 @@
       <Filter>Graphics\Headers</Filter>
     </ClInclude>
     <ClInclude Include="ShaderSMap.h">
+      <Filter>Graphics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderCompute.h">
+      <Filter>Graphics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderParticle.h">
+      <Filter>Graphics\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Particles.h">
       <Filter>Graphics\Headers</Filter>
     </ClInclude>
   </ItemGroup>
