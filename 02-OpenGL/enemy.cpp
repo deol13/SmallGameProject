@@ -344,7 +344,7 @@ void Enemy::move()
 			this->z += zMove;
 			loadObj->translate(xMove, 0.0, zMove);
 			collisionRect.move(xMove, zMove);
-			loadObj->animate(loadObj->getNrOfKeyFrames() - 2);
+			loadObj->animate(1);
 			if(dirIndex > 4)
 			{
 				loadObj->setRotation(0.0, (dirIndex - 2)*3.14159 / 4, 0.0);
