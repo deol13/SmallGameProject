@@ -69,10 +69,9 @@ void Particles::createPaticleData(float startPosX, float startPosZ)  //Second sh
 
 void Particles::createNewParticles(float startPosX, float startPosZ, Particle* ptr)
 {
-	int* fTmp = nullptr;
 	vec3 velocity;
-	vec3 rPos;
-	float pLife = 60;
+	int* fTmp = nullptr;
+	float pLife = 80;
 
 	if (particlesLife != nullptr)
 	{
@@ -95,54 +94,34 @@ void Particles::createNewParticles(float startPosX, float startPosZ, Particle* p
 
 	//Calc velocity
 	velocity = vec3(0.0f, 0.0f, -0.5f);
-	rPos = vec3(startPosX, 5.0f, startPosZ);
-	particlesArray[sizeOfPA] = Particle(rPos, velocity, pLife);
-	sizeOfPA++;
+	particleArraySet(velocity, startPosX, startPosZ, pLife);
 
 	velocity = vec3(-0.35f, 0.0f, -0.5f);
-	rPos = vec3(startPosX, 5.0f, startPosZ);
-	particlesArray[sizeOfPA] = Particle(rPos, velocity, pLife);
-	sizeOfPA++;
+	particleArraySet(velocity, startPosX, startPosZ, pLife);
 
 	velocity = vec3(-0.5f, 0.0f, -0.2f);
-	rPos = vec3(startPosX, 5.0f, startPosZ);
-	particlesArray[sizeOfPA] = Particle(rPos, velocity, pLife);
-	sizeOfPA++;
+	particleArraySet(velocity, startPosX, startPosZ, pLife);
 
 	velocity = vec3(-0.5f, 0.0f, 0.2f);
-	rPos = vec3(startPosX, 5.0f, startPosZ);
-	particlesArray[sizeOfPA] = Particle(rPos, velocity, pLife);
-	sizeOfPA++;
+	particleArraySet(velocity, startPosX, startPosZ, pLife);
 
 	velocity = vec3(-0.5f, 0.0f, 0.35f);
-	rPos = vec3(startPosX, 5.0f, startPosZ);
-	particlesArray[sizeOfPA] = Particle(rPos, velocity, pLife);
-	sizeOfPA++;
+	particleArraySet(velocity, startPosX, startPosZ, pLife);;
 
 	velocity = vec3(-0.5f, 0.0f, 0.0f);
-	rPos = vec3(startPosX, 5.0f, startPosZ);
-	particlesArray[sizeOfPA] = Particle(rPos, velocity, pLife);
-	sizeOfPA++;
+	particleArraySet(velocity, startPosX, startPosZ, pLife);
 
 	velocity = vec3(0.35f, 0.0f, 0.5f);
-	rPos = vec3(startPosX, 5.0f, startPosZ);
-	particlesArray[sizeOfPA] = Particle(rPos, velocity, pLife);
-	sizeOfPA++;
+	particleArraySet(velocity, startPosX, startPosZ, pLife);
 
 	velocity = vec3(0.2f, 0.0f, 0.5f);
-	rPos = vec3(startPosX, 5.0f, startPosZ);
-	particlesArray[sizeOfPA] = Particle(rPos, velocity, pLife);
-	sizeOfPA++;
+	particleArraySet(velocity, startPosX, startPosZ, pLife);
 
 	velocity = vec3(0.5f, 0.0f, -0.2f);
-	rPos = vec3(startPosX, 5.0f, startPosZ);
-	particlesArray[sizeOfPA] = Particle(rPos, velocity, pLife);
-	sizeOfPA++;
+	particleArraySet(velocity, startPosX, startPosZ, pLife);
 
 	velocity = vec3(0.5f, 0.0f, -0.35f);
-	rPos = vec3(startPosX, 5.0f, startPosZ);
-	particlesArray[sizeOfPA] = Particle(rPos, velocity, pLife);
-	sizeOfPA++;
+	particleArraySet(velocity, startPosX, startPosZ, pLife);
 
 	if (fTmp != nullptr)
 	{
@@ -157,7 +136,8 @@ void Particles::removeParticleData() //FIXA
 	int tmpCounter = 0;
 
 	if (sizeOfPA == 0)
-	{}
+	{
+	}
 	else if (sizeOfPA == MAX_PARTICLES)
 	{
 		sizeOfPL = 0;
@@ -195,4 +175,14 @@ void Particles::removeParticleData() //FIXA
 		glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(Particles::Particle)*sizeOfPA, &particlesArray[0], GL_STATIC_READ);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, paticleVBO);
 	}
+}
+
+void Particles::particleArraySet(vec3 velocity, float startPosX, float startPosZ, int pLife)
+{
+	float tmpStopRender = rand() % 20 + 50;
+
+	vec3 rPos;
+	rPos = vec3(startPosX, 5.0f, startPosZ);
+	particlesArray[sizeOfPA] = Particle(rPos, velocity, pLife, tmpStopRender);
+	sizeOfPA++;
 }
