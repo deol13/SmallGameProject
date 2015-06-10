@@ -27,6 +27,8 @@ bool ShaderParticle::compile()
 			float life;
 			vec3 velocity;
 			float tTrash;
+			vec3 trash1;
+			float stopRender;
 		};
 
 		layout (std430, binding = 2) buffer particlesArray
@@ -34,9 +36,12 @@ bool ShaderParticle::compile()
 			particles data[];
 		};
 
+		out float pStopRender;
+
 		void main () 
 		{
 			gl_Position = vec4(data[gl_VertexID].pos, 1);
+			pStopRender = data[gl_VertexID].stopRender;
 		}
 	)";
 
@@ -45,6 +50,8 @@ bool ShaderParticle::compile()
 		layout (points) in;
 		layout(triangle_strip, max_vertices = 4) out;
 
+		in float pStopRender[];
+
 		uniform mat4 ViewMatrix;
 		uniform mat4 ProjectionMatrix;
 		
@@ -52,38 +59,41 @@ bool ShaderParticle::compile()
 		
 		void main ()
 		{
-			Positions = gl_in[0].gl_Position.xyz;
+			if(pStopRender[0] > 0)
+			{
+				Positions = gl_in[0].gl_Position.xyz;
 
-			gl_in[0].gl_Position = ViewMatrix * gl_in[0].gl_Position;
+				gl_in[0].gl_Position = ViewMatrix * gl_in[0].gl_Position;
 
-			vec3 nPos = normalize(gl_in[0].gl_Position.xyz);
-			vec3 up = vec3(0.0f, 1.0f, 0.0f);
-			vec3 bBoardVec = cross(-nPos, up);
-			vec3 sizey = vec3(0.0f, 0.80f, 0.0f);
-			vec3 sizex = bBoardVec*0.70f;
+				vec3 nPos = normalize(gl_in[0].gl_Position.xyz);
+				vec3 up = vec3(0.0f, 1.0f, 0.0f);
+				vec3 bBoardVec = cross(-nPos, up);
+				vec3 sizey = vec3(0.0f, 0.50f, 0.0f);
+				vec3 sizex = bBoardVec*0.50f;
 
-			//Triangle
-			//Upper left vertex(corner)
-			gl_Position = vec4( gl_in[0].gl_Position.xyz - sizex + sizey, 1.0f );
-			gl_Position = ProjectionMatrix * gl_Position;
-			EmitVertex();
+				//Triangle
+				//Upper left vertex(corner)
+				gl_Position = vec4( gl_in[0].gl_Position.xyz - sizex + sizey, 1.0f );
+				gl_Position = ProjectionMatrix * gl_Position;
+				EmitVertex();
 
-			//Lower left vertex(corner)
-			gl_Position = vec4( gl_in[0].gl_Position.xyz - sizex - sizey, 1.0f );
-			gl_Position = ProjectionMatrix * gl_Position;
-			EmitVertex();
+				//Lower left vertex(corner)
+				gl_Position = vec4( gl_in[0].gl_Position.xyz - sizex - sizey, 1.0f );
+				gl_Position = ProjectionMatrix * gl_Position;
+				EmitVertex();
 
-			//Upper right vertex(corner)
-			gl_Position = vec4( gl_in[0].gl_Position.xyz + sizex + sizey, 1.0f );
-			gl_Position = ProjectionMatrix * gl_Position;
-			EmitVertex();
+				//Upper right vertex(corner)
+				gl_Position = vec4( gl_in[0].gl_Position.xyz + sizex + sizey, 1.0f );
+				gl_Position = ProjectionMatrix * gl_Position;
+				EmitVertex();
 
-			//Lower right vertex(corner)
-			gl_Position = vec4( gl_in[0].gl_Position.xyz + sizex - sizey, 1.0f );
-			gl_Position = ProjectionMatrix * gl_Position;
-			EmitVertex();
+				//Lower right vertex(corner)
+				gl_Position = vec4( gl_in[0].gl_Position.xyz + sizex - sizey, 1.0f );
+				gl_Position = ProjectionMatrix * gl_Position;
+				EmitVertex();
 
-			EndPrimitive();
+				EndPrimitive();
+			}
 		}
 	)";
 

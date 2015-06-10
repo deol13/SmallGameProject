@@ -25,6 +25,8 @@ bool ShaderCompute::compile()
 			float life;
 			vec3 velocity;
 			float tTrash;
+			vec3 trash1;
+			float stopRender;
 		};
 
 		layout (std430, binding = 2) buffer particlesArray
@@ -37,11 +39,12 @@ bool ShaderCompute::compile()
 		void main()
 		{
 			uint tmpID =  gl_GlobalInvocationID.x;
-			if( data[tmpID].life >= 40 )
+			if( data[tmpID].life >= 60 )
 			{
 				data[tmpID].pos -= data[tmpID].velocity;
 				data[tmpID].life -= 1;
 			}
+			data[tmpID].stopRender -= 1;
 		}
 	)";
 

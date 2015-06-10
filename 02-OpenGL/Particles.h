@@ -20,15 +20,18 @@ public:
 		float life;
 		glm::vec3 velocity;
 		float tTrash;
+		glm::vec3 trash1;
+		float stopRender;
 		
 		Particle(){};
 		~Particle(){};
-		Particle(glm::vec3 pPos, glm::vec3 pVelocity, float pLife)
+		Particle(glm::vec3 pPos, glm::vec3 pVelocity, float pLife, float pStopRender)
 		{
 			pos = pPos;
 			velocity = pVelocity;
 			life = pLife;
 			tTrash = 0.0f;
+			stopRender = pStopRender;
 		}
 	};
 	
@@ -42,6 +45,7 @@ public:
 	void createPaticleData(float startPosX, float startPosZ);
 	void createNewParticles(float startPosX, float startPosZ, Particle* ptr);
 	void removeParticleData();
+	void particleArraySet(glm::vec3 velocity, float startPosX, float startPosZ, int pLife);
 };
 
 #endif

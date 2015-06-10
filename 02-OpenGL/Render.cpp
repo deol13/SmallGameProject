@@ -186,6 +186,9 @@ void Render::render(std::vector<GObject*> renderObjects)
 		renderObjects[i]->render(gaShader->worldMatrix, *gaShader->gShaderProgram);
 	}
 
+	shadowMapPassInit();
+	shadowMapPass(renderObjects);
+
 	GLenum error = glGetError();
 	if(error != GL_NO_ERROR)
 	{
