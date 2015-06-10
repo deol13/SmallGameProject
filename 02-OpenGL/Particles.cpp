@@ -1,7 +1,7 @@
 #include "Particles.h"
 
 using namespace glm;
-#define MAX_PARTICLES 10
+#define MAX_PARTICLES 20
 
 Particles::Particles()
 {
@@ -71,7 +71,9 @@ void Particles::createNewParticles(float startPosX, float startPosZ, Particle* p
 {
 	vec3 velocity;
 	int* fTmp = nullptr;
-	float pLife = 80;
+	float pLife = 0;// 80;
+	int lifeArray[20];
+	int tmpCounter = 0;
 
 	if (particlesLife != nullptr)
 	{
@@ -89,39 +91,85 @@ void Particles::createNewParticles(float startPosX, float startPosZ, Particle* p
 	}
 	for (int i = sizeOfPA; i < MAX_PARTICLES * sizeOfPL; i++)
 	{
+		pLife = rand() % 10 + 70;
 		particlesLife[i] = pLife;
+		lifeArray[tmpCounter] = pLife;
+		tmpCounter++;
+		//particlesLife[i] = pLife;
 	}
 
 	//Calc velocity
-	velocity = vec3(0.0f, 0.0f, -0.5f);
-	particleArraySet(velocity, startPosX, startPosZ, pLife);
+	//UP
+	velocity = vec3(0.25f, 0.0f, -0.5f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[0]);
 
-	velocity = vec3(-0.35f, 0.0f, -0.5f);
-	particleArraySet(velocity, startPosX, startPosZ, pLife);
+	velocity = vec3(0.1f, 0.0f, -0.5f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[1]);
 
+	velocity = vec3(-0.1f, 0.0f, -0.5f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[2]);
+
+	velocity = vec3(-0.25f, 0.0f, -0.5f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[3]);
+	//
+
+	//LEFT UP
 	velocity = vec3(-0.5f, 0.0f, -0.2f);
-	particleArraySet(velocity, startPosX, startPosZ, pLife);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[4]);
 
+	velocity = vec3(-0.5f, 0.0f, -0.3f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[5]);
+
+	velocity = vec3(-0.5f, 0.0f, -0.15f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[6]);
+	//
+
+	//LEFT DOWN
 	velocity = vec3(-0.5f, 0.0f, 0.2f);
-	particleArraySet(velocity, startPosX, startPosZ, pLife);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[7]);
 
-	velocity = vec3(-0.5f, 0.0f, 0.35f);
-	particleArraySet(velocity, startPosX, startPosZ, pLife);;
+	velocity = vec3(-0.5f, 0.0f, 0.3f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[8]);
 
-	velocity = vec3(-0.5f, 0.0f, 0.0f);
-	particleArraySet(velocity, startPosX, startPosZ, pLife);
+	velocity = vec3(-0.4f, 0.0f, 0.5f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[9]);
+	//
 
-	velocity = vec3(0.35f, 0.0f, 0.5f);
-	particleArraySet(velocity, startPosX, startPosZ, pLife);
+	//DOWN
+	velocity = vec3(-0.25f, 0.0f, 0.5f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[10]);
 
-	velocity = vec3(0.2f, 0.0f, 0.5f);
-	particleArraySet(velocity, startPosX, startPosZ, pLife);
+	velocity = vec3(-0.1f, 0.0f, 0.5f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[11]);
 
+	velocity = vec3(0.1f, 0.0f, 0.5f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[12]);
+
+	velocity = vec3(0.25f, 0.0f, 0.5f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[13]);
+	//
+
+	//RIGHT DOWN
+	velocity = vec3(0.5f, 0.0f, 0.2f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[14]);
+
+	velocity = vec3(0.5f, 0.0f, 0.3f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[15]);
+
+	velocity = vec3(0.5f, 0.0f, 0.4f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[16]);
+	//
+
+	//RIGHT UP
 	velocity = vec3(0.5f, 0.0f, -0.2f);
-	particleArraySet(velocity, startPosX, startPosZ, pLife);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[17]);
 
-	velocity = vec3(0.5f, 0.0f, -0.35f);
-	particleArraySet(velocity, startPosX, startPosZ, pLife);
+	velocity = vec3(0.5f, 0.0f, -0.3f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[18]);
+
+	velocity = vec3(0.5f, 0.0f, -0.4f);
+	particleArraySet(velocity, startPosX, startPosZ, lifeArray[19]);
+	//
 
 	if (fTmp != nullptr)
 	{
@@ -179,7 +227,7 @@ void Particles::removeParticleData() //FIXA
 
 void Particles::particleArraySet(vec3 velocity, float startPosX, float startPosZ, int pLife)
 {
-	float tmpStopRender = rand() % 20 + 50;
+	float tmpStopRender = rand() % 30 + 40;
 
 	vec3 rPos;
 	rPos = vec3(startPosX, 5.0f, startPosZ);
